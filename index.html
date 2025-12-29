@@ -61,7 +61,7 @@
         .bg-video.active { opacity: 1; z-index: 1; }
 
         /* =========================================
-           [헤더 스타일]
+           [헤더 스타일 - About 페이지와 통일됨]
            ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
@@ -72,7 +72,8 @@
             backdrop-filter: blur(0px); 
             transition: all 0.5s ease;
             color: #111111;
-            height: 80px;
+            /* [수정됨] 헤더 높이 90px로 확대 (로고 크기 대응) */
+            height: 90px;
         }
 
         /* 비디오 배경에 따른 헤더 색상 반전 클래스 */
@@ -81,8 +82,9 @@
 
         .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
         
+        /* [수정됨] PC 로고 크기 60px로 확대 */
         .logo-img { 
-            height: 45px; 
+            height: 60px; 
             width: auto; display: block; 
             transition: height 0.3s ease, filter 0.5s ease; 
         }
@@ -93,6 +95,7 @@
 
         nav ul li a {
             text-decoration: none; color: inherit; 
+            /* [PC 폰트 유지] clamp 적용 */
             font-size: clamp(15px, 1.2vw, 18px); 
             font-weight: 400; 
             display: block; 
@@ -131,7 +134,7 @@
 
         main { flex: 1; width: 100%; height: 100%; }
 
-        /* [모바일 대응] */
+        /* [모바일 대응 - About 페이지와 통일됨] */
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
@@ -140,10 +143,16 @@
                 height: auto;
                 background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
             }
-            .logo-img { height: 35px; }
+            /* [수정됨] 모바일 로고 50px로 확대 */
+            .logo-img { height: 50px; }
+            
             nav { width: 100%; }
-            nav ul { justify-content: center; gap: 30px; width: 100%; }
-            nav ul li a { font-size: 14px; }
+            
+            /* [수정됨] 간격 25px로 조정 */
+            nav ul { justify-content: center; gap: 25px; width: 100%; }
+            
+            /* [수정됨] 모바일 폰트 16px, 굵기 500으로 확대 */
+            nav ul li a { font-size: 16px; font-weight: 500; }
         }
     </style>
 </head>
@@ -255,19 +264,16 @@
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
 
-            // [수정됨] 모바일/저전력 모드 대응을 위한 강력한 초기 재생 함수
             function startFirstVideo() {
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // 1. 자동 재생 성공
                         console.log("Autoplay started.");
                         firstVideo.classList.add('active');
                         posterLayer.classList.add('hidden');
                     })
                     .catch((error) => {
-                        // 2. 자동 재생 실패 (사용자 인터랙션 대기)
                         console.log("Autoplay blocked. Waiting for user interaction.");
                         
                         const interactionHandler = () => {
@@ -275,7 +281,6 @@
                             firstVideo.classList.add('active');
                             posterLayer.classList.add('hidden');
                             
-                            // 리스너 제거
                             document.removeEventListener('click', interactionHandler);
                             document.removeEventListener('touchstart', interactionHandler);
                         };
@@ -286,7 +291,6 @@
                 }
             }
 
-            // readyState 체크 후 실행
             if (firstVideo.readyState >= 3) {
                 startFirstVideo();
             } else {
