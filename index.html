@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID</title>
+    <link rel="icon" href="img/main/favicon.png" type="image/png">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    <style>
+        /* [기본 설정] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            height: 100vh;
+            height: 100dvh; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0; /* 초기 투명 상태 */
+            transition: opacity 0.5s ease-in-out; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body.fade-in { opacity: 1; }
+
+        /* [비디오 배경] */
+        #video-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background-color: #000000; overflow: hidden;
+        }
+
+        #poster-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('img/main/loop/poster1.jpg'); 
+            background-size: cover;
+            background-position: center;
+            z-index: 10;
+            transition: opacity 0.8s ease-out;
+            opacity: 1;
+        }
+        
+        #poster-layer.hidden { opacity: 0; pointer-events: none; }
+
+        .bg-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; 
+            opacity: 0;
+            z-index: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .bg-video.active { opacity: 1; z-index: 1; }
+
+        /* =========================================
+           [헤더 스타일 - About 페이지와 통일]
+           ========================================= */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            /* [수정] 컴팩트한 패딩 적용 */
+            padding: 20px 40px; 
+            width: 100%;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(0px); 
+            transition: all 0.5s ease;
+            color: #111111;
+            /* [수정] 높이 축소 */
+            height: 80px;
+        }
+
+        /* 비디오 배경에 따른 헤더 색상 반전 클래스 */
+        header.white-skin { color: #ffffff !important; }
+        header.white-skin .logo-img { filter: invert(1); }
+
+        .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
+        
+        .logo-img { 
+            /* [수정] 로고 크기 축소 */
+            height: 45px; 
+            width: auto; display: block; 
+            transition: height 0.3s ease, filter 0.5s ease; 
+        }
+
+        /* [네비게이션 스타일] */
+        nav ul { display: flex; list-style: none; gap: 50px; /* 간격 조정 */ }
+        nav ul li { margin-left: 0; }
+
+        nav ul li a {
+            text-decoration: none; color: inherit; 
+            /* [수정] 폰트 사이즈 세련되게 축소 */
+            font-size: clamp(15px, 1.2vw, 18px); 
+            font-weight: 400; 
+            display: block; 
+            padding: 10px 0; 
+            letter-spacing: -0.02em;
+            opacity: 0.8; 
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        nav ul li a::before {
+            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
+        }
+
+        /* 흰색 스킨일 때 그림자 효과 */
+        header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
+
+        nav ul li:hover a { 
+            transform: translateY(-0.33em); 
+            opacity: 1; 
+        }
+
+        nav ul li.active a { 
+            font-weight: 700; 
+            opacity: 1;
+        }
+        
+        nav ul li.active a::after {
+            content: ''; display: block; width: 100%; height: 2px; 
+            background: currentColor;
+            margin-top: 5px; 
+            border-radius: 2px;
+        }
+
+        main { flex: 1; width: 100%; height: 100%; }
+
+        /* [모바일 대응] */
+        @media (max-width: 768px) {
+            header { 
+                padding: 15px 20px; 
+                flex-direction: column; 
+                gap: 15px;
+                height: auto;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
+            }
+            .logo-img { height: 35px; }
+            nav { width: 100%; }
+            nav ul { justify-content: center; gap: 30px; width: 100%; }
+            nav ul li a { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <div id="poster-layer"></div>
+
+        <video class="bg-video" id="v1" playsinline muted data-theme="light">
+            <source src="img/main/loop/video 1.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v2" playsinline muted data-theme="dark">
+            <source src="img/main/loop/video 2.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v3" playsinline muted data-theme="light">
+            <source src="img/main/loop/video 3.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v4" playsinline muted data-theme="light">
+            <source src="img/main/loop/video 4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header id="main-header">
+        <div class="logo-container" id="main-logo">
+            <img src="img/main/Head Logo.svg" alt="Logo" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html" class="nav-link" title="About">About</a></li>
+                <li><a href="projects.html" class="nav-link" title="Projects">Projects</a></li>
+                <li><a href="contact.html" class="nav-link" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main></main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+
+            const header = document.getElementById("main-header");
+            const posterLayer = document.getElementById("poster-layer");
+            
+            function fadeAndMove(destinationUrl) {
+                if(window.location.href.includes(destinationUrl) && !destinationUrl.includes('index.html')) return;
+                document.body.classList.remove('fade-in'); 
+                setTimeout(() => {
+                    window.location.href = destinationUrl; 
+                }, 500);
+            }
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); 
+                    const target = this.getAttribute('href');
+                    fadeAndMove(target); 
+                });
+            });
+
+            const mainLogo = document.getElementById('main-logo');
+            if(mainLogo) {
+                mainLogo.addEventListener('click', function() {
+                    fadeAndMove('index.html'); 
+                });
+            }
+
+            const videos = Array.from(document.querySelectorAll('.bg-video'));
+            
+            function updateHeaderColor(videoElement) {
+                const theme = videoElement.getAttribute("data-theme");
+                if (theme === "dark") {
+                    header.classList.add("white-skin");
+                } else {
+                    header.classList.remove("white-skin");
+                }
+            }
+
+            videos.forEach((video, index) => {
+                video.muted = true; 
+                video.loop = false; 
+
+                video.addEventListener('ended', () => {
+                    playNextVideo(index);
+                });
+            });
+
+            function playNextVideo(currentIndex) {
+                const nextIndex = (currentIndex + 1) % videos.length;
+                const currentVideo = videos[currentIndex];
+                const nextVideo = videos[nextIndex];
+
+                nextVideo.play().then(() => {
+                    nextVideo.classList.add('active'); 
+                    updateHeaderColor(nextVideo); 
+
+                    setTimeout(() => {
+                        currentVideo.classList.remove('active');
+                        currentVideo.currentTime = 0; 
+                        currentVideo.pause(); 
+                    }, 800); 
+                    
+                }).catch(error => {
+                    console.error("Play failed:", error);
+                });
+            }
+
+            const firstVideo = videos[0];
+            updateHeaderColor(firstVideo);
+
+            if (firstVideo.readyState >= 3) {
+                startFirstVideo();
+            } else {
+                firstVideo.addEventListener('canplay', startFirstVideo, { once: true });
+            }
+
+            function startFirstVideo() {
+                firstVideo.play().then(() => {
+                    firstVideo.classList.add('active');
+                    posterLayer.classList.add('hidden');
+                }).catch((error) => {
+                    console.log("Autoplay blocked:", error);
+                    firstVideo.muted = true;
+                    firstVideo.play();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
