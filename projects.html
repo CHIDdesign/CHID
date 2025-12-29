@@ -3,78 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHID - Projects</title>
+    <title>CHID</title>
     <link rel="icon" href="img/main/favicon.png" type="image/png">
 
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <style>
-        /* [기본 스타일] */
+        /* [기본 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
             color: #111111;
-            
-            min-height: 100vh;
+            height: 100vh;
+            height: 100dvh; 
             display: flex;
             flex-direction: column;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            
+            overflow: hidden;
+            opacity: 0; /* 초기 투명 상태 */
+            transition: opacity 0.5s ease-in-out; 
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         body.fade-in { opacity: 1; }
 
+        /* [비디오 배경] */
+        #video-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background-color: #000000; overflow: hidden;
+        }
+
+        #poster-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('img/main/loop/poster1.jpg'); 
+            background-size: cover;
+            background-position: center;
+            z-index: 10;
+            transition: opacity 0.8s ease-out;
+            opacity: 1;
+        }
+        
+        #poster-layer.hidden { opacity: 0; pointer-events: none; }
+
+        .bg-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; 
+            opacity: 0;
+            z-index: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .bg-video.active { opacity: 1; z-index: 1; }
+
         /* =========================================
-           [헤더 스타일 - Compact & Elegant 적용]
+           [헤더 스타일 - About 페이지와 통일됨]
            ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            /* [수정] 패딩 축소: 40px 60px -> 20px 40px */
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            
-            /* 배경 유지 (본문 스크롤 시 가독성 확보) */
-            background-color: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(0px); 
             transition: all 0.5s ease;
-            /* [수정] 높이 축소: 100px -> 80px */
-            height: 80px;
+            color: #111111;
+            /* [수정됨] 헤더 높이 90px로 확대 (로고 크기 대응) */
+            height: 90px;
         }
 
-        .logo-container { cursor: pointer; }
+        /* 비디오 배경에 따른 헤더 색상 반전 클래스 */
+        header.white-skin { color: #ffffff !important; }
+        header.white-skin .logo-img { filter: invert(1); }
+
+        .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
         
+        /* [수정됨] PC 로고 크기 60px로 확대 */
         .logo-img { 
-            /* [수정] 로고 크기 축소: 60px -> 45px */
-            height: 45px; 
-            width: auto; 
-            display: block; 
-            transition: height 0.3s ease;
+            height: 60px; 
+            width: auto; display: block; 
+            transition: height 0.3s ease, filter 0.5s ease; 
         }
 
         /* [네비게이션 스타일] */
-        nav ul { display: flex; list-style: none; gap: 50px; /* [수정] 간격 60px -> 50px */ }
+        nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
-        
+
         nav ul li a {
-            text-decoration: none; 
-            color: #111111;
-            
-            /* [수정] 폰트 사이즈 축소: clamp(18px...) -> clamp(15px...) */
+            text-decoration: none; color: inherit; 
+            /* [PC 폰트 유지] clamp 적용 */
             font-size: clamp(15px, 1.2vw, 18px); 
             font-weight: 400; 
-            
             display: block; 
             padding: 10px 0; 
             letter-spacing: -0.02em;
             opacity: 0.8; 
-            
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             text-align: center;
@@ -85,19 +112,19 @@
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
 
-        /* 호버 모션 */
+        /* 흰색 스킨일 때 그림자 효과 */
+        header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
+
         nav ul li:hover a { 
             transform: translateY(-0.33em); 
-            opacity: 1;
+            opacity: 1; 
         }
 
-        /* 활성 상태 */
         nav ul li.active a { 
             font-weight: 700; 
             opacity: 1;
         }
         
-        /* 밑줄 애니메이션 */
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor;
@@ -105,177 +132,170 @@
             border-radius: 2px;
         }
 
-        /* [메인 영역] */
-        main { 
-            flex: 1; 
-            width: 100%; 
-            /* [수정] 헤더가 작아졌으므로 상단 여백도 축소 (180px -> 140px) */
-            padding-top: 140px; 
-            padding-bottom: 80px; 
-        }
+        main { flex: 1; width: 100%; height: 100%; }
 
-        /* 갤러리 그리드 */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            /* [수정] 헤더 패딩(40px)과 라인을 맞춤 */
-            padding: 0 40px;
-        }
-
-        /* [프로젝트 아이템 & 애니메이션] */
-        .project-item { 
-            cursor: pointer; 
-            opacity: 0; 
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* 순차적 등장 */
-        .project-item:nth-child(1) { animation-delay: 0.1s; }
-        .project-item:nth-child(2) { animation-delay: 0.2s; }
-        .project-item:nth-child(3) { animation-delay: 0.3s; }
-        .project-item:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .image-wrapper {
-            position: relative; width: 100%; aspect-ratio: 3 / 4;
-            overflow: hidden; background-color: #f0f0f0;
-        }
-
-        .image-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
-            display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .project-info-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(5px); 
-            color: #ffffff;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
-        }
-
-        .project-item:hover .project-info-overlay { opacity: 1; }
-        .project-item:hover .image-wrapper img { transform: scale(1.05); }
-        
-        .info-title { 
-            /* [수정] 오버레이 텍스트도 살짝 정돈 */
-            font-size: 18px; font-weight: 700; margin-bottom: 10px; 
-            text-transform: uppercase; letter-spacing: 0.05em; 
-        }
-        .info-desc { 
-            font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; 
-        }
-
-        /* [반응형 미디어 쿼리] */
-        @media (max-width: 1200px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
-        
-        /* [모바일 최적화] */
+        /* [모바일 대응 - About 페이지와 통일됨] */
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
                 flex-direction: column; 
                 gap: 15px;
                 height: auto;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
             }
-            .logo-img { height: 35px; } 
+            /* [수정됨] 모바일 로고 50px로 확대 */
+            .logo-img { height: 50px; }
             
             nav { width: 100%; }
-            nav ul { justify-content: center; gap: 30px; width: 100%; }
-            nav ul li a { font-size: 14px; }
-
-            main { padding-top: 140px; } 
-            .gallery-grid { 
-                grid-template-columns: 1fr; 
-                gap: 30px; 
-                padding: 0 20px; /* 모바일 패딩 */
-            }
+            
+            /* [수정됨] 간격 25px로 조정 */
+            nav ul { justify-content: center; gap: 25px; width: 100%; }
+            
+            /* [수정됨] 모바일 폰트 16px, 굵기 500으로 확대 */
+            nav ul li a { font-size: 16px; font-weight: 500; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container" id="back-to-home">
-            <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
+    <div id="video-container">
+        <div id="poster-layer"></div>
+
+        <video class="bg-video" id="v1" playsinline muted autoplay data-theme="light">
+            <source src="img/main/loop/video 1.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v2" playsinline muted autoplay data-theme="dark">
+            <source src="img/main/loop/video 2.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v3" playsinline muted autoplay data-theme="light">
+            <source src="img/main/loop/video 3.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v4" playsinline muted autoplay data-theme="light">
+            <source src="img/main/loop/video 4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header id="main-header">
+        <div class="logo-container" id="main-logo">
+            <img src="img/main/Head Logo.svg" alt="Logo" class="logo-img">
         </div>
         <nav>
             <ul>
                 <li><a href="about.html" class="nav-link" title="About">About</a></li>
-                <li class="active"><a href="projects.html" class="nav-link" title="Projects">Projects</a></li>
+                <li><a href="projects.html" class="nav-link" title="Projects">Projects</a></li>
                 <li><a href="contact.html" class="nav-link" title="Contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <div class="gallery-grid">
-            <div class="project-item">
-                <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 3.png" alt="KUNST">
-                    <div class="project-info-overlay">
-                        <div class="info-title">KUNST</div>
-                        <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 2.png" alt="Seesaw">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Seesaw</div>
-                        <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 1.png" alt="Aetheris">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Aetheris</div>
-                        <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-item">
-                <div class="image-wrapper">
-                    <img src="https://via.placeholder.com/400x533/f5f5f5/111111?text=Project+4" alt="Dogsplay">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Dogsplay</div>
-                        <div class="info-desc">Sunny wave tech<br>TV for dogs<br>2024</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <main></main>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+
+            const header = document.getElementById("main-header");
+            const posterLayer = document.getElementById("poster-layer");
             
-            function fadeAndMove(targetUrl) {
-                if(window.location.href.includes(targetUrl)) return;
-                document.body.classList.remove('fade-in');
-                setTimeout(() => { window.location.href = targetUrl; }, 500);
+            function fadeAndMove(destinationUrl) {
+                if(window.location.href.includes(destinationUrl) && !destinationUrl.includes('index.html')) return;
+                document.body.classList.remove('fade-in'); 
+                setTimeout(() => {
+                    window.location.href = destinationUrl; 
+                }, 500);
             }
-            
-            document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fadeAndMove(this.getAttribute('href'));
+                    e.preventDefault(); 
+                    const target = this.getAttribute('href');
+                    fadeAndMove(target); 
                 });
             });
+
+            const mainLogo = document.getElementById('main-logo');
+            if(mainLogo) {
+                mainLogo.addEventListener('click', function() {
+                    fadeAndMove('index.html'); 
+                });
+            }
+
+            const videos = Array.from(document.querySelectorAll('.bg-video'));
+            
+            function updateHeaderColor(videoElement) {
+                const theme = videoElement.getAttribute("data-theme");
+                if (theme === "dark") {
+                    header.classList.add("white-skin");
+                } else {
+                    header.classList.remove("white-skin");
+                }
+            }
+
+            videos.forEach((video, index) => {
+                video.muted = true; 
+                video.loop = false; 
+
+                video.addEventListener('ended', () => {
+                    playNextVideo(index);
+                });
+            });
+
+            function playNextVideo(currentIndex) {
+                const nextIndex = (currentIndex + 1) % videos.length;
+                const currentVideo = videos[currentIndex];
+                const nextVideo = videos[nextIndex];
+
+                nextVideo.play().then(() => {
+                    nextVideo.classList.add('active'); 
+                    updateHeaderColor(nextVideo); 
+
+                    setTimeout(() => {
+                        currentVideo.classList.remove('active');
+                        currentVideo.currentTime = 0; 
+                        currentVideo.pause(); 
+                    }, 800); 
+                    
+                }).catch(error => {
+                    console.error("Play failed:", error);
+                });
+            }
+
+            const firstVideo = videos[0];
+            updateHeaderColor(firstVideo);
+
+            function startFirstVideo() {
+                var playPromise = firstVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Autoplay started.");
+                        firstVideo.classList.add('active');
+                        posterLayer.classList.add('hidden');
+                    })
+                    .catch((error) => {
+                        console.log("Autoplay blocked. Waiting for user interaction.");
+                        
+                        const interactionHandler = () => {
+                            firstVideo.play();
+                            firstVideo.classList.add('active');
+                            posterLayer.classList.add('hidden');
+                            
+                            document.removeEventListener('click', interactionHandler);
+                            document.removeEventListener('touchstart', interactionHandler);
+                        };
+
+                        document.addEventListener('click', interactionHandler);
+                        document.addEventListener('touchstart', interactionHandler);
+                    });
+                }
+            }
+
+            if (firstVideo.readyState >= 3) {
+                startFirstVideo();
+            } else {
+                firstVideo.addEventListener('canplay', startFirstVideo, { once: true });
+            }
         });
     </script>
 </body>
