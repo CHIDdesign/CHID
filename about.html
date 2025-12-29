@@ -36,18 +36,29 @@
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            background-color: rgba(255, 255, 255, 0.01); 
+            background-color: rgba(255, 255, 255, 0); 
             backdrop-filter: blur(0px); 
-            transition: all 0.5s ease;
-            height: 80px; 
+            transition: all 0.4s ease;
+            height: 90px;
+        }
+
+        /* 스크롤 시 스타일 */
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
         }
         
-        body.dark-mode header { background-color: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px); }
+        body.dark-mode header { 
+            background-color: rgba(5, 5, 5, 0.85); 
+            backdrop-filter: blur(12px); 
+        }
 
         .logo-container { cursor: pointer; pointer-events: auto; }
         
+        /* PC 로고 크기 확대 */
         .logo-img { 
-            height: 45px; 
+            height: 60px; 
             width: auto; display: block; 
             transition: height 0.3s ease, filter 0.5s ease; 
         }
@@ -88,22 +99,30 @@
             border-radius: 2px;
         }
 
-        /* [모바일 대응 - 헤더 높이 변화 및 콘텐츠 위치 조정] */
+        /* [모바일 대응] */
         @media (max-width: 768px) {
             header { 
-                /* 레이아웃이 세로로 바뀌면서 높이가 늘어남 */
                 padding: 15px 20px; 
                 flex-direction: column; 
                 gap: 15px;
-                height: auto; /* 자동 높이 */
-                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
+                height: auto;
+                background: transparent; 
             }
+            
+            header.scrolled {
+                background-color: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(15px);
+            }
+            
             body.dark-mode header { background: rgba(5,5,5,0.9); }
             
-            .logo-img { height: 35px; }
+            /* 모바일 로고 확대 */
+            .logo-img { height: 50px; }
+            
             nav { width: 100%; }
-            nav ul { justify-content: center; gap: 30px; width: 100%; }
-            nav ul li a { font-size: 14px; }
+            nav ul { justify-content: center; gap: 25px; width: 100%; }
+            /* 모바일 폰트 확대 */
+            nav ul li a { font-size: 16px; font-weight: 500; }
         }
 
         /* [인트로 영역] */
@@ -141,14 +160,32 @@
         .scroll-hint {
             position: fixed;
             bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 90;
-            font-size: 13px; font-weight: 400; letter-spacing: 0.05em; color: #666; opacity: 0.7;
+            display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 90;
+            
+            font-size: 15px; 
+            font-weight: 500; letter-spacing: 0.05em; color: #666; opacity: 0.7;
+            
             animation: floatUpDown 2s infinite ease-in-out;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: color 0.5s ease, opacity 0.5s ease, visibility 0.5s;
         }
-        .scroll-arrow svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.2px; }
-        @keyframes floatUpDown { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
-        body.dark-mode .scroll-hint { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .scroll-arrow svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5px; }
+
+        @keyframes floatUpDown { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
+        
+        /* 다크 모드일 때 */
+        body.dark-mode .scroll-hint { 
+            opacity: 0.8; 
+            color: #ffffff;
+            visibility: visible; 
+        }
+
+        /* [추가됨] 최하단 도달 시 투명 처리 클래스 */
+        .scroll-hint.reached-bottom {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
 
         /* [콘텐츠 섹션] */
         .content-section {
@@ -202,7 +239,6 @@
         /* [개별 텍스트 블록] */
         .text-block {
             position: fixed; 
-            /* PC: 화면 중앙선 기준 */
             top: 50vh; 
             left: 0; width: 100%; height: 50vh;
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
@@ -243,15 +279,9 @@
 
         /* [반응형 수정 - 모바일/좁은 화면] */
         @media (max-width: 768px) {
-            /* 헤더가 2단으로 바뀌면서 높이가 길어짐 (약 120~130px 예상) 
-               따라서 눈이 가려지지 않게 top을 더 내림 */
             .eyes-container-sticky.moved-up { top: 180px; } 
-            
             .eye-group { width: clamp(60px, 18vw, 100px); }
-            
-            /* 눈이 내려왔으므로 텍스트도 겹치지 않게 더 내림 */
             .text-block { top: 45vh; height: 55vh; padding: 0 20px; }
-            
             .brand-slogan { font-size: clamp(1.8rem, 8vw, 3rem); }
         }
     </style>
@@ -364,6 +394,31 @@
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
 
+            const header = document.querySelector('header');
+            const scrollHint = document.querySelector('.scroll-hint');
+
+            // [스크롤 감지]
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const docHeight = document.documentElement.scrollHeight;
+
+                // 1. 헤더 투명도 처리
+                if (scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // 2. [추가됨] 스크롤 힌트 최하단 숨김 처리
+                // 페이지 하단까지 스크롤 되었는지 확인 (오차 50px 여유 둠)
+                if (scrollY + windowHeight >= docHeight - 50) {
+                    scrollHint.classList.add('reached-bottom');
+                } else {
+                    scrollHint.classList.remove('reached-bottom');
+                }
+            });
+
             // [페이지 이동 함수]
             function fadeAndMove(destinationUrl) {
                 if(window.location.href.includes(destinationUrl)) return;
@@ -469,7 +524,7 @@
                 });
             });
 
-            // [3. 눈알 애니메이션 (모바일 터치 + 거리 비례 + 경계선 넘기 + Parallax + 실눈)]
+            // [3. 눈알 애니메이션]
             const eyeGroups = document.querySelectorAll('.eye-group');
             if (eyeGroups.length > 0) {
                 let mouseX = window.innerWidth / 2; 
