@@ -61,11 +61,10 @@
         .bg-video.active { opacity: 1; z-index: 1; }
 
         /* =========================================
-           [헤더 스타일 - About 페이지와 통일]
+           [헤더 스타일]
            ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            /* [수정] 컴팩트한 패딩 적용 */
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
@@ -73,7 +72,6 @@
             backdrop-filter: blur(0px); 
             transition: all 0.5s ease;
             color: #111111;
-            /* [수정] 높이 축소 */
             height: 80px;
         }
 
@@ -84,19 +82,17 @@
         .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
         
         .logo-img { 
-            /* [수정] 로고 크기 축소 */
             height: 45px; 
             width: auto; display: block; 
             transition: height 0.3s ease, filter 0.5s ease; 
         }
 
         /* [네비게이션 스타일] */
-        nav ul { display: flex; list-style: none; gap: 50px; /* 간격 조정 */ }
+        nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
 
         nav ul li a {
             text-decoration: none; color: inherit; 
-            /* [수정] 폰트 사이즈 세련되게 축소 */
             font-size: clamp(15px, 1.2vw, 18px); 
             font-weight: 400; 
             display: block; 
@@ -156,16 +152,16 @@
     <div id="video-container">
         <div id="poster-layer"></div>
 
-        <video class="bg-video" id="v1" playsinline muted data-theme="light">
+        <video class="bg-video" id="v1" playsinline muted autoplay data-theme="light">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline muted data-theme="dark">
+        <video class="bg-video" id="v2" playsinline muted autoplay data-theme="dark">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline muted data-theme="light">
+        <video class="bg-video" id="v3" playsinline muted autoplay data-theme="light">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline muted data-theme="light">
+        <video class="bg-video" id="v4" playsinline muted autoplay data-theme="light">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
     </div>
@@ -259,21 +255,42 @@
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
 
+            // [수정됨] 모바일/저전력 모드 대응을 위한 강력한 초기 재생 함수
+            function startFirstVideo() {
+                var playPromise = firstVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // 1. 자동 재생 성공
+                        console.log("Autoplay started.");
+                        firstVideo.classList.add('active');
+                        posterLayer.classList.add('hidden');
+                    })
+                    .catch((error) => {
+                        // 2. 자동 재생 실패 (사용자 인터랙션 대기)
+                        console.log("Autoplay blocked. Waiting for user interaction.");
+                        
+                        const interactionHandler = () => {
+                            firstVideo.play();
+                            firstVideo.classList.add('active');
+                            posterLayer.classList.add('hidden');
+                            
+                            // 리스너 제거
+                            document.removeEventListener('click', interactionHandler);
+                            document.removeEventListener('touchstart', interactionHandler);
+                        };
+
+                        document.addEventListener('click', interactionHandler);
+                        document.addEventListener('touchstart', interactionHandler);
+                    });
+                }
+            }
+
+            // readyState 체크 후 실행
             if (firstVideo.readyState >= 3) {
                 startFirstVideo();
             } else {
                 firstVideo.addEventListener('canplay', startFirstVideo, { once: true });
-            }
-
-            function startFirstVideo() {
-                firstVideo.play().then(() => {
-                    firstVideo.classList.add('active');
-                    posterLayer.classList.add('hidden');
-                }).catch((error) => {
-                    console.log("Autoplay blocked:", error);
-                    firstVideo.muted = true;
-                    firstVideo.play();
-                });
             }
         });
     </script>
