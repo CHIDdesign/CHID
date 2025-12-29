@@ -21,7 +21,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            opacity: 0; /* 초기 투명 상태 */
+            opacity: 0; 
             transition: opacity 0.5s ease-in-out; 
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -55,13 +55,15 @@
             object-fit: cover; 
             opacity: 0;
             z-index: 0;
+            /* transform: translate3d(0,0,0)은 모바일 렌더링 가속에 도움을 줌 */
+            transform: translate3d(0,0,0);
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
 
         .bg-video.active { opacity: 1; z-index: 1; }
 
         /* =========================================
-           [헤더 스타일 - About 페이지와 통일됨]
+           [헤더 스타일]
            ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
@@ -72,7 +74,6 @@
             backdrop-filter: blur(0px); 
             transition: all 0.5s ease;
             color: #111111;
-            /* [수정됨] 헤더 높이 90px로 확대 (로고 크기 대응) */
             height: 90px;
         }
 
@@ -82,7 +83,6 @@
 
         .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
         
-        /* [수정됨] PC 로고 크기 60px로 확대 */
         .logo-img { 
             height: 60px; 
             width: auto; display: block; 
@@ -95,7 +95,6 @@
 
         nav ul li a {
             text-decoration: none; color: inherit; 
-            /* [PC 폰트 유지] clamp 적용 */
             font-size: clamp(15px, 1.2vw, 18px); 
             font-weight: 400; 
             display: block; 
@@ -112,7 +111,6 @@
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
 
-        /* 흰색 스킨일 때 그림자 효과 */
         header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
 
         nav ul li:hover a { 
@@ -134,7 +132,7 @@
 
         main { flex: 1; width: 100%; height: 100%; }
 
-        /* [모바일 대응 - About 페이지와 통일됨] */
+        /* [모바일 대응] */
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
@@ -143,15 +141,9 @@
                 height: auto;
                 background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
             }
-            /* [수정됨] 모바일 로고 50px로 확대 */
             .logo-img { height: 50px; }
-            
             nav { width: 100%; }
-            
-            /* [수정됨] 간격 25px로 조정 */
             nav ul { justify-content: center; gap: 25px; width: 100%; }
-            
-            /* [수정됨] 모바일 폰트 16px, 굵기 500으로 확대 */
             nav ul li a { font-size: 16px; font-weight: 500; }
         }
     </style>
@@ -161,16 +153,16 @@
     <div id="video-container">
         <div id="poster-layer"></div>
 
-        <video class="bg-video" id="v1" playsinline muted autoplay data-theme="light">
+        <video class="bg-video" id="v1" playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline muted autoplay data-theme="dark">
+        <video class="bg-video" id="v2" playsinline muted autoplay data-theme="dark" preload="auto">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline muted autoplay data-theme="light">
+        <video class="bg-video" id="v3" playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline muted autoplay data-theme="light">
+        <video class="bg-video" id="v4" playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
     </div>
@@ -200,44 +192,38 @@
             function fadeAndMove(destinationUrl) {
                 if(window.location.href.includes(destinationUrl) && !destinationUrl.includes('index.html')) return;
                 document.body.classList.remove('fade-in'); 
-                setTimeout(() => {
-                    window.location.href = destinationUrl; 
-                }, 500);
+                setTimeout(() => { window.location.href = destinationUrl; }, 500);
             }
 
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    const target = this.getAttribute('href');
-                    fadeAndMove(target); 
-                });
-            });
+            navLinks.forEach(link => link.addEventListener('click', function(e) {
+                e.preventDefault(); fadeAndMove(this.getAttribute('href')); 
+            }));
 
             const mainLogo = document.getElementById('main-logo');
-            if(mainLogo) {
-                mainLogo.addEventListener('click', function() {
-                    fadeAndMove('index.html'); 
-                });
-            }
+            if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
             const videos = Array.from(document.querySelectorAll('.bg-video'));
             
+            // [중요] 현재 활성화된 비디오 인덱스를 추적하는 변수 (글리치 방지 핵심)
+            let activeIndex = 0;
+
             function updateHeaderColor(videoElement) {
                 const theme = videoElement.getAttribute("data-theme");
-                if (theme === "dark") {
-                    header.classList.add("white-skin");
-                } else {
-                    header.classList.remove("white-skin");
-                }
+                if (theme === "dark") header.classList.add("white-skin");
+                else header.classList.remove("white-skin");
             }
 
             videos.forEach((video, index) => {
                 video.muted = true; 
-                video.loop = false; 
+                video.playsInline = true; // iOS 필수
 
                 video.addEventListener('ended', () => {
-                    playNextVideo(index);
+                    // [핵심 수정] 현재 활성화된 비디오만 '다음 재생'을 트리거할 수 있음
+                    // 다른 비디오가 백그라운드에서 끝나도 무시함
+                    if (index === activeIndex) {
+                        playNextVideo(index);
+                    }
                 });
             });
 
@@ -246,25 +232,39 @@
                 const currentVideo = videos[currentIndex];
                 const nextVideo = videos[nextIndex];
 
-                nextVideo.play().then(() => {
-                    nextVideo.classList.add('active'); 
-                    updateHeaderColor(nextVideo); 
+                // [핵심] activeIndex를 즉시 업데이트하여 중복 실행 방지
+                activeIndex = nextIndex;
 
-                    setTimeout(() => {
-                        currentVideo.classList.remove('active');
-                        currentVideo.currentTime = 0; 
-                        currentVideo.pause(); 
-                    }, 800); 
-                    
-                }).catch(error => {
-                    console.error("Play failed:", error);
-                });
+                nextVideo.currentTime = 0; // 재생 전 초기화
+                var playPromise = nextVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        nextVideo.classList.add('active'); 
+                        updateHeaderColor(nextVideo); 
+
+                        setTimeout(() => {
+                            // 이전 비디오 정리
+                            currentVideo.classList.remove('active');
+                            currentVideo.pause(); 
+                            currentVideo.currentTime = 0; 
+                        }, 800); // 크로스페이드 시간
+                        
+                    }).catch(error => {
+                        console.error("Play failed:", error);
+                        // 에러 발생 시에도 인덱스 꼬임 방지를 위해 처리 가능하나, 일단 콘솔만 출력
+                    });
+                }
             }
 
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
 
+            // [초기 재생 및 모바일 터치 대응 로직]
             function startFirstVideo() {
+                // 이미 재생 중이면 실행하지 않음 (중복 방지)
+                if(!firstVideo.paused && activeIndex === 0) return;
+
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
@@ -272,14 +272,19 @@
                         console.log("Autoplay started.");
                         firstVideo.classList.add('active');
                         posterLayer.classList.add('hidden');
+                        activeIndex = 0; // 인덱스 확실히 초기화
                     })
                     .catch((error) => {
-                        console.log("Autoplay blocked. Waiting for user interaction.");
+                        console.log("Autoplay blocked. Waiting for interaction.");
                         
                         const interactionHandler = () => {
-                            firstVideo.play();
-                            firstVideo.classList.add('active');
-                            posterLayer.classList.add('hidden');
+                            // 터치 시점에 이미 다른 비디오가 재생 중이면 무시
+                            if (activeIndex !== 0) return;
+
+                            firstVideo.play().then(() => {
+                                firstVideo.classList.add('active');
+                                posterLayer.classList.add('hidden');
+                            }).catch(e => console.log("Interaction play failed", e));
                             
                             document.removeEventListener('click', interactionHandler);
                             document.removeEventListener('touchstart', interactionHandler);
