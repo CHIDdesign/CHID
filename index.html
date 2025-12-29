@@ -55,7 +55,7 @@
             object-fit: cover; 
             opacity: 0;
             z-index: 0;
-            /* transform: translate3d(0,0,0)은 모바일 렌더링 가속에 도움을 줌 */
+            /* 모바일 렌더링 최적화 */
             transform: translate3d(0,0,0);
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
@@ -77,7 +77,6 @@
             height: 90px;
         }
 
-        /* 비디오 배경에 따른 헤더 색상 반전 클래스 */
         header.white-skin { color: #ffffff !important; }
         header.white-skin .logo-img { filter: invert(1); }
 
@@ -113,16 +112,8 @@
 
         header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
 
-        nav ul li:hover a { 
-            transform: translateY(-0.33em); 
-            opacity: 1; 
-        }
-
-        nav ul li.active a { 
-            font-weight: 700; 
-            opacity: 1;
-        }
-        
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor;
@@ -153,16 +144,16 @@
     <div id="video-container">
         <div id="poster-layer"></div>
 
-        <video class="bg-video" id="v1" playsinline muted autoplay data-theme="light" preload="auto">
+        <video class="bg-video" id="v1" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline muted autoplay data-theme="dark" preload="auto">
+        <video class="bg-video" id="v2" playsinline webkit-playsinline muted autoplay data-theme="dark" preload="auto">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline muted autoplay data-theme="light" preload="auto">
+        <video class="bg-video" id="v3" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline muted autoplay data-theme="light" preload="auto">
+        <video class="bg-video" id="v4" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
     </div>
@@ -205,7 +196,7 @@
 
             const videos = Array.from(document.querySelectorAll('.bg-video'));
             
-            // [중요] 현재 활성화된 비디오 인덱스를 추적하는 변수 (글리치 방지 핵심)
+            // [글리치 방지 변수]
             let activeIndex = 0;
 
             function updateHeaderColor(videoElement) {
@@ -214,13 +205,18 @@
                 else header.classList.remove("white-skin");
             }
 
+            // [핵심 수정] 모바일 브라우저를 위해 JS로 Mute 강제 적용
             videos.forEach((video, index) => {
-                video.muted = true; 
-                video.playsInline = true; // iOS 필수
+                video.muted = true;  // JS로 한번 더 확실하게 Mute
+                video.defaultMuted = true;
+                video.playsInline = true;
+                
+                // 아이폰 구형 호환
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
 
                 video.addEventListener('ended', () => {
-                    // [핵심 수정] 현재 활성화된 비디오만 '다음 재생'을 트리거할 수 있음
-                    // 다른 비디오가 백그라운드에서 끝나도 무시함
+                    // 현재 활성화된 비디오일 때만 다음으로 넘어감
                     if (index === activeIndex) {
                         playNextVideo(index);
                     }
@@ -232,10 +228,9 @@
                 const currentVideo = videos[currentIndex];
                 const nextVideo = videos[nextIndex];
 
-                // [핵심] activeIndex를 즉시 업데이트하여 중복 실행 방지
-                activeIndex = nextIndex;
+                activeIndex = nextIndex; // 인덱스 업데이트
 
-                nextVideo.currentTime = 0; // 재생 전 초기화
+                nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
 
                 if (playPromise !== undefined) {
@@ -244,15 +239,12 @@
                         updateHeaderColor(nextVideo); 
 
                         setTimeout(() => {
-                            // 이전 비디오 정리
                             currentVideo.classList.remove('active');
                             currentVideo.pause(); 
                             currentVideo.currentTime = 0; 
-                        }, 800); // 크로스페이드 시간
-                        
+                        }, 800); 
                     }).catch(error => {
-                        console.error("Play failed:", error);
-                        // 에러 발생 시에도 인덱스 꼬임 방지를 위해 처리 가능하나, 일단 콘솔만 출력
+                        console.error("Next video play failed:", error);
                     });
                 }
             }
@@ -260,11 +252,11 @@
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
 
-            // [초기 재생 및 모바일 터치 대응 로직]
             function startFirstVideo() {
-                // 이미 재생 중이면 실행하지 않음 (중복 방지)
-                if(!firstVideo.paused && activeIndex === 0) return;
-
+                // [강력한 자동 재생 트리거]
+                // 1. 소리 끄기 확정
+                firstVideo.muted = true;
+                
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
@@ -272,15 +264,17 @@
                         console.log("Autoplay started.");
                         firstVideo.classList.add('active');
                         posterLayer.classList.add('hidden');
-                        activeIndex = 0; // 인덱스 확실히 초기화
+                        activeIndex = 0;
                     })
                     .catch((error) => {
                         console.log("Autoplay blocked. Waiting for interaction.");
                         
+                        // 자동 재생 실패 시 (저전력 모드 등), 터치 이벤트 대기
                         const interactionHandler = () => {
-                            // 터치 시점에 이미 다른 비디오가 재생 중이면 무시
                             if (activeIndex !== 0) return;
 
+                            // 터치 시에도 Mute 상태로 재생 시도
+                            firstVideo.muted = true; 
                             firstVideo.play().then(() => {
                                 firstVideo.classList.add('active');
                                 posterLayer.classList.add('hidden');
