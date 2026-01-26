@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>CHID</title>
-    <link rel="icon" href="img/main/favicon.png" type="image/png">
+    
+    <meta name="description" content="CHID Industrial Design Portfolio. Seoul based Product Designer. 서울 기반 산업 디자이너 CHID의 포트폴리오.">
+    <meta name="keywords" content="CHID, Industrial Design, Product Design, Portfolio, Designer, 칫, 산업디자인, 제품디자인">
+    <meta name="author" content="CHID">
+    <meta name="robots" content="index, follow">
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chid.kr">
+    <meta property="og:title" content="CHID">
+    <meta property="og:description" content="Industrial Design Portfolio">
+    <meta property="og:image" content="img/main/favicon.png">
+
+    <link rel="icon" href="img/main/favicon.png" type="image/png">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "CHID",
+      "url": "https://chid.kr",
+      "jobTitle": "Industrial Designer",
+      "sameAs": [
+        "https://www.instagram.com/chid_design/",
+        "https://www.behance.net/chiddesign/"
+      ]
+    }
+    </script>
 
     <style>
         /* [기본 설정] */
@@ -55,16 +81,13 @@
             object-fit: cover; 
             opacity: 0;
             z-index: 0;
-            /* 모바일 렌더링 최적화 */
             transform: translate3d(0,0,0);
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
 
         .bg-video.active { opacity: 1; z-index: 1; }
 
-        /* =========================================
-           [헤더 스타일]
-           ========================================= */
+        /* [헤더 스타일] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -123,7 +146,6 @@
 
         main { flex: 1; width: 100%; height: 100%; }
 
-        /* [모바일 대응] */
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
@@ -195,8 +217,6 @@
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
             const videos = Array.from(document.querySelectorAll('.bg-video'));
-            
-            // [글리치 방지 변수]
             let activeIndex = 0;
 
             function updateHeaderColor(videoElement) {
@@ -205,18 +225,14 @@
                 else header.classList.remove("white-skin");
             }
 
-            // [핵심 수정] 모바일 브라우저를 위해 JS로 Mute 강제 적용
             videos.forEach((video, index) => {
-                video.muted = true;  // JS로 한번 더 확실하게 Mute
+                video.muted = true;
                 video.defaultMuted = true;
                 video.playsInline = true;
-                
-                // 아이폰 구형 호환
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
 
                 video.addEventListener('ended', () => {
-                    // 현재 활성화된 비디오일 때만 다음으로 넘어감
                     if (index === activeIndex) {
                         playNextVideo(index);
                     }
@@ -228,7 +244,7 @@
                 const currentVideo = videos[currentIndex];
                 const nextVideo = videos[nextIndex];
 
-                activeIndex = nextIndex; // 인덱스 업데이트
+                activeIndex = nextIndex;
 
                 nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
@@ -253,27 +269,18 @@
             updateHeaderColor(firstVideo);
 
             function startFirstVideo() {
-                // [강력한 자동 재생 트리거]
-                // 1. 소리 끄기 확정
                 firstVideo.muted = true;
-                
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        console.log("Autoplay started.");
                         firstVideo.classList.add('active');
                         posterLayer.classList.add('hidden');
                         activeIndex = 0;
                     })
                     .catch((error) => {
-                        console.log("Autoplay blocked. Waiting for interaction.");
-                        
-                        // 자동 재생 실패 시 (저전력 모드 등), 터치 이벤트 대기
                         const interactionHandler = () => {
                             if (activeIndex !== 0) return;
-
-                            // 터치 시에도 Mute 상태로 재생 시도
                             firstVideo.muted = true; 
                             firstVideo.play().then(() => {
                                 firstVideo.classList.add('active');
@@ -283,7 +290,6 @@
                             document.removeEventListener('click', interactionHandler);
                             document.removeEventListener('touchstart', interactionHandler);
                         };
-
                         document.addEventListener('click', interactionHandler);
                         document.addEventListener('touchstart', interactionHandler);
                     });
