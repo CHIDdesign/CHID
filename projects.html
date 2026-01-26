@@ -3,10 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>CHID - Projects</title>
-    <link rel="icon" href="img/main/favicon.png" type="image/png">
 
+    <meta name="description" content="Industrial Design Projects by CHID. KUNST AR Glasses, Dogsplay, and more. 산업 디자이너 CHID의 프로젝트 아카이브.">
+    <meta name="keywords" content="CHID, Projects, Industrial Design, Product Design, Portfolio, 칫, 프로젝트, 제품디자인">
+    <meta name="author" content="CHID">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chid.kr/projects.html">
+    <meta property="og:title" content="CHID - Projects">
+    <meta property="og:description" content="CHID's Design Archive">
+    <meta property="og:image" content="img/main/favicon.png">
+
+    <link rel="icon" href="img/main/favicon.png" type="image/png">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "CollectionPage",
+      "name": "CHID Projects",
+      "url": "https://chid.kr/projects.html",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          { "@type": "CreativeWork", "position": 1, "name": "KUNST" },
+          { "@type": "CreativeWork", "position": 2, "name": "Seesaw" },
+          { "@type": "CreativeWork", "position": 3, "name": "Aetheris" },
+          { "@type": "CreativeWork", "position": 4, "name": "Dogsplay" }
+        ]
+      }
+    }
+    </script>
 
     <style>
         /* [기본 스타일] */
@@ -30,173 +60,132 @@
         
         body.fade-in { opacity: 1; }
 
-        /* =========================================
-           [헤더 스타일 - 수정됨]
-           ========================================= */
+        /* [헤더 스타일] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            
-            /* 배경 유지 (본문 스크롤 시 가독성 확보) */
-            background-color: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             transition: all 0.5s ease;
-            
-            /* [수정됨] 헤더 높이 90px로 확대 */
             height: 90px;
         }
 
         .logo-container { cursor: pointer; }
-        
-        .logo-img { 
-            /* [수정됨] PC 로고 크기 60px로 확대 */
-            height: 60px; 
-            width: auto; 
-            display: block; 
-            transition: height 0.3s ease;
-        }
+        .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
 
         /* [네비게이션 스타일] */
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
-        
+
         nav ul li a {
-            text-decoration: none; 
-            color: #111111;
-            
-            /* [PC 폰트 유지] */
+            text-decoration: none; color: #111111;
             font-size: clamp(15px, 1.2vw, 18px); 
             font-weight: 400; 
-            
-            display: block; 
-            padding: 10px 0; 
+            display: block; padding: 10px 0; 
             letter-spacing: -0.02em;
             opacity: 0.8; 
-            
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            text-align: center;
-            pointer-events: auto;
+            position: relative; text-align: center;
         }
 
         nav ul li a::before {
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
 
-        /* 호버 모션 */
-        nav ul li:hover a { 
-            transform: translateY(-0.33em); 
-            opacity: 1;
-        }
-
-        /* 활성 상태 */
-        nav ul li.active a { 
-            font-weight: 700; 
-            opacity: 1;
-        }
-        
-        /* 밑줄 애니메이션 */
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor;
-            margin-top: 5px; 
-            border-radius: 2px;
+            margin-top: 5px; border-radius: 2px;
         }
 
         /* [메인 영역] */
         main { 
-            flex: 1; 
-            width: 100%; 
-            /* [수정] 헤더 높이 변화에 맞춰 상단 여백 유지 (140px 적절) */
-            padding-top: 140px; 
-            padding-bottom: 80px; 
+            flex: 1; width: 100%; 
+            padding: 120px 20px 60px; 
+            max-width: 1600px; margin: 0 auto;
         }
 
-        /* 갤러리 그리드 */
-        .gallery-grid {
+        /* [프로젝트 그리드] */
+        .project-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr); 
             gap: 20px;
-            padding: 0 40px;
+            width: 100%;
         }
 
-        /* [프로젝트 아이템 & 애니메이션] */
-        .project-item { 
-            cursor: pointer; 
-            opacity: 0; 
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* 순차적 등장 */
-        .project-item:nth-child(1) { animation-delay: 0.1s; }
-        .project-item:nth-child(2) { animation-delay: 0.2s; }
-        .project-item:nth-child(3) { animation-delay: 0.3s; }
-        .project-item:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+        .project-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* 이미지 비율 고정 (변경 가능) */
+            overflow: hidden;
+            cursor: pointer;
         }
 
         .image-wrapper {
-            position: relative; width: 100%; aspect-ratio: 3 / 4;
-            overflow: hidden; background-color: #f0f0f0;
+            width: 100%; height: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
         .image-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
-            display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        /* 호버 시 줌인 효과 */
+        .project-item:hover .image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* 오버레이 정보 (평소엔 숨김) */
         .project-info-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(5px); 
-            color: #ffffff;
+            background-color: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(4px);
+            opacity: 0;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
+            text-align: center;
+            transition: opacity 0.4s ease;
+            color: #fff;
+            padding: 20px;
         }
 
         .project-item:hover .project-info-overlay { opacity: 1; }
-        .project-item:hover .image-wrapper img { transform: scale(1.05); }
-        
-        .info-title { 
-            font-size: 18px; font-weight: 700; margin-bottom: 10px; 
-            text-transform: uppercase; letter-spacing: 0.05em; 
+
+        .info-title {
+            font-size: clamp(24px, 2.5vw, 36px);
+            font-weight: 700; margin-bottom: 10px;
+            transform: translateY(20px); transition: transform 0.4s ease;
         }
-        .info-desc { 
-            font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; 
+        .info-desc {
+            font-size: clamp(14px, 1vw, 16px);
+            font-weight: 300; line-height: 1.5;
+            transform: translateY(20px); transition: transform 0.4s ease 0.1s;
         }
 
-        /* [반응형 미디어 쿼리] */
-        @media (max-width: 1200px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
-        
-        /* [모바일 최적화 - 수정됨] */
+        .project-item:hover .info-title,
+        .project-item:hover .info-desc { transform: translateY(0); }
+
+        /* [모바일 대응] */
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
                 flex-direction: column; 
-                gap: 15px;
-                height: auto;
+                gap: 15px; height: auto;
+                background-color: rgba(255, 255, 255, 0.9);
             }
-            /* [수정됨] 모바일 로고 50px로 확대 */
-            .logo-img { height: 50px; } 
-            
+            .logo-img { height: 50px; }
             nav { width: 100%; }
-            /* [수정됨] 간격 25px로 조정 */
             nav ul { justify-content: center; gap: 25px; width: 100%; }
-            /* [수정됨] 모바일 폰트 16px, 굵기 500으로 확대 */
             nav ul li a { font-size: 16px; font-weight: 500; }
 
-            main { padding-top: 140px; } 
-            .gallery-grid { 
-                grid-template-columns: 1fr; 
-                gap: 30px; 
-                padding: 0 20px; 
-            }
+            .project-grid { grid-template-columns: 1fr; gap: 15px; } /* 모바일 1열 */
         }
     </style>
 </head>
@@ -216,13 +205,13 @@
     </header>
 
     <main>
-        <div class="gallery-grid">
+        <div class="project-grid">
             <div class="project-item">
                 <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 3.png" alt="KUNST">
+                    <img src="img/projects/Thumbnail/project 1.png" alt="KUNST AR Glasses">
                     <div class="project-info-overlay">
                         <div class="info-title">KUNST</div>
-                        <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
+                        <div class="info-desc">AR Docent Device<br>UX/Product Design<br>2025</div>
                     </div>
                 </div>
             </div>
@@ -232,24 +221,24 @@
                     <img src="img/projects/Thumbnail/project 2.png" alt="Seesaw">
                     <div class="project-info-overlay">
                         <div class="info-title">Seesaw</div>
-                        <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
+                        <div class="info-desc">Samsung Life Insurance<br>Industry-Academic Project<br>2024</div>
                     </div>
                 </div>
             </div>
 
             <div class="project-item">
                 <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 1.png" alt="Aetheris">
+                    <img src="img/projects/Thumbnail/project 3.png" alt="Aetheris">
                     <div class="project-info-overlay">
                         <div class="info-title">Aetheris</div>
-                        <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
+                        <div class="info-desc">XR Glasses Concept<br>Future Interface<br>2025</div>
                     </div>
                 </div>
             </div>
 
             <div class="project-item">
                 <div class="image-wrapper">
-                    <img src="https://via.placeholder.com/400x533/f5f5f5/111111?text=Project+4" alt="Dogsplay">
+                    <img src="img/projects/Thumbnail/project 4.png" alt="Dogsplay">
                     <div class="project-info-overlay">
                         <div class="info-title">Dogsplay</div>
                         <div class="info-desc">Sunny wave tech<br>TV for dogs<br>2024</div>
