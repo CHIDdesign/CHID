@@ -4,413 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>CHID - Seesaw</title>
+    <title>Page Not Found - CHID</title>
     
     <link rel="icon" href="../img/main/favicon.png" type="image/png">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <style>
-        /* [기본 설정] */
+        /* [기본 초기화] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
             color: #111111;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
-        }
-        
-        body.fade-in { opacity: 1; }
-
-        /* [헤더 스타일] */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px; 
-            width: 100%;
-            position: fixed; top: 0; left: 0; z-index: 100;
-            background-color: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
-            height: 90px;
+            height: 100vh; /* 화면 전체 높이 사용 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        .logo-container { cursor: pointer; }
-        .logo-img { height: 60px; width: auto; display: block; }
-
-        /* [네비게이션 스타일] */
-        nav ul { display: flex; list-style: none; gap: 50px; }
-        nav ul li { margin-left: 0; }
-        
-        nav ul li a {
-            text-decoration: none; color: #111111;
-            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
-            display: block; padding: 10px 0; letter-spacing: -0.02em;
-            opacity: 0.8; 
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative; text-align: center; pointer-events: auto;
+        /* [404 컨테이너] */
+        .error-container {
+            text-align: center;
+            padding: 20px;
         }
 
-        nav ul li a::before {
-            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
+        /* [404 숫자 타이틀] */
+        .error-title {
+            font-size: clamp(100px, 20vw, 200px); /* 반응형 폰트 크기 */
+            font-weight: 800;
+            line-height: 1;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0px; /* 숫자와 캐릭터 사이 간격 */
+            margin-bottom: 40px;
         }
 
-        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
-        nav ul li.active a { font-weight: 700; opacity: 1; }
-        nav ul li.active a::after {
-            content: ''; display: block; width: 100%; height: 2px; 
-            background: currentColor; margin-top: 5px; border-radius: 2px;
+        /* [캐릭터 이미지 ("0" 대체)] */
+        .error-char-img {
+            /* 폰트 크기에 맞춰 이미지 크기 자동 조절 (약 0.9배) */
+            height: 2em; 
+            width: auto;
+            display: block;
+            
+            /* 이미지가 없을 때를 대비한 임시 스타일 (이미지 넣으면 삭제 가능) */
+            /* background-color: #FF7F50; */
+            /* border-radius: 50%; */
+            /* width: 0.7em; height: 0.7em; */
         }
 
-        /* [메인 컨텐츠] */
-        main { 
-            width: 100%; 
-            padding-top: 90px; 
-            position: relative;
+        /* [안내 텍스트] */
+        .error-message {
+            font-size: clamp(18px, 4vw, 32px);
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
         }
 
-        /* [뒤로가기 버튼] */
-        .back-nav-container {
-            width: 100%;
-            /* 버튼은 여전히 여백을 가져야 보기 좋음 */
-            max-width: 100%; 
-            padding: 0 40px; 
-            margin: 0 auto;
-            position: -webkit-sticky; position: sticky;
-            top: 110px; z-index: 50;
-            height: 0; overflow: visible;
-            pointer-events: none; 
+        .error-subtext {
+            font-size: clamp(14px, 3vw, 18px);
+            color: #666;
+            font-weight: 400;
         }
 
-        .back-btn {
-            display: flex; justify-content: center; align-items: center;
-            width: 48px; height: 48px; 
-            border-radius: 50%; 
-            border: 2px solid #111111; 
-            background: rgba(255, 255, 255, 0.48); 
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px);
-            text-decoration: none; color: #111111;
-            opacity: 1; 
-            transition: transform 0.3s ease, background 0.3s ease;
-            cursor: pointer; pointer-events: auto; 
-            transform: translateY(20px); 
+        .error-subtext a {
+            color: #111;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
-        .back-btn svg {
-            width: 18px; height: 18px; fill: none;
-            stroke: currentColor; stroke-width: 2; 
-            stroke-linecap: round; stroke-linejoin: round;
-            display: block; transform: translateX(-1px); 
+        .error-subtext a:hover {
+            color: #33C5F4; /* 기존 프로젝트의 포인트 컬러 활용 */
         }
 
-        .back-btn:hover {
-            transform: translateY(20px) translateX(-3px); 
-            background: rgba(255, 255, 255, 0.9); 
-        }
-
-        /* [레이아웃 수정 - 꽉 찬 이미지] */
-        .hero-section { 
-            width: 100%; 
-            /* [수정] 패딩 제거하여 좌우 여백 없앰 */
-            padding: 0; 
-            margin-bottom: 60px; 
-        }
-        
-        .hero-image {
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            /* [수정] 둥근 모서리 제거 (꽉 찬 느낌) */
-            border-radius: 0; 
-            background-color: #f4f4f4; 
-        }
-
-        /* 텍스트 영역은 여백 유지 */
-        .project-header {
-            max-width: 1800px; margin: 0 auto 60px; 
-            padding: 0 40px; /* 텍스트는 여백 유지 */
-            display: flex; justify-content: space-between; align-items: flex-end;
-        }
-        .project-title h1 {
-            font-size: clamp(40px, 6vw, 100px); font-weight: 800;
-            line-height: 1; letter-spacing: -0.04em; margin: 0;
-        }
-        .project-specs {
-            text-align: right; font-size: 14px; color: #666; line-height: 1.6;
-        }
-
-        /* [컨텐츠 컨테이너 - 꽉 차게 수정] */
-        .content-container { 
-            width: 100%; 
-            max-width: 100%; /* 제한 해제 */
-            margin: 0 auto; 
-            padding: 0; /* 패딩 제거 */
-        }
-        
-        .full-image-block { 
-            margin-bottom: 60px; 
-            width: 100%; 
-        }
-        
-        .full-image-block img { 
-            width: 100%; height: auto; display: block; 
-            border-radius: 0; /* 모서리 직각 */
-            margin-bottom: 20px; 
-        }
-
-        .full-image-block video.locked-video {
-            width: 100%; height: auto; display: block; 
-            border-radius: 0; /* 모서리 직각 */
-            margin-bottom: 20px;
-            pointer-events: none; 
-        }
-        
-        /* 설명 텍스트는 중앙 정렬 및 여백 확보 */
-        .detail-text {
-            font-size: clamp(16px, 1.2vw, 18px);
-            line-height: 1.7;
-            color: #333;
-            max-width: 1200px; /* 텍스트가 너무 퍼지지 않게 제한 */
-            width: 100%;
-            margin: 0 auto; /* 중앙 정렬 */
-            padding: 0 40px; /* 좌우 여백 */
-            font-weight: 300;
-            word-break: keep-all; 
-        }
-
-        /* 크레딧 섹션도 여백 확보 */
-        .credit-section {
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            padding: 40px 40px 0; /* 좌우 여백 추가 */
-            max-width: 1800px;
-            margin-left: auto; margin-right: auto;
-        }
-        
-        .credit-grid {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        .credit-label { font-weight: 700; color: #111; }
-        .credit-content { font-weight: 300; color: #555; }
-
-        /* [하단 네비게이션] */
-        .next-project {
-            border-top: 1px solid #eee; padding: 80px 40px;
-            text-align: center; cursor: pointer; transition: background 0.3s ease;
-            margin-top: 60px;
-        }
-        .next-project:hover { background-color: #fafafa; }
-        .next-label { font-size: 14px; color: #888; margin-bottom: 15px; letter-spacing: 0.05em; }
-        .next-title { font-size: clamp(24px, 4vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
-
-        /* [반응형] */
+        /* [반응형 처리] */
         @media (max-width: 768px) {
-            header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
-            .logo-img { height: 50px; }
-            nav ul { justify-content: center; gap: 25px; }
-            nav ul li a { font-size: 16px; font-weight: 500; }
-
-            main { padding-top: 140px; }
-            
-            /* 모바일에서도 버튼 위치 여백 조정 */
-            .back-nav-container { top: 150px; padding: 0 20px; }
-            
-            /* 모바일 헤더/텍스트 여백 */
-            .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
-            .project-specs { text-align: left; margin-top: 20px; }
-            
-            .detail-text { padding: 0 20px; }
-            .credit-section { padding: 40px 20px 0; }
-            
-            .full-image-block { margin-bottom: 60px; }
-            
-            .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
-            .credit-label { margin-bottom: 5px; }
+            .error-title {
+                gap: 5px;
+                margin-bottom: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container" id="back-to-home">
-            <img src="../img/main/Head Logo.svg" alt="CHID" class="logo-img">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="../about.html" title="About">About</a></li>
-                <li class="active"><a href="../projects.html" title="Projects">Projects</a></li>
-                <li><a href="../contact.html" title="Contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="back-nav-container">
-            <a href="../projects.html" class="back-btn" title="Back to Projects">
-                <svg viewBox="0 0 24 24">
-                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-            </a>
-        </div>
-
-        <section class="hero-section">
-            <img src="../img/projects/project img/2. seesaw/seesaw 1.png" alt="Seesaw Hero" class="hero-image">
-        </section>
-
-        <section class="project-header">
-            <div class="project-title">
-                <h1>Seesaw</h1>
-            </div>
-            <div class="project-specs">
-                Samsung Life Insurance<br>
-                Motion-Tracking Wearable Device for Senior<br>
-                2024
-            </div>
-        </section>
-
-        <div class="content-container">
+    <main class="error-container">
+        <div class="error-title">
+            <span>4</span>
             
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 2.png" alt="Detail 1">
-                <p class="detail-text">
-                    See-Saw is an AI wearable that empowers active seniors to master balance anywhere.
-                    By replacing cameras with smart sensors, it delivers instant haptic feedback for real-time posture correction and sustainable well-being.
-                </p>
-            </div>
-
-            <div class="full-image-block">
-                <video class="locked-video" autoplay muted loop playsinline>
-                    <source src="../img/projects/project img/2. seesaw/seesaw 3.mp4" type="video/mp4">
-                </video>
-                <p class="detail-text">
-                    비디오에 대한 설명입니다. 작동 원리나 움직임을 설명하기 좋습니다.
-                </p>
-            </div>
+            <img src="../img/main/404_char.png.png" alt="0" class="error-char-img">
             
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 4.png" alt="Detail">
-                <p class="detail-text">4</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 5.png" alt="Detail">
-                <p class="detail-text">5</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 6.png" alt="Detail">
-                <p class="detail-text">6</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 7.png" alt="Detail">
-                <p class="detail-text">7</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 8.png" alt="Detail">
-                <p class="detail-text">8</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 9.png" alt="Detail">
-                <p class="detail-text">9</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 10.png" alt="Detail">
-                <p class="detail-text">10</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 11.png" alt="Detail">
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 12.png" alt="Detail">
-                <p class="detail-text">12</p>
-            </div>
-
-            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 13.png" alt="Detail">
-                
-                <div class="credit-section">
-                    <div class="credit-grid">
-                        <div class="credit-label">Project</div>
-                        <div class="credit-content">
-                            Samsung Life Insurance (Life-nology Lab)<br>
-                            2024.09 - 2025.03
-                        </div>
-                    </div>
-                    
-                    <div class="credit-grid">
-                        <div class="credit-label">Industrial Designer</div>
-                        <div class="credit-content">
-                            Jaeseung Kim (PL)<br>
-                            Eunjun Choi<br>
-                            Yunseo Lee<br>
-                            Taehyun Kim
-                        </div>
-                    </div>
-
-                    <div class="credit-grid">
-                        <div class="credit-label">Visualization</div>
-                        <div class="credit-content">Eunjun Choi</div>
-                    </div>
-
-                    <div class="credit-grid">
-                        <div class="credit-label">UX Designer</div>
-                        <div class="credit-content">Taehyun Kim</div>
-                    </div>
-
-                    <div class="credit-grid">
-                        <div class="credit-label">Tutor</div>
-                        <div class="credit-content">
-                            Professor. Gilok Lee<br>
-                            Hongik Univ. Dept. of Industrial Design
-                        </div>
-                    </div>
-
-                    <div class="credit-grid">
-                        <div class="credit-label">Filming</div>
-                        <div class="credit-content">
-                            Photographer: Eunjun Choi<br>
-                            Process: Eunjun Choi / Taehyun Kim
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 40px; font-size: 13px; color: #888;">
-                        Sponsored by Samsung Life Insurance Co., Ltd.
-                    </div>
-                </div>
-            </div>
-
+            <span>4</span>
         </div>
 
-        <div class="next-project" onclick="location.href='../projects.html'">
-            <div class="next-label">Next Project</div>
-            <div class="next-title">Dogsplay &rarr;</div>
-        </div>
-
+        <p class="error-message">Ooops! This page is under construction.</p>
+        <p class="error-subtext">
+            Looks like we're lost. <a href="../index.html">Return to Home.</a>
+        </p>
     </main>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
-            
-            document.getElementById('back-to-home').addEventListener('click', function() {
-                window.location.href = '../index.html';
-            });
-        });
-    </script>
 </body>
 </html>

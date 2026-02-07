@@ -38,8 +38,14 @@
             position: fixed; top: 0; left: 0; z-index: 100;
             background-color: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
+            /* 트랜지션 설정 */
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease; 
             height: 90px;
+        }
+
+        /* [추가됨] 헤더 숨김 클래스 */
+        header.header-hidden {
+            transform: translateY(-100%);
         }
 
         .logo-container { cursor: pointer; }
@@ -225,6 +231,29 @@
                     fadeAndMove(this.getAttribute('href'));
                 });
             });
+
+            // [추가된 부분] 스크롤 시 헤더 숨김/표시 로직
+            let lastScrollTop = 0;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // 모바일 바운싱 방지 (스크롤이 0 이하일 땐 무시)
+                if (currentScroll <= 0) {
+                    return; 
+                }
+
+                if (currentScroll > lastScrollTop) {
+                    // 스크롤 내림 -> 헤더 숨김
+                    header.classList.add('header-hidden');
+                } else {
+                    // 스크롤 올림 -> 헤더 보임
+                    header.classList.remove('header-hidden');
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+            }, false);
         });
     </script>
 </body>
