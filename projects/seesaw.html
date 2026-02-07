@@ -33,8 +33,14 @@
             position: fixed; top: 0; left: 0; z-index: 100;
             background-color: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
+            /* 트랜지션에 transform 추가하여 부드럽게 이동 */
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             height: 90px;
+        }
+
+        /* 헤더가 숨겨질 때 적용되는 클래스 */
+        header.header-hidden {
+            transform: translateY(-100%); 
         }
 
         .logo-container { cursor: pointer; }
@@ -71,10 +77,9 @@
             position: relative;
         }
 
-        /* [뒤로가기 버튼] */
+        /* [뒤로가기 버튼 컨테이너] */
         .back-nav-container {
             width: 100%;
-            /* 버튼은 여전히 여백을 가져야 보기 좋음 */
             max-width: 100%; 
             padding: 0 40px; 
             margin: 0 auto;
@@ -82,6 +87,14 @@
             top: 110px; z-index: 50;
             height: 0; overflow: visible;
             pointer-events: none; 
+            /* 부드러운 이동을 위한 트랜지션 */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* [수정됨] 더 많이 올라가도록 변경 (-70px -> -100px) */
+        .back-nav-container.nav-up {
+            /* 헤더가 사라진 자리까지 확실하게 올라갑니다 */
+            transform: translateY(-100px); 
         }
 
         .back-btn {
@@ -114,7 +127,6 @@
         /* [레이아웃 수정 - 꽉 찬 이미지] */
         .hero-section { 
             width: 100%; 
-            /* [수정] 패딩 제거하여 좌우 여백 없앰 */
             padding: 0; 
             margin-bottom: 60px; 
         }
@@ -123,15 +135,16 @@
             width: 100%; 
             height: auto; 
             display: block; 
-            /* [수정] 둥근 모서리 제거 (꽉 찬 느낌) */
             border-radius: 0; 
-            background-color: #f4f4f4; 
+            background-color: #f4f4f4;
+            object-fit: cover;
+            object-position: center;
         }
 
-        /* 텍스트 영역은 여백 유지 */
+        /* 텍스트 영역 */
         .project-header {
             max-width: 1800px; margin: 0 auto 60px; 
-            padding: 0 40px; /* 텍스트는 여백 유지 */
+            padding: 0 40px; 
             display: flex; justify-content: space-between; align-items: flex-end;
         }
         .project-title h1 {
@@ -142,12 +155,12 @@
             text-align: right; font-size: 14px; color: #666; line-height: 1.6;
         }
 
-        /* [컨텐츠 컨테이너 - 꽉 차게 수정] */
+        /* [컨텐츠 컨테이너] */
         .content-container { 
             width: 100%; 
-            max-width: 100%; /* 제한 해제 */
+            max-width: 100%; 
             margin: 0 auto; 
-            padding: 0; /* 패딩 제거 */
+            padding: 0; 
         }
         
         .full-image-block { 
@@ -157,35 +170,34 @@
         
         .full-image-block img { 
             width: 100%; height: auto; display: block; 
-            border-radius: 0; /* 모서리 직각 */
+            border-radius: 0; 
             margin-bottom: 20px; 
         }
 
         .full-image-block video.locked-video {
             width: 100%; height: auto; display: block; 
-            border-radius: 0; /* 모서리 직각 */
+            border-radius: 0; 
             margin-bottom: 20px;
             pointer-events: none; 
         }
         
-        /* 설명 텍스트는 중앙 정렬 및 여백 확보 */
         .detail-text {
             font-size: clamp(16px, 1.2vw, 18px);
             line-height: 1.7;
             color: #333;
-            max-width: 1200px; /* 텍스트가 너무 퍼지지 않게 제한 */
+            max-width: 1200px; 
             width: 100%;
-            margin: 0 auto; /* 중앙 정렬 */
-            padding: 0 40px; /* 좌우 여백 */
+            margin: 0 auto; 
+            padding: 0 40px; 
             font-weight: 300;
             word-break: keep-all; 
         }
 
-        /* 크레딧 섹션도 여백 확보 */
+        /* 크레딧 섹션 */
         .credit-section {
             margin-top: 40px;
             border-top: 1px solid #eee;
-            padding: 40px 40px 0; /* 좌우 여백 추가 */
+            padding: 40px 40px 0; 
             max-width: 1800px;
             margin-left: auto; margin-right: auto;
         }
@@ -221,10 +233,8 @@
 
             main { padding-top: 140px; }
             
-            /* 모바일에서도 버튼 위치 여백 조정 */
             .back-nav-container { top: 150px; padding: 0 20px; }
             
-            /* 모바일 헤더/텍스트 여백 */
             .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
             .project-specs { text-align: left; margin-top: 20px; }
             
@@ -235,6 +245,10 @@
             
             .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
             .credit-label { margin-bottom: 5px; }
+
+            .hero-image {
+                height: 80vh; 
+            }
         }
     </style>
 </head>
@@ -288,7 +302,7 @@
             </div>
 
             <div class="full-image-block">
-                <video class="locked-video" autoplay muted loop playsinline>
+                <video class="locked-video" autoplay muted loop playsinline preload="auto">
                     <source src="../img/projects/project img/2. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
                 <p class="detail-text">
@@ -410,6 +424,48 @@
             document.getElementById('back-to-home').addEventListener('click', function() {
                 window.location.href = '../index.html';
             });
+
+            // 1. 비디오 자동재생 로직
+            const videos = document.querySelectorAll('video.locked-video');
+            videos.forEach(video => {
+                video.muted = true;
+                video.playsInline = true;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        console.log("Video Autoplay Started");
+                    }).catch(error => {
+                        console.log("Autoplay failed:", error);
+                        video.style.pointerEvents = "auto";
+                        video.setAttribute("controls", "true"); 
+                    });
+                }
+            });
+
+            // 2. 네비게이션 & 뒤로가기 버튼 스크롤 인터랙션
+            let lastScrollTop = 0;
+            const header = document.querySelector('header');
+            const backNav = document.querySelector('.back-nav-container'); // 뒤로가기 컨테이너 선택
+            
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll <= 0) {
+                    return; 
+                }
+
+                if (currentScroll > lastScrollTop) {
+                    // 스크롤 내림 (Down) -> 헤더 숨김 & 뒤로가기 버튼 위로 이동
+                    header.classList.add('header-hidden');
+                    backNav.classList.add('nav-up');
+                } else {
+                    // 스크롤 올림 (Up) -> 헤더 보임 & 뒤로가기 버튼 원위치
+                    header.classList.remove('header-hidden');
+                    backNav.classList.remove('nav-up');
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+            }, false);
         });
     </script>
 </body>
