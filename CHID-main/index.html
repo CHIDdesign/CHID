@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>CHID</title>
+    
+    <meta name="description" content="CHID Industrial Design Portfolio. Seoul based Product Designer. 서울 기반 산업 디자이너 CHID의 포트폴리오.">
+    <meta name="keywords" content="CHID, Industrial Design, Product Design, Portfolio, Designer, 칫, 산업디자인, 제품디자인">
+    <meta name="author" content="CHID">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chid.kr">
+    <meta property="og:title" content="CHID">
+    <meta property="og:description" content="Industrial Design Portfolio">
+    <meta property="og:image" content="img/main/favicon.png">
+
+    <link rel="icon" href="img/main/favicon.png" type="image/png">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "CHID",
+      "url": "https://chid.kr",
+      "jobTitle": "Industrial Designer",
+      "sameAs": [
+        "https://www.instagram.com/chid_design/",
+        "https://www.behance.net/chiddesign/"
+      ]
+    }
+    </script>
+
+    <style>
+        /* [기본 설정] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            height: 100vh;
+            height: 100dvh; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body.fade-in { opacity: 1; }
+
+        /* [비디오 배경] */
+        #video-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background-color: #000000; overflow: hidden;
+        }
+
+        #poster-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('img/main/loop/poster1.jpg'); 
+            background-size: cover;
+            background-position: center;
+            z-index: 10;
+            transition: opacity 0.8s ease-out;
+            opacity: 1;
+        }
+        
+        #poster-layer.hidden { opacity: 0; pointer-events: none; }
+
+        .bg-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; 
+            opacity: 0;
+            z-index: 0;
+            transform: translate3d(0,0,0);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .bg-video.active { opacity: 1; z-index: 1; }
+
+        /* [헤더 스타일] */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 40px; 
+            width: 100%;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(0px); 
+            transition: all 0.5s ease;
+            color: #111111;
+            height: 90px;
+        }
+
+        header.white-skin { color: #ffffff !important; }
+        header.white-skin .logo-img { filter: invert(1); }
+
+        .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
+        
+        .logo-img { 
+            height: 60px; 
+            width: auto; display: block; 
+            transition: height 0.3s ease, filter 0.5s ease; 
+        }
+
+        /* [네비게이션 스타일] */
+        nav ul { display: flex; list-style: none; gap: 50px; }
+        nav ul li { margin-left: 0; }
+
+        nav ul li a {
+            text-decoration: none; color: inherit; 
+            font-size: clamp(15px, 1.2vw, 18px); 
+            font-weight: 400; 
+            display: block; 
+            padding: 10px 0; 
+            letter-spacing: -0.02em;
+            opacity: 0.8; 
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        nav ul li a::before {
+            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
+        }
+
+        header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
+
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
+        nav ul li.active a::after {
+            content: ''; display: block; width: 100%; height: 2px; 
+            background: currentColor;
+            margin-top: 5px; 
+            border-radius: 2px;
+        }
+
+        main { flex: 1; width: 100%; height: 100%; }
+
+        @media (max-width: 768px) {
+            header { 
+                padding: 15px 20px; 
+                flex-direction: column; 
+                gap: 15px;
+                height: auto;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
+            }
+            .logo-img { height: 50px; }
+            nav { width: 100%; }
+            nav ul { justify-content: center; gap: 25px; width: 100%; }
+            nav ul li a { font-size: 16px; font-weight: 500; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <div id="poster-layer"></div>
+
+        <video class="bg-video" id="v1" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+            <source src="img/main/loop/video 1.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v2" playsinline webkit-playsinline muted autoplay data-theme="dark" preload="auto">
+            <source src="img/main/loop/video 2.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v3" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+            <source src="img/main/loop/video 3.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video" id="v4" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+            <source src="img/main/loop/video 4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header id="main-header">
+        <div class="logo-container" id="main-logo">
+            <img src="img/main/Head Logo.svg" alt="Logo" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html" class="nav-link" title="About">About</a></li>
+                <li><a href="projects.html" class="nav-link" title="Projects">Projects</a></li>
+                <li><a href="contact.html" class="nav-link" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main></main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+
+            const header = document.getElementById("main-header");
+            const posterLayer = document.getElementById("poster-layer");
+            
+            function fadeAndMove(destinationUrl) {
+                if(window.location.href.includes(destinationUrl) && !destinationUrl.includes('index.html')) return;
+                document.body.classList.remove('fade-in'); 
+                setTimeout(() => { window.location.href = destinationUrl; }, 500);
+            }
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.addEventListener('click', function(e) {
+                e.preventDefault(); fadeAndMove(this.getAttribute('href')); 
+            }));
+
+            const mainLogo = document.getElementById('main-logo');
+            if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
+
+            const videos = Array.from(document.querySelectorAll('.bg-video'));
+            let activeIndex = 0;
+
+            function updateHeaderColor(videoElement) {
+                const theme = videoElement.getAttribute("data-theme");
+                if (theme === "dark") header.classList.add("white-skin");
+                else header.classList.remove("white-skin");
+            }
+
+            videos.forEach((video, index) => {
+                video.muted = true;
+                video.defaultMuted = true;
+                video.playsInline = true;
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
+
+                video.addEventListener('ended', () => {
+                    if (index === activeIndex) {
+                        playNextVideo(index);
+                    }
+                });
+            });
+
+            function playNextVideo(currentIndex) {
+                const nextIndex = (currentIndex + 1) % videos.length;
+                const currentVideo = videos[currentIndex];
+                const nextVideo = videos[nextIndex];
+
+                activeIndex = nextIndex;
+
+                nextVideo.currentTime = 0;
+                var playPromise = nextVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        nextVideo.classList.add('active'); 
+                        updateHeaderColor(nextVideo); 
+
+                        setTimeout(() => {
+                            currentVideo.classList.remove('active');
+                            currentVideo.pause(); 
+                            currentVideo.currentTime = 0; 
+                        }, 800); 
+                    }).catch(error => {
+                        console.error("Next video play failed:", error);
+                    });
+                }
+            }
+
+            const firstVideo = videos[0];
+            updateHeaderColor(firstVideo);
+
+            function startFirstVideo() {
+                firstVideo.muted = true;
+                var playPromise = firstVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        firstVideo.classList.add('active');
+                        posterLayer.classList.add('hidden');
+                        activeIndex = 0;
+                    })
+                    .catch((error) => {
+                        const interactionHandler = () => {
+                            if (activeIndex !== 0) return;
+                            firstVideo.muted = true; 
+                            firstVideo.play().then(() => {
+                                firstVideo.classList.add('active');
+                                posterLayer.classList.add('hidden');
+                            }).catch(e => console.log("Interaction play failed", e));
+                            
+                            document.removeEventListener('click', interactionHandler);
+                            document.removeEventListener('touchstart', interactionHandler);
+                        };
+                        document.addEventListener('click', interactionHandler);
+                        document.addEventListener('touchstart', interactionHandler);
+                    });
+                }
+            }
+
+            if (firstVideo.readyState >= 3) {
+                startFirstVideo();
+            } else {
+                firstVideo.addEventListener('canplay', startFirstVideo, { once: true });
+            }
+        });
+    </script>
+</body>
+</html>

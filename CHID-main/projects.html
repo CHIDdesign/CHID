@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID - Projects</title>
+    
+    <link rel="icon" href="img/main/favicon.png" type="image/png">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    <style>
+        /* [기본 스타일] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body.fade-in { opacity: 1; }
+
+        /* [헤더 스타일] */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 40px; 
+            width: 100%;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            height: 90px;
+        }
+
+        .logo-container { cursor: pointer; }
+        .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
+
+        nav ul { display: flex; list-style: none; gap: 50px; }
+        nav ul li { margin-left: 0; }
+        
+        nav ul li a {
+            text-decoration: none; color: #111111;
+            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            display: block; padding: 10px 0; letter-spacing: -0.02em;
+            opacity: 0.8; 
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; text-align: center; pointer-events: auto;
+        }
+
+        nav ul li a::before {
+            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
+        }
+
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
+        nav ul li.active a::after {
+            content: ''; display: block; width: 100%; height: 2px; 
+            background: currentColor; margin-top: 5px; border-radius: 2px;
+        }
+
+        /* [메인 영역] */
+        main { 
+            flex: 1; width: 100%; 
+            padding-top: 140px; padding-bottom: 80px; 
+        }
+
+        /* 갤러리 그리드 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* PC: 4열 */
+            gap: 20px;
+            padding: 0 40px;
+        }
+
+        /* [프로젝트 아이템] */
+        .project-item { 
+            cursor: pointer; 
+            opacity: 0; 
+            transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* 순차적 등장 딜레이 */
+        .project-item:nth-child(1) { animation-delay: 0.1s; }
+        .project-item:nth-child(2) { animation-delay: 0.2s; }
+        .project-item:nth-child(3) { animation-delay: 0.3s; }
+        .project-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-wrapper {
+            position: relative; width: 100%; aspect-ratio: 3 / 4;
+            overflow: hidden; background-color: #f0f0f0;
+        }
+
+        .image-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-info-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(5px); 
+            color: #ffffff;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
+        }
+
+        .project-item:hover .project-info-overlay { opacity: 1; }
+        .project-item:hover .image-wrapper img { transform: scale(1.05); }
+        
+        .info-title { 
+            font-size: 18px; font-weight: 700; margin-bottom: 10px; 
+            text-transform: uppercase; letter-spacing: 0.05em; 
+        }
+        .info-desc { 
+            font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; 
+        }
+
+        /* [반응형] */
+        @media (max-width: 1200px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
+            .logo-img { height: 50px; } 
+            nav { width: 100%; }
+            nav ul { justify-content: center; gap: 25px; width: 100%; }
+            nav ul li a { font-size: 16px; font-weight: 500; }
+
+            main { padding-top: 140px; } 
+            .gallery-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="back-to-home">
+            <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html" class="nav-link" title="About">About</a></li>
+                <li class="active"><a href="projects.html" class="nav-link" title="Projects">Projects</a></li>
+                <li><a href="contact.html" class="nav-link" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="gallery-grid">
+            
+            <div class="project-item" onclick="location.href='projects/kunst.html'">
+                <div class="image-wrapper">
+                    <img src="img/projects/Thumbnail/project 3.png" alt="KUNST">
+                    <div class="project-info-overlay">
+                        <div class="info-title">KUNST</div>
+                        <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item" onclick="location.href='projects/seesaw.html'">
+                <div class="image-wrapper">
+                    <img src="img/projects/Thumbnail/project 2.png" alt="Seesaw">
+                    <div class="project-info-overlay">
+                        <div class="info-title">Seesaw</div>
+                        <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item" onclick="location.href='projects/aetheris.html'">
+                <div class="image-wrapper">
+                    <img src="img/projects/Thumbnail/project 1.png" alt="Aetheris">
+                    <div class="project-info-overlay">
+                        <div class="info-title">Aetheris</div>
+                        <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item" onclick="location.href='projects/dogsplay.html'">
+                <div class="image-wrapper">
+                    <img src="img/projects/Thumbnail/project 4.png" onerror="this.src='https://via.placeholder.com/400x533/f5f5f5/111111?text=Dogsplay'" alt="Dogsplay">
+                    <div class="project-info-overlay">
+                        <div class="info-title">Dogsplay</div>
+                        <div class="info-desc">Sunny wave tech<br>TV for dogs<br>2024</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+            
+            function fadeAndMove(targetUrl) {
+                if(window.location.href.includes(targetUrl)) return;
+                document.body.classList.remove('fade-in');
+                setTimeout(() => { window.location.href = targetUrl; }, 500);
+            }
+            
+            document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fadeAndMove(this.getAttribute('href'));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
