@@ -185,6 +185,14 @@
             margin-bottom: 20px;
             pointer-events: none; 
         }
+
+        /* [추가됨] 데스크톱에서 비디오 크기 제한 (seesaw 6.mp4 용) */
+        .full-image-block video.video-limit {
+            max-width: 1000px; 
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
         
         /* Webkit 계열 브라우저에서 컨트롤바 숨기기 (필수) */
         video::-webkit-media-controls { display: none !important; }
@@ -247,28 +255,6 @@
             padding-top: 10px; 
         }
 
-        /* [단일 텍스트 블록 스타일] */
-        .text-single-block {
-           max-width: 800px; /* 텍스트가 너무 퍼지지 않게 너비 제한 (핵심) */
-           width: 100%;
-           margin: 100px auto; /* 위아래 여백을 넉넉히 줌 */
-           padding: 0 40px; /* 좌우 패딩 */
-           text-align: left; /* 왼쪽 정렬 */
-        }
-
-/* 텍스트 간격 미세 조정 */
-.text-single-block .body-en {
-    margin-bottom: 24px; /* 영문-한글 사이 간격 */
-}
-
-/* 모바일 반응형 */
-@media (max-width: 768px) {
-    .text-single-block {
-        margin: 60px auto;
-        padding: 0 20px;
-        max-width: 100%; /* 모바일에서는 꽉 차게 */
-    }
-}
         /* 로고 섹션에서는 텍스트 패딩 제거 */
         .text-section-split.align-center .text-right {
             padding-top: 0;
@@ -415,8 +401,12 @@
             .full-image-block img.mobile-view-img {
                 max-width: 100%; 
             }
+
+            /* [수정됨] 모바일에서는 비디오도 꽉 차게 */
+            .full-image-block video.video-limit {
+                max-width: 100%;
+            }
             
-            /* [수정됨] 모바일에서 로고 이미지 크기 키우고 중앙 정렬 */
             .seesaw-logo-img {
                 width: 70%; /* 화면 너비의 70% 차지 */
                 max-width: 400px; /* 너무 커지지 않게 제한 */
@@ -558,7 +548,7 @@
             
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 4.png" alt="Detail">
-                <p class="detail-text"></p>
+                <p class="detail-text">4</p>
             </div>
 
             <div class="text-section-center">
@@ -576,7 +566,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/2. seesaw/logo.svg" alt="see-saw logo" class="seesaw-logo-img">
                 </div>
                 <div class="text-right">
                     <p class="body-en">
@@ -596,41 +586,42 @@
             </div>
 
             <div class="text-section-split">
-                    <div class="text-left">
-                        <span class="blue-label">Product.</span>
-                        <h2 class="main-heading">Motion Tracking<br>Posture Correction Sensor </h2>
-                        <div class="sub-heading">모션트래킹 자세 교정 센서</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            See-saw is a motion-tracking wearable device designed for posture correction in seniors.<br>
-                            Gyroscopic sensors to monitor the user's posture in real-time, both indoors and outdoors, providing immediate haptic feedback when misalignment is detected.<br>
-                            See-saw helps users correct their posture independently and supports the maintenance of a healthy lifestyle.
-                        </p>
-                        <p class="body-kr">
-                            See-saw는 노인의 자세 교정을 위한 모션 트래킹 웨어러블 기기입니다.<br>
-                            이 제품은 자이로스코프 센서를 활용하여 실내외에서 사용자의 자세를 실시간으로 모니터링하며, 잘못된 자세를 감지하면 해당 부위에 즉각적인 햅틱 피드백을 제공합니다.<br>
-                            See-saw는 사용자가 스스로 자세를 교정할 수 있도록 돕고, 건강한 생활을 지속적으로 유지할 수 있게 해줍니다.
-                        </p>
-                    </div>
+                <div class="text-left">
+                    <span class="blue-label">Product.</span>
+                    <h2 class="main-heading">Motion Tracking<br>Posture Correction Sensor </h2>
+                    <div class="sub-heading">모션트래킹 자세 교정 센서</div>
                 </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        See-saw is a motion-tracking wearable device designed for posture correction in seniors.<br>
+                        Gyroscopic sensors to monitor the user's posture in real-time, both indoors and outdoors, providing immediate haptic feedback when misalignment is detected.<br>
+                        See-saw helps users correct their posture independently and supports the maintenance of a healthy lifestyle.
+                    </p>
+                    <p class="body-kr">
+                        See-saw는 노인의 자세 교정을 위한 모션 트래킹 웨어러블 기기입니다.<br>
+                        이 제품은 자이로스코프 센서를 활용하여 실내외에서 사용자의 자세를 실시간으로 모니터링하며, 잘못된 자세를 감지하면 해당 부위에 즉각적인 햅틱 피드백을 제공합니다.<br>
+                        See-saw는 사용자가 스스로 자세를 교정할 수 있도록 돕고, 건강한 생활을 지속적으로 유지할 수 있게 해줍니다.
+                    </p>
+                </div>
+            </div>
 
             <div class="full-image-block">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
                     <source src="../img/projects/project img/2. seesaw/seesaw 6.mp4" type="video/mp4">
                 </video>
             </div>
+            
             <div class="text-single-block">
-               <p class="body-en">
-             Unlike traditional posture correction methods that rely on periodic check-ups or external assistance, 
-               See-saw offers real-time guidance, making it easier for users to develop and maintain proper posture 
-               habits in their daily lives.
-               </p>
-              <p class="body-kr">
-             기존의 자세 교정 방법이 정기적인 검사나 외부 도움에 의존하는 반면, See-saw는 실시간으로 사용자에게 피드백을 제공하여 
-               일상 속에서 자연스럽게 올바른 자세 습관을 형성할 수 있도록 합니다.
-            </p>
-</div>
+                <p class="body-en">
+                    Unlike traditional posture correction methods that rely on periodic check-ups or external assistance, 
+                    See-saw offers real-time guidance, making it easier for users to develop and maintain proper posture 
+                    habits in their daily lives.
+                </p>
+                <p class="body-kr">
+                    기존의 자세 교정 방법이 정기적인 검사나 외부 도움에 의존하는 반면, See-saw는 실시간으로 사용자에게 피드백을 제공하여 
+                    일상 속에서 자연스럽게 올바른 자세 습관을 형성할 수 있도록 합니다.
+                </p>
+            </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 7.png" alt="Detail">
@@ -658,17 +649,15 @@
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 8.png" alt="Detail">
                 <p class="detail-text"></p>
-                    <div class="text-single-block">
-                   <p class="body-en">
-                   By preventing excessive forward head posture, the neck sensor helps reduce strain on the cervical spine, preventing common issues such as neck pain, stiffness, and long-term spinal misalignment.
+                <div class="text-single-block">
+                    <p class="body-en">
+                        By preventing excessive forward head posture, the neck sensor helps reduce strain on the cervical spine, preventing common issues such as neck pain, stiffness, and long-term spinal misalignment.
                     </p>
-                   <p class="body-kr">
-                   과도한 거북목 자세를 방지하여 경추에 가해지는 부담을 줄이고, 목 통증이나 뻣뻣함, 장기적인 척추 불균형과 같은 문제를 예방하는 데 도움을 줍니다.
+                    <p class="body-kr">
+                        과도한 거북목 자세를 방지하여 경추에 가해지는 부담을 줄이고, 목 통증이나 뻣뻣함, 장기적인 척추 불균형과 같은 문제를 예방하는 데 도움을 줍니다.
                     </p>
+                </div>
             </div>
-            
-
-            
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 9.png" alt="Detail">
@@ -696,13 +685,14 @@
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 10.png" alt="Detail">
                 <p class="detail-text"></p>
-                    <div class="text-single-block">
-                   <p class="body-en">
-                   In addition to improving posture, the waist sensor helps stabilize the body’s center of gravity, reducing the risk of falls and supporting better mobility for active seniors.
+                <div class="text-single-block">
+                    <p class="body-en">
+                        In addition to improving posture, the waist sensor helps stabilize the body’s center of gravity, reducing the risk of falls and supporting better mobility for active seniors.
                     </p>
-                   <p class="body-kr">
-                   자세 교정뿐만 아니라 신체의 무게 중심을 안정적으로 잡아주어 낙상의 위험을 줄이고, 보다 활발한 활동을 원하는 시니어들에게 안정적인 움직임을 지원합니다.
+                    <p class="body-kr">
+                        자세 교정뿐만 아니라 신체의 무게 중심을 안정적으로 잡아주어 낙상의 위험을 줄이고, 보다 활발한 활동을 원하는 시니어들에게 안정적인 움직임을 지원합니다.
                     </p>
+                </div>
             </div>
 
             <div class="full-image-block">
@@ -729,13 +719,14 @@
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 12.png" alt="Detail">
                 <p class="detail-text"></p>
-                    <div class="text-single-block">
-                   <p class="body-en">
-                  These sensors also help users monitor asymmetrical movements, making them particularly useful for activities like walking, stretching, or exercising, where proper form is crucial for injury prevention and effective movement.
+                <div class="text-single-block">
+                    <p class="body-en">
+                        These sensors also help users monitor asymmetrical movements, making them particularly useful for activities like walking, stretching, or exercising, where proper form is crucial for injury prevention and effective movement.
                     </p>
-                   <p class="body-kr">
-                   또한, 신체의 비대칭적인 움직임을 감지할 수 있어, 걷기나 스트레칭, 운동 시 올바른 자세를 유지하는 데 도움을 주며, 부상을 예방하고 보다 효과적인 움직임을 유도하는 역할을 합니다.
+                    <p class="body-kr">
+                        또한, 신체의 비대칭적인 움직임을 감지할 수 있어, 걷기나 스트레칭, 운동 시 올바른 자세를 유지하는 데 도움을 주며, 부상을 예방하고 보다 효과적인 움직임을 유도하는 역할을 합니다.
                     </p>
+                </div>
             </div>
 
             <div class="full-image-block">
