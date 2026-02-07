@@ -20,7 +20,7 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
+            overflow-x: hidden;
         }
         
         body.fade-in { opacity: 1; }
@@ -178,7 +178,7 @@
             margin: 0 auto 60px; 
         }
 
-        /* [비디오 컨트롤바 강제 숨김] */
+        /* [비디오 스타일 & 컨트롤 숨김] */
         .full-image-block video.locked-video {
             width: 100%; height: auto; display: block; 
             border-radius: 0; 
@@ -186,9 +186,9 @@
             pointer-events: none; 
         }
 
-        /* [추가됨] 데스크톱에서 비디오 크기 제한 (seesaw 6.mp4 용) */
+        /* [추가됨] seesaw 6.mp4 크기 제한용 클래스 */
         .full-image-block video.video-limit {
-            max-width: 1000px; 
+            max-width: 1000px; /* 데스크톱에서 너무 커지지 않게 제한 */
             width: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -207,7 +207,7 @@
             max-width: 1200px; 
             width: 100%;
             margin: 0 auto 80px; 
-            padding: 0 40px; 
+            padding: 0 40px; /* 패딩 복구 */
             gap: 40px;
         }
 
@@ -281,7 +281,7 @@
             width: 100%;
             max-width: 1000px; 
             margin: 100px auto; 
-            padding: 0 40px;
+            padding: 0 40px; /* 패딩 복구 */
         }
 
         .center-heading {
@@ -312,6 +312,19 @@
             line-height: 1.8;
         }
 
+        /* [단일 텍스트 블록 스타일] */
+        .text-single-block {
+            max-width: 800px; 
+            width: 100%;
+            margin: 100px auto; 
+            padding: 0 40px; /* 패딩 복구 */
+            text-align: left;
+        }
+        
+        .text-single-block .body-en {
+            margin-bottom: 24px; 
+        }
+
         .detail-text {
             font-size: clamp(16px, 1.2vw, 18px);
             line-height: 1.7;
@@ -319,7 +332,7 @@
             max-width: 1200px; 
             width: 100%;
             margin: 0 auto; 
-            padding: 0 40px; 
+            padding: 0 40px; /* 패딩 복구 */
             font-weight: 300;
             word-break: keep-all; 
         }
@@ -397,21 +410,27 @@
                 margin: 60px auto; 
                 padding: 0 20px;
             }
+            
+            .text-single-block {
+                margin: 60px auto;
+                padding: 0 20px;
+                max-width: 100%;
+            }
 
             .full-image-block img.mobile-view-img {
                 max-width: 100%; 
             }
-
-            /* [수정됨] 모바일에서는 비디오도 꽉 차게 */
-            .full-image-block video.video-limit {
-                max-width: 100%;
-            }
             
             .seesaw-logo-img {
-                width: 70%; /* 화면 너비의 70% 차지 */
-                max-width: 400px; /* 너무 커지지 않게 제한 */
-                margin: 0 auto 30px auto; /* 상0, 좌우auto(중앙), 하30px */
+                width: 70%; 
+                max-width: 400px; 
+                margin: 0 auto 30px auto; 
                 display: block;
+            }
+
+            /* 모바일에서는 비디오 제한 해제 (꽉 차게) */
+            .full-image-block video.video-limit {
+                max-width: 100%;
             }
         }
     </style>
@@ -548,7 +567,7 @@
             
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 4.png" alt="Detail">
-                <p class="detail-text">4</p>
+                <p class="detail-text"></p>
             </div>
 
             <div class="text-section-center">
@@ -566,7 +585,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/2. seesaw/logo.svg" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img">
                 </div>
                 <div class="text-right">
                     <p class="body-en">
@@ -812,8 +831,6 @@
                     }).catch(error => {
                         console.log("Autoplay failed:", error);
                         video.style.pointerEvents = "auto";
-                        // [수정] 실패해도 컨트롤 바를 강제로 띄우지 않음 (짜침 방지)
-                        // video.setAttribute("controls", "true"); 
                     });
                 }
             });
