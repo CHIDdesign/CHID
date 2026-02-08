@@ -8,6 +8,8 @@
     
     <link rel="icon" href="../img/main/favicon.png" type="image/png">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
 
     <style>
         /* [기본 설정] */
@@ -20,7 +22,7 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
+            overflow-x: hidden;
         }
         
         body.fade-in { opacity: 1; }
@@ -37,9 +39,7 @@
             height: 90px;
         }
 
-        header.header-hidden {
-            transform: translateY(-100%); 
-        }
+        header.header-hidden { transform: translateY(-100%); }
 
         .logo-container { cursor: pointer; }
         .logo-img { height: 60px; width: auto; display: block; }
@@ -75,36 +75,25 @@
             position: relative;
         }
 
-        /* [뒤로가기 버튼 컨테이너] */
+        /* [뒤로가기 버튼] */
         .back-nav-container {
-            width: 100%;
-            max-width: 100%; 
-            padding: 0 40px; 
-            margin: 0 auto;
+            width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
             position: -webkit-sticky; position: sticky;
-            top: 110px; z-index: 50;
-            height: 0; overflow: visible;
-            pointer-events: none; 
-            transition: transform 0.3s ease-in-out;
+            top: 110px; z-index: 50; height: 0; overflow: visible;
+            pointer-events: none; transition: transform 0.3s ease-in-out;
         }
 
-        .back-nav-container.nav-up {
-            transform: translateY(-100px); 
-        }
+        .back-nav-container.nav-up { transform: translateY(-100px); }
 
         .back-btn {
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
-            border-radius: 50%; 
-            border: 2px solid #111111; 
+            border-radius: 50%; border: 2px solid #111111; 
             background: rgba(255, 255, 255, 0.48); 
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px);
-            text-decoration: none; color: #111111;
-            opacity: 1; 
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            text-decoration: none; color: #111111; opacity: 1; 
             transition: transform 0.3s ease, background 0.3s ease;
-            cursor: pointer; pointer-events: auto; 
-            transform: translateY(20px); 
+            cursor: pointer; pointer-events: auto; transform: translateY(20px); 
         }
 
         .back-btn svg {
@@ -120,26 +109,16 @@
         }
 
         /* [히어로 이미지] */
-        .hero-section { 
-            width: 100%; 
-            padding: 0; 
-            margin-bottom: 60px; 
-        }
-        
+        .hero-section { width: 100%; padding: 0; margin-bottom: 60px; }
         .hero-image {
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            border-radius: 0; 
-            background-color: #f4f4f4;
-            object-fit: cover;
-            object-position: center;
+            width: 100%; height: auto; display: block; 
+            border-radius: 0; background-color: #f4f4f4;
+            object-fit: cover; object-position: center;
         }
 
         /* [프로젝트 헤더] */
         .project-header {
-            max-width: 1800px; margin: 0 auto 60px; 
-            padding: 0 40px; 
+            max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; 
             display: flex; justify-content: space-between; align-items: flex-end;
         }
         .project-title h1 {
@@ -152,209 +131,128 @@
 
         /* [컨텐츠 컨테이너] */
         .content-container { 
-            width: 100%; 
-            max-width: 100%; 
-            margin: 0 auto; 
-            padding: 0; 
+            width: 100%; max-width: 100%; margin: 0 auto; padding: 0; 
         }
         
-        .full-image-block { 
-            margin-bottom: 60px; 
-            width: 100%; 
-        }
+        .full-image-block { margin-bottom: 60px; width: 100%; }
         
-        /* 기본 이미지 스타일 (가로 꽉 참) */
+        /* 이미지 스타일 */
         .full-image-block img { 
             width: 100%; height: auto; display: block; 
-            border-radius: 0; 
-            margin-bottom: 20px; 
+            border-radius: 0; margin-bottom: 20px; 
         }
 
-        /* [모바일 뷰 최적화 이미지 - 1000px 제한] */
+        /* 모바일 뷰 최적화 이미지 (100% 꽉 참) */
         .full-image-block img.mobile-view-img {
-            max-width: 1000px; 
-            width: 100%;
-            display: block;
-            margin: 0 auto 60px; 
+            max-width: 100%; width: 100%; display: block; margin: 0 auto 60px; 
         }
 
-        /* [비디오 스타일] */
+        /* 비디오 스타일 */
         .full-image-block video.locked-video {
             width: 100%; height: auto; display: block; 
-            border-radius: 0; 
-            margin-bottom: 20px;
-            pointer-events: none; 
+            border-radius: 0; margin-bottom: 20px; pointer-events: none; 
         }
 
-        /* [수정됨] seesaw 6.mp4 크기 제한 (데스크톱 1000px로 복구) */
+        /* 비디오 크기 제한 (데스크톱 1000px, 모바일 100%) */
         .full-image-block video.video-limit {
-            max-width: 1000px; /* 요청하신 대로 1000px로 유지 */
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 1000px; width: 100%; margin: 0 auto;
         }
         
-        /* Webkit 계열 브라우저에서 컨트롤바 숨기기 (필수) */
+        /* 비디오 컨트롤바 숨김 */
         video::-webkit-media-controls { display: none !important; }
         video::-webkit-media-controls-enclosure { display: none !important; }
         video::-webkit-media-controls-panel { display: none !important; }
 
+        /* [Juxtapose 슬라이더 스타일 - 반응형 적용] */
+        .juxtapose {
+            width: 100%; 
+            margin: 0 auto;
+            /* 높이를 지정하지 않아야 이미지 비율대로 자동으로 늘어납니다 */
+        }
+        
+        /* 로딩 중일 때 높이 깨짐 방지용 최소 높이 */
+        .juxtapose-wrapper {
+            min-height: 400px;
+            background-color: #f4f4f4;
+        }
+
         /* [2단 텍스트 레이아웃] */
         .text-section-split {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            max-width: 1200px; 
-            width: 100%;
-            margin: 0 auto 80px; 
-            padding: 0 40px; 
-            gap: 40px;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            max-width: 1200px; width: 100%; margin: 0 auto 80px; 
+            padding: 0 40px; gap: 40px;
         }
 
-        /* 로고 섹션을 위한 수직 중앙 정렬 옵션 */
-        .text-section-split.align-center {
-            align-items: center; 
-        }
+        .text-section-split.align-center { align-items: center; }
 
         .text-left { flex: 0 0 40%; }
+        .text-right { flex: 1; padding-top: 10px; }
+        
+        .text-section-split.align-center .text-right { padding-top: 0; }
 
-        /* 로고 이미지 스타일 (데스크탑) */
+        /* 로고 이미지 (데스크탑) */
         .seesaw-logo-img {
-            width: 100%;
-            max-width: 380px; 
-            height: auto;
-            display: block;
+            width: 100%; max-width: 380px; height: auto; display: block;
         }
 
         .blue-label {
-            color: #33C5F4; 
-            font-size: 24px; 
-            font-weight: 700;
-            margin-bottom: 15px;
-            display: block;
+            color: #33C5F4; font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block;
         }
-
         .main-heading {
-            font-size: 38px; 
-            font-weight: 700; 
-            color: #222;
-            line-height: 1.2; 
-            margin-bottom: 15px;
-            letter-spacing: -0.02em;
+            font-size: 38px; font-weight: 700; color: #222;
+            line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em;
         }
-
         .sub-heading {
-            font-size: 18px; 
-            color: #a7a7a7; 
-            font-weight: 600;
-            margin-top: 5px;
+            font-size: 18px; color: #a7a7a7; font-weight: 600; margin-top: 5px;
         }
-
-        .text-right {
-            flex: 1; 
-            padding-top: 10px; 
-        }
-
-        /* 로고 섹션에서는 텍스트 패딩 제거 */
-        .text-section-split.align-center .text-right {
-            padding-top: 0;
-        }
-
         .body-en {
-            font-size: 16px; 
-            color: #333; 
-            line-height: 1.6; 
-            margin-bottom: 30px;
-            font-weight: 400;
+            font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 30px; font-weight: 400;
         }
-
         .body-kr {
-            font-size: 14px; 
-            color: #a7a7a7; 
-            line-height: 1.7;
-            font-weight: 300;
+            font-size: 14px; color: #a7a7a7; line-height: 1.7; font-weight: 300;
         }
 
-        /* [중앙 정렬 텍스트 레이아웃] */
+        /* [중앙 정렬 텍스트] */
         .text-section-center {
-            text-align: center;
-            width: 100%;
-            max-width: 1000px; 
-            margin: 100px auto; 
-            padding: 0 40px;
+            text-align: center; width: 100%; max-width: 1000px; 
+            margin: 100px auto; padding: 0 40px;
         }
-
         .center-heading {
-            font-size: clamp(32px, 5vw, 64px); 
-            font-weight: 700;
-            color: #222;
-            line-height: 1.2;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
+            font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: #222;
+            line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em;
         }
-
-        .highlight-blue {
-            color: #33C5F4; 
-        }
-
+        .highlight-blue { color: #33C5F4; }
         .center-sub-heading {
-            font-size: clamp(18px, 2.5vw, 28px);
-            font-weight: 600;
-            color: #333; 
-            margin-bottom: 30px;
-            letter-spacing: -0.02em;
+            font-size: clamp(18px, 2.5vw, 28px); font-weight: 600; color: #333; 
+            margin-bottom: 30px; letter-spacing: -0.02em;
         }
-
         .center-body-kr {
-            font-size: 16px;
-            font-weight: 400;
-            color: #a7a7a7; 
-            line-height: 1.8;
+            font-size: 16px; font-weight: 400; color: #a7a7a7; line-height: 1.8;
         }
 
-        /* [단일 텍스트 블록 스타일] */
+        /* [단일 텍스트 블록] */
         .text-single-block {
-            max-width: 800px; 
-            width: 100%;
-            margin: 100px auto; 
-            padding: 0 40px; 
-            text-align: left;
+            max-width: 800px; width: 100%; margin: 100px auto; 
+            padding: 0 40px; text-align: left;
         }
-        
-        .text-single-block .body-en {
-            margin-bottom: 24px; 
-        }
+        .text-single-block .body-en { margin-bottom: 24px; }
 
         .detail-text {
-            font-size: clamp(16px, 1.2vw, 18px);
-            line-height: 1.7;
-            color: #333;
-            max-width: 1200px; 
-            width: 100%;
-            margin: 0 auto; 
-            padding: 0 40px; 
-            font-weight: 300;
-            word-break: keep-all; 
+            font-size: clamp(16px, 1.2vw, 18px); line-height: 1.7; color: #333;
+            max-width: 1200px; width: 100%; margin: 0 auto; 
+            padding: 0 40px; font-weight: 300; word-break: keep-all; 
         }
 
         /* [크레딧 섹션] */
         .credit-section {
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            padding: 40px 40px 0; 
-            max-width: 1800px;
+            margin-top: 40px; border-top: 1px solid #eee;
+            padding: 40px 40px 0; max-width: 1800px;
             margin-left: auto; margin-right: auto;
         }
-        
         .credit-grid {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 15px;
-            line-height: 1.6;
+            display: grid; grid-template-columns: 180px 1fr;
+            gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6;
         }
-        
         .credit-label { font-weight: 700; color: #111; }
         .credit-content { font-weight: 300; color: #555; }
 
@@ -376,29 +274,21 @@
             nav ul li a { font-size: 16px; font-weight: 500; }
 
             main { padding-top: 140px; }
-            
             .back-nav-container { top: 150px; padding: 0 20px; }
-            
             .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
             .project-specs { text-align: left; margin-top: 20px; }
             
             .detail-text { padding: 0 20px; }
             .credit-section { padding: 40px 20px 0; }
-            
             .full-image-block { margin-bottom: 60px; }
             
             .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
             .credit-label { margin-bottom: 5px; }
 
-            .hero-image {
-                height: 80vh; 
-            }
+            .hero-image { height: 80vh; }
 
             .text-section-split {
-                flex-direction: column; 
-                gap: 30px;
-                padding: 0 20px;
-                margin-bottom: 60px;
+                flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px;
             }
             .text-left { flex: 0 0 auto; width: 100%; }
             .text-right { flex: 0 0 auto; width: 100%; padding-top: 0; }
@@ -406,32 +296,16 @@
             .main-heading { font-size: 32px; margin-bottom: 10px; }
             .blue-label { font-size: 20px; margin-bottom: 10px; }
 
-            .text-section-center {
-                margin: 60px auto; 
-                padding: 0 20px;
-            }
-            
-            .text-single-block {
-                margin: 60px auto;
-                padding: 0 20px;
-                max-width: 100%;
-            }
+            .text-section-center { margin: 60px auto; padding: 0 20px; }
+            .text-single-block { margin: 60px auto; padding: 0 20px; max-width: 100%; }
 
-            .full-image-block img.mobile-view-img {
-                max-width: 100%; 
-            }
+            .full-image-block img.mobile-view-img { max-width: 100%; }
             
             .seesaw-logo-img {
-                width: 70%; 
-                max-width: 400px; 
-                margin: 0 auto 30px auto; 
-                display: block;
+                width: 70%; max-width: 400px; margin: 0 auto 30px auto; display: block;
             }
 
-            /* 모바일에서는 비디오 제한 해제 (꽉 차게) */
-            .full-image-block video.video-limit {
-                max-width: 100%;
-            }
+            .full-image-block video.video-limit { max-width: 100%; }
         }
     </style>
 </head>
@@ -481,95 +355,95 @@
             </div>
                 
             <div class="full-image-block">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
                     <source src="../img/projects/project img/2. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
+            </div>
 
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <span class="blue-label">Background.</span>
-                        <h2 class="main-heading">The Increasing Proportion of<br>YOLD</h2>
-                        <div class="sub-heading">비중이 늘어나고 있는 “욜드족”</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            Currently, senior-related trends are drawing attention as the aging social phenomenon has emerged as a social agenda.<br>
-                            By the way, do you know that in this phenomenon, the new keyword "YOLD" is rapidly emerging in the elderly?
-                        </p>
-                        <p class="body-kr">
-                            현재 고령화 사회 현상이 사회 안건으로 대두되면서 시니어 관련 트렌드가 주목받고 있습니다.<br>
-                            그런데 이러한 현상에서 “YOLD”라는 새로운 키워드가 노인계층에서 급부상하고 있다는 사실을 알고 있나요?
-                        </p>
-                    </div>
+            <div class="text-section-split">
+                <div class="text-left">
+                    <span class="blue-label">Background.</span>
+                    <h2 class="main-heading">The Increasing Proportion of<br>YOLD</h2>
+                    <div class="sub-heading">비중이 늘어나고 있는 “욜드족”</div>
                 </div>
-                
-                <div class="full-image-block">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 3-1.png" alt="Detail 1" class="mobile-view-img">
+                <div class="text-right">
+                    <p class="body-en">
+                        Currently, senior-related trends are drawing attention as the aging social phenomenon has emerged as a social agenda.<br>
+                        By the way, do you know that in this phenomenon, the new keyword "YOLD" is rapidly emerging in the elderly?
+                    </p>
+                    <p class="body-kr">
+                        현재 고령화 사회 현상이 사회 안건으로 대두되면서 시니어 관련 트렌드가 주목받고 있습니다.<br>
+                        그런데 이러한 현상에서 “YOLD”라는 새로운 키워드가 노인계층에서 급부상하고 있다는 사실을 알고 있나요?
+                    </p>
                 </div>
+            </div>
+            
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 3-1.png" alt="Detail 1" class="mobile-view-img">
+            </div>
 
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <h2 class="main-heading">"YOLD"<br>The New Elderly</h2>
-                        <div class="sub-heading">새로운 시니어 “욜드족”</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            YOLD means "senior people who enjoy an active consumption and cultural life based on generous assets even after retirement and enjoy a young lifestyle."<br>
-                            The senior class is largely divided into "OLD" and "YOLD" that are the targets of the medical industry
-                        </p>
-                        <p class="body-kr">
-                            YOLD란 “은퇴 후에도 넉넉한 자산을 기반으로 활발한 소비와 문화생활을 즐기며 젊은 라이프스타일을 향유하는 시니어계층”을 뜻합니다.<br>
-                            시니어 계층은 크게 메디컬 산업의 대상이 되는 “OLD”와, 액티브한 “YOLD”로 나뉘는 것이죠
-                        </p>
-                    </div>
+            <div class="text-section-split">
+                <div class="text-left">
+                    <h2 class="main-heading">"YOLD"<br>The New Elderly</h2>
+                    <div class="sub-heading">새로운 시니어 “욜드족”</div>
                 </div>
-                
-                <div class="full-image-block">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 3-2.png" alt="Detail 1" class="mobile-view-img">
+                <div class="text-right">
+                    <p class="body-en">
+                        YOLD means "senior people who enjoy an active consumption and cultural life based on generous assets even after retirement and enjoy a young lifestyle."<br>
+                        The senior class is largely divided into "OLD" and "YOLD" that are the targets of the medical industry
+                    </p>
+                    <p class="body-kr">
+                        YOLD란 “은퇴 후에도 넉넉한 자산을 기반으로 활발한 소비와 문화생활을 즐기며 젊은 라이프스타일을 향유하는 시니어계층”을 뜻합니다.<br>
+                        시니어 계층은 크게 메디컬 산업의 대상이 되는 “OLD”와, 액티브한 “YOLD”로 나뉘는 것이죠
+                    </p>
                 </div>
+            </div>
+            
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 3-2.png" alt="Detail 1" class="mobile-view-img">
+            </div>
 
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <h2 class="main-heading">YOLD<br>Invests on "Health"</h2>
-                        <div class="sub-heading">건강에 투자하는 욜드족</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            YOLD individuals do not focus solely on medical treatment but also actively invest in disease prevention and health management.<br>
-                            The fact that they spend over $2,200 per month on health management highlights how much they prioritize their well-being.
-                        </p>
-                        <p class="body-kr">
-                            욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다.<br>
-                            건강 관리를 위해 월 300만원 이상 지출한다는 내용을 통해, 이들이 건강을 얼마나 중요하게 여기는 지 엿볼 수 있습니다.
-                        </p>
-                    </div>
+            <div class="text-section-split">
+                <div class="text-left">
+                    <h2 class="main-heading">YOLD<br>Invests on "Health"</h2>
+                    <div class="sub-heading">건강에 투자하는 욜드족</div>
                 </div>
-                
-                <div class="full-image-block">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 3-3.png" alt="Detail 1" class="mobile-view-img">
+                <div class="text-right">
+                    <p class="body-en">
+                        YOLD individuals do not focus solely on medical treatment but also actively invest in disease prevention and health management.<br>
+                        The fact that they spend over $2,200 per month on health management highlights how much they prioritize their well-being.
+                    </p>
+                    <p class="body-kr">
+                        욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다.<br>
+                        건강 관리를 위해 월 300만원 이상 지출한다는 내용을 통해, 이들이 건강을 얼마나 중요하게 여기는 지 엿볼 수 있습니다.
+                    </p>
                 </div>
+            </div>
+            
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 3-3.png" alt="Detail 1" class="mobile-view-img">
+            </div>
 
-                <div class="full-image-block">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 3-4.png" alt="Detail 1" class="mobile-view-img">
-                </div>
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 3-4.png" alt="Detail 1" class="mobile-view-img">
+            </div>
 
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <h2 class="main-heading">Focusing on<br><span class="highlight-blue">Balance</span></h2>
-                        <div class="sub-heading">‘밸런스’에 집중하다</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            Why do seniors clasp their hands behind their backs while walking?<br>
-                            Experts say that as muscle strength weakens, the body's center of gravity shifts forward, leading to this posture as a compensatory movement.<br>
-                            However, this is actually a very unhealthy habit. To break this cycle, it is crucial to restore proper body balance.
-                        </p>
-                        <p class="body-kr">
-                            노인들이 걸어갈 때 뒷짐을 지는 이유는 무엇일까요?<br>
-                            전문가들은 근력 약화로 인해 신체의 무게 중심이 앞으로 쏠리고, 이에 대흔 보상운동으로 뒷짐을 진다고 합니다.<br>
-                            그러나 이는 건강상 정말 잘못된 자세라고 하죠. 이러한 악순환을 끊기 위해 몸의 균형을 바로잡습니다.
-                        </p>
-                    </div>
+            <div class="text-section-split">
+                <div class="text-left">
+                    <h2 class="main-heading">Focusing on<br><span class="highlight-blue">Balance</span></h2>
+                    <div class="sub-heading">‘밸런스’에 집중하다</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        Why do seniors clasp their hands behind their backs while walking?<br>
+                        Experts say that as muscle strength weakens, the body's center of gravity shifts forward, leading to this posture as a compensatory movement.<br>
+                        However, this is actually a very unhealthy habit. To break this cycle, it is crucial to restore proper body balance.
+                    </p>
+                    <p class="body-kr">
+                        노인들이 걸어갈 때 뒷짐을 지는 이유는 무엇일까요?<br>
+                        전문가들은 근력 약화로 인해 신체의 무게 중심이 앞으로 쏠리고, 이에 대흔 보상운동으로 뒷짐을 진다고 합니다.<br>
+                        그러나 이는 건강상 정말 잘못된 자세라고 하죠. 이러한 악순환을 끊기 위해 몸의 균형을 바로잡습니다.
+                    </p>
                 </div>
             </div>
             
@@ -652,161 +526,260 @@
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 7.png" alt="Detail">
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <div class="sub-heading">for upper body positioning</div>
-                        <h2 class="main-heading">Neck</h2>
-                        <div class="sub-heading">상체 측정을 위한 목 센서</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            The neck sensor of See-saw is a key component that monitors the user's posture in real time.<br>
-                            Using a gyroscopic sensor, it detects misalignment and provides haptic feedback for immediate correction. <br>
-                            This helps users maintain proper posture independently and manage their health effectively.
-                        </p>
-                        <p class="body-kr">
-                            목 센서는 사용자의 목 자세를 실시간으로 모니터링하는 핵심 센서입니다.<br>
-                            자이로스코프 센서를 활용해 잘못된 자세를 감지하고, 진동 피드백을 제공하여 즉각적인 교정을 돕습니다.<br>
-                            이를 통해 사용자는 스스로 올바른 자세를 유지하며 건강을 관리할 수 있습니다.
-                        </p>
-                    </div>
+            </div>
+            
+            <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">for upper body positioning</div>
+                    <h2 class="main-heading">Neck</h2>
+                    <div class="sub-heading">상체 측정을 위한 목 센서</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        The neck sensor of See-saw is a key component that monitors the user's posture in real time.<br>
+                        Using a gyroscopic sensor, it detects misalignment and provides haptic feedback for immediate correction. <br>
+                        This helps users maintain proper posture independently and manage their health effectively.
+                    </p>
+                    <p class="body-kr">
+                        목 센서는 사용자의 목 자세를 실시간으로 모니터링하는 핵심 센서입니다.<br>
+                        자이로스코프 센서를 활용해 잘못된 자세를 감지하고, 진동 피드백을 제공하여 즉각적인 교정을 돕습니다.<br>
+                        이를 통해 사용자는 스스로 올바른 자세를 유지하며 건강을 관리할 수 있습니다.
+                    </p>
                 </div>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 8.png" alt="Detail">
                 <p class="detail-text"></p>
-                <div class="text-single-block">
-                    <p class="body-en">
-                        By preventing excessive forward head posture, the neck sensor helps reduce strain on the cervical spine, preventing common issues such as neck pain, stiffness, and long-term spinal misalignment.
-                    </p>
-                    <p class="body-kr">
-                        과도한 거북목 자세를 방지하여 경추에 가해지는 부담을 줄이고, 목 통증이나 뻣뻣함, 장기적인 척추 불균형과 같은 문제를 예방하는 데 도움을 줍니다.
-                    </p>
-                </div>
+            </div>
+            
+            <div class="text-single-block">
+                <p class="body-en">
+                    By preventing excessive forward head posture, the neck sensor helps reduce strain on the cervical spine, preventing common issues such as neck pain, stiffness, and long-term spinal misalignment.
+                </p>
+                <p class="body-kr">
+                    과도한 거북목 자세를 방지하여 경추에 가해지는 부담을 줄이고, 목 통증이나 뻣뻣함, 장기적인 척추 불균형과 같은 문제를 예방하는 데 도움을 줍니다.
+                </p>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 9.png" alt="Detail">
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <div class="sub-heading">for core body positioning</div>
-                        <h2 class="main-heading">Waist</h2>
-                        <div class="sub-heading">코어 측정을 위한 허리 센서</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            The waist sensor is a core component that helps maintain the user's balance by monitoring posture.<br>
-                            Utilizing a gyroscopic sensor, it detects tilt or twisting of the waist and provides haptic feedback when poor posture persists.<br>
-                            This allows users to naturally maintain proper alignment.
-                        </p>
-                        <p class="body-kr">
-                            허리 센서는 사용자의 중심을 잡아주는 핵심 센서로, 자세의 균형을 모니터링합니다.<br>
-                            자이로스코프 센서를 활용하여 허리의 기울기나 비틀림을 감지하고, 잘못된 자세가 지속되면 햅틱 피드백을 제공합니다.<br>
-                            이를 통해 사용자는 자연스럽게 올바른 자세를 유지할 수 있습니다.
-                        </p>
-                    </div>
+            </div>
+
+            <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">for core body positioning</div>
+                    <h2 class="main-heading">Waist</h2>
+                    <div class="sub-heading">코어 측정을 위한 허리 센서</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        The waist sensor is a core component that helps maintain the user's balance by monitoring posture.<br>
+                        Utilizing a gyroscopic sensor, it detects tilt or twisting of the waist and provides haptic feedback when poor posture persists.<br>
+                        This allows users to naturally maintain proper alignment.
+                    </p>
+                    <p class="body-kr">
+                        허리 센서는 사용자의 중심을 잡아주는 핵심 센서로, 자세의 균형을 모니터링합니다.<br>
+                        자이로스코프 센서를 활용하여 허리의 기울기나 비틀림을 감지하고, 잘못된 자세가 지속되면 햅틱 피드백을 제공합니다.<br>
+                        이를 통해 사용자는 자연스럽게 올바른 자세를 유지할 수 있습니다.
+                    </p>
                 </div>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 10.png" alt="Detail">
                 <p class="detail-text"></p>
-                <div class="text-single-block">
-                    <p class="body-en">
-                        In addition to improving posture, the waist sensor helps stabilize the body’s center of gravity, reducing the risk of falls and supporting better mobility for active seniors.
-                    </p>
-                    <p class="body-kr">
-                        자세 교정뿐만 아니라 신체의 무게 중심을 안정적으로 잡아주어 낙상의 위험을 줄이고, 보다 활발한 활동을 원하는 시니어들에게 안정적인 움직임을 지원합니다.
-                    </p>
-                </div>
+            </div>
+
+            <div class="text-single-block">
+                <p class="body-en">
+                    In addition to improving posture, the waist sensor helps stabilize the body’s center of gravity, reducing the risk of falls and supporting better mobility for active seniors.
+                </p>
+                <p class="body-kr">
+                    자세 교정뿐만 아니라 신체의 무게 중심을 안정적으로 잡아주어 낙상의 위험을 줄이고, 보다 활발한 활동을 원하는 시니어들에게 안정적인 움직임을 지원합니다.
+                </p>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 11.png" alt="Detail">
-                <div class="text-section-split">
-                    <div class="text-left">
-                        <div class="sub-heading">for more accuracy</div>
-                        <h2 class="main-heading">Wrist & Ankle</h2>
-                        <div class="sub-heading">더욱 정확성을 위한  팔목, 발목 센서</div>
-                    </div>
-                    <div class="text-right">
-                        <p class="body-en">
-                            The additional sensors attached to the wrists and ankles enhance the accuracy of posture analysis by tracking body movements in greater detail.<br>
-                            They detect upper and lower body balance, improving the precision of overall posture monitoring, and provide haptic feedback when necessary to assist in posture correction.
-                        </p>
-                        <p class="body-kr">
-                            팔목과 발목에 부착된 추가 센서는 신체의 움직임을 더욱 정밀하게 분석하는 역할을 합니다.<br>
-                            상체와 하체의 균형을 감지하여 전체적인 자세 분석의 정확도를 높이며, 필요에 따라 햅틱 피드백을 제공해 사용자의 자세 교정을 돕습니다.
-                        </p>
-                    </div>
+            </div>
+
+            <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">for more accuracy</div>
+                    <h2 class="main-heading">Wrist & Ankle</h2>
+                    <div class="sub-heading">더욱 정확성을 위한  팔목, 발목 센서</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        The additional sensors attached to the wrists and ankles enhance the accuracy of posture analysis by tracking body movements in greater detail.<br>
+                        They detect upper and lower body balance, improving the precision of overall posture monitoring, and provide haptic feedback when necessary to assist in posture correction.
+                    </p>
+                    <p class="body-kr">
+                        팔목과 발목에 부착된 추가 센서는 신체의 움직임을 더욱 정밀하게 분석하는 역할을 합니다.<br>
+                        상체와 하체의 균형을 감지하여 전체적인 자세 분석의 정확도를 높이며, 필요에 따라 햅틱 피드백을 제공해 사용자의 자세 교정을 돕습니다.
+                    </p>
                 </div>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 12.png" alt="Detail">
                 <p class="detail-text"></p>
-                <div class="text-single-block">
+            </div>
+
+            <div class="text-single-block">
+                <p class="body-en">
+                    These sensors also help users monitor asymmetrical movements, making them particularly useful for activities like walking, stretching, or exercising, where proper form is crucial for injury prevention and effective movement.
+                </p>
+                <p class="body-kr">
+                    또한, 신체의 비대칭적인 움직임을 감지할 수 있어, 걷기나 스트레칭, 운동 시 올바른 자세를 유지하는 데 도움을 주며, 부상을 예방하고 보다 효과적인 움직임을 유도하는 역할을 합니다.
+                </p>
+            </div>
+
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 14.png" alt="Gyro Sensor" class="mobile-view-img">
+            </div>
+
+            <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">Watch your every move</div>
+                    <h2 class="main-heading">Gyroscopic Sensor</h2>
+                    <div class="sub-heading">자이로스코프 센서</div>
+                </div>
+                <div class="text-right">
                     <p class="body-en">
-                        These sensors also help users monitor asymmetrical movements, making them particularly useful for activities like walking, stretching, or exercising, where proper form is crucial for injury prevention and effective movement.
+                        The gyroscopic sensor detects posture changes by measuring orientation and angular velocity.<br>
+                        It provides instant haptic feedback when misalignment occurs, helping users maintain proper posture effortlessly.
                     </p>
                     <p class="body-kr">
-                        또한, 신체의 비대칭적인 움직임을 감지할 수 있어, 걷기나 스트레칭, 운동 시 올바른 자세를 유지하는 데 도움을 주며, 부상을 예방하고 보다 효과적인 움직임을 유도하는 역할을 합니다.
+                        자이로스코프 센서는 기울기와 각속도를 측정하여 자세 변화를 감지합니다.<br>
+                        자세가 흐트러지면 즉각적인 햅틱 피드백을 제공해 올바른 자세를 쉽게 유지할 수 있도록 돕습니다.
                     </p>
                 </div>
             </div>
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 13.png" alt="Detail">
-                
-                <div class="credit-section">
-                    <div class="credit-grid">
-                        <div class="credit-label">Project</div>
-                        <div class="credit-content">
-                            Samsung Life Insurance (Life-nology Lab)<br>
-                            2024.09 - 2025.03
-                        </div>
-                    </div>
-                    
-                    <div class="credit-grid">
-                        <div class="credit-label">Industrial Designer</div>
-                        <div class="credit-content">
-                            Jaeseung Kim (PL)<br>
-                            Eunjun Choi<br>
-                            Yunseo Lee<br>
-                            Taehyun Kim
-                        </div>
-                    </div>
+            </div>
 
-                    <div class="credit-grid">
-                        <div class="credit-label">Visualization</div>
-                        <div class="credit-content">Eunjun Choi</div>
-                    </div>
+            <div class="full-image-block">
+                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+                    <source src="../img/projects/project img/2. seesaw/seesaw 15.mp4" type="video/mp4">
+                </video>
+            </div>
 
-                    <div class="credit-grid">
-                        <div class="credit-label">UX Designer</div>
-                        <div class="credit-content">Taehyun Kim</div>
-                    </div>
+            <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">easily put it on</div>
+                    <h2 class="main-heading">Magnetic Charging</h2>
+                    <div class="sub-heading">손쉬운 무선 충전</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        See-saw supports wireless charging, allowing effortless charging by simply placing the sensor on the pad. <br>
+                        The LED indicator provides clear charging status at a glance.
+                    </p>
+                    <p class="body-kr">
+                        See-saw는 무선 충전 패드로 간편하게 충전할 수 있습니다.<br>
+                        센서를 올려놓기만 하면 자동 충전되며, LED 표시로 충전 상태를 쉽게 확인할 수 있습니다.
+                    </p>
+                </div>
+            </div>
 
-                    <div class="credit-grid">
-                        <div class="credit-label">Tutor</div>
-                        <div class="credit-content">
-                            Professor. Gilok Lee<br>
-                            Hongik Univ. Dept. of Industrial Design
-                        </div>
-                    </div>
+            <div class="full-image-block">
+                <div class="juxtapose" style="width: 100%;">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 16-1.png">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 16-2.png">
+                </div>
+            </div>
 
-                    <div class="credit-grid">
-                        <div class="credit-label">Filming</div>
-                        <div class="credit-content">
-                            Photographer: Eunjun Choi<br>
-                            Process: Eunjun Choi / Taehyun Kim
-                        </div>
+           <div class="text-single-block">
+                <p class="body-en">
+                    The wireless charging pad of See-saw features a slim, flat design.<br>
+                    To ensure precise sensor placement, the pad includes outlined markings for each sensor, making the charging process simple and intuitive.
+                </p>
+                <p class="body-kr">
+                    See-saw의 무선 충전 패드는 얇은 판 형태로 디자인되었습니다.<br>
+                    센서를 정확한 위치에 놓을 수 있도록 패드 위에 각 센서의 윤곽이 표시되어 있어 쉽고 직관적인 충전이 가능합니다.
+                </p>
+            </div>      
+
+            <div class="full-image-block">
+                <div class="juxtapose" style="width: 100%;">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 17-1.png">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 17-2.png">
+                </div>
+            </div>
+
+           <div class="text-section-split">
+                <div class="text-left">
+                    <div class="sub-heading">choose your style</div>
+                    <h2 class="main-heading">Color Variations</h2>
+                    <div class="sub-heading">컬러 베리에이션</div>
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        Seesaw is available in two color variations: Gold and Silver.<br>
+                        These colors were chosen to reflect a sense of sophistication and timeless elegance, aligning with the refined lifestyle of active seniors.<br>
+                        The Gold variation exudes warmth and luxury, while the Silver version emphasizes modernity and versatility, allowing users to choose a style that best suits their personality.
+                    </p>
+                    <p class="body-kr">
+                        Seesaw는 골드와 실버 두 가지 컬러로 제공됩니다.<br>
+                        이 컬러는 세련되고 우아한 감각을 반영하며, 활기찬 시니어들의 품격 있는 라이프스타일과 조화를 이루도록 선정되었습니다.<br>
+                        골드 컬러는 따뜻함과 고급스러움을 강조하고, 실버 컬러는 모던하고 세련된 분위기를 자아내어, 사용자가 자신의 취향에 맞는 스타일을 선택할 수 있도록 합니다.
+                    </p>
+                </div>
+            </div>  
+
+          <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 18.png" alt="Detail">
+            </div>  
+
+            <div class="full-image-block">
+                <img src="../img/projects/project img/2. seesaw/seesaw 44.png" alt="Detail">
+            </div>
+
+            <div class="credit-section">
+                <div class="credit-grid">
+                    <div class="credit-label">Project</div>
+                    <div class="credit-content">
+                        Samsung Life Insurance (Life-nology Lab)<br>
+                        2024.09 - 2025.03
                     </div>
-                    
-                    <div style="margin-top: 40px; font-size: 13px; color: #888;">
-                        Sponsored by Samsung Life Insurance Co., Ltd.
+                </div>
+                <div class="credit-grid">
+                    <div class="credit-label">Industrial Designer</div>
+                    <div class="credit-content">
+                        Jaeseung Kim (PL)<br>
+                        Eunjun Choi<br>
+                        Yunseo Lee<br>
+                        Taehyun Kim
                     </div>
+                </div>
+                <div class="credit-grid">
+                    <div class="credit-label">Visualization</div>
+                    <div class="credit-content">Eunjun Choi</div>
+                </div>
+                <div class="credit-grid">
+                    <div class="credit-label">UX Designer</div>
+                    <div class="credit-content">Taehyun Kim</div>
+                </div>
+                <div class="credit-grid">
+                    <div class="credit-label">Tutor</div>
+                    <div class="credit-content">
+                        Professor. Gilok Lee<br>
+                        Hongik Univ. Dept. of Industrial Design
+                    </div>
+                </div>
+                <div class="credit-grid">
+                    <div class="credit-label">Filming</div>
+                    <div class="credit-content">
+                        Photographer: Eunjun Choi<br>
+                        Process: Eunjun Choi / Taehyun Kim
+                    </div>
+                </div>
+                <div style="margin-top: 40px; font-size: 13px; color: #888;">
+                    Sponsored by Samsung Life Insurance Co., Ltd.
                 </div>
             </div>
 
@@ -819,6 +792,8 @@
 
     </main>
 
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
@@ -827,7 +802,6 @@
                 window.location.href = '../index.html';
             });
 
-            // 1. 비디오 자동재생 로직 (컨트롤 바 숨김 및 예외처리 수정)
             const videos = document.querySelectorAll('video.locked-video');
             videos.forEach(video => {
                 video.muted = true;
@@ -843,7 +817,6 @@
                 }
             });
 
-            // 2. 네비게이션 & 뒤로가기 버튼 스크롤 인터랙션
             let lastScrollTop = 0;
             const header = document.querySelector('header');
             const backNav = document.querySelector('.back-nav-container'); 
@@ -856,11 +829,9 @@
                 }
 
                 if (currentScroll > lastScrollTop) {
-                    // 스크롤 내림 -> 헤더 숨김 & 뒤로가기 버튼 위로 이동 (많이)
                     header.classList.add('header-hidden');
                     backNav.classList.add('nav-up');
                 } else {
-                    // 스크롤 올림 -> 헤더 보임 & 뒤로가기 버튼 원위치
                     header.classList.remove('header-hidden');
                     backNav.classList.remove('nav-up');
                 }
