@@ -153,7 +153,7 @@
             border-radius: 0; margin-bottom: 20px; pointer-events: none; 
         }
 
-        /* 비디오 크기 제한 (데스크톱 1000px, 모바일 100%) */
+        /* [수정됨] 비디오 크기 제한 (1000px) - seesaw 6.mp4 전용 */
         .full-image-block video.video-limit {
             max-width: 1000px; width: 100%; margin: 0 auto;
         }
@@ -163,14 +163,12 @@
         video::-webkit-media-controls-enclosure { display: none !important; }
         video::-webkit-media-controls-panel { display: none !important; }
 
-        /* [Juxtapose 슬라이더 스타일 - 반응형 적용] */
+        /* [Juxtapose 슬라이더 스타일] */
         .juxtapose {
             width: 100%; 
             margin: 0 auto;
-            /* 높이를 지정하지 않아야 이미지 비율대로 자동으로 늘어납니다 */
         }
         
-        /* 로딩 중일 때 높이 깨짐 방지용 최소 높이 */
         .juxtapose-wrapper {
             min-height: 400px;
             background-color: #f4f4f4;
@@ -190,7 +188,7 @@
         
         .text-section-split.align-center .text-right { padding-top: 0; }
 
-        /* 로고 이미지 (데스크탑) */
+        /* 로고 이미지 */
         .seesaw-logo-img {
             width: 100%; max-width: 380px; height: auto; display: block;
         }
@@ -355,7 +353,7 @@
             </div>
                 
             <div class="full-image-block">
-                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" autoplay muted loop playsinline preload="auto">
                     <source src="../img/projects/project img/2. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
             </div>
@@ -688,52 +686,10 @@
 
             <div class="full-image-block">
                 <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 16-1.png">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 16-2.png">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 16-1.png" data-label="Charging">
+                    <img src="../img/projects/project img/2. seesaw/seesaw 16-2.png" data-label="Pad">
                 </div>
             </div>
-
-           <div class="text-single-block">
-                <p class="body-en">
-                    The wireless charging pad of See-saw features a slim, flat design.<br>
-                    To ensure precise sensor placement, the pad includes outlined markings for each sensor, making the charging process simple and intuitive.
-                </p>
-                <p class="body-kr">
-                    See-saw의 무선 충전 패드는 얇은 판 형태로 디자인되었습니다.<br>
-                    센서를 정확한 위치에 놓을 수 있도록 패드 위에 각 센서의 윤곽이 표시되어 있어 쉽고 직관적인 충전이 가능합니다.
-                </p>
-            </div>      
-
-            <div class="full-image-block">
-                <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 17-1.png">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 17-2.png">
-                </div>
-            </div>
-
-           <div class="text-section-split">
-                <div class="text-left">
-                    <div class="sub-heading">choose your style</div>
-                    <h2 class="main-heading">Color Variations</h2>
-                    <div class="sub-heading">컬러 베리에이션</div>
-                </div>
-                <div class="text-right">
-                    <p class="body-en">
-                        Seesaw is available in two color variations: Gold and Silver.<br>
-                        These colors were chosen to reflect a sense of sophistication and timeless elegance, aligning with the refined lifestyle of active seniors.<br>
-                        The Gold variation exudes warmth and luxury, while the Silver version emphasizes modernity and versatility, allowing users to choose a style that best suits their personality.
-                    </p>
-                    <p class="body-kr">
-                        Seesaw는 골드와 실버 두 가지 컬러로 제공됩니다.<br>
-                        이 컬러는 세련되고 우아한 감각을 반영하며, 활기찬 시니어들의 품격 있는 라이프스타일과 조화를 이루도록 선정되었습니다.<br>
-                        골드 컬러는 따뜻함과 고급스러움을 강조하고, 실버 컬러는 모던하고 세련된 분위기를 자아내어, 사용자가 자신의 취향에 맞는 스타일을 선택할 수 있도록 합니다.
-                    </p>
-                </div>
-            </div>  
-
-          <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 18.png" alt="Detail">
-            </div>  
 
             <div class="full-image-block">
                 <img src="../img/projects/project img/2. seesaw/seesaw 44.png" alt="Detail">
