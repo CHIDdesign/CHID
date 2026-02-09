@@ -282,15 +282,65 @@
         .credit-label { font-weight: 700; color: #111; }
         .credit-content { font-weight: 300; color: #555; }
 
-        /* [하단 네비게이션] */
+        /* [하단 네비게이션 - 수정됨] */
         .next-project {
-            border-top: 1px solid #eee; padding: 80px 40px;
-            text-align: center; cursor: pointer; transition: background 0.3s ease;
+            /* border-top: 1px solid #eee;  기존 테두리 제거 */
+            padding: 140px 40px; /* 패딩을 늘려 이미지가 시원하게 보이도록 함 */
+            text-align: center; 
+            cursor: pointer; 
+            /* transition: background 0.3s ease; 기존 배경색 전환 제거 */
+            transition: transform 0.3s ease; /* 호버 시 움직임 효과 추가 */
             margin-top: 60px;
+            position: relative; /* 가상 요소의 기준점 */
+            overflow: hidden; /* 블러된 이미지가 영역 밖으로 나가지 않도록 함 */
+            color: #ffffff; /* 텍스트 색상을 밝게 변경 */
         }
-        .next-project:hover { background-color: #fafafa; }
-        .next-label { font-size: 14px; color: #888; margin-bottom: 15px; letter-spacing: 0.05em; }
-        .next-title { font-size: clamp(24px, 4vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
+
+        /* 배경 이미지 및 블러 효과를 위한 가상 요소 추가 */
+        .next-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* ▼▼▼ 여기에 배경으로 사용할 이미지 경로를 입력하세요 ▼▼▼ */
+            background-image: url('../img/projects/Thumbnail/project 5.png'); 
+            /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+            background-size: cover;
+            background-position: center;
+            /* 블러 처리 및 밝기 조절 (텍스트 가독성을 위해 어둡게 처리) */
+            filter: blur(10px) brightness(0.6); 
+            z-index: -1; /* 텍스트 뒤로 배치 */
+            transform: scale(1.1); /* 블러로 인한 가장자리 흘러내림 방지 */
+            transition: filter 0.3s ease, transform 0.3s ease; /* 호버 효과를 위한 트랜지션 */
+        }
+
+        /* 호버 효과 수정 */
+        .next-project:hover {
+            /* background-color: #fafafa; 기존 배경색 변경 제거 */
+            transform: translateY(-5px); /* 호버 시 살짝 위로 올라가는 효과 */
+        }
+
+        /* 호버 시 배경 이미지 효과 변화 */
+        .next-project:hover::before {
+            filter: blur(5px) brightness(0.7); /* 블러를 줄이고 밝기를 약간 올려서 선명해지는 느낌 */
+            transform: scale(1.05);
+        }
+
+        .next-label { 
+            font-size: 16px; /* 폰트 크기 약간 키움 */
+            color: rgba(255, 255, 255, 0.8); /* 텍스트 색상 밝게 변경 */
+            margin-bottom: 15px; 
+            letter-spacing: 0.05em; 
+            text-transform: uppercase; /* 대문자로 변경 */
+        }
+        
+        .next-title { 
+            font-size: clamp(32px, 5vw, 72px); /* 폰트 크기 키움 */
+            font-weight: 800; 
+            letter-spacing: -0.02em; 
+        }
 
         /* [반응형] */
         @media (max-width: 768px) {
@@ -345,6 +395,10 @@
             .gif-grid-section {
                 grid-template-columns: repeat(2, 1fr); /* 모바일: 2개씩 2줄 */
             }
+            
+            /* 하단 네비게이션 반응형 수정 */
+            .next-project { padding: 100px 20px; }
+            .next-title { font-size: 40px; }
         }
     </style>
 </head>
@@ -373,7 +427,7 @@
         </div>
 
         <section class="hero-section">
-            <img src="../img/projects/project img/2. seesaw/seesaw 1.png" alt="Seesaw Hero" class="hero-image">
+            <img src="../img/projects/project img/4. seesaw/seesaw 1.png" alt="Seesaw Hero" class="hero-image">
         </section>
 
         <section class="project-header">
@@ -390,12 +444,12 @@
         <div class="content-container">
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 2.png" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 2.png" alt="Detail 1" class="mobile-view-img">
             </div>
                 
             <div class="full-image-block">
                 <video class="locked-video" autoplay muted loop playsinline preload="auto">
-                    <source src="../img/projects/project img/2. seesaw/seesaw 3.mp4" type="video/mp4">
+                    <source src="../img/projects/project img/4. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
             </div>
 
@@ -418,7 +472,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 3-1.png" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-1.png" alt="Detail 1" class="mobile-view-img">
             </div>
 
             <div class="text-section-split">
@@ -439,7 +493,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 3-2.png" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-2.png" alt="Detail 1" class="mobile-view-img">
             </div>
 
             <div class="text-section-split">
@@ -460,11 +514,11 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 3-3.png" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-3.png" alt="Detail 1" class="mobile-view-img">
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 3-4.png" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-4.png" alt="Detail 1" class="mobile-view-img">
             </div>
 
             <div class="text-section-split">
@@ -487,7 +541,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 4.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 4.png" alt="Detail">
                 <p class="detail-text"></p>
             </div>
 
@@ -506,7 +560,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img">
                 </div>
                 <div class="text-right">
                     <p class="body-en">
@@ -521,7 +575,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 5.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 5.png" alt="Detail">
                 <p class="detail-text"></p>
             </div>
 
@@ -547,7 +601,7 @@
 
             <div class="full-image-block">
                 <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
-                    <source src="../img/projects/project img/2. seesaw/seesaw 6.mp4" type="video/mp4">
+                    <source src="../img/projects/project img/4. seesaw/seesaw 6.mp4" type="video/mp4">
                 </video>
             </div>
             
@@ -564,7 +618,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 7.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 7.png" alt="Detail">
             </div>
             
             <div class="text-section-split">
@@ -588,7 +642,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 8.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 8.png" alt="Detail">
                 <p class="detail-text"></p>
             </div>
             
@@ -602,7 +656,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 9.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 9.png" alt="Detail">
             </div>
 
             <div class="text-section-split">
@@ -626,7 +680,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 10.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 10.png" alt="Detail">
                 <p class="detail-text"></p>
             </div>
 
@@ -640,7 +694,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 11.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 11.png" alt="Detail">
             </div>
 
             <div class="text-section-split">
@@ -662,7 +716,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 12.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 12.png" alt="Detail">
                 <p class="detail-text"></p>
             </div>
 
@@ -677,7 +731,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 14.png" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 14.png" alt="see-saw logo" class="seesaw-logo-img">
                 </div>
                 <div class="text-right">
                     <div class="sub-heading">Watch your every move</div>
@@ -696,12 +750,12 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 13.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 13.png" alt="Detail">
             </div>
 
             <div class="full-image-block">
                 <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
-                    <source src="../img/projects/project img/2. seesaw/seesaw 15.mp4" type="video/mp4">
+                    <source src="../img/projects/project img/4. seesaw/seesaw 15.mp4" type="video/mp4">
                 </video>
             </div>
 
@@ -725,8 +779,8 @@
 
             <div class="full-image-block">
                 <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 16-1.png">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 16-2.png">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 16-1.png">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 16-2.png">
                 </div>
             </div>
 
@@ -743,8 +797,8 @@
 
             <div class="full-image-block">
                 <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 17-1.png">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 17-2.png">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 17-1.png">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 17-2.png">
                 </div>
             </div>
 
@@ -769,12 +823,12 @@
             </div> 
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 18.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 18.png" alt="Detail">
             </div>
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 19.png" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 19.png" alt="Main Screen Live Posture Tracking">
                 </div>
 
                 <div class="split-text">
@@ -801,10 +855,10 @@
             </div>
 
             <div class="gif-grid-section">
-                <div class="gif-item"><img src="../img/projects/project img/2. seesaw/seesaw 20-1.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/2. seesaw/seesaw 20-2.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/2. seesaw/seesaw 20-3.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/2. seesaw/seesaw 20-4.gif" alt=""></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-1.gif" alt=""></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-2.gif" alt=""></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-3.gif" alt=""></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-4.gif" alt=""></div>
             </div>
 
            <div class="text-section-split">
@@ -829,7 +883,7 @@
           
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 21.png" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 21.png" alt="Main Screen Live Posture Tracking">
                 </div>
 
                 <div class="split-text">
@@ -853,7 +907,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 22.png" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 22.png" alt="Main Screen Live Posture Tracking">
                 </div>
 
                 <div class="split-text">
@@ -876,7 +930,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 23.png" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 23.png" alt="Main Screen Live Posture Tracking">
                 </div>
 
                 <div class="split-text">
@@ -903,7 +957,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/2. seesaw/seesaw 24.png" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 24.png" alt="Main Screen Live Posture Tracking">
                 </div>
 
                 <div class="split-text">
@@ -928,7 +982,7 @@
             </div>
 
            <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 25.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 25.png" alt="Detail">
             </div>
 
            <div class="text-section-center">
@@ -947,7 +1001,7 @@
            <div class="image-text-split">
               <div class="split-image">
                    <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/2. seesaw/seesaw 26-1.mp4" type="video/mp4">
+                     <source src="../img/projects/project img/4. seesaw/seesaw 26-1.mp4" type="video/mp4">
                  </video>
                 </div>
 
@@ -973,7 +1027,7 @@
             <div class="image-text-split">
               <div class="split-image">
                    <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/2. seesaw/seesaw 26-2.mp4" type="video/mp4">
+                     <source src="../img/projects/project img/4. seesaw/seesaw 26-2.mp4" type="video/mp4">
                  </video>
                 </div>
 
@@ -998,7 +1052,7 @@
             <div class="image-text-split">
               <div class="split-image">
                    <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/2. seesaw/seesaw 26-3.mp4" type="video/mp4">
+                     <source src="../img/projects/project img/4. seesaw/seesaw 26-3.mp4" type="video/mp4">
                  </video>
                 </div>
 
@@ -1027,7 +1081,7 @@
 
            
             <div class="full-image-block">
-                <img src="../img/projects/project img/2. seesaw/seesaw 27.png" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 27.png" alt="Detail">
             </div>
 
             <div class="credit-section">
@@ -1076,9 +1130,9 @@
 
         </div>
 
-        <div class="next-project" onclick="location.href='../projects.html'">
+        <div class="next-project" onclick="location.href='../projects/kunst.html'">
             <div class="next-label">Next Project</div>
-            <div class="next-title">Dogsplay &rarr;</div>
+            <div class="next-title">kunst &rarr;</div>
         </div>
 
     </main>
