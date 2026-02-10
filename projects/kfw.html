@@ -131,11 +131,18 @@
 
         .text-section-split {
             display: flex; justify-content: space-between; align-items: flex-start;
-            max-width: 1200px; width: 100%; margin: 0 auto 80px; 
+            
+            /* [수정됨] 최대 너비를 1200px에서 1800px로 대폭 확장 */
+            max-width: 1800px; 
+            
+            width: 100%; margin: 0 auto 80px; 
             padding: 0 40px; gap: 40px;
         }
         .text-section-split.align-center { align-items: center; }
-        .text-left { flex: 0 0 40%; }
+        
+        /* [수정됨] 로고 영역을 20%로 줄여서 텍스트 공간(80%)을 더 확보 */
+        .text-left { flex: 0 0 20%; }
+        
         .text-right { flex: 1; padding-top: 10px; }
         .text-section-split.align-center .text-right { padding-top: 0; }
 
@@ -241,7 +248,6 @@
 
             .full-image-block img.mobile-view-img { max-width: 100%; }
             
-            /* [수정됨] auto 마진을 제거하고 0으로 설정하여 왼쪽 정렬 */
             .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 0 30px 0; display: block; }
             
             .full-image-block video.video-limit { max-width: 100%; }
