@@ -285,22 +285,33 @@
         .closing-block { margin-bottom: 80px; }
         .closing-section .body-en, .closing-section .body-kr { margin-bottom: 20px; }
 
-        /* [NEW] Product Identity Section */
+        /* [수정됨] Product Identity Section (기본: 좌측 정렬) */
         .product-identity-section {
-            max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; text-align: left;
+            max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; 
+            text-align: left; /* 기본값 복구 (Left) */
         }
         
-        /* [수정됨] 중앙 정렬 */
         .identity-title {
             color: var(--point-color); font-style: italic; line-height: 1.1; margin-bottom: 60px; letter-spacing: -0.02em;
-            text-align: center; /* 중앙 정렬 추가 */
+            text-align: left; /* 기본값 복구 (Left) */
         }
         
-        /* [수정됨] 설명 텍스트도 중앙 정렬 */
         .identity-desc { 
             max-width: 800px; 
-            margin: 0 auto; /* 가로 중앙 배치 */
-            text-align: center; /* 텍스트 내용 중앙 정렬 */
+            margin: 0; /* 기본값 복구 (Left) */
+            text-align: left; /* 기본값 복구 (Left) */
+        }
+
+        /* [NEW] Center Alignment Modifier (중앙 정렬 전용) */
+        .product-identity-section.centered {
+            text-align: center;
+        }
+        .product-identity-section.centered .identity-title {
+            text-align: center;
+        }
+        .product-identity-section.centered .identity-desc {
+            margin: 0 auto;
+            text-align: center;
         }
 
         .brand-bold { font-size: clamp(60px, 8vw, 120px); font-weight: 800; }
@@ -385,7 +396,7 @@
             .slogan-sub { font-size: 20px; }
             .slogan-main { font-size: 50px; }
 
-            /* [NEW] Product Identity Mobile */
+            /* Product Identity Mobile */
             .product-identity-section { margin: 100px auto; padding: 0 20px; }
             .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
         }
@@ -751,7 +762,7 @@
             <img src="../img/projects/project img/5. kunst/kunst 21.png" alt="Detail">
         </div> 
 
-        <section class="product-identity-section">
+        <section class="product-identity-section centered">
             <h2 class="identity-title">
                 <span class="brand-thin">Inspired from</span><br>
                 <span class="brand-bold">[ Art Critics ]</span> <span class="brand-pipe"></span>
