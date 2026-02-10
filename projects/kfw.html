@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>CHID - Project Name</title>
+    
+    <link rel="icon" href="../img/main/favicon.png" type="image/png">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+
+    <style>
+        /* [기본 설정 및 레이아웃 CSS - 수정 불필요] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        body.fade-in { opacity: 1; }
+
+        /* [헤더 스타일] */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 40px; 
+            width: 100%;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            height: 90px;
+        }
+
+        header.header-hidden { transform: translateY(-100%); }
+        .logo-container { cursor: pointer; }
+        .logo-img { height: 60px; width: auto; display: block; }
+
+        /* [네비게이션 스타일] */
+        nav ul { display: flex; list-style: none; gap: 50px; }
+        nav ul li { margin-left: 0; }
+        nav ul li a {
+            text-decoration: none; color: #111111;
+            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            display: block; padding: 10px 0; letter-spacing: -0.02em;
+            opacity: 0.8; 
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; text-align: center; pointer-events: auto;
+        }
+        nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
+        nav ul li.active a::after {
+            content: ''; display: block; width: 100%; height: 2px; 
+            background: currentColor; margin-top: 5px; border-radius: 2px;
+        }
+
+        /* [메인 컨텐츠 레이아웃] */
+        main { width: 100%; padding-top: 90px; position: relative; }
+
+        /* [뒤로가기 버튼] */
+        .back-nav-container {
+            width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
+            position: -webkit-sticky; position: sticky;
+            top: 110px; z-index: 50; height: 0; overflow: visible;
+            pointer-events: none; transition: transform 0.3s ease-in-out;
+        }
+        .back-nav-container.nav-up { transform: translateY(-100px); }
+        .back-btn {
+            display: flex; justify-content: center; align-items: center;
+            width: 48px; height: 48px; 
+            border-radius: 50%; border: 2px solid #111111; 
+            background: rgba(255, 255, 255, 0.48); 
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            text-decoration: none; color: #111111; opacity: 1; 
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer; pointer-events: auto; transform: translateY(20px); 
+        }
+        .back-btn svg {
+            width: 18px; height: 18px; fill: none;
+            stroke: currentColor; stroke-width: 2; 
+            stroke-linecap: round; stroke-linejoin: round;
+            display: block; transform: translateX(-1px); 
+        }
+        .back-btn:hover {
+            transform: translateY(20px) translateX(-3px); 
+            background: rgba(255, 255, 255, 0.9); 
+        }
+
+        /* [히어로 이미지] */
+        .hero-section { width: 100%; padding: 0; margin-bottom: 60px; }
+        .hero-image {
+            width: 100%; height: auto; display: block; 
+            border-radius: 0; background-color: #f4f4f4;
+            object-fit: cover; object-position: center;
+            min-height: 400px; /* 이미지가 없을 때 최소 높이 확보 */
+        }
+
+        /* [프로젝트 헤더] */
+        .project-header {
+            max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; 
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .project-title h1 {
+            font-size: clamp(40px, 6vw, 100px); font-weight: 800;
+            line-height: 1; letter-spacing: -0.04em; margin: 0;
+        }
+        .project-specs {
+            text-align: right; font-size: 14px; color: #666; line-height: 1.6;
+        }
+
+        /* [컨텐츠 공통 클래스 - 복사해서 사용] */
+        .content-container { width: 100%; max-width: 100%; margin: 0 auto; padding: 0; }
+        
+        .full-image-block { margin-bottom: 60px; width: 100%; }
+        .full-image-block img { width: 100%; height: auto; display: block; border-radius: 0; margin-bottom: 20px; }
+        .full-image-block img.mobile-view-img { max-width: 1000px; width: 100%; display: block; margin: 0 auto 60px; }
+        
+        .full-image-block video.locked-video { width: 100%; height: auto; display: block; border-radius: 0; margin-bottom: 20px; pointer-events: none; }
+        .full-image-block video.video-limit { max-width: 1000px; width: 100%; margin: 0 auto; }
+        video::-webkit-media-controls { display: none !important; }
+
+        .juxtapose { width: 100%; margin: 0 auto; }
+
+        .text-section-split {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            max-width: 1200px; width: 100%; margin: 0 auto 80px; 
+            padding: 0 40px; gap: 40px;
+        }
+        .text-section-split.align-center { align-items: center; }
+        .text-left { flex: 0 0 40%; }
+        .text-right { flex: 1; padding-top: 10px; }
+        .text-section-split.align-center .text-right { padding-top: 0; }
+
+        .image-text-split {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1400px; width: 100%; margin: 0 auto 80px;
+            padding: 0 40px; gap: 60px;
+        }
+        .split-image { flex: 1; width: 50%; }
+        .split-image img { width: 100%; height: auto; display: block; }
+        .split-text { flex: 1; width: 50%; padding: 0 40px; box-sizing: border-box; }
+        .split-heading { font-size: 38px; font-weight: 700; color: #222; line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em; }
+
+        .gif-grid-section {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            width: 100%; max-width: 100%; margin: 0 auto 60px; gap: 0;
+        }
+        .gif-item { width: 100%; position: relative; padding: 0; }
+        .gif-item img { width: 100%; height: auto; display: block; object-fit: cover; }
+
+        /* [텍스트 스타일] */
+        .blue-label { color: #33C5F4; font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block; }
+        .main-heading { font-size: 38px; font-weight: 700; color: #222; line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em; }
+        .sub-heading { font-size: 18px; color: #a7a7a7; font-weight: 600; margin-top: 5px; }
+        .body-en { font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
+        .body-kr { font-size: 14px; color: #a7a7a7; line-height: 1.7; font-weight: 300; }
+        
+        .text-section-center { text-align: center; width: 100%; max-width: 1000px; margin: 100px auto; padding: 0 40px; }
+        .center-heading { font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: #222; line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em; }
+        .highlight-blue { color: #33C5F4; }
+        .center-sub-heading { font-size: clamp(18px, 2.5vw, 28px); font-weight: 600; color: #333; margin-bottom: 30px; letter-spacing: -0.02em; }
+        .center-body-kr { font-size: 16px; font-weight: 400; color: #a7a7a7; line-height: 1.8; }
+
+        .text-single-block { max-width: 800px; width: 100%; margin: 100px auto; padding: 0 40px; text-align: left; }
+        .text-single-block .body-en { margin-bottom: 24px; }
+        .detail-text { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.7; color: #333; max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 40px; font-weight: 300; word-break: keep-all; }
+
+        /* [크레딧 섹션] */
+        .credit-section { margin-top: 40px; border-top: 1px solid #eee; padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; }
+        .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
+        .credit-label { font-weight: 700; color: #111; }
+        .credit-content { font-weight: 300; color: #555; }
+
+        /* [하단 네비게이션] */
+        .next-project {
+            padding: 140px 40px;
+            text-align: center; 
+            cursor: pointer; 
+            transition: transform 0.3s ease; 
+            margin-top: 60px;
+            position: relative; 
+            overflow: hidden; 
+            color: #ffffff; 
+        }
+
+        .next-project::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* [수정 필요] 다음 프로젝트 썸네일 경로 */
+            background-image: url('../img/projects/Thumbnail/placeholder.png'); 
+            background-size: cover; background-position: center;
+            filter: blur(10px) brightness(0.6); 
+            z-index: -1; transform: scale(1.1); 
+            transition: filter 0.3s ease, transform 0.3s ease; 
+        }
+
+        .next-project:hover { transform: translateY(-5px); }
+        .next-project:hover::before { filter: blur(5px) brightness(0.7); transform: scale(1.05); }
+
+        .next-label { font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px; letter-spacing: 0.05em; text-transform: uppercase; }
+        .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.02em; }
+
+        /* [반응형] */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
+            .logo-img { height: 50px; }
+            nav ul { justify-content: center; gap: 25px; }
+            nav ul li a { font-size: 16px; font-weight: 500; }
+
+            main { padding-top: 140px; }
+            .back-nav-container { top: 150px; padding: 0 20px; }
+            .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
+            .project-specs { text-align: left; margin-top: 20px; }
+            
+            .detail-text { padding: 0 20px; }
+            .credit-section { padding: 40px 20px 0; }
+            .full-image-block { margin-bottom: 60px; }
+            
+            .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
+            .credit-label { margin-bottom: 5px; }
+
+            .hero-image { height: 80vh; }
+
+            .text-section-split { flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px; }
+            .text-left { flex: 0 0 auto; width: 100%; }
+            .text-right { flex: 0 0 auto; width: 100%; padding-top: 0; }
+            
+            .main-heading { font-size: 32px; margin-bottom: 10px; }
+            .blue-label { font-size: 20px; margin-bottom: 10px; }
+
+            .text-section-center { margin: 60px auto; padding: 0 20px; }
+            .text-single-block { margin: 60px auto; padding: 0 20px; max-width: 100%; }
+
+            .full-image-block img.mobile-view-img { max-width: 100%; }
+            
+            /* [수정됨] auto 마진을 제거하고 0으로 설정하여 왼쪽 정렬 */
+            .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 0 30px 0; display: block; }
+            
+            .full-image-block video.video-limit { max-width: 100%; }
+
+            .image-text-split { flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px; }
+            .split-image, .split-text { width: 100%; }
+            .split-text { padding: 0; }
+            .split-heading { font-size: 32px; margin-bottom: 10px; }
+
+            .gif-grid-section { grid-template-columns: repeat(2, 1fr); }
+            
+            .next-project { padding: 100px 20px; }
+            .next-title { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="back-to-home">
+            <img src="../img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../about.html" title="About">About</a></li>
+                <li class="active"><a href="../projects.html" title="Projects">Projects</a></li>
+                <li><a href="../contact.html" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="back-nav-container">
+            <a href="../projects.html" class="back-btn" title="Back to Projects">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+        </div>
+
+        <section class="hero-section">
+            <img src="../img/projects/project img/6. kfw/kfw 1.png" alt="KUNST Hero Image" class="hero-image" style="background-color: #1a1a1a;">
+        </section>
+
+        <section class="project-header">
+            <div class="project-title">
+                <h1>KFW 2026</h1>
+            </div>
+            <div class="project-specs">
+                Eighth Army<br>
+                Branding<br>
+                2026
+            </div>
+        </section>
+
+        <div class="text-section-split align-center">
+                <div class="text-left">
+                    <img src="../img/projects/project img/6. kfw/kfw 2.svg" alt="see-saw logo" class="seesaw-logo-img">
+                </div>
+                <div class="text-right">
+                    <p class="body-en">
+                        Originating from the Korean War on June 25, 1950, KATUSA marks its 76th anniversary this year, standing as a living symbol of the ROK-US Alliance.<br>
+                        The KFW 2026 logo reinterprets this historic bond through the visual metaphor of a single, continuous ribbon.<br>
+                        While the firm knot represents an unbreakable promise, the freely flowing ribbon captures the dynamic nature of the relationship between the two nations.<br>
+                        <br>
+                        This design embodies a flexible alliance that adapts to any change without breaking, remaining resilient and enduring.<br>
+                        By deconstructing and intertwining elements from the national flags of South Korea and the United States, the logo visualizes a seamless flow where two distinct cultures come together, representing the true spirit of moving forward together.
+                    </p>
+                    <p class="body-kr">
+                        1950년 6월 25일 전쟁의 포화 속에서 태동한 카투사는 올해로 76주년을 맞이하며 한미동맹의 살아있는 역사이자 상징이 되었습니다.<br>
+                        KFW 2026 로고는 이 깊은 유산을 기념하고 견고한 동맹을 '하나의 리본'이라는 시각적 언어로 재해석했습니다.<br>
+                        단단히 묶여있는 매듭이 풀리지 않는 약속을 의미한다면, 바람에 자유롭게 나풀거리는 리본의 자락은 두 나라 관계의 역동성을 상징합니다.<br>
+                        <br>
+                        이는 어떠한 환경 변화에도 유연하고 질기게 지속될 한미동맹의 미래를 보여줍니다.<br>
+                        대한민국과 미합중국 국기의 조형적 요소를 현대적으로 해체하고 재구성하여, 서로 얽히고설키며 하나의 유기적인 흐름을 만들어내는 모습은 두 국가가 완벽한 조화를 이루는 진정한 동행의 정신을 담고 있습니다.
+                    </p>
+                </div>
+            </div>
+
+        <div class="content-container">
+            <div style="padding: 100px 0; text-align: center; color: #ccc;">
+                Content Area
+            </div>
+
+        </div>
+
+        <div class="credit-section">
+            <div class="credit-grid">
+                <div class="credit-label">Project</div>
+                <div class="credit-content">Project Name / Period</div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Role</div>
+                <div class="credit-content">Name</div>
+            </div>
+            </div>
+
+        <div class="next-project" onclick="location.href='다음프로젝트링크.html'">
+            <div class="next-label">Next Project</div>
+            <div class="next-title">Next Project Name &rarr;</div>
+            </div>
+
+    </main>
+
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+            
+            document.getElementById('back-to-home').addEventListener('click', function() {
+                window.location.href = '../index.html';
+            });
+
+            const videos = document.querySelectorAll('video.locked-video');
+            videos.forEach(video => {
+                video.muted = true;
+                video.playsInline = true;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        console.log("Video Autoplay Started");
+                    }).catch(error => {
+                        console.log("Autoplay failed:", error);
+                        video.style.pointerEvents = "auto";
+                    });
+                }
+            });
+
+            let lastScrollTop = 0;
+            const header = document.querySelector('header');
+            const backNav = document.querySelector('.back-nav-container'); 
+            
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll <= 0) {
+                    return; 
+                }
+
+                if (currentScroll > lastScrollTop) {
+                    header.classList.add('header-hidden');
+                    backNav.classList.add('nav-up');
+                } else {
+                    header.classList.remove('header-hidden');
+                    backNav.classList.remove('nav-up');
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+            }, false);
+        });
+    </script>
+</body>
+</html>
