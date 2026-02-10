@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>CHID - Project Name (Dark)</title>
+    <title>CHID - KUNST (Dark)</title>
     
     <link rel="icon" href="../img/main/favicon.png" type="image/png">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
@@ -13,11 +13,11 @@
     <style>
         /* [기본 설정 및 다크모드 색상 변수] */
         :root {
-            --bg-color: #131313;       /* 메인 배경 (Dark) */
-            --text-main: #FAFAFA;      /* 메인 텍스트 (White) */
-            --text-sub: #b0b0b0;       /* 서브 텍스트 (Light Gray) */
-            --border-color: #333333;   /* 구분선 색상 (Dark Gray) */
-            --accent-blue: #33C5F4;    /* 포인트 컬러 (유지) */
+            --bg-color: #000000;       /* 메인 배경 (Dark) - 유지 */
+            --text-main: #ffffff;      /* 메인 텍스트 (White) - 변경 */
+            --text-sub: #A3A3A3;       /* 서브 텍스트 (Gray) - 변경 */
+            --border-color: #000000;   /* 구분선 색상 (Dark Gray) - 유지 */
+            --point-color: #FF7300;    /* 포인트 컬러 (Orange) - 변경 */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,12 +41,11 @@
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            /* 배경을 어두운 반투명색으로 변경 */
-            background-color: rgba(19, 19, 19, 0.95); 
+            background-color: rgba(0, 0, 0, 0.95); 
             backdrop-filter: blur(10px);
             transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             height: 90px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* 헤더 구분감 살짝 추가 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         header.header-hidden { transform: translateY(-100%); }
@@ -55,7 +54,7 @@
         /* [중요] 로고 색상 반전 (검은 로고를 흰색으로 변경) */
         .logo-img { 
             height: 60px; width: auto; display: block; 
-            filter: invert(1) brightness(1.2); /* 로고가 이미지일 경우 색상 반전 */
+            filter: invert(1) brightness(1.2);
         }
 
         /* [네비게이션 스타일] */
@@ -63,7 +62,7 @@
         nav ul li { margin-left: 0; }
         nav ul li a {
             text-decoration: none; 
-            color: var(--text-main); /* #FAFAFA */
+            color: var(--text-main);
             font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
             display: block; padding: 10px 0; letter-spacing: -0.02em;
             opacity: 0.7; 
@@ -94,11 +93,11 @@
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
             border-radius: 50%; 
-            border: 2px solid var(--text-main); /* 테두리 #FAFAFA */
-            background: rgba(255, 255, 255, 0.1); /* 반투명 흰색 배경 */
+            border: 2px solid var(--text-main);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             text-decoration: none; 
-            color: var(--text-main); /* 아이콘 #FAFAFA */
+            color: var(--text-main);
             opacity: 1; 
             transition: transform 0.3s ease, background 0.3s ease;
             cursor: pointer; pointer-events: auto; transform: translateY(20px); 
@@ -111,7 +110,7 @@
         }
         .back-btn:hover {
             transform: translateY(20px) translateX(-3px); 
-            background: rgba(255, 255, 255, 0.2); /* 호버 시 조금 더 밝게 */
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* [히어로 이미지] */
@@ -119,7 +118,7 @@
         .hero-image {
             width: 100%; height: auto; display: block; 
             border-radius: 0; 
-            background-color: #1a1a1a; /* 이미지가 없을 때 어두운 회색 배경 */
+            background-color: #1a1a1a;
             object-fit: cover; object-position: center;
             min-height: 400px;
         }
@@ -136,7 +135,7 @@
         }
         .project-specs {
             text-align: right; font-size: 14px; 
-            color: var(--text-sub); /* #b0b0b0 */
+            color: var(--text-sub);
             line-height: 1.6;
         }
 
@@ -181,35 +180,37 @@
         .gif-item img { width: 100%; height: auto; display: block; object-fit: cover; }
 
         /* [텍스트 스타일 - 다크모드] */
-        .blue-label { color: var(--accent-blue); font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block; }
+        .point-label { color: var(--point-color); font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block; }
         
         .main-heading { 
             font-size: 38px; font-weight: 700; 
-            color: var(--text-main); /* #FAFAFA */
+            color: var(--text-main); 
             line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em; 
         }
         
         .sub-heading { 
             font-size: 18px; 
-            color: var(--text-sub); /* #b0b0b0 */
+            color: var(--text-sub); 
             font-weight: 600; margin-top: 5px; 
         }
         
         .body-en { 
             font-size: 16px; 
-            color: #e0e0e0; /* 본문 영문은 가독성을 위해 살짝 밝게 */
+            color: #e0e0e0; /* 영문 가독성 유지 */
             line-height: 1.6; margin-bottom: 30px; font-weight: 400; 
         }
         
         .body-kr { 
             font-size: 14px; 
-            color: var(--text-sub); /* #b0b0b0 */
+            color: var(--text-sub); 
             line-height: 1.7; font-weight: 300; 
         }
         
         .text-section-center { text-align: center; width: 100%; max-width: 1000px; margin: 100px auto; padding: 0 40px; }
         .center-heading { font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em; }
-        .highlight-blue { color: var(--accent-blue); }
+        
+        .highlight-point { color: var(--point-color); }
+        
         .center-sub-heading { font-size: clamp(18px, 2.5vw, 28px); font-weight: 600; color: #e0e0e0; margin-bottom: 30px; letter-spacing: -0.02em; }
         .center-body-kr { font-size: 16px; font-weight: 400; color: var(--text-sub); line-height: 1.8; }
 
@@ -225,7 +226,7 @@
         /* [크레딧 섹션 - 다크모드] */
         .credit-section { 
             margin-top: 40px; 
-            border-top: 1px solid var(--border-color); /* #333333 */
+            border-top: 1px solid var(--border-color); 
             padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; 
         }
         .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
@@ -250,7 +251,7 @@
             /* [수정 필요] 다음 프로젝트 썸네일 경로 */
             background-image: url('../img/projects/Thumbnail/placeholder.png'); 
             background-size: cover; background-position: center;
-            filter: blur(10px) brightness(0.5); /* 다크모드이므로 조금 더 어둡게 처리 (0.6 -> 0.5) */
+            filter: blur(10px) brightness(0.5); 
             z-index: -1; transform: scale(1.1); 
             transition: filter 0.3s ease, transform 0.3s ease; 
         }
@@ -287,7 +288,7 @@
             .text-right { flex: 0 0 auto; width: 100%; padding-top: 0; }
             
             .main-heading { font-size: 32px; margin-bottom: 10px; }
-            .blue-label { font-size: 20px; margin-bottom: 10px; }
+            .point-label { font-size: 20px; margin-bottom: 10px; }
 
             .text-section-center { margin: 60px auto; padding: 0 20px; }
             .text-single-block { margin: 60px auto; padding: 0 20px; max-width: 100%; }
@@ -333,30 +334,30 @@
         </div>
 
         <section class="hero-section">
-            <img src="" alt="Hero Image" class="hero-image" style="background-color: #1a1a1a;"> </section>
+            <img src="../img/projects/project img/5. kunst/kunst 1.png" alt="KUNST Hero Image" class="hero-image" style="background-color: #1a1a1a;">
+        </section>
 
         <section class="project-header">
             <div class="project-title">
-                <h1>Project Title</h1>
+                <h1>KUNST</h1>
             </div>
             <div class="project-specs">
-                Client Name<br>
-                Project Description<br>
-                Year
+                CHID<br>
+                Augmented Reality Docent Glasses<br>
+                2025
             </div>
         </section>
 
         <div class="content-container">
-            <div style="padding: 100px 0; text-align: center; color: #555;">
+            <div style="padding: 100px 0; text-align: center; color: var(--text-sub);">
                 Content Area
             </div>
-
         </div>
 
         <div class="credit-section">
             <div class="credit-grid">
                 <div class="credit-label">Project</div>
-                <div class="credit-content">Project Name / Period</div>
+                <div class="credit-content">KUNST</div>
             </div>
             <div class="credit-grid">
                 <div class="credit-label">Role</div>
