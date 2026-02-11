@@ -38,12 +38,10 @@
             position: fixed; top: 0; left: 0; z-index: 100;
             background-color: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(10px);
-            /* 스크롤 트랜지션 적용 */
             transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             height: 90px;
         }
 
-        /* [추가됨] 헤더 숨김 클래스 */
         header.header-hidden {
             transform: translateY(-100%);
         }
@@ -80,15 +78,13 @@
             padding-top: 140px; padding-bottom: 80px; 
         }
 
-        /* 갤러리 그리드 */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* PC: 4열 */
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             padding: 0 40px;
         }
 
-        /* [프로젝트 아이템] */
         .project-item { 
             cursor: pointer; 
             opacity: 0; 
@@ -96,7 +92,6 @@
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* 순차적 등장 딜레이 */
         .project-item:nth-child(1) { animation-delay: 0.1s; }
         .project-item:nth-child(2) { animation-delay: 0.2s; }
         .project-item:nth-child(3) { animation-delay: 0.3s; }
@@ -106,27 +101,48 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* [수정됨] 간결하고 확실한 방식으로 변경 */
         .image-wrapper {
             position: relative; width: 100%; aspect-ratio: 3 / 4;
-            overflow: hidden; background-color: #f0f0f0;
+            overflow: hidden; 
+            /* background-color 제거 (검은 선의 원인 차단) */
+            background-color: transparent; 
+            
+            /* 마스킹 코드 모두 제거 (이게 오히려 선을 만들었음) */
+            
+            transform: translateZ(0); /* 사파리 렌더링 최적화 유지 */
         }
 
-        .image-wrapper img {
+        /* 이미지와 비디오 공통 스타일 */
+        .image-wrapper img, 
+        .image-wrapper video {
             width: 100%; height: 100%; object-fit: cover;
-            display: block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: block; 
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* [핵심] 기본 상태에서 1.01배 확대하여 틈새 원천 봉쇄 */
+            transform: scale(1.01); 
+            
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform;
         }
 
         .project-info-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(5px); 
+            background-color: rgba(0, 0, 0, 0.7); 
             color: #ffffff;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
         }
 
         .project-item:hover .project-info-overlay { opacity: 1; }
-        .project-item:hover .image-wrapper img { transform: scale(1.05); }
+        
+        /* 호버 시 1.05배 (기존 1.01배에서 더 확대됨) */
+        .project-item:hover .image-wrapper img,
+        .project-item:hover .image-wrapper video { 
+            transform: scale(1.06); 
+        }
         
         .info-title { 
             font-size: 18px; font-weight: 700; margin-bottom: 10px; 
@@ -172,7 +188,11 @@
 
            <div class="project-item" onclick="location.href='projects/kfw.html'">
                 <div class="image-wrapper">
-                    <img src="img/projects/Thumbnail/project 7.png" alt="KFW 2026">
+                    <video autoplay muted loop playsinline poster="img/projects/Thumbnail/project 7.png">
+                        <source src="img/projects/Thumbnail/project 7.mp4" type="video/mp4">
+                        <img src="img/projects/Thumbnail/project 7.png" alt="KFW 2026">
+                    </video>
+                    
                     <div class="project-info-overlay">
                         <div class="info-title">KFW 2026</div>
                         <div class="info-desc">Eighth Army<br>Branding<br>2026</div>
@@ -180,7 +200,6 @@
                 </div>
             </div> 
 
-            
             <div class="project-item" onclick="location.href='projects/FoldiSafe.html'">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 6.png" alt="FoldiSafe">
@@ -263,23 +282,20 @@
                 });
             });
 
-            // [추가된 부분] 스크롤 시 헤더 숨김/표시 로직
+            // 스크롤 시 헤더 숨김/표시 로직
             let lastScrollTop = 0;
             const header = document.querySelector('header');
             
             window.addEventListener('scroll', function() {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 
-                // 모바일 바운싱 방지 (스크롤이 0 이하일 땐 무시)
                 if (currentScroll <= 0) {
                     return; 
                 }
 
                 if (currentScroll > lastScrollTop) {
-                    // 스크롤 내림 -> 헤더 숨김
                     header.classList.add('header-hidden');
                 } else {
-                    // 스크롤 올림 -> 헤더 보임
                     header.classList.remove('header-hidden');
                 }
                 
