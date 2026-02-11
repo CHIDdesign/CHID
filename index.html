@@ -62,17 +62,22 @@
             z-index: -1; background-color: #000000; overflow: hidden;
         }
 
-        /* [수정됨] 전체 화면 비디오 밴딩(깨짐) 방지용 노이즈 필터 추가 */
+        /* [수정됨] 밴딩(깨짐) 방지 필터 개선 */
         #video-container::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5; /* 비디오(1)보다 위, 포스터(10)보다 아래 */
+            z-index: 5;
             pointer-events: none;
-            /* SVG 노이즈 패턴 */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.07; /* 노이즈 강도 */
-            mix-blend-mode: overlay; /* 영상과 자연스럽게 합성 */
+            
+            /* 노이즈 패턴 SVG */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+            
+            /* [중요 수정] 어두운 영상(Video 2)에서도 노이즈가 보이도록 overlay 제거 */
+            /* mix-blend-mode: overlay;  <-- 삭제함 (검은색 위에서 투명해지는 문제 해결) */
+            
+            /* 투명도를 낮춰서 자연스럽게 덮어씌움 (3% ~ 5% 추천) */
+            opacity: 0.04; 
         }
 
         #poster-layer {
@@ -95,7 +100,7 @@
             opacity: 0;
             z-index: 0;
             transform: translate3d(0,0,0);
-            will-change: opacity; /* 렌더링 최적화 힌트 추가 */
+            will-change: opacity;
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
 
