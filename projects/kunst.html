@@ -45,14 +45,10 @@
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            
-            /* [수정됨] 노이즈 방지를 위해 backdrop-filter 제거 및 완전 검정 배경 적용 */
             background-color: #000000; 
-            /* backdrop-filter: blur(10px);  <-- 노이즈의 원인 */
-            
             transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             height: 90px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 구분선 명도 약간 조절 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         header.header-hidden { transform: translateY(-100%); }
 
@@ -92,12 +88,8 @@
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
             border-radius: 50%; 
-            border: 1px solid #333333; /* 테두리 깔끔하게 변경 */
-            
-            /* [수정됨] 블러 제거하고 단색 배경 적용 */
+            border: 1px solid #333333; 
             background: #1a1a1a; 
-            /* backdrop-filter: blur(4px); <-- 노이즈 원인 제거 */
-            
             text-decoration: none; color: var(--text-main);
             opacity: 1; transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
             cursor: pointer; pointer-events: auto; transform: translateY(20px); 
@@ -164,6 +156,39 @@
         .full-image-block img { width: 100%; height: auto; display: block; margin-bottom: 20px; }
         .full-image-block video.locked-video { width: 100%; height: auto; display: block; margin-bottom: 20px; pointer-events: none; }
         video::-webkit-media-controls { display: none !important; }
+
+        /* [NEW] 영상 깨짐/밴딩 방지용 컨테이너 스타일 */
+        .banding-fix {
+            position: relative;
+            width: 100%;
+            background-color: #000; /* 영상 로딩 전 깜빡임 방지 */
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+        
+        .banding-fix video {
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            /* 하드웨어 가속 강제 */
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* [핵심] 노이즈 필터 오버레이: 밴딩(깍두기) 현상을 가려주는 필름 그레인 효과 */
+        .banding-fix::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            /* SVG 노이즈 패턴 생성 */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.07; /* 노이즈 강도 (너무 심하면 0.05로 줄이세요) */
+            mix-blend-mode: overlay; /* 영상과 자연스럽게 섞임 */
+        }
 
         /* Graph Video Block (Restricted Width) */
         .graph-block {
@@ -292,34 +317,23 @@
         .closing-block { margin-bottom: 80px; }
         .closing-section .body-en, .closing-section .body-kr { margin-bottom: 20px; }
 
-        /* Product Identity Section (기본: 좌측 정렬) */
+        /* Product Identity Section */
         .product-identity-section {
             max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; 
             text-align: left; 
         }
-        
         .identity-title {
             color: var(--point-color); font-style: italic; line-height: 1.1; margin-bottom: 60px; letter-spacing: -0.02em;
             text-align: left; 
         }
-        
         .identity-desc { 
-            max-width: 800px; 
-            margin: 0; 
-            text-align: left; 
+            max-width: 800px; margin: 0; text-align: left; 
         }
 
         /* Center Alignment Modifier */
-        .product-identity-section.centered {
-            text-align: center;
-        }
-        .product-identity-section.centered .identity-title {
-            text-align: center;
-        }
-        .product-identity-section.centered .identity-desc {
-            margin: 0 auto;
-            text-align: center;
-        }
+        .product-identity-section.centered { text-align: center; }
+        .product-identity-section.centered .identity-title { text-align: center; }
+        .product-identity-section.centered .identity-desc { margin: 0 auto; text-align: center; }
 
         .brand-bold { font-size: clamp(60px, 8vw, 120px); font-weight: 800; }
         .brand-pipe {
@@ -337,13 +351,11 @@
            7. Responsive Styles (Mobile)
            ========================================= */
         @media (max-width: 768px) {
-            /* Header */
             header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
             .logo-img { height: 50px; }
             nav ul { justify-content: center; gap: 25px; }
             nav ul li a { font-size: 16px; font-weight: 500; }
 
-            /* Layout */
             main { padding-top: 140px; }
             .back-nav-container { top: 150px; padding: 0 20px; }
             .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
@@ -355,33 +367,28 @@
             .next-project { padding: 100px 20px; }
             .next-title { font-size: 40px; }
 
-            /* Title Group */
             .title-group { padding: 80px 20px 20px; }
             .vertical-line { height: 40px; }
             .small-label { margin-bottom: 40px; font-size: 14px; }
             .horizontal-line { max-width: 200px; margin-bottom: 50px; }
             .main-quote { font-size: 32px; margin-bottom: 10px; }
 
-            /* Image & Video Blocks */
             .full-image-block { margin-bottom: 60px; }
             .full-image-block img.mobile-view-img { max-width: 100%; }
             .graph-block { margin-bottom: 20px; }
-            .web-constrained-img { max-width: 100%; } /* Mobile full width */
+            .web-constrained-img { max-width: 100%; } 
             .solution-logo { padding: 0 20px; max-width: 80%; }
 
-            /* Stats Section */
             .stats-text-container { flex-direction: row !important; gap: 20px; padding: 0 20px; margin-bottom: 80px; }
             .stats-title { font-size: 16px; margin-bottom: 5px; }
             .stats-sub { font-size: 12px; margin-bottom: 10px; }
             .stats-source { font-size: 11px; letter-spacing: -0.05em; }
 
-            /* Problem Section */
             .problem-define-section { margin: 20px auto 40px; padding: 0 20px; }
             .problem-label { font-size: 18px; text-align: center; padding-left: 0; margin-bottom: 15px; }
             .bracket-container { padding: 15px 30px; }
             .bracket-container::before, .bracket-container::after { width: 15px; border-width: 4px; }
 
-            /* Split Section */
             .image-text-split { flex-direction: column; gap: 40px; padding: 0; margin-bottom: 80px; }
             .split-image { width: 100%; padding: 0 20px; }
             .split-image video { max-width: 100%; }
@@ -389,7 +396,6 @@
             .split-heading { font-size: 32px; }
             .problem-heading { font-size: 28px; margin-bottom: 20px; }
 
-            /* Mission & Definition */
             .mission-section { margin: 100px auto; }
             .mission-text-en { line-height: 1.3; }
             .mission-text-kr { font-size: 13px; margin-top: 30px; padding: 0 10px; }
@@ -403,7 +409,6 @@
             .slogan-sub { font-size: 20px; }
             .slogan-main { font-size: 50px; }
 
-            /* Product Identity Mobile */
             .product-identity-section { margin: 100px auto; padding: 0 20px; }
             .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
         }
@@ -642,7 +647,7 @@
             </div> 
         </section>
 
-        <div class="full-image-block">
+        <div class="banding-fix">
             <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
                 <source src="../img/projects/project img/5. kunst/kunst 11.mp4" type="video/mp4">
             </video>
