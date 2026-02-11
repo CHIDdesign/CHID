@@ -198,7 +198,7 @@
             width: 100%; height: auto; display: block; pointer-events: none;
         }
 
-        /* Web Constrained Image */
+        /* Web Constrained Image (PC에서만 너비 제한, 모바일은 100% 유지) */
         .web-constrained-img {
             width: 100%; max-width: 1200px; 
             margin: 0 auto 20px; display: block; height: auto;
@@ -411,6 +411,8 @@
 
             .product-identity-section { margin: 100px auto; padding: 0 20px; }
             .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
+
+            /* [수정] 모바일 확대 코드 제거됨 */
         }
     </style>
 </head>
@@ -767,7 +769,7 @@
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 20.png" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 20.png" alt="Detail" class="web-constrained-img">
         </div> 
 
         <div class="full-image-block">
