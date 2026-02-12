@@ -157,11 +157,10 @@
         .full-image-block video.locked-video { width: 100%; height: auto; display: block; margin-bottom: 20px; pointer-events: none; }
         video::-webkit-media-controls { display: none !important; }
 
-        /* [NEW] 영상 깨짐/밴딩 방지용 컨테이너 스타일 */
         .banding-fix {
             position: relative;
             width: 100%;
-            background-color: #000; /* 영상 로딩 전 깜빡임 방지 */
+            background-color: #000;
             overflow: hidden;
             margin-bottom: 60px;
         }
@@ -172,25 +171,21 @@
             height: auto;
             position: relative;
             z-index: 1;
-            /* 하드웨어 가속 강제 */
             will-change: transform;
             transform: translate3d(0, 0, 0);
         }
 
-        /* [핵심] 노이즈 필터 오버레이: 밴딩(깍두기) 현상을 가려주는 필름 그레인 효과 */
         .banding-fix::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 2;
             pointer-events: none;
-            /* SVG 노이즈 패턴 생성 */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.07; /* 노이즈 강도 (너무 심하면 0.05로 줄이세요) */
-            mix-blend-mode: overlay; /* 영상과 자연스럽게 섞임 */
+            opacity: 0.07; 
+            mix-blend-mode: overlay; 
         }
 
-        /* Graph Video Block (Restricted Width) */
         .graph-block {
             width: 100%; max-width: 800px; margin: 0 auto 40px; 
         }
@@ -198,13 +193,11 @@
             width: 100%; height: auto; display: block; pointer-events: none;
         }
 
-        /* Web Constrained Image (PC에서만 너비 제한, 모바일은 100% 유지) */
         .web-constrained-img {
             width: 100%; max-width: 1200px; 
             margin: 0 auto 20px; display: block; height: auto;
         }
 
-        /* Solution Logo */
         .solution-logo {
             width: 100%; max-width: 600px; 
             padding: 0 40px; height: auto; display: block; margin: 40px auto 0;
@@ -221,6 +214,13 @@
         
         .body-en { font-size: 16px; color: #e0e0e0; line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
         .body-kr { font-size: 14px; color: var(--text-sub); line-height: 1.7; font-weight: 300; }
+        
+        .intro-lead {
+            display: block;
+            font-size: 24px; font-weight: 700; color: #ffffff;
+            line-height: 1.3; margin-bottom: 15px;
+        }
+
         .highlight-text { color: var(--point-color); font-weight: 700; font-style: italic; }
         .highlight-orange { color: var(--point-color); font-weight: 700; }
 
@@ -228,7 +228,6 @@
            6. Special Sections
            ========================================= */
         
-        /* Title Group */
         .title-group {
             width: 100%; text-align: center; padding: 100px 20px 40px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -239,7 +238,6 @@
         .main-quote { font-size: clamp(32px, 5vw, 72px); font-weight: 300; color: var(--text-main); line-height: 1.3; letter-spacing: -0.02em; word-break: keep-all; }
         .main-quote span.quote-mark { font-family: serif; color: #666; margin: 0 5px; }
 
-        /* Stats Text */
         .stats-text-container {
             display: flex; justify-content: space-between; align-items: flex-start;
             max-width: 800px; width: 100%; margin: 0 auto 100px; padding: 0 20px; gap: 40px;
@@ -250,7 +248,6 @@
         .stats-source { font-size: 13px; color: #666666; font-weight: 300; line-height: 1.4; }
         .stats-title .highlight-text { color: var(--point-color); font-style: normal; }
 
-        /* Problem Definition (Brackets) */
         .problem-define-section {
             width: 100%; max-width: 1200px; margin: 40px auto 60px; padding: 0 40px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
@@ -273,7 +270,6 @@
             line-height: 1.2; text-align: center; margin: 0; letter-spacing: -0.02em;
         }
 
-        /* Image-Text Split Section */
         .image-text-split {
             display: flex; align-items: center; justify-content: space-between;
             max-width: 1400px; width: 100%; margin: 0 auto 120px; padding: 0 40px; gap: 80px;
@@ -293,10 +289,25 @@
 
         /* Mission Section */
         .mission-section { text-align: center; width: 100%; max-width: 1200px; margin: 150px auto; padding: 0 20px; }
-        .mission-text-en { font-size: clamp(24px, 4vw, 48px); font-weight: 300; color: var(--text-main); line-height: 1.4; margin: 0; letter-spacing: -0.02em; }
+        
+        /* [수정] 영문 텍스트 기본 스타일: 기존보다 약간 작게 설정 */
+        .mission-text-en { 
+            font-size: clamp(20px, 3.2vw, 40px); /* 기존 max 48px -> 40px로 축소 */
+            font-weight: 300; 
+            color: var(--text-main); 
+            line-height: 1.4; 
+            margin: 0; 
+            letter-spacing: -0.02em; 
+        }
+        /* [수정] 영문 강조 텍스트: 기존 크기(큰 폰트) 유지 */
+        .mission-text-en .highlight-orange {
+            font-size: clamp(24px, 4vw, 48px); /* 기존 크기 유지 */
+            font-weight: 700;
+            color: var(--point-color);
+        }
+
         .mission-text-kr { font-size: 15px; color: #666666; font-weight: 300; margin-top: 50px; line-height: 1.6; word-break: keep-all; }
 
-        /* Definition Section */
         .definition-section {
             display: flex; justify-content: center; align-items: center;
             max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; gap: 80px;
@@ -310,14 +321,15 @@
         .slogan-sub { font-size: clamp(18px, 2.5vw, 32px); font-weight: 300; color: var(--text-main); margin: 0 0 10px 0; line-height: 1.2; }
         .slogan-main { font-size: clamp(40px, 6vw, 100px); font-weight: 700; color: var(--point-color); font-style: italic; line-height: 1; margin: 0; letter-spacing: -0.02em; }
 
-        /* Closing Text Section */
         .closing-section {
-            max-width: 1000px; margin: 100px auto; padding: 0 20px; text-align: center;
+            max-width: 1200px;
+            margin: 100px auto; padding: 0 20px; text-align: center;
         }
         .closing-block { margin-bottom: 80px; }
-        .closing-section .body-en, .closing-section .body-kr { margin-bottom: 20px; }
+        
+        .closing-section .mission-text-en { margin-bottom: 10px; }
+        .closing-section .mission-text-kr { margin-top: 10px; } 
 
-        /* Product Identity Section */
         .product-identity-section {
             max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; 
             text-align: left; 
@@ -330,7 +342,6 @@
             max-width: 800px; margin: 0; text-align: left; 
         }
 
-        /* Center Alignment Modifier */
         .product-identity-section.centered { text-align: center; }
         .product-identity-section.centered .identity-title { text-align: center; }
         .product-identity-section.centered .identity-desc { margin: 0 auto; text-align: center; }
@@ -341,7 +352,6 @@
         }
         .brand-thin { font-size: clamp(60px, 8vw, 120px); font-weight: 200; display: block; }
 
-        /* Credits */
         .credit-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; }
         .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
         .credit-label { font-weight: 700; color: var(--text-main); }
@@ -411,8 +421,6 @@
 
             .product-identity-section { margin: 100px auto; padding: 0 20px; }
             .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
-
-            /* [수정] 모바일 확대 코드 제거됨 */
         }
     </style>
 </head>
@@ -462,8 +470,10 @@
         </div>
 
         <div class="text-right">
+            <p class="intro-lead">
+                KUNST is an exhibition docent device powered by Augmented Reality (AR).
+            </p>
             <p class="body-en">
-                KUNST is an exhibition docent device powered by Augmented Reality (AR).<br>
                 Upon entry, dual cameras scan the environment to overlay audiovisual commentary directly onto artworks in real-time.<br>
                 Users can intuitively access information via gestures or physical controls, while an integrated Large Language Model (LLM) provides instant responses to queries.<br>
                 By eliminating the barrier of screens, KUNST seamlessly merges digital content with physical space, offering an immersive experience akin to walking with a personal curator.
@@ -678,44 +688,44 @@
 
         <section class="closing-section">
             <div class="closing-block">
-                <p class="body-en">
+                <p class="mission-text-en">
                     Is an exhibition really just a place to Look and Observe?<br>
                     What if we <span class="highlight-orange">Expand</span> that role a little further?
                 </p>
-                <p class="body-kr">
+                <p class="mission-text-kr">
                     전시는 정말로 단순히 바라보기만 하는 공간일까요?<br>
                     이제 그 역할을 한층 더 확장해보면 어떨까요?
                 </p>
             </div>
 
             <div class="closing-block">
-                <p class="body-en">
+                <p class="mission-text-en">
                     The moment you put on <span class="highlight-orange">KUNST</span>; something changes.
                 </p>
-                <p class="body-kr">
+                <p class="mission-text-kr">
                     예술비평가의 “검은 뿔테 안경”을 연상시키는 KUNST를 착용하는 순간,
                 </p>
             </div>
 
             <div class="closing-block">
-                <p class="body-en">
+                <p class="mission-text-en">
                     From children to adults,<br>
                     Everyone begins to <span class="highlight-orange">Ask their own Questions</span><br>
                     and <span class="highlight-orange">Dive Deeper</span> into the world of each artwork.<br>
                     The exhibition is no longer a stage for passive viewing.
                 </p>
-                <p class="body-kr">
+                <p class="mission-text-kr">
                     어린아이부터 성인까지, 각자의 질문을 던지고, 작품의 세계 속으로 더 깊이 빠져듭니다.<br>
                     전시는 더 이상 수동적 감상의 무대가 아닙니다.
                 </p>
             </div>
 
             <div class="closing-block">
-                <p class="body-en">
+                <p class="mission-text-en">
                     Here, everyone becomes an <span class="highlight-orange">Art Critic</span>,<br>
                     freely interpreting, questioning, and recreating art in their own way.
                 </p>
-                <p class="body-kr">
+                <p class="mission-text-kr">
                     누구나 스스로 예술을 비평하고 재창조하는 ‘예술 비평가’입니다.
                 </p>
             </div>
