@@ -75,7 +75,7 @@
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
 
-        /* Back Navigation */
+        /* Back Navigation (Modified for Glassmorphism) */
         .back-nav-container {
             width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
             position: -webkit-sticky; position: sticky;
@@ -88,8 +88,13 @@
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
             border-radius: 50%; 
-            border: 1px solid #333333; 
-            background: #1a1a1a; 
+            
+            /* [수정됨] Glass Style 적용 */
+            border: 2px solid rgba(255, 255, 255, 1); /* 흰색 투명 테두리 */
+            background: rgba(0, 0, 0, 0.24);             /* 투명도 있는 배경 */
+            backdrop-filter: blur(4px);                 /* 배경 블러 처리 */
+            -webkit-backdrop-filter: blur(4px);         /* 사파리 호환 */
+            
             text-decoration: none; color: var(--text-main);
             opacity: 1; transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
             cursor: pointer; pointer-events: auto; transform: translateY(20px); 
@@ -102,8 +107,8 @@
         }
         .back-btn:hover {
             transform: translateY(20px) translateX(-3px); 
-            background: #333333;
-            border-color: #555555;
+            background: rgba(255, 255, 255, 0.1); /* 호버 시 약간 밝게 */
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         /* Footer (Next Project) */
@@ -385,6 +390,44 @@
         .credit-label { font-weight: 700; color: var(--text-main); }
         .credit-content { font-weight: 300; color: var(--text-sub); }
 
+        /* [NEW] Custom Layout Helper: Hand Tracking Section */
+        /* Alignment Fix: Match the max-width (1200px) and padding of .text-right */
+        .hand-tracking-container {
+            max-width: 1200px !important; 
+            margin: 0 auto 100px;
+            width: 100%;
+            padding: 0 40px;
+        }
+        
+        @media (min-width: 769px) {
+            .hand-tracking-container.reverse-desktop {
+                display: flex;
+                flex-direction: row-reverse; /* Desktop: Image Right, Text Left */
+                justify-content: space-between; /* This pushes Text to Left Edge, Image to Right Edge */
+                align-items: center;
+                gap: 40px;
+            }
+            
+            /* Specific fix to ensure text is flushed left */
+            .hand-tracking-container .split-text {
+                text-align: left;
+                flex: 0 0 auto;
+                width: auto;
+            }
+
+            /* Image Sizing Fix: Make it appropriately large */
+            .hand-tracking-container .split-image {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end;
+            }
+            .hand-tracking-container .split-image img {
+                max-width: 650px; /* Increased size */
+                width: 100%;
+                height: auto;
+            }
+        }
+
         /* =========================================
            7. Responsive Styles (Mobile)
            ========================================= */
@@ -455,6 +498,21 @@
             .touching-title { font-size: 48px; }
             .touching-sub { font-size: 24px; }
             .touching-kr { font-size: 14px; }
+
+            /* [NEW] Hand Tracking Mobile Specific */
+            /* Force big fonts specifically for this section on mobile */
+            .hand-tracking-container .split-heading {
+                font-size: 64px !important;
+                line-height: 0.9;
+                margin-bottom: 20px;
+            }
+            .hand-tracking-container .body-en {
+                font-size: 28px !important;
+                line-height: 1.2;
+            }
+            .hand-tracking-container .body-kr {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -704,7 +762,7 @@
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 13.png" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 13.png" alt="Detail" class="web-constrained-img">
         </div> 
 
         <section class="definition-section">
@@ -848,6 +906,12 @@
             <div class="horizontal-line"></div>
         </section>
 
+        <div class="full-image-block">
+            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <source src="../img/projects/project img/5. kunst/kunst 23.mp4" type="video/mp4">
+            </video>
+        </div>
+
         <section class="touching-space-section">
             <h2 class="touching-title">Touching the Space</h2>
             <p class="touching-sub">: Gesture-Based Immersive Docent</p>
@@ -860,12 +924,67 @@
         </div> 
 
        <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 25.png" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 25.png" alt="Detail" class="web-constrained-img">
         </div>  
 
-        <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 26.gif" alt="Detail">
+        <div class="text-right">
+            <p class="body-en">
+                Traditional viewing is passive. KUNST transforms this into interaction.<br>
+                Fusing AR with precise hand-tracking, it bridges the gap between the viewer and the art.<br>
+            </p>
+           <p class="body-kr">
+                수동적인 관람을 넘어, KUNST는 '상호작용'을 제안합니다.<br>
+                AR과 정교한 핸드 트래킹의 결합으로 예술과 관람객 사이의 경계를 허뭅니다.
+            </p>
         </div> 
+        
+        <div class="full-image-block">
+            <img src="../img/projects/project img/5. kunst/kunst 26.gif" alt="Detail" class="web-constrained-img">
+        </div> 
+
+        <div class="full-image-block">
+            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <source src="../img/projects/project img/5. kunst/kunst 27.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="text-right">
+            <p class="intro-lead">
+                <span class="highlight-orange">Witty Microcopy: Turning Waiting into Entertainment</span>
+            </p>
+            <p class="body-en">
+                KUNST turns friction into fun.<br>
+                Witty microcopy like "Searching for Mona Lisa’s eyebrows" adds personality, transforming boring waits into entertainment.
+            </p>
+            <p class="body-kr">
+                기다림을 유쾌함으로 바꿉니다.<br>
+                "모나리자의 눈썹을 찾는 중" 같은 위트 있는 문구로, 지루한 로딩 시간조차 즐거운 경험이 됩니다.
+            </p>
+        </div>
+
+        <div class="image-text-split reverse-desktop hand-tracking-container">
+            <div class="split-image">
+                <img src="../img/projects/project img/5. kunst/kunst 28.png" alt="Hand Tracking">
+            </div>
+            <div class="split-text">
+                <h2 class="split-heading" style="margin-bottom: 20px;">
+                    <span class="highlight-orange">Hand<br>Tracking</span>
+                </h2>
+                <p class="body-en" style="font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 10px; line-height: 1.2;">
+                    for Seamless & Precise<br>
+                    viewing experience
+                </p>
+                <p class="body-kr">
+                    직관적이고 정확한 관람을 위한 손 모션 트래킹
+                </p>
+            </div>
+        </div>
+
+        <div class="full-image-block">
+            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <source src="../img/projects/project img/5. kunst/kunst 29.mp4" type="video/mp4">
+            </video>
+        </div>
 
         <div class="credit-section">
             <div class="credit-grid">
