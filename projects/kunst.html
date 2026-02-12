@@ -89,11 +89,10 @@
             width: 48px; height: 48px; 
             border-radius: 50%; 
             
-            /* [수정됨] Glass Style 적용 */
-            border: 2px solid rgba(255, 255, 255, 1); /* 흰색 투명 테두리 */
-            background: rgba(0, 0, 0, 0.24);             /* 투명도 있는 배경 */
-            backdrop-filter: blur(4px);                 /* 배경 블러 처리 */
-            -webkit-backdrop-filter: blur(4px);         /* 사파리 호환 */
+            border: 2px solid rgba(255, 255, 255, 1); 
+            background: rgba(0, 0, 0, 0.24);             
+            backdrop-filter: blur(4px);                 
+            -webkit-backdrop-filter: blur(4px);         
             
             text-decoration: none; color: var(--text-main);
             opacity: 1; transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
@@ -107,7 +106,7 @@
         }
         .back-btn:hover {
             transform: translateY(20px) translateX(-3px); 
-            background: rgba(255, 255, 255, 0.1); /* 호버 시 약간 밝게 */
+            background: rgba(255, 255, 255, 0.1); 
             border-color: rgba(255, 255, 255, 0.6);
         }
 
@@ -178,6 +177,14 @@
             z-index: 1;
             will-change: transform;
             transform: translate3d(0, 0, 0);
+        }
+
+        /* [NEW] 37번, 44번 비디오 전용 스타일 (PC에서만 너비 제한) */
+        @media (min-width: 769px) {
+            .video-limit-small {
+                max-width: 1000px !important; /* 원하는 크기로 제한 */
+                margin: 0 auto !important;    /* 중앙 정렬 */
+            }
         }
 
         .banding-fix::after {
@@ -1100,7 +1107,7 @@
         </div>
 
         <div class="banding-fix">
-            <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video video-limit-small" autoplay muted loop playsinline preload="auto">
                 <source src="../img/projects/project img/5. kunst/kunst 37.mp4" type="video/mp4">
             </video>
         </div>
@@ -1181,7 +1188,7 @@
         </div> 
 
         <div class="banding-fix">
-            <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+             <video class="locked-video video-limit-small" autoplay muted loop playsinline preload="auto">
                 <source src="../img/projects/project img/5. kunst/kunst 44.mp4" type="video/mp4">
             </video>
         </div>
@@ -1225,7 +1232,7 @@
         </div> 
 
         <div class="banding-fix">
-            <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" autoplay muted loop playsinline preload="auto">
                 <source src="../img/projects/project img/5. kunst/kunst 48.mp4" type="video/mp4">
             </video>
         </div>
