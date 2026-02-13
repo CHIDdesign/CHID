@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>CHID - Project Name</title>
+    <title>CHID - KFW 2026</title>
     
-    <link rel="icon" href="../img/main/favicon.png" type="image/png">
+    <link rel="icon" href="../img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
 
@@ -131,18 +131,11 @@
 
         .text-section-split {
             display: flex; justify-content: space-between; align-items: flex-start;
-            
-            /* [수정됨] 최대 너비를 1200px에서 1800px로 대폭 확장 */
-            max-width: 1800px; 
-            
-            width: 100%; margin: 0 auto 80px; 
+            max-width: 1200px; width: 100%; margin: 0 auto 80px; 
             padding: 0 40px; gap: 40px;
         }
         .text-section-split.align-center { align-items: center; }
-        
-        /* [수정됨] 로고 영역을 20%로 줄여서 텍스트 공간(80%)을 더 확보 */
-        .text-left { flex: 0 0 20%; }
-        
+        .text-left { flex: 0 0 40%; }
         .text-right { flex: 1; padding-top: 10px; }
         .text-section-split.align-center .text-right { padding-top: 0; }
 
@@ -201,8 +194,8 @@
         .next-project::before {
             content: '';
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* [수정 필요] 다음 프로젝트 썸네일 경로 */
-            background-image: url('../img/projects/Thumbnail/placeholder.png'); 
+            /* [수정] png -> webp */
+            background-image: url('../img/projects/Thumbnail/placeholder.webp'); 
             background-size: cover; background-position: center;
             filter: blur(10px) brightness(0.6); 
             z-index: -1; transform: scale(1.1); 
@@ -247,9 +240,7 @@
             .text-single-block { margin: 60px auto; padding: 0 20px; max-width: 100%; }
 
             .full-image-block img.mobile-view-img { max-width: 100%; }
-            
-            .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 0 30px 0; display: block; }
-            
+            .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 auto 30px auto; display: block; }
             .full-image-block video.video-limit { max-width: 100%; }
 
             .image-text-split { flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px; }
@@ -289,7 +280,7 @@
         </div>
 
         <section class="hero-section">
-            <img src="../img/projects/project img/7. kfw/kfw 1.png" alt="KUNST Hero Image" class="hero-image" style="background-color: #1a1a1a;">
+            <img src="../img/projects/project img/7. kfw/kfw 1.webp" alt="KUNST Hero Image" class="hero-image" style="background-color: #1a1a1a;">
         </section>
 
         <section class="project-header">

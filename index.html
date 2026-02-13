@@ -15,9 +15,9 @@
     <meta property="og:url" content="https://chid.kr">
     <meta property="og:title" content="CHID">
     <meta property="og:description" content="Industrial Design Portfolio">
-    <meta property="og:image" content="https://chid.kr/img/main/meta img.png">
+    <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
 
-    <link rel="icon" href="img/main/favicon.png" type="image/png">
+    <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <script type="application/ld+json">
@@ -72,9 +72,6 @@
             
             /* 노이즈 패턴 SVG */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            
-            /* [중요 수정] 어두운 영상(Video 2)에서도 노이즈가 보이도록 overlay 제거 */
-            /* mix-blend-mode: overlay;  <-- 삭제함 (검은색 위에서 투명해지는 문제 해결) */
             
             /* 투명도를 낮춰서 자연스럽게 덮어씌움 (3% ~ 5% 추천) */
             opacity: 0.04; 
