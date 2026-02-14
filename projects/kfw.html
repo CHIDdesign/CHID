@@ -129,22 +129,30 @@
 
         .juxtapose { width: 100%; margin: 0 auto; }
 
+        /* [수정됨] 항상 상하 배치(Column) 및 너비 확장 */
         .text-section-split {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            max-width: 1200px; width: 100%; margin: 0 auto 80px; 
-            padding: 0 40px; gap: 40px;
+            display: flex; 
+            flex-direction: column; /* 항상 세로 배치 */
+            justify-content: flex-start; 
+            align-items: flex-start; /* 좌측 정렬 */
+            max-width: 1800px; /* 최대 너비를 1800px로 확장 */
+            width: 100%; 
+            margin: 0 auto 80px; 
+            padding: 0 40px; 
+            gap: 40px; /* 로고와 텍스트 사이 간격 */
         }
-        .text-section-split.align-center { align-items: center; }
-        .text-left { flex: 0 0 40%; }
-        .text-right { flex: 1; padding-top: 10px; }
-        .text-section-split.align-center .text-right { padding-top: 0; }
+        
+        /* 기존 좌우 분할 속성 제거 및 전체 너비 할당 */
+        .text-left { width: 100%; }
+        .text-right { width: 100%; padding-top: 0; }
 
-        /* [이미지 반응형 추가] */
+        /* [수정됨] 로고 스타일: 반응형 + 좌측 정렬 + 적절한 최대 크기 제한 */
         .seesaw-logo-img {
             width: 100%;      
+            max-width: 500px; /* 로고가 너무 거대해지지 않도록 제한 (원하시면 조절 가능) */
             height: auto;     
             display: block;
-            max-width: 100%; 
+            margin: 0; /* 좌측 정렬 */
         }
 
         .image-text-split {
@@ -236,16 +244,17 @@
 
             .hero-image { height: 80vh; }
 
-            /* [수정됨] 패딩을 0으로 줄여 좌우 공간 최대 확보 */
+            /* [수정됨] 모바일에서도 동일하게 적용하되 패딩값만 조절 */
             .text-section-split { 
+                /* flex-direction은 이미 base css에서 column이므로 생략 가능하나 명시 유지 */
                 flex-direction: column; 
                 gap: 30px; 
-                padding: 0; 
+                padding: 0; /* 컨테이너 패딩 제거 */
                 margin-bottom: 60px; 
             }
             
             .text-left { flex: 0 0 auto; width: 100%; }
-            /* [수정됨] 텍스트 영역 내부 여백 */
+            /* 모바일 텍스트 내부 여백 */
             .text-right { flex: 0 0 auto; width: 100%; padding-top: 0; padding-left: 10px; padding-right: 10px; }
             
             .main-heading { font-size: 32px; margin-bottom: 10px; }
@@ -256,8 +265,8 @@
 
             .full-image-block img.mobile-view-img { max-width: 100%; }
             
-            /* [수정됨] 모바일에서는 로고 크기를 적절히 줄여줌 (기존 유지) */
-            .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 auto 30px auto; display: block; }
+            /* 모바일에서는 로고 크기를 조금 더 줄여서 보여줌 */
+            .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 auto 30px 0; /* 좌측 정렬 유지 */ }
             
             .full-image-block video.video-limit { max-width: 100%; }
 
