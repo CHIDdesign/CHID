@@ -85,11 +85,16 @@
             padding: 0 40px;
         }
 
+        /* [수정] a 태그 스타일 리셋 및 블록화 */
         .project-item { 
+            display: block;
+            text-decoration: none;
+            color: inherit;
             cursor: pointer; 
             opacity: 0; 
             transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
         }
 
         .project-item:nth-child(1) { animation-delay: 0.1s; }
@@ -101,16 +106,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* [수정됨] 간결하고 확실한 방식으로 변경 */
         .image-wrapper {
             position: relative; width: 100%; aspect-ratio: 3 / 4;
             overflow: hidden; 
-            /* background-color 제거 (검은 선의 원인 차단) */
             background-color: transparent; 
-            
-            /* 마스킹 코드 모두 제거 (이게 오히려 선을 만들었음) */
-            
-            transform: translateZ(0); /* 사파리 렌더링 최적화 유지 */
+            transform: translateZ(0); 
         }
 
         /* 이미지와 비디오 공통 스타일 */
@@ -119,10 +119,7 @@
             width: 100%; height: 100%; object-fit: cover;
             display: block; 
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            
-            /* [핵심] 기본 상태에서 1.01배 확대하여 틈새 원천 봉쇄 */
             transform: scale(1.01); 
-            
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             will-change: transform;
@@ -136,11 +133,16 @@
             text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
         }
 
+        /* PC: 호버 시 정보 표시 */
         .project-item:hover .project-info-overlay { opacity: 1; }
         
-        /* 호버 시 1.05배 (기존 1.01배에서 더 확대됨) */
+        /* [추가] 모바일: 탭 활성화 시 정보 표시 */
+        .project-item.mobile-hover .project-info-overlay { opacity: 1; }
+        
         .project-item:hover .image-wrapper img,
-        .project-item:hover .image-wrapper video { 
+        .project-item:hover .image-wrapper video,
+        .project-item.mobile-hover .image-wrapper img,
+        .project-item.mobile-hover .image-wrapper video { 
             transform: scale(1.06); 
         }
         
@@ -186,7 +188,7 @@
     <main>
         <div class="gallery-grid">
 
-           <div class="project-item" onclick="location.href='projects/kfw.html'">
+           <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 7.webp" alt="KFW 2026">
                     <div class="project-info-overlay">
@@ -194,9 +196,9 @@
                         <div class="info-desc">Eighth Army<br>Branding<br>2026</div>
                     </div>
                 </div>
-            </div> 
+            </a> 
 
-            <div class="project-item" onclick="location.href='projects/FoldiSafe.html'">
+            <a href="projects/FoldiSafe.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 6.webp" alt="FoldiSafe">
                     <div class="project-info-overlay">
@@ -204,9 +206,9 @@
                         <div class="info-desc">COREAMED<br>Suction Liner Bag<br>2025</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-item" onclick="location.href='projects/kunst.html'">
+            <a href="projects/kunst.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 5.webp" alt="KUNST">
                     <div class="project-info-overlay">
@@ -214,9 +216,9 @@
                         <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-item" onclick="location.href='projects/seesaw.html'">
+            <a href="projects/seesaw.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 4.webp" alt="Seesaw">
                     <div class="project-info-overlay">
@@ -224,9 +226,9 @@
                         <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-item" onclick="location.href='projects/aetheris.html'">
+            <a href="projects/aetheris.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 3.webp" alt="Aetheris">
                     <div class="project-info-overlay">
@@ -234,9 +236,9 @@
                         <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-item" onclick="location.href='projects/Nezhnost.html'">
+            <a href="projects/Nezhnost.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 2.webp" alt="Invasion">
                     <div class="project-info-overlay">
@@ -244,9 +246,9 @@
                         <div class="info-desc">TU Berlin<br>XR Game<br>2024</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-item" onclick="location.href='projects/Nezhnost.html'">
+            <a href="projects/Nezhnost.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 1.webp" alt="Nezhnost">
                     <div class="project-info-overlay">
@@ -254,7 +256,7 @@
                         <div class="info-desc">CHID<br>Speaker for ISS<br>2024</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
         </div>
     </main>
@@ -285,18 +287,50 @@
             window.addEventListener('scroll', function() {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 
-                if (currentScroll <= 0) {
-                    return; 
-                }
+                if (currentScroll <= 0) return; 
 
                 if (currentScroll > lastScrollTop) {
                     header.classList.add('header-hidden');
                 } else {
                     header.classList.remove('header-hidden');
                 }
-                
                 lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
             }, false);
+
+            /* -----------------------------------------------------------
+               [핵심] 모바일 'Double Tap' UX 로직
+               1. 첫 번째 터치: 정보 오버레이 표시 (페이지 이동 X)
+               2. 두 번째 터치: 해당 페이지로 이동
+            ----------------------------------------------------------- */
+            const projectItems = document.querySelectorAll('.project-item');
+
+            projectItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 터치 가능한 디바이스인지 체크
+                    const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+                    
+                    if (isTouchDevice) {
+                        // 현재 아이템이 활성화(정보표시) 상태가 아니라면
+                        if (!this.classList.contains('mobile-hover')) {
+                            e.preventDefault(); // 링크 이동 막음
+                            
+                            // 다른 아이템들의 활성화 상태 제거 (하나만 켜지게)
+                            projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
+                            
+                            // 현재 아이템 활성화
+                            this.classList.add('mobile-hover');
+                        }
+                        // 활성화 상태라면? -> preventDefault 없이 그냥 넘어가서 href로 이동됨.
+                    }
+                });
+            });
+            
+            // 빈 공간 터치 시 모든 활성화 해제 (깔끔한 경험을 위해)
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.project-item')) {
+                    projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
+                }
+            });
         });
     </script>
 </body>
