@@ -1035,7 +1035,6 @@
                 window.location.href = '../index.html';
             });
 
-            // IntersectionObserver: Scroll-based Video Lazy Loading & Playing
             const videoObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     const video = entry.target;
@@ -1060,6 +1059,9 @@
             });
 
             let lastScrollTop = 0;
+            let scrollUpDistance = 0;
+            const scrollThreshold = 400;
+
             const header = document.querySelector('header');
             const backNav = document.querySelector('.back-nav-container'); 
             
@@ -1067,15 +1069,23 @@
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 
                 if (currentScroll <= 0) {
+                    header.classList.remove('header-hidden');
+                    backNav.classList.remove('nav-up');
+                    lastScrollTop = 0;
                     return; 
                 }
 
                 if (currentScroll > lastScrollTop) {
                     header.classList.add('header-hidden');
                     backNav.classList.add('nav-up');
+                    scrollUpDistance = 0;
                 } else {
-                    header.classList.remove('header-hidden');
-                    backNav.classList.remove('nav-up');
+                    scrollUpDistance += (lastScrollTop - currentScroll);
+                    if (scrollUpDistance > scrollThreshold) {
+                        header.classList.remove('header-hidden');
+                        backNav.classList.remove('nav-up');
+                        scrollUpDistance = scrollThreshold;
+                    }
                 }
                 
                 lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
