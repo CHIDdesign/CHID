@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <title>CHID - Seesaw</title>
-    
     <link rel="icon" href="../img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-    
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
-
     <style>
-        /* [기본 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
@@ -25,10 +19,7 @@
             overflow-x: hidden;
             width: 100%;
         }
-        
         body.fade-in { opacity: 1; }
-
-        /* [헤더 스타일] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -39,16 +30,11 @@
             transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             height: 90px;
         }
-
         header.header-hidden { transform: translateY(-100%); }
-
         .logo-container { cursor: pointer; }
         .logo-img { height: 60px; width: auto; display: block; }
-
-        /* [네비게이션 스타일] */
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
-        
         nav ul li a {
             text-decoration: none; color: #111111;
             font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
@@ -57,35 +43,27 @@
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; text-align: center; pointer-events: auto;
         }
-
         nav ul li a::before {
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
-
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
         nav ul li.active a { font-weight: 700; opacity: 1; }
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
-
-        /* [메인 컨텐츠] */
         main { 
             width: 100%; 
             padding-top: 90px; 
             position: relative;
         }
-
-        /* [뒤로가기 버튼] */
         .back-nav-container {
             width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
             position: -webkit-sticky; position: sticky;
             top: 110px; z-index: 50; height: 0; overflow: visible;
             pointer-events: none; transition: transform 0.3s ease-in-out;
         }
-
         .back-nav-container.nav-up { transform: translateY(-100px); }
-
         .back-btn {
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
@@ -96,28 +74,22 @@
             transition: transform 0.3s ease, background 0.3s ease;
             cursor: pointer; pointer-events: auto; transform: translateY(20px); 
         }
-
         .back-btn svg {
             width: 18px; height: 18px; fill: none;
             stroke: currentColor; stroke-width: 2; 
             stroke-linecap: round; stroke-linejoin: round;
             display: block; transform: translateX(-1px); 
         }
-
         .back-btn:hover {
             transform: translateY(20px) translateX(-3px); 
             background: rgba(255, 255, 255, 0.9); 
         }
-
-        /* [히어로 이미지] */
         .hero-section { width: 100%; padding: 0; margin-bottom: 60px; }
         .hero-image {
             width: 100%; height: auto; display: block; 
             border-radius: 0; background-color: #f4f4f4;
             object-fit: cover; object-position: center;
         }
-
-        /* [프로젝트 헤더] */
         .project-header {
             max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; 
             display: flex; justify-content: space-between; align-items: flex-end;
@@ -129,98 +101,67 @@
         .project-specs {
             text-align: right; font-size: 14px; color: #666; line-height: 1.6;
         }
-
-        /* [컨텐츠 컨테이너] */
         .content-container { 
             width: 100%; max-width: 100%; margin: 0 auto; padding: 0; 
         }
-        
         .full-image-block { margin-bottom: 60px; width: 100%; }
-        
-        /* 이미지 스타일 */
         .full-image-block img { 
             width: 100%; height: auto; display: block; 
             border-radius: 0; margin-bottom: 20px; 
         }
-
-        /* 모바일 뷰 최적화 이미지 (1000px / 100%) */
         .full-image-block img.mobile-view-img {
             max-width: 1000px; width: 100%; display: block; margin: 0 auto 60px; 
         }
-
-        /* 비디오 스타일 */
         .full-image-block video.locked-video {
             width: 100%; height: auto; display: block; 
             border-radius: 0; margin-bottom: 20px; pointer-events: none; 
         }
-
-        /* 비디오 크기 제한 (1000px) */
         .full-image-block video.video-limit {
             max-width: 1000px; width: 100%; margin: 0 auto;
         }
-        
-        /* 비디오 컨트롤바 숨김 */
         video::-webkit-media-controls { display: none !important; }
         video::-webkit-media-controls-enclosure { display: none !important; }
         video::-webkit-media-controls-panel { display: none !important; }
-
-        /* [Juxtapose 슬라이더 스타일] */
         .juxtapose {
             width: 100%; margin: 0 auto;
         }
-
-        /* [2단 텍스트 레이아웃] */
         .text-section-split {
             display: flex; justify-content: space-between; align-items: flex-start;
             max-width: 1200px; width: 100%; margin: 0 auto 80px; 
             padding: 0 40px; gap: 40px;
         }
-
         .text-section-split.align-center { align-items: center; }
-
         .text-left { flex: 0 0 40%; }
         .text-right { flex: 1; padding-top: 10px; }
-        
         .text-section-split.align-center .text-right { padding-top: 0; }
-
-        /* [앱 화면 분할 레이아웃] */
         .image-text-split {
             display: flex; align-items: center; justify-content: space-between;
             max-width: 1400px; width: 100%; margin: 0 auto 80px;
             padding: 0 40px; gap: 60px;
         }
-        
         .split-image { flex: 1; width: 50%; }
         .split-image img { width: 100%; height: auto; display: block; }
-        
         .split-text { 
             flex: 1; width: 50%;
             padding: 0 40px; 
             box-sizing: border-box;
         }
-        
         .split-heading {
             font-size: 38px; font-weight: 700; color: #222;
             line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em;
         }
-
-        /* [GIF 4단 그리드 레이아웃] */
         .gif-grid-section {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* PC: 4개 1줄 */
+            grid-template-columns: repeat(4, 1fr);
             width: 100%; max-width: 100%; 
             margin: 0 auto 60px; 
             gap: 0;
         }
-
         .gif-item { width: 100%; position: relative; padding: 0; }
         .gif-item img { width: 100%; height: auto; display: block; object-fit: cover; }
-
-        /* 로고 이미지 */
         .seesaw-logo-img {
             width: 100%; max-width: 380px; height: auto; display: block;
         }
-
         .blue-label {
             color: #33C5F4; font-size: 24px; font-weight: 700; margin-bottom: 15px; display: block;
         }
@@ -237,8 +178,6 @@
         .body-kr {
             font-size: 14px; color: #a7a7a7; line-height: 1.7; font-weight: 300;
         }
-
-        /* [중앙 정렬 텍스트] */
         .text-section-center {
             text-align: center; width: 100%; max-width: 1000px; 
             margin: 100px auto; padding: 0 40px;
@@ -255,21 +194,16 @@
         .center-body-kr {
             font-size: 16px; font-weight: 400; color: #a7a7a7; line-height: 1.8;
         }
-
-        /* [단일 텍스트 블록] */
         .text-single-block {
             max-width: 800px; width: 100%; margin: 100px auto; 
             padding: 0 40px; text-align: left;
         }
         .text-single-block .body-en { margin-bottom: 24px; }
-
         .detail-text {
             font-size: clamp(16px, 1.2vw, 18px); line-height: 1.7; color: #333;
             max-width: 1200px; width: 100%; margin: 0 auto; 
             padding: 0 40px; font-weight: 300; word-break: keep-all; 
         }
-
-        /* [크레딧 섹션] */
         .credit-section {
             margin-top: 40px; border-top: 1px solid #eee;
             padding: 40px 40px 0; max-width: 1800px;
@@ -281,121 +215,80 @@
         }
         .credit-label { font-weight: 700; color: #111; }
         .credit-content { font-weight: 300; color: #555; }
-
-        /* [하단 네비게이션 - 수정됨] */
         .next-project {
-            /* border-top: 1px solid #eee;  기존 테두리 제거 */
-            padding: 140px 40px; /* 패딩을 늘려 이미지가 시원하게 보이도록 함 */
+            padding: 140px 40px; 
             text-align: center; 
             cursor: pointer; 
-            /* transition: background 0.3s ease; 기존 배경색 전환 제거 */
-            transition: transform 0.3s ease; /* 호버 시 움직임 효과 추가 */
+            transition: transform 0.3s ease;
             margin-top: 60px;
-            position: relative; /* 가상 요소의 기준점 */
-            overflow: hidden; /* 블러된 이미지가 영역 밖으로 나가지 않도록 함 */
-            color: #ffffff; /* 텍스트 색상을 밝게 변경 */
+            position: relative; 
+            overflow: hidden; 
+            color: #ffffff; 
         }
-
-        /* 배경 이미지 및 블러 효과를 위한 가상 요소 추가 */
         .next-project::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* [수정] png -> webp 배경 이미지 변경 */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('../img/projects/Thumbnail/project 5.webp'); 
             background-size: cover;
             background-position: center;
-            /* 블러 처리 및 밝기 조절 (텍스트 가독성을 위해 어둡게 처리) */
             filter: blur(10px) brightness(0.6); 
-            z-index: -1; /* 텍스트 뒤로 배치 */
-            transform: scale(1.1); /* 블러로 인한 가장자리 흘러내림 방지 */
-            transition: filter 0.3s ease, transform 0.3s ease; /* 호버 효과를 위한 트랜지션 */
+            z-index: -1; 
+            transform: scale(1.1); 
+            transition: filter 0.3s ease, transform 0.3s ease; 
         }
-
-        /* 호버 효과 수정 */
-        .next-project:hover {
-            /* background-color: #fafafa; 기존 배경색 변경 제거 */
-            transform: translateY(-5px); /* 호버 시 살짝 위로 올라가는 효과 */
-        }
-
-        /* 호버 시 배경 이미지 효과 변화 */
+        .next-project:hover { transform: translateY(-5px); }
         .next-project:hover::before {
-            filter: blur(5px) brightness(0.7); /* 블러를 줄이고 밝기를 약간 올려서 선명해지는 느낌 */
+            filter: blur(5px) brightness(0.7); 
             transform: scale(1.05);
         }
-
         .next-label { 
-            font-size: 16px; /* 폰트 크기 약간 키움 */
-            color: rgba(255, 255, 255, 0.8); /* 텍스트 색상 밝게 변경 */
+            font-size: 16px; 
+            color: rgba(255, 255, 255, 0.8); 
             margin-bottom: 15px; 
             letter-spacing: 0.05em; 
-            text-transform: uppercase; /* 대문자로 변경 */
+            text-transform: uppercase; 
         }
-        
         .next-title { 
-            font-size: clamp(32px, 5vw, 72px); /* 폰트 크기 키움 */
+            font-size: clamp(32px, 5vw, 72px); 
             font-weight: 800; 
             letter-spacing: -0.02em; 
         }
-
-        /* [반응형] */
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
             .logo-img { height: 50px; }
             nav ul { justify-content: center; gap: 25px; }
             nav ul li a { font-size: 16px; font-weight: 500; }
-
             main { padding-top: 140px; }
             .back-nav-container { top: 150px; padding: 0 20px; }
             .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
             .project-specs { text-align: left; margin-top: 20px; }
-            
             .detail-text { padding: 0 20px; }
             .credit-section { padding: 40px 20px 0; }
             .full-image-block { margin-bottom: 60px; }
-            
             .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
             .credit-label { margin-bottom: 5px; }
-
             .hero-image { height: 80vh; }
-
             .text-section-split {
                 flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px;
             }
             .text-left { flex: 0 0 auto; width: 100%; }
             .text-right { flex: 0 0 auto; width: 100%; padding-top: 0; }
-            
             .main-heading { font-size: 32px; margin-bottom: 10px; }
             .blue-label { font-size: 20px; margin-bottom: 10px; }
-
             .text-section-center { margin: 60px auto; padding: 0 20px; }
             .text-single-block { margin: 60px auto; padding: 0 20px; max-width: 100%; }
-
             .full-image-block img.mobile-view-img { max-width: 100%; }
-            
             .seesaw-logo-img {
                 width: 70%; max-width: 400px; margin: 0 auto 30px auto; display: block;
             }
-
             .full-image-block video.video-limit { max-width: 100%; }
-
-            /* 앱 화면 섹션 반응형 */
             .image-text-split {
                 flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px;
             }
             .split-image, .split-text { width: 100%; }
             .split-text { padding: 0; }
             .split-heading { font-size: 32px; margin-bottom: 10px; }
-
-            /* GIF 그리드 반응형 */
-            .gif-grid-section {
-                grid-template-columns: repeat(2, 1fr); /* 모바일: 2개씩 2줄 */
-            }
-            
-            /* 하단 네비게이션 반응형 수정 */
+            .gif-grid-section { grid-template-columns: repeat(2, 1fr); }
             .next-project { padding: 100px 20px; }
             .next-title { font-size: 40px; }
         }
@@ -443,11 +336,11 @@
         <div class="content-container">
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 2.webp" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 2.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
             </div>
                 
             <div class="full-image-block">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/4. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
             </div>
@@ -471,7 +364,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 3-1.webp" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-1.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
             </div>
 
             <div class="text-section-split">
@@ -492,7 +385,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 3-2.webp" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-2.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
             </div>
 
             <div class="text-section-split">
@@ -513,11 +406,11 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 3-3.webp" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-3.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 3-4.webp" alt="Detail 1" class="mobile-view-img">
+                <img src="../img/projects/project img/4. seesaw/seesaw 3-4.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
             </div>
 
             <div class="text-section-split">
@@ -540,7 +433,7 @@
             </div>
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 4.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 4.webp" alt="Detail" loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
@@ -559,7 +452,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img" loading="lazy">
                 </div>
                 <div class="text-right">
                     <p class="body-en">
@@ -574,7 +467,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 5.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 5.webp" alt="Detail" loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
@@ -599,7 +492,7 @@
             </div>
 
             <div class="full-image-block">
-                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video video-limit" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/4. seesaw/seesaw 6.mp4" type="video/mp4">
                 </video>
             </div>
@@ -617,7 +510,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 7.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 7.webp" alt="Detail" loading="lazy">
             </div>
             
             <div class="text-section-split">
@@ -641,7 +534,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 8.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 8.webp" alt="Detail" loading="lazy">
                 <p class="detail-text"></p>
             </div>
             
@@ -655,7 +548,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 9.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 9.webp" alt="Detail" loading="lazy">
             </div>
 
             <div class="text-section-split">
@@ -679,7 +572,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 10.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 10.webp" alt="Detail" loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
@@ -693,7 +586,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 11.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 11.webp" alt="Detail" loading="lazy">
             </div>
 
             <div class="text-section-split">
@@ -715,7 +608,7 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 12.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 12.webp" alt="Detail" loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
@@ -730,7 +623,7 @@
 
             <div class="text-section-split align-center">
                 <div class="text-left">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 13.webp" alt="see-saw logo" class="seesaw-logo-img">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 13.webp" alt="see-saw logo" class="seesaw-logo-img" loading="lazy">
                 </div>
                 <div class="text-right">
                     <div class="sub-heading">Watch your every move</div>
@@ -749,11 +642,11 @@
             </div>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 14.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 14.webp" alt="Detail" loading="lazy">
             </div>
 
             <div class="full-image-block">
-                <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video video-limit" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/4. seesaw/seesaw 15.mp4" type="video/mp4">
                 </video>
             </div>
@@ -778,8 +671,8 @@
 
             <div class="full-image-block">
                 <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 16-1.webp">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 16-2.webp">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 16-1.webp" loading="lazy">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 16-2.webp" loading="lazy">
                 </div>
             </div>
 
@@ -796,8 +689,8 @@
 
             <div class="full-image-block">
                 <div class="juxtapose" style="width: 100%;">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 17-1.webp">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 17-2.webp">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 17-1.webp" loading="lazy">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 17-2.webp" loading="lazy">
                 </div>
             </div>
 
@@ -822,12 +715,12 @@
             </div> 
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 18.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 18.webp" alt="Detail" loading="lazy">
             </div>
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 19.webp" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 19.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
@@ -842,7 +735,7 @@
                         The main screen displays real-time posture tracking with dynamic visual cues, allowing users to instantly see how their body alignment changes throughout the day.<br>
                         The intuitive design ensures that all key information is accessible at a glance, making it easy to monitor posture continuously.<br>
                         This screen serves as the primary hub for users to engage with their posture data. 
-                         
+                          
                         
                     </p>
                     <p class="body-kr">
@@ -854,10 +747,10 @@
             </div>
 
             <div class="gif-grid-section">
-                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-1.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-2.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-3.gif" alt=""></div>
-                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-4.gif" alt=""></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-1.gif" alt="" loading="lazy"></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-2.gif" alt="" loading="lazy"></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-3.gif" alt="" loading="lazy"></div>
+                <div class="gif-item"><img src="../img/projects/project img/4. seesaw/seesaw 20-4.gif" alt="" loading="lazy"></div>
             </div>
 
            <div class="text-section-split">
@@ -882,13 +775,13 @@
           
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 21.webp" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 21.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
                     <h2 class="split-heading">
                         Check your<br>
-                         Current Posture
+                          Current Posture
                     </h2>
 
                     <p class="body-en">
@@ -906,7 +799,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 22.webp" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 22.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
@@ -929,7 +822,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 23.webp" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 23.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
@@ -956,7 +849,7 @@
 
             <div class="image-text-split">
                 <div class="split-image">
-                    <img src="../img/projects/project img/4. seesaw/seesaw 24.webp" alt="Main Screen Live Posture Tracking">
+                    <img src="../img/projects/project img/4. seesaw/seesaw 24.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
@@ -981,13 +874,13 @@
             </div>
 
            <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 25.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 25.webp" alt="Detail" loading="lazy">
             </div>
 
            <div class="text-section-center">
                 <h2 class="center-heading">
                     Correct Your Posture,<br>
-                     <span class="highlight-blue">Enhance</span> Your Life
+                      <span class="highlight-blue">Enhance</span> Your Life
                 </h2>
                 <div class="center-sub-heading">
                     How to Use See-saw
@@ -999,9 +892,9 @@
 
            <div class="image-text-split">
               <div class="split-image">
-                   <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/4. seesaw/seesaw 26-1.mp4" type="video/mp4">
-                 </video>
+                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+                      <source src="../img/projects/project img/4. seesaw/seesaw 26-1.mp4" type="video/mp4">
+                  </video>
                 </div>
 
                <div class="split-text">
@@ -1025,9 +918,9 @@
 
             <div class="image-text-split">
               <div class="split-image">
-                   <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/4. seesaw/seesaw 26-2.mp4" type="video/mp4">
-                 </video>
+                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+                      <source src="../img/projects/project img/4. seesaw/seesaw 26-2.mp4" type="video/mp4">
+                  </video>
                 </div>
 
                <div class="split-text">
@@ -1050,9 +943,9 @@
 
             <div class="image-text-split">
               <div class="split-image">
-                   <video class="locked-video" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;">
-                     <source src="../img/projects/project img/4. seesaw/seesaw 26-3.mp4" type="video/mp4">
-                 </video>
+                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+                      <source src="../img/projects/project img/4. seesaw/seesaw 26-3.mp4" type="video/mp4">
+                  </video>
                 </div>
 
                <div class="split-text">
@@ -1076,7 +969,7 @@
 
             
             <div class="full-image-block">
-                <img src="../img/projects/project img/4. seesaw/seesaw 27.webp" alt="Detail">
+                <img src="../img/projects/project img/4. seesaw/seesaw 27.webp" alt="Detail" loading="lazy">
             </div>
 
             <div class="credit-section">
@@ -1142,19 +1035,28 @@
                 window.location.href = '../index.html';
             });
 
-            const videos = document.querySelectorAll('video.locked-video');
-            videos.forEach(video => {
-                video.muted = true;
-                video.playsInline = true;
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log("Video Autoplay Started");
-                    }).catch(error => {
-                        console.log("Autoplay failed:", error);
-                        video.style.pointerEvents = "auto";
-                    });
-                }
+            // IntersectionObserver: Scroll-based Video Lazy Loading & Playing
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.preload = "auto"; 
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log("Auto-play blocked:", error);
+                            });
+                        }
+                    } else {
+                        if (!video.paused) {
+                            video.pause();
+                        }
+                    }
+                });
+            }, { rootMargin: "200px 0px", threshold: 0.1 });
+
+            document.querySelectorAll('video.locked-video').forEach(video => {
+                videoObserver.observe(video);
             });
 
             let lastScrollTop = 0;
