@@ -4,25 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CHID - Projects</title>
-    
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <style>
-        /* [기본 스타일] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
             color: #111111;
-            
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
-            
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
@@ -30,7 +26,6 @@
         
         body.fade-in { opacity: 1; }
 
-        /* [헤더 스타일] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -72,7 +67,6 @@
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
 
-        /* [메인 영역] */
         main { 
             flex: 1; width: 100%; 
             padding-top: 140px; padding-bottom: 80px; 
@@ -85,7 +79,6 @@
             padding: 0 40px;
         }
 
-        /* [수정] a 태그 스타일 리셋 및 블록화 */
         .project-item { 
             display: block;
             text-decoration: none;
@@ -94,7 +87,7 @@
             opacity: 0; 
             transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         .project-item:nth-child(1) { animation-delay: 0.1s; }
@@ -113,7 +106,6 @@
             transform: translateZ(0); 
         }
 
-        /* 이미지와 비디오 공통 스타일 */
         .image-wrapper img, 
         .image-wrapper video {
             width: 100%; height: 100%; object-fit: cover;
@@ -133,10 +125,8 @@
             text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
         }
 
-        /* PC: 호버 시 정보 표시 */
         .project-item:hover .project-info-overlay { opacity: 1; }
         
-        /* [추가] 모바일: 탭 활성화 시 정보 표시 */
         .project-item.mobile-hover .project-info-overlay { opacity: 1; }
         
         .project-item:hover .image-wrapper img,
@@ -154,7 +144,6 @@
             font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; 
         }
 
-        /* [반응형] */
         @media (max-width: 1200px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
         
@@ -188,7 +177,7 @@
     <main>
         <div class="gallery-grid">
 
-           <a href="projects/kfw.html" class="project-item">
+            <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
                     <img src="img/projects/Thumbnail/project 7.webp" alt="KFW 2026">
                     <div class="project-info-overlay">
@@ -280,52 +269,50 @@
                 });
             });
 
-            // 스크롤 시 헤더 숨김/표시 로직
             let lastScrollTop = 0;
+            let scrollUpDistance = 0;
+            const scrollThreshold = 400;
+
             const header = document.querySelector('header');
             
             window.addEventListener('scroll', function() {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 
-                if (currentScroll <= 0) return; 
+                if (currentScroll <= 0) {
+                    header.classList.remove('header-hidden');
+                    lastScrollTop = 0;
+                    return; 
+                }
 
                 if (currentScroll > lastScrollTop) {
                     header.classList.add('header-hidden');
+                    scrollUpDistance = 0;
                 } else {
-                    header.classList.remove('header-hidden');
+                    scrollUpDistance += (lastScrollTop - currentScroll);
+                    if (scrollUpDistance > scrollThreshold) {
+                        header.classList.remove('header-hidden');
+                        scrollUpDistance = scrollThreshold;
+                    }
                 }
                 lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
             }, false);
 
-            /* -----------------------------------------------------------
-               [핵심] 모바일 'Double Tap' UX 로직
-               1. 첫 번째 터치: 정보 오버레이 표시 (페이지 이동 X)
-               2. 두 번째 터치: 해당 페이지로 이동
-            ----------------------------------------------------------- */
             const projectItems = document.querySelectorAll('.project-item');
 
             projectItems.forEach(item => {
                 item.addEventListener('click', function(e) {
-                    // 터치 가능한 디바이스인지 체크
                     const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
                     
                     if (isTouchDevice) {
-                        // 현재 아이템이 활성화(정보표시) 상태가 아니라면
                         if (!this.classList.contains('mobile-hover')) {
-                            e.preventDefault(); // 링크 이동 막음
-                            
-                            // 다른 아이템들의 활성화 상태 제거 (하나만 켜지게)
+                            e.preventDefault(); 
                             projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
-                            
-                            // 현재 아이템 활성화
                             this.classList.add('mobile-hover');
                         }
-                        // 활성화 상태라면? -> preventDefault 없이 그냥 넘어가서 href로 이동됨.
                     }
                 });
             });
             
-            // 빈 공간 터치 시 모든 활성화 해제 (깔끔한 경험을 위해)
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.project-item')) {
                     projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
