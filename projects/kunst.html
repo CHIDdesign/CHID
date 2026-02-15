@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <title>CHID - KUNST</title>
-    
     <link rel="icon" href="../img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
-
     <style>
-        /* =========================================
-           1. Variables & Reset
-           ========================================= */
         :root {
             --bg-color: #000000;
             --text-main: #ffffff;
@@ -21,9 +15,7 @@
             --border-color: #000000;
             --point-color: #FF7300;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: var(--bg-color);
@@ -34,12 +26,7 @@
             overflow-x: hidden;
             width: 100%;
         }
-        
         body.fade-in { opacity: 1; }
-
-        /* =========================================
-           2. Layout (Header, Nav, Footer)
-           ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -51,13 +38,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         header.header-hidden { transform: translateY(-100%); }
-
         .logo-container { cursor: pointer; }
         .logo-img { 
             height: 60px; width: auto; display: block; 
             filter: invert(1) brightness(1.2);
         }
-
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
         nav ul li a {
@@ -74,8 +59,6 @@
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
-
-        /* Back Navigation (Modified for Glassmorphism) */
         .back-nav-container {
             width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
             position: -webkit-sticky; position: sticky;
@@ -83,17 +66,14 @@
             pointer-events: none; transition: transform 0.3s ease-in-out;
         }
         .back-nav-container.nav-up { transform: translateY(-100px); }
-        
         .back-btn {
             display: flex; justify-content: center; align-items: center;
             width: 48px; height: 48px; 
             border-radius: 50%; 
-            
             border: 2px solid rgba(255, 255, 255, 1); 
             background: rgba(0, 0, 0, 0.24);             
             backdrop-filter: blur(4px);                 
             -webkit-backdrop-filter: blur(4px);         
-            
             text-decoration: none; color: var(--text-main);
             opacity: 1; transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
             cursor: pointer; pointer-events: auto; transform: translateY(20px); 
@@ -109,8 +89,6 @@
             background: rgba(255, 255, 255, 0.1); 
             border-color: rgba(255, 255, 255, 0.6);
         }
-
-        /* Footer (Next Project) */
         .next-project {
             padding: 140px 40px; text-align: center; cursor: pointer; 
             transition: transform 0.3s ease; margin-top: 60px; 
@@ -118,7 +96,6 @@
         }
         .next-project::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* [수정] png -> webp */
             background-image: url('../img/projects/Thumbnail/project 6.webp'); 
             background-size: cover; background-position: center;
             filter: blur(10px) brightness(0.5); z-index: -1; 
@@ -128,19 +105,13 @@
         .next-project:hover::before { filter: blur(5px) brightness(0.7); transform: scale(1.05); }
         .next-label { font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px; letter-spacing: 0.05em; text-transform: uppercase; }
         .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.02em; }
-
         main { width: 100%; padding-top: 90px; position: relative; }
-
-        /* =========================================
-           3. Core Components (Hero, Project Info)
-           ========================================= */
         .hero-section { width: 100%; padding: 0; margin-bottom: 60px; }
         .hero-image {
             width: 100%; height: auto; display: block; 
             border-radius: 0; background-color: #1a1a1a;
             object-fit: cover; object-position: center; min-height: 400px;
         }
-
         .project-header {
             max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; 
             display: flex; justify-content: space-between; align-items: flex-end;
@@ -153,15 +124,10 @@
             text-align: right; font-size: 14px; 
             color: var(--text-sub); line-height: 1.6;
         }
-
-        /* =========================================
-           4. Media Blocks (Images, Videos)
-           ========================================= */
         .full-image-block { margin-bottom: 60px; width: 100%; }
         .full-image-block img { width: 100%; height: auto; display: block; margin-bottom: 20px; }
         .full-image-block video.locked-video { width: 100%; height: auto; display: block; margin-bottom: 20px; pointer-events: none; }
         video::-webkit-media-controls { display: none !important; }
-
         .banding-fix {
             position: relative;
             width: 100%;
@@ -169,7 +135,6 @@
             overflow: hidden;
             margin-bottom: 60px;
         }
-        
         .banding-fix video {
             display: block;
             width: 100%;
@@ -179,15 +144,12 @@
             will-change: transform;
             transform: translate3d(0, 0, 0);
         }
-
-        /* [NEW] 37번, 44번 비디오 전용 스타일 (PC에서만 너비 제한) */
         @media (min-width: 769px) {
             .video-limit-small {
-                max-width: 1000px !important; /* 원하는 크기로 제한 */
-                margin: 0 auto !important;    /* 중앙 정렬 */
+                max-width: 1000px !important;
+                margin: 0 auto !important;
             }
         }
-
         .banding-fix::after {
             content: "";
             position: absolute;
@@ -198,49 +160,34 @@
             opacity: 0.07; 
             mix-blend-mode: overlay; 
         }
-
         .graph-block {
             width: 100%; max-width: 800px; margin: 0 auto 40px; 
         }
         .graph-block video {
             width: 100%; height: auto; display: block; pointer-events: none;
         }
-
         .web-constrained-img {
             width: 100%; max-width: 1200px; 
             margin: 0 auto 20px; display: block; height: auto;
         }
-
         .solution-logo {
             width: 100%; max-width: 600px; 
             padding: 0 40px; height: auto; display: block; margin: 40px auto 0;
         }
-
-        /* =========================================
-           5. Text Blocks & Typography
-           ========================================= */
         .text-right { 
             flex: 1; 
             padding-top: 10px; padding-left: 40px; padding-right: 40px; 
             box-sizing: border-box; max-width: 1200px; margin: 0 auto 60px; 
         }
-        
         .body-en { font-size: 16px; color: #e0e0e0; line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
         .body-kr { font-size: 14px; color: var(--text-sub); line-height: 1.7; font-weight: 300; }
-        
         .intro-lead {
             display: block;
             font-size: 24px; font-weight: 700; color: #ffffff;
             line-height: 1.3; margin-bottom: 15px;
         }
-
         .highlight-text { color: var(--point-color); font-weight: 700; font-style: italic; }
         .highlight-orange { color: var(--point-color); font-weight: 700; }
-
-        /* =========================================
-           6. Special Sections
-           ========================================= */
-        
         .title-group {
             width: 100%; text-align: center; padding: 100px 20px 40px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -250,7 +197,6 @@
         .horizontal-line { width: 100%; max-width: 400px; height: 1px; background-color: rgba(255, 255, 255, 0.3); margin: 0 auto 80px auto; }
         .main-quote { font-size: clamp(32px, 5vw, 72px); font-weight: 300; color: var(--text-main); line-height: 1.3; letter-spacing: -0.02em; word-break: keep-all; }
         .main-quote span.quote-mark { font-family: serif; color: #666; margin: 0 5px; }
-
         .stats-text-container {
             display: flex; justify-content: space-between; align-items: flex-start;
             max-width: 800px; width: 100%; margin: 0 auto 100px; padding: 0 20px; gap: 40px;
@@ -260,7 +206,6 @@
         .stats-sub { font-size: 15px; color: var(--text-sub); font-weight: 400; margin-bottom: 20px; }
         .stats-source { font-size: 13px; color: #666666; font-weight: 300; line-height: 1.4; }
         .stats-title .highlight-text { color: var(--point-color); font-style: normal; }
-
         .problem-define-section {
             width: 100%; max-width: 1200px; margin: 40px auto 60px; padding: 0 40px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
@@ -282,7 +227,6 @@
             font-size: clamp(40px, 5vw, 80px); font-weight: 700; color: var(--point-color);
             line-height: 1.2; text-align: center; margin: 0; letter-spacing: -0.02em;
         }
-
         .image-text-split {
             display: flex; align-items: center; justify-content: space-between;
             max-width: 1400px; width: 100%; margin: 0 auto 120px; padding: 0 40px; gap: 80px;
@@ -292,17 +236,13 @@
         .split-text { flex: 1; width: 50%; padding: 0; box-sizing: border-box; text-align: left; }
         .split-heading { font-size: 48px; font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 10px; letter-spacing: -0.02em; }
         .step-label { font-size: 20px; color: #888; font-weight: 300; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
-        
         .problem-heading {
             font-size: 42px; font-weight: 700; color: var(--point-color); line-height: 1.2;
             margin-bottom: 30px; position: relative; display: inline-block; font-style: italic;
         }
         .problem-heading::after { content: ''; display: block; width: 100%; height: 1px; background-color: #666; margin-top: 10px; }
         .ref-text { font-size: 13px; color: #555; font-weight: 300; margin-bottom: 30px; font-style: italic; }
-
-        /* Mission Section */
         .mission-section { text-align: center; width: 100%; max-width: 1200px; margin: 150px auto; padding: 0 20px; }
-        
         .mission-text-en { 
             font-size: clamp(20px, 3.2vw, 40px); 
             font-weight: 300; 
@@ -316,9 +256,7 @@
             font-weight: 700;
             color: var(--point-color);
         }
-
         .mission-text-kr { font-size: 15px; color: #666666; font-weight: 300; margin-top: 50px; line-height: 1.6; word-break: keep-all; }
-
         .definition-section {
             display: flex; justify-content: center; align-items: center;
             max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; gap: 80px;
@@ -331,16 +269,13 @@
         .def-right { text-align: left; display: flex; flex-direction: column; justify-content: center; }
         .slogan-sub { font-size: clamp(18px, 2.5vw, 32px); font-weight: 300; color: var(--text-main); margin: 0 0 10px 0; line-height: 1.2; }
         .slogan-main { font-size: clamp(40px, 6vw, 100px); font-weight: 700; color: var(--point-color); font-style: italic; line-height: 1; margin: 0; letter-spacing: -0.02em; }
-
         .closing-section {
             max-width: 1200px;
             margin: 100px auto; padding: 0 20px; text-align: center;
         }
         .closing-block { margin-bottom: 80px; }
-        
         .closing-section .mission-text-en { margin-bottom: 10px; }
         .closing-section .mission-text-kr { margin-top: 10px; } 
-
         .product-identity-section {
             max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; 
             text-align: left; 
@@ -352,18 +287,14 @@
         .identity-desc { 
             max-width: 800px; margin: 0; text-align: left; 
         }
-
         .product-identity-section.centered { text-align: center; }
         .product-identity-section.centered .identity-title { text-align: center; }
         .product-identity-section.centered .identity-desc { margin: 0 auto; text-align: center; }
-
         .brand-bold { font-size: clamp(60px, 8vw, 120px); font-weight: 800; }
         .brand-pipe {
             font-size: clamp(60px, 8vw, 120px); font-weight: 200; margin: 0 10px; color: var(--point-color); vertical-align: top;
         }
         .brand-thin { font-size: clamp(60px, 8vw, 120px); font-weight: 200; display: block; }
-
-        /* [NEW] Touching the Space Section Style */
         .touching-space-section {
             max-width: 1400px; width: 100%; margin: 60px auto 100px; padding: 0 40px;
             text-align: left;
@@ -392,61 +323,46 @@
             height: 1px;
             background-color: #666;
         }
-
         .credit-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; }
         .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
         .credit-label { font-weight: 700; color: var(--text-main); }
         .credit-content { font-weight: 300; color: var(--text-sub); }
-
-        /* [NEW] Custom Layout Helper: Hand Tracking Section */
-        /* Alignment Fix: Match the max-width (1200px) and padding of .text-right */
         .hand-tracking-container {
             max-width: 1200px !important; 
             margin: 0 auto 100px;
             width: 100%;
             padding: 0 40px;
         }
-        
         @media (min-width: 769px) {
             .hand-tracking-container.reverse-desktop {
                 display: flex;
-                flex-direction: row-reverse; /* Desktop: Image Right, Text Left */
-                justify-content: space-between; /* This pushes Text to Left Edge, Image to Right Edge */
+                flex-direction: row-reverse; 
+                justify-content: space-between; 
                 align-items: center;
                 gap: 40px;
             }
-            
-            /* Specific fix to ensure text is flushed left */
             .hand-tracking-container .split-text {
                 text-align: left;
                 flex: 0 0 auto;
                 width: auto;
             }
-
-            /* Image Sizing Fix: Make it appropriately large */
             .hand-tracking-container .split-image {
                 flex: 1;
                 display: flex;
                 justify-content: flex-end;
             }
-            /* [NEW] Ensure video behaves like the image in this container */
             .hand-tracking-container .split-image img,
             .hand-tracking-container .split-image video {
-                max-width: 650px; /* Increased size */
+                max-width: 650px; 
                 width: 100%;
                 height: auto;
             }
         }
-
-        /* =========================================
-           7. Responsive Styles (Mobile)
-           ========================================= */
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
             .logo-img { height: 50px; }
             nav ul { justify-content: center; gap: 25px; }
             nav ul li a { font-size: 16px; font-weight: 500; }
-
             main { padding-top: 140px; }
             .back-nav-container { top: 150px; padding: 0 20px; }
             .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
@@ -457,41 +373,34 @@
             .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
             .next-project { padding: 100px 20px; }
             .next-title { font-size: 40px; }
-
             .title-group { padding: 80px 20px 20px; }
             .vertical-line { height: 40px; }
             .small-label { margin-bottom: 40px; font-size: 14px; }
             .horizontal-line { max-width: 200px; margin-bottom: 50px; }
             .main-quote { font-size: 32px; margin-bottom: 10px; }
-
             .full-image-block { margin-bottom: 60px; }
             .full-image-block img.mobile-view-img { max-width: 100%; }
             .graph-block { margin-bottom: 20px; }
             .web-constrained-img { max-width: 100%; } 
             .solution-logo { padding: 0 20px; max-width: 80%; }
-
             .stats-text-container { flex-direction: row !important; gap: 20px; padding: 0 20px; margin-bottom: 80px; }
             .stats-title { font-size: 16px; margin-bottom: 5px; }
             .stats-sub { font-size: 12px; margin-bottom: 10px; }
             .stats-source { font-size: 11px; letter-spacing: -0.05em; }
-
             .problem-define-section { margin: 20px auto 40px; padding: 0 20px; }
             .problem-label { font-size: 18px; text-align: center; padding-left: 0; margin-bottom: 15px; }
             .bracket-container { padding: 15px 30px; }
             .bracket-container::before, .bracket-container::after { width: 15px; border-width: 4px; }
-
             .image-text-split { flex-direction: column; gap: 40px; padding: 0; margin-bottom: 80px; }
             .split-image { width: 100%; padding: 0 20px; }
             .split-image video { max-width: 100%; }
             .split-text { width: 100%; padding: 0 20px; }
             .split-heading { font-size: 32px; }
             .problem-heading { font-size: 28px; margin-bottom: 20px; }
-
             .mission-section { margin: 100px auto; }
             .mission-text-en { line-height: 1.3; }
             .mission-text-kr { font-size: 13px; margin-top: 30px; padding: 0 10px; }
             .pc-break { display: none; }
-            
             .definition-section { flex-direction: column; gap: 40px; margin: 100px auto; text-align: center; }
             .def-left, .def-right { text-align: center; align-items: center; }
             .def-divider { width: 60px; height: 1px; }
@@ -499,18 +408,12 @@
             .def-meaning { font-size: 32px; }
             .slogan-sub { font-size: 20px; }
             .slogan-main { font-size: 50px; }
-
             .product-identity-section { margin: 100px auto; padding: 0 20px; }
             .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
-
-            /* [NEW] Touching Space Mobile */
             .touching-space-section { margin: 60px auto; padding: 0 20px; }
             .touching-title { font-size: 48px; }
             .touching-sub { font-size: 24px; }
             .touching-kr { font-size: 14px; }
-
-            /* [NEW] Hand Tracking Mobile Specific */
-            /* Force big fonts specifically for this section on mobile */
             .hand-tracking-container .split-heading {
                 font-size: 64px !important;
                 line-height: 0.9;
@@ -566,7 +469,7 @@
         </section>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 2.mp4" type="video/mp4">
             </video>
         </div>
@@ -589,7 +492,7 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 3.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 3.webp" alt="Detail" loading="lazy">
         </div>
 
         <section class="title-group">
@@ -602,11 +505,11 @@
         </section>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 4.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 4.webp" alt="Detail" loading="lazy">
         </div>
 
         <div class="graph-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 5.mp4" type="video/mp4">
             </video>
         </div>
@@ -636,7 +539,7 @@
 
         <div class="image-text-split">
             <div class="split-image">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/5. kunst/kunst 6-1.mp4" type="video/mp4">
                 </video>
             </div>
@@ -662,7 +565,7 @@
 
         <div class="image-text-split">
             <div class="split-image">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/5. kunst/kunst 6-2.mp4" type="video/mp4">
                 </video>
             </div>
@@ -688,7 +591,7 @@
         
         <div class="image-text-split">
             <div class="split-image">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/5. kunst/kunst 6-3.mp4" type="video/mp4">
                 </video>
             </div>
@@ -728,15 +631,15 @@
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 7.gif" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 7.gif" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 8.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 8.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 9.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 9.webp" alt="Detail" loading="lazy">
         </div> 
 
         <section class="mission-section">
@@ -757,22 +660,22 @@
             <div class="small-label">The Solution.</div>
             <div class="horizontal-line"></div>
             <div class="full-image-block" style="margin-bottom: 0;">
-                <img src="../img/projects/project img/5. kunst/kunst 10.svg" alt="Detail" class="solution-logo">
+                <img src="../img/projects/project img/5. kunst/kunst 10.svg" alt="Detail" class="solution-logo" loading="lazy">
             </div> 
         </section>
 
         <div class="banding-fix">
-            <video class="locked-video video-limit" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video video-limit" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 11.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 12.gif" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 12.gif" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 13.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 13.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <section class="definition-section">
@@ -834,7 +737,7 @@
         </section>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 14.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 14.webp" alt="Detail" loading="lazy">
         </div> 
 
         <section class="title-group">
@@ -844,7 +747,7 @@
         </section>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 15.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 15.webp" alt="Detail" loading="lazy">
         </div> 
 
         <section class="product-identity-section">
@@ -865,27 +768,27 @@
         </section>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 16.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 16.webp" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 17.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 17.webp" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 18.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 18.webp" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 19.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 19.webp" alt="Detail" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 20.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 20.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 21.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 21.webp" alt="Detail" loading="lazy">
         </div> 
 
         <section class="product-identity-section centered">
@@ -895,7 +798,7 @@
             </h2>
 
             <div class="full-image-block">
-                <img src="../img/projects/project img/5. kunst/kunst 22.webp" alt="Detail" class="web-constrained-img">
+                <img src="../img/projects/project img/5. kunst/kunst 22.webp" alt="Detail" class="web-constrained-img" loading="lazy">
             </div>
 
             <div class="identity-desc">
@@ -917,7 +820,7 @@
         </section>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 23.mp4" type="video/mp4">
             </video>
         </div>
@@ -930,11 +833,11 @@
         </section>
 
        <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 24.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 24.webp" alt="Detail" loading="lazy">
         </div> 
 
        <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 25.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 25.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div>  
 
         <div class="text-right">
@@ -949,11 +852,11 @@
         </div> 
         
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 26.gif" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 26.gif" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 27.mp4" type="video/mp4">
             </video>
         </div>
@@ -974,7 +877,7 @@
 
         <div class="image-text-split reverse-desktop hand-tracking-container">
             <div class="split-image">
-                <img src="../img/projects/project img/5. kunst/kunst 28.webp" alt="Hand Tracking">
+                <img src="../img/projects/project img/5. kunst/kunst 28.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
                 <h2 class="split-heading" style="margin-bottom: 20px;">
@@ -991,7 +894,7 @@
         </div>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 29.mp4" type="video/mp4">
             </video>
         </div>
@@ -1012,7 +915,7 @@
 
         <div class="image-text-split reverse-desktop hand-tracking-container">
             <div class="split-image">
-                <video class="locked-video" autoplay muted loop playsinline preload="auto">
+                <video class="locked-video" muted loop playsinline preload="none">
                     <source src="../img/projects/project img/5. kunst/kunst 30.mp4" type="video/mp4">
                 </video>
             </div>
@@ -1031,7 +934,7 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 31.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 31.webp" alt="Detail" loading="lazy">
         </div>
 
         <div class="text-right">
@@ -1046,11 +949,11 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 32.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 32.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 33.mp4" type="video/mp4">
             </video>
         </div>
@@ -1072,7 +975,7 @@
         </div>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 34.mp4" type="video/mp4">
             </video>
         </div>
@@ -1085,7 +988,7 @@
         </section>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 35.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 35.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div>
 
         <div class="text-right">
@@ -1102,19 +1005,19 @@
         </div>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 36.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="banding-fix">
-            <video class="locked-video video-limit-small" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video video-limit-small" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 37.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 38.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 38.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="text-right">
@@ -1129,12 +1032,12 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 39.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 39.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div>
 
         <div class="image-text-split reverse-desktop hand-tracking-container">
             <div class="split-image">
-                <img src="../img/projects/project img/5. kunst/kunst 40.webp" alt="Hand Tracking">
+                <img src="../img/projects/project img/5. kunst/kunst 40.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
                 <h2 class="split-heading" style="margin-bottom: 20px;">
@@ -1151,7 +1054,7 @@
         </div>
 
         <div class="full-image-block">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 41.mp4" type="video/mp4">
             </video>
         </div>
@@ -1169,7 +1072,7 @@
 
         <div class="image-text-split reverse-desktop hand-tracking-container">
             <div class="split-image">
-                <img src="../img/projects/project img/5. kunst/kunst 42.webp" alt="Hand Tracking">
+                <img src="../img/projects/project img/5. kunst/kunst 42.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
                 <h2 class="split-heading" style="margin-bottom: 20px;">
@@ -1185,11 +1088,11 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 43.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 43.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="banding-fix">
-             <video class="locked-video video-limit-small" autoplay muted loop playsinline preload="auto">
+             <video class="locked-video video-limit-small" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 44.mp4" type="video/mp4">
             </video>
         </div>
@@ -1208,7 +1111,7 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 45.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 45.webp" alt="Detail" loading="lazy">
         </div>
 
         <div class="text-right">
@@ -1225,21 +1128,21 @@
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 46.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 46.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 47.webp" alt="Detail" class="web-constrained-img">
+            <img src="../img/projects/project img/5. kunst/kunst 47.webp" alt="Detail" class="web-constrained-img" loading="lazy">
         </div> 
 
         <div class="banding-fix">
-            <video class="locked-video" autoplay muted loop playsinline preload="auto">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="../img/projects/project img/5. kunst/kunst 48.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="full-image-block">
-            <img src="../img/projects/project img/5. kunst/kunst 49.webp" alt="Detail">
+            <img src="../img/projects/project img/5. kunst/kunst 49.webp" alt="Detail" loading="lazy">
         </div>
 
         <div class="credit-section">
@@ -1289,19 +1192,33 @@
                 window.location.href = '../index.html';
             });
 
-            const videos = document.querySelectorAll('video.locked-video');
-            videos.forEach(video => {
-                video.muted = true;
-                video.playsInline = true;
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log("Video Autoplay Started");
-                    }).catch(error => {
-                        console.log("Autoplay failed:", error);
-                        video.style.pointerEvents = "auto";
-                    });
-                }
+            // IntersectionObserver: Scroll-based Video Lazy Loading & Playing
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        // When video is in viewport (plus 200px margin)
+                        // Load and Play
+                        video.preload = "auto";
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log("Auto-play blocked:", error);
+                            });
+                        }
+                    } else {
+                        // When video is out of viewport
+                        // Pause to save battery/data
+                        if (!video.paused) {
+                            video.pause();
+                        }
+                    }
+                });
+            }, { rootMargin: "200px 0px", threshold: 0.1 });
+
+            // Attach observer to all locked videos
+            document.querySelectorAll('video.locked-video').forEach(video => {
+                videoObserver.observe(video);
             });
 
             let lastScrollTop = 0;
