@@ -127,12 +127,8 @@
 
         .project-item:hover .project-info-overlay { opacity: 1; }
         
-        .project-item.mobile-hover .project-info-overlay { opacity: 1; }
-        
         .project-item:hover .image-wrapper img,
-        .project-item:hover .image-wrapper video,
-        .project-item.mobile-hover .image-wrapper img,
-        .project-item.mobile-hover .image-wrapper video { 
+        .project-item:hover .image-wrapper video { 
             transform: scale(1.06); 
         }
         
@@ -296,28 +292,6 @@
                 }
                 lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
             }, false);
-
-            const projectItems = document.querySelectorAll('.project-item');
-
-            projectItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-                    
-                    if (isTouchDevice) {
-                        if (!this.classList.contains('mobile-hover')) {
-                            e.preventDefault(); 
-                            projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
-                            this.classList.add('mobile-hover');
-                        }
-                    }
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.project-item')) {
-                    projectItems.forEach(pi => pi.classList.remove('mobile-hover'));
-                }
-            });
         });
     </script>
 </body>
