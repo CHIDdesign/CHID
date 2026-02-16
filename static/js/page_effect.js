@@ -3,7 +3,7 @@
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
             
             document.getElementById('back-to-home').addEventListener('click', function() {
-                window.location.href = '../index.html';
+                window.location.href = '/';
             });
 
             const videos = document.querySelectorAll('video.locked-video');
