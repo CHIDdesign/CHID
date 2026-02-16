@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID - Foldisafe</title>
+    <link rel="icon" href="../img/main/favicon.webp" type="image/webp">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        body.fade-in { opacity: 1; }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 40px; 
+            width: 100%;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            height: 90px;
+        }
+        header.header-hidden { transform: translateY(-100%); }
+        .logo-container { cursor: pointer; }
+        .logo-img { height: 60px; width: auto; display: block; }
+        nav ul { display: flex; list-style: none; gap: 50px; }
+        nav ul li { margin-left: 0; }
+        nav ul li a {
+            text-decoration: none; color: #111111;
+            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            display: block; padding: 10px 0; letter-spacing: -0.02em;
+            opacity: 0.8; 
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; text-align: center; pointer-events: auto;
+        }
+        nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
+        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+        nav ul li.active a { font-weight: 700; opacity: 1; }
+        nav ul li.active a::after {
+            content: ''; display: block; width: 100%; height: 2px; 
+            background: currentColor; margin-top: 5px; border-radius: 2px;
+        }
+        main { width: 100%; padding-top: 90px; position: relative; }
+        .back-nav-container {
+            width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
+            position: -webkit-sticky; position: sticky;
+            top: 110px; z-index: 50; height: 0; overflow: visible;
+            pointer-events: none; transition: transform 0.3s ease-in-out;
+        }
+        .back-nav-container.nav-up { transform: translateY(-100px); }
+        .back-btn {
+            display: flex; justify-content: center; align-items: center;
+            width: 48px; height: 48px; 
+            border-radius: 50%; border: 2px solid #111111; 
+            background: rgba(255, 255, 255, 0.48); 
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            text-decoration: none; color: #111111; opacity: 1; 
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer; pointer-events: auto; transform: translateY(20px); 
+        }
+        .back-btn svg {
+            width: 18px; height: 18px; fill: none;
+            stroke: currentColor; stroke-width: 2; 
+            stroke-linecap: round; stroke-linejoin: round;
+            display: block; transform: translateX(-1px); 
+        }
+        .back-btn:hover {
+            transform: translateY(20px) translateX(-3px); 
+            background: rgba(255, 255, 255, 0.9); 
+        }
+        .hero-section { width: 100%; padding: 0; margin-bottom: 60px; }
+        .hero-image {
+            width: 100%; height: auto; display: block; 
+            border-radius: 0; background-color: #f4f4f4;
+            object-fit: cover; object-position: center; min-height: 400px;
+        }
+        .project-header {
+            max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; 
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .project-title h1 {
+            font-size: clamp(40px, 6vw, 100px); font-weight: 800;
+            line-height: 1; letter-spacing: -0.04em; margin: 0;
+        }
+        .project-specs {
+            text-align: right; font-size: 14px; color: #666; line-height: 1.6;
+        }
+        .content-container { width: 100%; max-width: 100%; margin: 0 auto; padding: 0; }
+        .credit-section { margin-top: 40px; border-top: 1px solid #eee; padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; }
+        .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
+        .credit-label { font-weight: 700; color: #111; }
+        .credit-content { font-weight: 300; color: #555; }
+        .next-project {
+            padding: 140px 40px; text-align: center; cursor: pointer; 
+            transition: transform 0.3s ease; margin-top: 60px; 
+            position: relative; overflow: hidden; color: #ffffff; 
+        }
+        .next-project::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('../img/projects/Thumbnail/placeholder.webp'); 
+            background-size: cover; background-position: center;
+            filter: blur(10px) brightness(0.6); z-index: -1; 
+            transform: scale(1.1); transition: filter 0.3s ease, transform 0.3s ease; 
+        }
+        .next-project:hover { transform: translateY(-5px); }
+        .next-project:hover::before { filter: blur(5px) brightness(0.7); transform: scale(1.05); }
+        .next-label { font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px; letter-spacing: 0.05em; text-transform: uppercase; }
+        .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.02em; }
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
+            .logo-img { height: 50px; }
+            nav ul { justify-content: center; gap: 25px; }
+            nav ul li a { font-size: 16px; font-weight: 500; }
+            main { padding-top: 140px; }
+            .back-nav-container { top: 150px; padding: 0 20px; }
+            .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
+            .project-specs { text-align: left; margin-top: 20px; }
+            .credit-section { padding: 40px 20px 0; }
+            .credit-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 30px; }
+            .credit-label { margin-bottom: 5px; }
+            .hero-image { height: 80vh; }
+            .next-project { padding: 100px 20px; }
+            .next-title { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="back-to-home">
+            <img src="../img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../about.html" title="About">About</a></li>
+                <li class="active"><a href="../projects.html" title="Projects">Projects</a></li>
+                <li><a href="../contact.html" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="back-nav-container">
+            <a href="../projects.html" class="back-btn" title="Back to Projects">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+        </div>
+
+        <section class="hero-section">
+            <img src="" alt="Hero Image" class="hero-image" style="background-color: #f4f4f4;"> 
+        </section>
+
+        <section class="project-header">
+            <div class="project-title">
+                <h1>Foldisafe</h1>
+            </div>
+            <div class="project-specs">
+                COREAMED<br>
+                Suction Liner Dispenser Pack<br>
+                2026
+            </div>
+        </section>
+
+        <div class="content-container">
+            <div style="padding: 100px 0; text-align: center; color: #ccc;">
+                Content Area
+            </div>
+        </div>
+
+        <div class="credit-section">
+            <div class="credit-grid">
+                <div class="credit-label">Project</div>
+                <div class="credit-content">
+                    Freelance Works<br>
+                    2025.03 - 2025.12
+                </div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Industrial Designer</div>
+                <div class="credit-content">Eunjun Choi<br></div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Visualization</div>
+                <div class="credit-content">Eunjun Choi</div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Filming</div>
+                <div class="credit-content">N/A</div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+            
+            document.getElementById('back-to-home').addEventListener('click', function() {
+                window.location.href = '../index.html';
+            });
+
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.preload = "auto";
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log("Auto-play blocked:", error);
+                            });
+                        }
+                    } else {
+                        if (!video.paused) {
+                            video.pause();
+                        }
+                    }
+                });
+            }, { rootMargin: "200px 0px", threshold: 0.1 });
+
+            document.querySelectorAll('video.locked-video').forEach(video => {
+                videoObserver.observe(video);
+            });
+
+            let lastScrollTop = 0;
+            let scrollUpDistance = 0;
+            const scrollThreshold = 400;
+
+            const header = document.querySelector('header');
+            const backNav = document.querySelector('.back-nav-container'); 
+            
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll <= 0) {
+                    header.classList.remove('header-hidden');
+                    backNav.classList.remove('nav-up');
+                    lastScrollTop = 0;
+                    return; 
+                }
+
+                if (currentScroll > lastScrollTop) {
+                    header.classList.add('header-hidden');
+                    backNav.classList.add('nav-up');
+                    scrollUpDistance = 0;
+                } else {
+                    scrollUpDistance += (lastScrollTop - currentScroll);
+                    if (scrollUpDistance > scrollThreshold) {
+                        header.classList.remove('header-hidden');
+                        backNav.classList.remove('nav-up');
+                        scrollUpDistance = scrollThreshold;
+                    }
+                }
+                
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+            }, false);
+        });
+    </script>
+</body>
+</html>
