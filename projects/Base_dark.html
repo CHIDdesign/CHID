@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID - Project Template (Dark)</title>
+    <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+    
+    <link rel="stylesheet" href="/static/css/base_black.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="back-to-home">
+            <img src="/img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/about.html" title="About">About</a></li>
+                <li class="active"><a href="/projects.html" title="Projects">Projects</a></li>
+                <li><a href="/contact.html" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="back-nav-container">
+            <a href="/projects.html" class="back-btn" title="Back to Projects">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+        </div>
+
+        <section class="hero-section">
+            <img src="/img/projects/project img/placeholder.webp" alt="Hero Image" class="hero-image">
+        </section>
+
+        <section class="project-header">
+            <div class="project-title">
+                <h1>[PROJECT TITLE]</h1>
+            </div>
+            <div class="project-specs">
+                [Client/Affiliation]<br>
+                [Project Type]<br>
+                [Year]
+            </div>
+        </section>
+
+        <div class="full-image-block">
+            <video class="locked-video" muted loop playsinline preload="none">
+                <source src="/img/projects/project img/placeholder.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="text-section-vertical-wide">
+            <div class="vertical-head">
+                <img src="/img/projects/project img/placeholder_logo.svg" alt="Logo" class="wide-logo-img" loading="lazy">
+            </div>
+            <div class="vertical-body">
+                <p class="body-en">
+                    English description goes here.<br>
+                    Describe the project overview and goals.
+                </p>
+                <p class="body-kr">
+                    국문 설명이 들어가는 곳입니다.<br>
+                    프로젝트의 개요와 목표를 서술하세요.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <p class="intro-lead">
+                [Project Summary Sentence]
+            </p>
+            <p class="body-en">
+                Additional English text.
+            </p>
+            <p class="body-kr">
+                추가 국문 텍스트.
+            </p>
+        </div>
+
+        <div class="full-image-block">
+            <img src="/img/projects/project img/placeholder.webp" alt="Detail" loading="lazy">
+        </div>
+
+        <div class="credit-section">
+            <div class="credit-grid">
+                <div class="credit-label">Project</div>
+                <div class="credit-content">
+                    Personal / Team<br>
+                    YYYY.MM - YYYY.MM
+                </div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Role</div>
+                <div class="credit-content">Your Name</div>
+            </div>
+        </div>
+
+        <div class="next-project" onclick="location.href='NEXT_PROJECT.html'" style="--next-bg: url('/img/projects/Thumbnail/project_N.webp');">
+            <div class="next-label">Next Project</div>
+            <div class="next-title">Next Project Title &rarr;</div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+    <script src="/static/js/page_effect.js"></script>
+
+</body>
+</html>
