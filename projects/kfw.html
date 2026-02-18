@@ -9,6 +9,65 @@
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
     
     <link rel="stylesheet" href="/static/css/base_white.css">
+
+    <style>
+        /* 띠 애니메이션 전체 영역 */
+        .marquee-section {
+            width: 100%;
+            padding: 80px 0; /* 위아래 여백 */
+            display: flex;
+            flex-direction: column;
+            gap: 24px; /* 띠 사이의 간격 */
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        /* 개별 띠 컨테이너 */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap; /* 줄바꿈 방지 */
+            position: relative;
+            line-height: 0; /* 이미지 하단 여백 제거 */
+        }
+
+        /* 움직이는 트랙 */
+        .marquee-track {
+            display: flex;
+            width: fit-content;
+            will-change: transform; /* 성능 최적화 */
+            animation: scroll-left 25s linear infinite; /* 25초 동안 이동, 무한반복 */
+        }
+
+        /* 띠 이미지 스타일 */
+        .marquee-track img {
+            height: 80px; /* PC 기준 띠 높이 (원하는대로 수정 가능) */
+            width: auto;  /* 비율 유지 */
+            display: block;
+        }
+
+        /* 애니메이션 정의 (왼쪽으로 이동) */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+            /* 트랙 길이의 절반(이미지 1개 길이)만큼 이동하면 처음으로 리셋되어 무한처럼 보임 */
+        }
+
+        /* 속도 조절용 클래스 (필요시 사용) */
+        .speed-fast { animation-duration: 15s; }
+        .speed-slow { animation-duration: 35s; }
+
+        /* 모바일 반응형 조절 */
+        @media (max-width: 768px) {
+            .marquee-section {
+                padding: 40px 0;
+                gap: 16px;
+            }
+            .marquee-track img {
+                height: 40px; /* 모바일에서는 띠 높이를 줄임 */
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -78,7 +137,31 @@
                 </p>
             </div>
         </div>
-        
+
+        <div class="marquee-section">
+            
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <img src="/img/projects/project img/7. kfw/kfw 4.png" alt="ROK Ribbon Pattern">
+                    <img src="/img/projects/project img/7. kfw/kfw 4.png" alt="ROK Ribbon Pattern" aria-hidden="true">
+                </div>
+            </div>
+
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <img src="/img/projects/project img/7. kfw/kfw 5.png" alt="US Stripe Ribbon Pattern">
+                    <img src="/img/projects/project img/7. kfw/kfw 5.png" alt="US Stripe Ribbon Pattern" aria-hidden="true">
+                </div>
+            </div>
+
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <img src="/img/projects/project img/7. kfw/kfw 6.png" alt="US Star Ribbon Pattern">
+                    <img src="/img/projects/project img/7. kfw/kfw 6.png" alt="US Star Ribbon Pattern" aria-hidden="true">
+                </div>
+            </div>
+
+        </div>
         <div class="credit-section">
             <div class="credit-grid">
                 <div class="credit-label">Project</div>
@@ -94,14 +177,6 @@
             <div class="credit-grid">
                 <div class="credit-label">Visualization</div>
                 <div class="credit-content">Eunjun Choi</div>
-            </div>
-            <div class="credit-grid">
-                <div class="credit-label">UX Designer</div>
-                <div class="credit-content">Eunjun Choi</div>
-            </div>
-            <div class="credit-grid">
-                <div class="credit-label">Tutor</div>
-                <div class="credit-content">N/A</div>
             </div>
             <div class="credit-grid">
                 <div class="credit-label">Filming</div>
