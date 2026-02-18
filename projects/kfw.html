@@ -11,51 +11,74 @@
     <link rel="stylesheet" href="/static/css/base_white.css">
 
     <style>
-        /* 띠 애니메이션 전체 영역 */
-        .marquee-section {
+        /* ▼▼▼ [수정됨] 로고 및 텍스트 섹션 반응형 강제 적용 ▼▼▼ */
+        .text-section-vertical-wide {
             width: 100%;
-            padding: 80px 0; /* 위아래 여백 */
+            max-width: 1800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px; /* 띠 사이의 간격 */
+            align-items: flex-start;
+            text-align: left;
+            box-sizing: border-box;
+            overflow-x: hidden; 
+        }
+
+        .vertical-head {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .wide-logo-img {
+            /* [중요] 모바일 오버플로우 해결 */
+            width: 100%;       
+            height: auto;
+            max-width: 400px;  /* PC 최대 크기 */
+            display: block;
+        }
+
+        .vertical-body {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* ▼▼▼ 띠 애니메이션 스타일 ▼▼▼ */
+        .marquee-section {
+            width: 100%;
+            padding: 80px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
             overflow: hidden;
             background-color: transparent;
         }
 
-        /* 개별 띠 컨테이너 */
         .marquee-container {
             width: 100%;
             overflow: hidden;
-            white-space: nowrap; /* 줄바꿈 방지 */
+            white-space: nowrap;
             position: relative;
-            line-height: 0; /* 이미지 하단 여백 제거 */
+            line-height: 0;
         }
 
-        /* 움직이는 트랙 */
         .marquee-track {
             display: flex;
             width: fit-content;
-            will-change: transform; /* 성능 최적화 */
-            animation: scroll-left 25s linear infinite; /* 25초 동안 이동, 무한반복 */
+            will-change: transform;
+            animation: scroll-left 25s linear infinite;
         }
 
-        /* 띠 이미지 스타일 */
         .marquee-track img {
-            height: 80px; /* PC 기준 띠 높이 (원하는대로 수정 가능) */
-            width: auto;  /* 비율 유지 */
+            height: 80px;
+            width: auto;
             display: block;
         }
 
-        /* 애니메이션 정의 (왼쪽으로 이동) */
         @keyframes scroll-left {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
-            /* 트랙 길이의 절반(이미지 1개 길이)만큼 이동하면 처음으로 리셋되어 무한처럼 보임 */
         }
-
-        /* 속도 조절용 클래스 (필요시 사용) */
-        .speed-fast { animation-duration: 15s; }
-        .speed-slow { animation-duration: 35s; }
 
         /* 모바일 반응형 조절 */
         @media (max-width: 768px) {
@@ -64,7 +87,7 @@
                 gap: 16px;
             }
             .marquee-track img {
-                height: 40px; /* 모바일에서는 띠 높이를 줄임 */
+                height: 40px;
             }
         }
     </style>
@@ -109,7 +132,7 @@
         </section>
 
         <div class="full-image-block">
-            <video class="locked-video" muted loop playsinline preload="none">
+            <video class="locked-video" muted loop playsinline preload="metadata">
                 <source src="/img/projects/project img/7. kfw/kfw 3.mp4" type="video/mp4">
             </video>
         </div>
@@ -168,6 +191,7 @@
             </div>
 
         </div>
+
         <div class="credit-section">
             <div class="credit-grid">
                 <div class="credit-label">Project</div>
@@ -190,9 +214,9 @@
             </div>
         </div>
 
-        <div class="next-project" onclick="location.href='다음프로젝트링크.html'" style="--next-bg: url('../img/projects/Thumbnail/placeholder.webp');">
+        <div class="next-project" onclick="location.href='nezhnost.html'" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
             <div class="next-label">Next Project</div>
-            <div class="next-title">Next Project Name &rarr;</div>
+            <div class="next-title">Nezhnost &rarr;</div>
         </div>
 
     </main>
