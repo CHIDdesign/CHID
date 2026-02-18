@@ -310,7 +310,7 @@ video::-webkit-media-controls-panel { display: none !important; }
 .wide-logo-img {
     width: 100%;       /* auto를 100%로 변경: 부모 너비에 맞춰 반응형으로 줄어듬 */
     height: auto;      /* 비율 유지 */
-    max-width: 640px;  /* 화면이 커도 이미지는 최대 400px까지만 커짐 */
+    max-width: 800px;  /* 화면이 커도 이미지는 최대 400px까지만 커짐 */
     display: block;
 }
 
