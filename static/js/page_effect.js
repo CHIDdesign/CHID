@@ -15,47 +15,48 @@ document.addEventListener("DOMContentLoaded", function() {
     // -------------------------------------------------------
     const videos = Array.from(document.querySelectorAll('video.locked-video'));
 
-    // 비디오 설정을 초기화 (소리 끔, 아이폰 전체화면 방지)
+    // 초기 설정: 모든 비디오의 로딩을 JS가 통제하기 위해 꺼둠
     videos.forEach(video => {
         video.muted = true;
         video.playsInline = true;
-        video.preload = "none"; // JS가 통제하므로 일단 끔
+        video.preload = "none"; 
     });
 
-    // 순차 로딩 함수: index번째 비디오를 로드하고, 완료되면 index+1번째를 호출
+    // 재귀 함수: index번째 비디오를 로드하고, 완료되면 index+1번째를 호출
     const loadVideoSequence = (index) => {
-        if (index >= videos.length) return; // 더 이상 비디오가 없으면 종료
+        if (index >= videos.length) return; // 모든 비디오 로딩 끝
 
         const video = videos[index];
         
-        // 로딩 시작 (강제)
+        // 로딩 시작
         video.preload = "auto"; 
         
-        // "데이터가 조금이라도 로딩되면" 다음 타자 호출
-        // (loadeddata: 첫 프레임이 로딩된 시점)
+        // 다음 비디오 로딩 트리거 (loadeddata: 첫 프레임 확보 시점)
         const onLoaded = () => {
-            // 이벤트 리스너 제거 (중복 실행 방지)
-            video.removeEventListener('loadeddata', onLoaded);
-            // 다음 비디오 로딩 시작
-            loadVideoSequence(index + 1);
+            video.removeEventListener('loadeddata', onLoaded); // 리스너 제거
+            loadVideoSequence(index + 1); // 다음 타자 호출
         };
 
-        // 이미 로딩이 되어있는 경우 바로 다음으로, 아니면 리스너 등록
+        // 이미 로딩되어 있다면 바로 다음으로, 아니면 대기
         if (video.readyState >= 2) {
             loadVideoSequence(index + 1);
         } else {
             video.addEventListener('loadeddata', onLoaded);
-            // 혹시 로딩이 너무 오래 걸릴 경우를 대비해 3초 뒤 강제 다음 진행
+            
+            // [안전장치] 3초가 지나도 로딩이 안 되면 강제로 다음 비디오 진행 (무한 대기 방지)
             setTimeout(() => {
-                if(video.readyState < 2) loadVideoSequence(index + 1);
+                if(video.readyState < 2) {
+                    console.warn(`Video ${index} loading timeout. Skipping to next.`);
+                    loadVideoSequence(index + 1);
+                }
             }, 3000); 
         }
 
-        // 모바일 브라우저를 깨우기 위해 강제로 load() 호출
+        // 모바일 브라우저 강제 로딩 트리거
         video.load();
     };
 
-    // [시작] 첫 번째 비디오부터 로딩 스타트!
+    // 첫 번째 비디오부터 로딩 시작!
     if (videos.length > 0) {
         loadVideoSequence(0);
     }
@@ -68,23 +69,24 @@ document.addEventListener("DOMContentLoaded", function() {
             const video = entry.target;
             
             if (entry.isIntersecting) {
-                // 화면에 들어옴: 재생 시도
-                // (위의 순차 로딩 로직 덕분에 이미 로딩이 되어있을 확률 높음)
+                // 화면에 들어오면 재생 시도
+                // (순차 로딩 덕분에 이미 로딩되어 있을 확률이 높음)
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        console.log("Play blocked (Low Power Mode?):", error);
+                        // 저전력 모드 등으로 자동 재생이 막힌 경우
+                        console.log("Auto-play blocked:", error);
                     });
                 }
             } else {
-                // 화면 밖: 정지
+                // 화면 밖으로 나가면 정지 (배터리/데이터 절약)
                 if (!video.paused) {
                     video.pause();
                 }
             }
         });
     }, { 
-        rootMargin: "50% 0px", // 미리 재생 준비
+        rootMargin: "50% 0px", // 화면에 들어오기 전 미리 감지
         threshold: 0.1 
     });
 
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
         videoObserver.observe(video);
     });
 
-    // 4. 스크롤 헤더 제어 (기존 동일)
+    // 4. 스크롤 헤더 제어 (기존 유지)
     let lastScrollTop = 0;
     const header = document.querySelector('header');
     const backNav = document.querySelector('.back-nav-container'); 
