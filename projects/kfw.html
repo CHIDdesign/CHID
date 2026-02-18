@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/static/css/base_white.css">
 
     <style>
-        /* ▼▼▼ [수정됨] 로고 및 텍스트 섹션 반응형 강제 적용 ▼▼▼ */
         .text-section-vertical-wide {
             width: 100%;
             max-width: 1800px;
@@ -31,10 +30,9 @@
         }
 
         .wide-logo-img {
-            /* [중요] 모바일 오버플로우 해결 */
             width: 100%;       
             height: auto;
-            max-width: 400px;  /* PC 최대 크기 */
+            max-width: 400px;
             display: block;
         }
 
@@ -43,7 +41,7 @@
             max-width: 100%;
         }
 
-        /* ▼▼▼ 띠 애니메이션 스타일 ▼▼▼ */
+        /* 띠 애니메이션 스타일 */
         .marquee-section {
             width: 100%;
             padding: 80px 0;
@@ -80,7 +78,6 @@
             100% { transform: translateX(-50%); } 
         }
 
-        /* 모바일 반응형 조절 */
         @media (max-width: 768px) {
             .marquee-section {
                 padding: 40px 0;
@@ -132,7 +129,7 @@
         </section>
 
         <div class="full-image-block">
-            <video class="locked-video" muted loop playsinline preload="metadata">
+            <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/7. kfw/kfw 3.mp4" type="video/mp4">
             </video>
         </div>
