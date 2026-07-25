@@ -185,7 +185,6 @@
     <div id="video-container">
         <div id="poster-layer"></div>
 
-        <!-- [수정] 모든 video 태그에서 autoplay 속성을 완전히 제거했습니다. -->
         <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
@@ -198,7 +197,8 @@
         <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <!-- 중복되었던 v4 아이디를 v5로 수정 -->
+        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 5.mp4" type="video/mp4">
         </video>
     </div>
@@ -239,8 +239,38 @@
             const mainLogo = document.getElementById('main-logo');
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
+            // DOM에 추가된 모든 .bg-video 요소들을 자동으로 배열로 가져옵니다.
             const videos = Array.from(document.querySelectorAll('.bg-video'));
-            let activeIndex = 0;
+            
+            // --- [랜덤 라인업(Playlist) 관리 변수] ---
+            let currentPlaylist = [];
+            let playlistCursor = 0;
+            let activeVideoIndex = -1; // 현재 재생 중인 비디오의 실제 DOM 인덱스
+
+            // 배열 셔플 함수 (Fisher-Yates 알고리즘)
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            // 새로운 랜덤 플레이리스트 생성 함수
+            function generatePlaylist() {
+                // 0부터 (비디오개수-1) 까지의 숫자로 배열을 만듭니다.
+                let newPlaylist = videos.map((_, i) => i);
+                shuffleArray(newPlaylist);
+
+                // 이전 사이클의 마지막 비디오와 새 사이클의 첫 비디오가 겹치지 않도록 방지
+                if (activeVideoIndex !== -1 && newPlaylist[0] === activeVideoIndex) {
+                    if (newPlaylist.length > 1) {
+                        // 첫 번째 비디오가 겹치면 두 번째 비디오와 순서를 바꿈
+                        [newPlaylist[0], newPlaylist[1]] = [newPlaylist[1], newPlaylist[0]];
+                    }
+                }
+                currentPlaylist = newPlaylist;
+                playlistCursor = 0;
+            }
 
             function updateHeaderColor(videoElement) {
                 const theme = videoElement.getAttribute("data-theme");
@@ -248,7 +278,8 @@
                 else header.classList.remove("white-skin");
             }
 
-            videos.forEach((video, index) => {
+            // 모든 비디오 초기 설정 및 종료 이벤트 등록
+            videos.forEach((video, domIndex) => {
                 video.muted = true;
                 video.defaultMuted = true;
                 video.playsInline = true;
@@ -256,18 +287,28 @@
                 video.setAttribute('webkit-playsinline', '');
 
                 video.addEventListener('ended', () => {
-                    if (index === activeIndex) {
-                        playNextVideo(index);
+                    // 현재 재생 중인 비디오가 끝났을 때만 다음 비디오 실행
+                    if (domIndex === activeVideoIndex) {
+                        playNextVideo();
                     }
                 });
             });
 
-            function playNextVideo(currentIndex) {
-                const nextIndex = (currentIndex + 1) % videos.length;
-                const currentVideo = videos[currentIndex];
-                const nextVideo = videos[nextIndex];
+            // 다음 랜덤 비디오 재생 함수
+            function playNextVideo() {
+                playlistCursor++;
+                
+                // 플레이리스트 끝에 도달하면 새로운 랜덤 순서를 다시 생성
+                if (playlistCursor >= currentPlaylist.length) {
+                    generatePlaylist();
+                }
 
-                activeIndex = nextIndex;
+                const nextDomIndex = currentPlaylist[playlistCursor];
+                const currentVideo = videos[activeVideoIndex];
+                const nextVideo = videos[nextDomIndex];
+
+                // 현재 활성화된 인덱스를 업데이트
+                activeVideoIndex = nextDomIndex;
 
                 nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
@@ -277,6 +318,7 @@
                         nextVideo.classList.add('active'); 
                         updateHeaderColor(nextVideo); 
 
+                        // 이전 비디오는 서서히 숨기고 정지
                         setTimeout(() => {
                             currentVideo.classList.remove('active');
                             currentVideo.pause(); 
@@ -288,31 +330,35 @@
                 }
             }
 
-            // --- [핵심 로직 개선 구간] ---
-            const firstVideo = videos[0];
+            // --- [초기 로딩 및 첫 비디오 실행] ---
+            
+            // 페이지 진입 시 첫 번째 라인업 생성
+            generatePlaylist();
+            activeVideoIndex = currentPlaylist[playlistCursor]; // 셔플된 첫 번째 비디오 인덱스
+            
+            const firstVideo = videos[activeVideoIndex];
             updateHeaderColor(firstVideo);
             
             // 브라우저에게 백그라운드 다운로드를 강제 지시
             firstVideo.load();
 
-            // 1. 비디오가 "실제 재생(픽셀을 그리기 시작)"될 때 포스터를 숨김
-            // canplay보다 훨씬 안전하고 직관적인 이벤트입니다.
+            // 첫 프레임이 그려지기 시작할 때 포스터를 숨김
             firstVideo.addEventListener('playing', () => {
                 firstVideo.classList.add('active');
-                posterLayer.classList.add('hidden');
-                activeIndex = 0;
+                
+                setTimeout(() => {
+                    posterLayer.classList.add('hidden');
+                }, 100);
             }, { once: true });
 
-            // 2. 비디오 재생 시도 함수
             function tryPlayFirstVideo() {
                 firstVideo.muted = true;
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
                     playPromise.catch((error) => {
-                        // 모바일 저전력 모드 등의 이유로 자동재생이 막힌 경우, 터치 시 재생되도록 폴백
+                        // 자동재생 차단 대비
                         const interactionHandler = () => {
-                            if (activeIndex !== 0) return;
                             firstVideo.play(); 
                             document.removeEventListener('click', interactionHandler);
                             document.removeEventListener('touchstart', interactionHandler);
@@ -323,18 +369,15 @@
                 }
             }
 
-            // 3. 비디오 로딩 상태 체크
+            // 비디오 로딩 상태에 맞춰 재생 트리거
             if (firstVideo.readyState >= 4) {
-                // 이미 끝까지 재생할 만큼 충분히 로딩된 경우 즉시 재생
                 tryPlayFirstVideo();
             } else {
-                // 끊김 없이 재생 가능해질 때(canplaythrough)까지 기다렸다가 재생
                 firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
                 
-                // 모바일 브라우저 예외 처리: 데이터 절약을 위해 canplaythrough를 띄우지 않고 멈춰있는 현상 방지
                 setTimeout(() => {
-                    if (firstVideo.paused && activeIndex === 0) {
-                        tryPlayFirstVideo(); // 2.5초가 지나면 억지로라도 재생을 시도해 버퍼링을 유도
+                    if (firstVideo.paused) {
+                        tryPlayFirstVideo(); 
                     }
                 }, 2500);
             }
