@@ -94,6 +94,9 @@
         .project-item:nth-child(2) { animation-delay: 0.2s; }
         .project-item:nth-child(3) { animation-delay: 0.3s; }
         .project-item:nth-child(4) { animation-delay: 0.4s; }
+        .project-item:nth-child(5) { animation-delay: 0.5s; }
+        .project-item:nth-child(6) { animation-delay: 0.6s; }
+        .project-item:nth-child(7) { animation-delay: 0.7s; }
 
         @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
@@ -106,16 +109,52 @@
             transform: translateZ(0); 
         }
 
+        /* --- [스켈레톤 UI 스타일 시작] --- */
+        .skeleton {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f0f0f0; 
+            z-index: 5;
+            transition: opacity 0.4s ease;
+        }
+
+        /* 빛이 스쳐 지나가는 애니메이션 (Shimmer) */
+        .skeleton::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { left: 150%; }
+        }
+
+        /* 데이터가 준비되기 전 이미지는 투명도 0 */
         .image-wrapper img, 
         .image-wrapper video {
             width: 100%; height: 100%; object-fit: cover;
             display: block; 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
             transform: scale(1.01); 
+            opacity: 0; /* 초기 숨김 */
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             will-change: transform;
+            z-index: 1;
         }
+
+        /* 이미지 로드 완료 시 적용될 클래스 */
+        .image-wrapper.loaded .skeleton {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .image-wrapper.loaded img {
+            opacity: 1; /* 서서히 나타남 */
+        }
+        /* --- [스켈레톤 UI 스타일 끝] --- */
 
         .project-info-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -123,6 +162,7 @@
             color: #ffffff;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
+            z-index: 10;
         }
 
         .project-item:hover .project-info-overlay { opacity: 1; }
@@ -175,6 +215,8 @@
 
             <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
+                    <!-- 스켈레톤 레이어 추가 -->
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026">
                     <div class="project-info-overlay">
                         <div class="info-title">KFW 2026</div>
@@ -185,6 +227,7 @@
 
             <a href="projects/foldiSafe.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_6.webp" alt="FoldiSafe">
                     <div class="project-info-overlay">
                         <div class="info-title">FoldiSafe</div>
@@ -195,6 +238,7 @@
 
             <a href="projects/kunst.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_5.webp" alt="KUNST">
                     <div class="project-info-overlay">
                         <div class="info-title">KUNST</div>
@@ -205,6 +249,7 @@
 
             <a href="projects/seesaw.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_4.webp" alt="Seesaw">
                     <div class="project-info-overlay">
                         <div class="info-title">Seesaw</div>
@@ -215,6 +260,7 @@
 
             <a href="projects/aetheris.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_3.webp" alt="Aetheris">
                     <div class="project-info-overlay">
                         <div class="info-title">Aetheris</div>
@@ -225,6 +271,7 @@
 
             <a href="projects/invasion.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_2.webp" alt="Invasion">
                     <div class="project-info-overlay">
                         <div class="info-title">Invasion</div>
@@ -235,6 +282,7 @@
 
             <a href="projects/nezhnost.html" class="project-item">
                 <div class="image-wrapper">
+                    <div class="skeleton"></div>
                     <img src="img/projects/Thumbnail/project_1.webp" alt="Nezhnost">
                     <div class="project-info-overlay">
                         <div class="info-title">Nezhnost</div>
@@ -263,6 +311,24 @@
                     e.preventDefault();
                     fadeAndMove(this.getAttribute('href'));
                 });
+            });
+
+            // --- [이미지 로드 완료 감지하여 스켈레톤 지우기 로직] ---
+            const imageWrappers = document.querySelectorAll('.image-wrapper');
+            
+            imageWrappers.forEach(wrapper => {
+                const img = wrapper.querySelector('img');
+                if (img) {
+                    // 이미지가 이미 브라우저 캐시에 있어 바로 로딩된 경우
+                    if (img.complete) {
+                        wrapper.classList.add('loaded');
+                    } else {
+                        // 새로 다운로드 받는 경우 완료 시점에 클래스 추가
+                        img.addEventListener('load', () => {
+                            wrapper.classList.add('loaded');
+                        });
+                    }
+                }
             });
 
             let lastScrollTop = 0;
