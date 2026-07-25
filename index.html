@@ -17,7 +17,7 @@
     <meta property="og:description" content="Industrial Design Portfolio">
     <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
 
-    <!-- [최적화 적용] 가장 먼저 보이는 포스터 이미지를 1순위로 로딩 -->
+    <!-- 포스터 이미지를 1순위로 즉시 로딩 -->
     <link rel="preload" as="image" href="img/main/loop/poster1.jpg">
 
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
@@ -65,7 +65,7 @@
             z-index: -1; background-color: #000000; overflow: hidden;
         }
 
-        /* [수정됨] 밴딩(깨짐) 방지 필터 개선 */
+        /* 밴딩(깨짐) 방지 필터 개선 */
         #video-container::after {
             content: "";
             position: absolute;
@@ -76,7 +76,7 @@
             /* 노이즈 패턴 SVG */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
             
-            /* 투명도를 낮춰서 자연스럽게 덮어씌움 (3% ~ 5% 추천) */
+            /* 투명도를 낮춰서 자연스럽게 덮어씌움 */
             opacity: 0.04; 
         }
 
@@ -294,6 +294,7 @@
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         firstVideo.classList.add('active');
+                        // 비디오 재생이 시작되면 포스터 레이어를 숨김
                         posterLayer.classList.add('hidden');
                         activeIndex = 0;
                     })
@@ -315,10 +316,12 @@
                 }
             }
 
-            if (firstVideo.readyState >= 3) {
+            // readyState 4 (HAVE_ENOUGH_DATA): 끝까지 끊김 없이 재생할 수 있을 만큼 데이터가 로드됨
+            if (firstVideo.readyState >= 4) {
                 startFirstVideo();
             } else {
-                firstVideo.addEventListener('canplay', startFirstVideo, { once: true });
+                // canplaythrough: 버퍼링 없이 끝까지 재생 가능할 때 발생하는 이벤트
+                firstVideo.addEventListener('canplaythrough', startFirstVideo, { once: true });
             }
         });
     </script>
