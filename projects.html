@@ -17,13 +17,14 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            opacity: 0;
+            opacity: 0; /* 초기 흰 화면 방지 (페이드인 대기) */
             transition: opacity 0.5s ease-in-out;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
         }
         
+        /* 페이지 전체 페이드인 활성화 클래스 */
         body.fade-in { opacity: 1; }
 
         header {
@@ -85,13 +86,12 @@
             color: inherit;
             cursor: pointer; 
             -webkit-tap-highlight-color: transparent; 
-            /* 기존에 스켈레톤을 숨기고 있던 animation-delay와 fadeUp 애니메이션 제거 */
         }
 
         .image-wrapper {
             position: relative; width: 100%; aspect-ratio: 3 / 4;
             overflow: hidden; 
-            background-color: #f5f5f5; /* 기본 배경색 (스켈레톤 대비용) */
+            background-color: #f5f5f5;
             transform: translateZ(0); 
         }
 
@@ -99,30 +99,30 @@
         .skeleton {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #eeeeee; 
+            background-color: #e8e8e8; 
             z-index: 5;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
 
-        /* 뼈대 위로 지나가는 Shimmer (빛) 애니메이션 */
+        /* 뼈대 위로 은은하게 빛이 지나가는 Shimmer 효과 */
         .skeleton::after {
             content: "";
             position: absolute;
             top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-            animation: shimmer 1.2s infinite;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: shimmer 1.5s infinite;
         }
 
         @keyframes shimmer {
             100% { left: 150%; }
         }
 
-        /* 진짜 이미지: 처음에는 투명도 0으로 숨겨둠 */
+        /* 실제 이미지: 초기에는 투명도 0으로 감춤 */
         .image-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             display: block; 
             opacity: 0; 
-            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             transform: scale(1.01); 
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
@@ -130,15 +130,16 @@
             z-index: 1;
         }
 
-        /* 이미지가 로딩 완료되어 .loaded 클래스가 붙었을 때 */
+        /* 이미지가 로딩 완료되면 스켈레톤을 숨기고 이미지를 띄움 */
         .image-wrapper.loaded .skeleton {
             opacity: 0;
             pointer-events: none;
         }
         
         .image-wrapper.loaded img {
-            opacity: 1; /* 스켈레톤이 사라짐과 동시에 이미지가 페이드인 */
+            opacity: 1; 
         }
+        /* --- [스켈레톤 UI 스타일 끝] --- */
 
         .project-info-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -198,9 +199,7 @@
 
             <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
-                    <!-- 1. 뼈대 역할의 스켈레톤 레이어 -->
                     <div class="skeleton"></div>
-                    <!-- 2. decoding="async"를 통해 UI 렌더링 블로킹 방지 -->
                     <img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026" decoding="async">
                     <div class="project-info-overlay">
                         <div class="info-title">KFW 2026</div>
@@ -280,8 +279,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // [즉시 실행] 페이지 접속 시 스켈레톤과 UI가 바로 렌더링되도록 트리거
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+            // 1. 페이지 전체 페이드인 효과 즉시 트리거 (UI와 스켈레톤 뼈대가 먼저 부드럽게 나타남)
+            setTimeout(() => { 
+                document.body.classList.add('fade-in'); 
+            }, 30);
             
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
@@ -298,30 +299,31 @@
                 });
             });
 
-            // --- [이미지 개별 로딩 감지 및 스켈레톤 해제] ---
+            // 2. 각 썸네일 이미지의 로딩 상태를 개별 감지하여 스켈레톤 해제
             const imageWrappers = document.querySelectorAll('.image-wrapper');
             
             imageWrappers.forEach(wrapper => {
                 const img = wrapper.querySelector('img');
                 if (img) {
-                    // 이미지가 성공적으로 불러와졌을 때 실행할 함수
-                    const handleLoad = () => {
-                        wrapper.classList.add('loaded');
+                    const revealImage = () => {
+                        // 약간의 미세 지연을 주어 페이드인 이후 자연스럽게 스켈레톤이 걷히도록 처리
+                        requestAnimationFrame(() => {
+                            wrapper.classList.add('loaded');
+                        });
                     };
 
-                    // 브라우저 캐시에 이미 있거나 로딩이 끝난 경우 즉시 전환
+                    // 이미지가 이미 브라우저 캐시에 로드되어 있는 경우
                     if (img.complete && img.naturalHeight !== 0) {
-                        handleLoad();
+                        revealImage();
                     } else {
-                        // 처음 다운로드하는 경우 로드가 끝나면 전환
-                        img.addEventListener('load', handleLoad);
-                        // 에러가 났을 때 무한 스켈레톤 로딩 방지
-                        img.addEventListener('error', handleLoad);
+                        // 네트워크를 통해 로딩되는 경우
+                        img.addEventListener('load', revealImage);
+                        img.addEventListener('error', revealImage); // 에러 발생 시에도 무한 로딩 방지
                     }
                 }
             });
 
-            // --- [헤더 스크롤 제어] ---
+            // 3. 헤더 스크롤 제어
             let lastScrollTop = 0;
             let scrollUpDistance = 0;
             const scrollThreshold = 400;
