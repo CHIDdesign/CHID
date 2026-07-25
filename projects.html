@@ -17,14 +17,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            opacity: 0; /* 초기 흰 화면 방지 (페이드인 대기) */
+            opacity: 0;
             transition: opacity 0.5s ease-in-out;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* 페이지 전체 페이드인 활성화 클래스 */
         body.fade-in { opacity: 1; }
 
         header {
@@ -85,30 +84,45 @@
             text-decoration: none;
             color: inherit;
             cursor: pointer; 
+            opacity: 0; 
+            transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             -webkit-tap-highlight-color: transparent; 
+        }
+
+        .project-item:nth-child(1) { animation-delay: 0.1s; }
+        .project-item:nth-child(2) { animation-delay: 0.2s; }
+        .project-item:nth-child(3) { animation-delay: 0.3s; }
+        .project-item:nth-child(4) { animation-delay: 0.4s; }
+        .project-item:nth-child(5) { animation-delay: 0.5s; }
+        .project-item:nth-child(6) { animation-delay: 0.6s; }
+        .project-item:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .image-wrapper {
             position: relative; width: 100%; aspect-ratio: 3 / 4;
             overflow: hidden; 
-            background-color: #f5f5f5;
+            background-color: transparent; 
             transform: translateZ(0); 
         }
 
-        /* --- [스켈레톤 UI 스타일] --- */
+        /* --- [스켈레톤 UI 스타일 시작] --- */
         .skeleton {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #e8e8e8; 
+            background-color: #f0f0f0; 
             z-index: 5;
             transition: opacity 0.4s ease;
         }
 
-        /* 뼈대 위로 은은하게 빛이 지나가는 Shimmer 효과 */
+        /* 빛이 스쳐 지나가는 애니메이션 (Shimmer) */
         .skeleton::after {
             content: "";
             position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
+            top: 0; left: -150%; width: 50%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
             animation: shimmer 1.5s infinite;
         }
@@ -117,27 +131,28 @@
             100% { left: 150%; }
         }
 
-        /* 실제 이미지: 초기에는 투명도 0으로 감춤 */
-        .image-wrapper img {
+        /* 데이터가 준비되기 전 이미지는 투명도 0 */
+        .image-wrapper img, 
+        .image-wrapper video {
             width: 100%; height: 100%; object-fit: cover;
             display: block; 
-            opacity: 0; 
-            transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
             transform: scale(1.01); 
+            opacity: 0; /* 초기 숨김 */
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            will-change: transform, opacity;
+            will-change: transform;
             z-index: 1;
         }
 
-        /* 이미지가 로딩 완료되면 스켈레톤을 숨기고 이미지를 띄움 */
+        /* 이미지 로드 완료 시 적용될 클래스 */
         .image-wrapper.loaded .skeleton {
             opacity: 0;
             pointer-events: none;
         }
         
         .image-wrapper.loaded img {
-            opacity: 1; 
+            opacity: 1; /* 서서히 나타남 */
         }
         /* --- [스켈레톤 UI 스타일 끝] --- */
 
@@ -152,7 +167,8 @@
 
         .project-item:hover .project-info-overlay { opacity: 1; }
         
-        .project-item:hover .image-wrapper img { 
+        .project-item:hover .image-wrapper img,
+        .project-item:hover .image-wrapper video { 
             transform: scale(1.06); 
         }
         
@@ -197,10 +213,23 @@
     <main>
         <div class="gallery-grid">
 
+            <a href="projects/snaked.html" class="project-item">
+                <div class="image-wrapper">
+                    <!-- 스켈레톤 레이어 추가 -->
+                    <div class="skeleton"></div>
+                    <img src="img/projects/Thumbnail/project_8.webp" alt="SNAKED">
+                    <div class="project-info-overlay">
+                        <div class="info-title">SNAKED</div>
+                        <div class="info-desc">James Dyson Awards 2026<br>Rescue Gear<br>2026</div>
+                    </div>
+                </div>
+            </a> 
+
             <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
+                    <!-- 스켈레톤 레이어 추가 -->
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026" decoding="async">
+                    <img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026">
                     <div class="project-info-overlay">
                         <div class="info-title">KFW 2026</div>
                         <div class="info-desc">Eighth Army<br>Branding<br>2026</div>
@@ -211,7 +240,7 @@
             <a href="projects/foldiSafe.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_6.webp" alt="FoldiSafe" decoding="async">
+                    <img src="img/projects/Thumbnail/project_6.webp" alt="FoldiSafe">
                     <div class="project-info-overlay">
                         <div class="info-title">FoldiSafe</div>
                         <div class="info-desc">COREAMED<br>Suction Liner Bag<br>2025</div>
@@ -222,7 +251,7 @@
             <a href="projects/kunst.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_5.webp" alt="KUNST" decoding="async">
+                    <img src="img/projects/Thumbnail/project_5.webp" alt="KUNST">
                     <div class="project-info-overlay">
                         <div class="info-title">KUNST</div>
                         <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
@@ -233,7 +262,7 @@
             <a href="projects/seesaw.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_4.webp" alt="Seesaw" decoding="async">
+                    <img src="img/projects/Thumbnail/project_4.webp" alt="Seesaw">
                     <div class="project-info-overlay">
                         <div class="info-title">Seesaw</div>
                         <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
@@ -244,7 +273,7 @@
             <a href="projects/aetheris.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_3.webp" alt="Aetheris" decoding="async">
+                    <img src="img/projects/Thumbnail/project_3.webp" alt="Aetheris">
                     <div class="project-info-overlay">
                         <div class="info-title">Aetheris</div>
                         <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
@@ -255,7 +284,7 @@
             <a href="projects/invasion.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_2.webp" alt="Invasion" decoding="async">
+                    <img src="img/projects/Thumbnail/project_2.webp" alt="Invasion">
                     <div class="project-info-overlay">
                         <div class="info-title">Invasion</div>
                         <div class="info-desc">TU Berlin<br>XR Game<br>2024</div>
@@ -266,7 +295,7 @@
             <a href="projects/nezhnost.html" class="project-item">
                 <div class="image-wrapper">
                     <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_1.webp" alt="Nezhnost" decoding="async">
+                    <img src="img/projects/Thumbnail/project_1.webp" alt="Nezhnost">
                     <div class="project-info-overlay">
                         <div class="info-title">Nezhnost</div>
                         <div class="info-desc">CHID<br>Speaker for ISS<br>2024</div>
@@ -279,10 +308,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. 페이지 전체 페이드인 효과 즉시 트리거 (UI와 스켈레톤 뼈대가 먼저 부드럽게 나타남)
-            setTimeout(() => { 
-                document.body.classList.add('fade-in'); 
-            }, 30);
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
             
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
@@ -299,31 +325,24 @@
                 });
             });
 
-            // 2. 각 썸네일 이미지의 로딩 상태를 개별 감지하여 스켈레톤 해제
+            // --- [이미지 로드 완료 감지하여 스켈레톤 지우기 로직] ---
             const imageWrappers = document.querySelectorAll('.image-wrapper');
             
             imageWrappers.forEach(wrapper => {
                 const img = wrapper.querySelector('img');
                 if (img) {
-                    const revealImage = () => {
-                        // 약간의 미세 지연을 주어 페이드인 이후 자연스럽게 스켈레톤이 걷히도록 처리
-                        requestAnimationFrame(() => {
+                    // 이미지가 이미 브라우저 캐시에 있어 바로 로딩된 경우
+                    if (img.complete) {
+                        wrapper.classList.add('loaded');
+                    } else {
+                        // 새로 다운로드 받는 경우 완료 시점에 클래스 추가
+                        img.addEventListener('load', () => {
                             wrapper.classList.add('loaded');
                         });
-                    };
-
-                    // 이미지가 이미 브라우저 캐시에 로드되어 있는 경우
-                    if (img.complete && img.naturalHeight !== 0) {
-                        revealImage();
-                    } else {
-                        // 네트워크를 통해 로딩되는 경우
-                        img.addEventListener('load', revealImage);
-                        img.addEventListener('error', revealImage); // 에러 발생 시에도 무한 로딩 방지
                     }
                 }
             });
 
-            // 3. 헤더 스크롤 제어
             let lastScrollTop = 0;
             let scrollUpDistance = 0;
             const scrollThreshold = 400;
