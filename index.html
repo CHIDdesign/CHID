@@ -65,18 +65,14 @@
             z-index: -1; background-color: #000000; overflow: hidden;
         }
 
-        /* 밴딩(깨짐) 방지 필터 개선 */
+        /* 밴딩(깨짐) 방지 필터 */
         #video-container::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 5;
             pointer-events: none;
-            
-            /* 노이즈 패턴 SVG */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            
-            /* 투명도를 낮춰서 자연스럽게 덮어씌움 */
             opacity: 0.04; 
         }
 
@@ -183,9 +179,10 @@
 <body>
 
     <div id="video-container">
+        <!-- 1. 포스터 레이어 -->
         <div id="poster-layer"></div>
 
-        <!-- [수정] 모든 video 태그에서 autoplay 속성을 완전히 제거했습니다. -->
+        <!-- 2. 비디오 소스 (autoplay 완전 제거) -->
         <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
@@ -217,7 +214,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
+            // [페이지 접속 즉시 UI + 포스터 페이드인 실행]
+            setTimeout(() => { document.body.classList.add('fade-in'); }, 30);
 
             const header = document.getElementById("main-header");
             const posterLayer = document.getElementById("poster-layer");
@@ -285,55 +283,34 @@
                 }
             }
 
-            // --- [핵심 로직 개선 구간] ---
+            // --- [핵심 로직: 포스터 띄우고 백그라운드 영상 준비] ---
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
             
-            // 브라우저에게 백그라운드 다운로드를 강제 지시
-            firstVideo.load();
-
-            // 1. 비디오가 "실제 재생(픽셀을 그리기 시작)"될 때 포스터를 숨김
-            // canplay보다 훨씬 안전하고 직관적인 이벤트입니다.
+            // 1. 비디오가 실제로 "화면에 픽셀을 그리기 시작(playing)"할 때 포스터 숨김
             firstVideo.addEventListener('playing', () => {
-                firstVideo.classList.add('active');
-                posterLayer.classList.add('hidden');
-                activeIndex = 0;
+                firstVideo.classList.add('active'); // 비디오 서서히 나타남
+                
+                // 첫 프레임이 그려질 미세한 시간을 벌어준 뒤 포스터 페이드아웃
+                setTimeout(() => {
+                    posterLayer.classList.add('hidden');
+                    activeIndex = 0;
+                }, 100);
             }, { once: true });
 
-            // 2. 비디오 재생 시도 함수
-            function tryPlayFirstVideo() {
-                firstVideo.muted = true;
-                var playPromise = firstVideo.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.catch((error) => {
-                        // 모바일 저전력 모드 등의 이유로 자동재생이 막힌 경우, 터치 시 재생되도록 폴백
-                        const interactionHandler = () => {
-                            if (activeIndex !== 0) return;
-                            firstVideo.play(); 
-                            document.removeEventListener('click', interactionHandler);
-                            document.removeEventListener('touchstart', interactionHandler);
-                        };
-                        document.addEventListener('click', interactionHandler);
-                        document.addEventListener('touchstart', interactionHandler);
-                    });
-                }
-            }
-
-            // 3. 비디오 로딩 상태 체크
-            if (firstVideo.readyState >= 4) {
-                // 이미 끝까지 재생할 만큼 충분히 로딩된 경우 즉시 재생
-                tryPlayFirstVideo();
-            } else {
-                // 끊김 없이 재생 가능해질 때(canplaythrough)까지 기다렸다가 재생
-                firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
-                
-                // 모바일 브라우저 예외 처리: 데이터 절약을 위해 canplaythrough를 띄우지 않고 멈춰있는 현상 방지
-                setTimeout(() => {
-                    if (firstVideo.paused && activeIndex === 0) {
-                        tryPlayFirstVideo(); // 2.5초가 지나면 억지로라도 재생을 시도해 버퍼링을 유도
-                    }
-                }, 2500);
+            // 2. 브라우저 정책 대응: 보이지 않는 상태에서 즉시 재생 명령을 내려 다운로드 강제 유도
+            const playPromise = firstVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch((error) => {
+                    // 모바일 저전력 모드 등으로 자동재생이 막힌 경우, 화면 터치 시 재생되도록 폴백 설정
+                    const interactionHandler = () => {
+                        firstVideo.play();
+                        document.removeEventListener('click', interactionHandler);
+                        document.removeEventListener('touchstart', interactionHandler);
+                    };
+                    document.addEventListener('click', interactionHandler);
+                    document.addEventListener('touchstart', interactionHandler);
+                });
             }
         });
     </script>
