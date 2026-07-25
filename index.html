@@ -185,16 +185,17 @@
     <div id="video-container">
         <div id="poster-layer"></div>
 
-        <video class="bg-video" id="v1" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+        <!-- [수정] 모든 video 태그에서 autoplay 속성을 완전히 제거했습니다. -->
+        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline webkit-playsinline muted autoplay data-theme="dark" preload="auto">
+        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="auto">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline webkit-playsinline muted autoplay data-theme="light" preload="auto">
+        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
     </div>
@@ -284,29 +285,32 @@
                 }
             }
 
+            // --- [핵심 로직 개선 구간] ---
             const firstVideo = videos[0];
             updateHeaderColor(firstVideo);
+            
+            // 브라우저에게 백그라운드 다운로드를 강제 지시
+            firstVideo.load();
 
-            function startFirstVideo() {
+            // 1. 비디오가 "실제 재생(픽셀을 그리기 시작)"될 때 포스터를 숨김
+            // canplay보다 훨씬 안전하고 직관적인 이벤트입니다.
+            firstVideo.addEventListener('playing', () => {
+                firstVideo.classList.add('active');
+                posterLayer.classList.add('hidden');
+                activeIndex = 0;
+            }, { once: true });
+
+            // 2. 비디오 재생 시도 함수
+            function tryPlayFirstVideo() {
                 firstVideo.muted = true;
                 var playPromise = firstVideo.play();
 
                 if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        firstVideo.classList.add('active');
-                        // 비디오 재생이 시작되면 포스터 레이어를 숨김
-                        posterLayer.classList.add('hidden');
-                        activeIndex = 0;
-                    })
-                    .catch((error) => {
+                    playPromise.catch((error) => {
+                        // 모바일 저전력 모드 등의 이유로 자동재생이 막힌 경우, 터치 시 재생되도록 폴백
                         const interactionHandler = () => {
                             if (activeIndex !== 0) return;
-                            firstVideo.muted = true; 
-                            firstVideo.play().then(() => {
-                                firstVideo.classList.add('active');
-                                posterLayer.classList.add('hidden');
-                            }).catch(e => console.log("Interaction play failed", e));
-                            
+                            firstVideo.play(); 
                             document.removeEventListener('click', interactionHandler);
                             document.removeEventListener('touchstart', interactionHandler);
                         };
@@ -316,12 +320,20 @@
                 }
             }
 
-            // readyState 4 (HAVE_ENOUGH_DATA): 끝까지 끊김 없이 재생할 수 있을 만큼 데이터가 로드됨
+            // 3. 비디오 로딩 상태 체크
             if (firstVideo.readyState >= 4) {
-                startFirstVideo();
+                // 이미 끝까지 재생할 만큼 충분히 로딩된 경우 즉시 재생
+                tryPlayFirstVideo();
             } else {
-                // canplaythrough: 버퍼링 없이 끝까지 재생 가능할 때 발생하는 이벤트
-                firstVideo.addEventListener('canplaythrough', startFirstVideo, { once: true });
+                // 끊김 없이 재생 가능해질 때(canplaythrough)까지 기다렸다가 재생
+                firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
+                
+                // 모바일 브라우저 예외 처리: 데이터 절약을 위해 canplaythrough를 띄우지 않고 멈춰있는 현상 방지
+                setTimeout(() => {
+                    if (firstVideo.paused && activeIndex === 0) {
+                        tryPlayFirstVideo(); // 2.5초가 지나면 억지로라도 재생을 시도해 버퍼링을 유도
+                    }
+                }, 2500);
             }
         });
     </script>
