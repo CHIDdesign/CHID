@@ -39,7 +39,7 @@
         </div>
 
         <section class="hero-section">
-            <img src="/img/projects/project img/placeholder.webp" alt="Hero Image" class="hero-image">
+            <img src="/img/projects/project img/6. foldisafe/foldisafe 1.webp" alt="Hero Image" class="hero-image">
         </section>
 
         <section class="project-header">
@@ -72,6 +72,38 @@
                 프로젝트의 개요와 목표를 서술하세요.
             </p>
         </div>
+
+        <!-- 새로 추가된 지그재그 컨테이너 -->
+        <div class="zigzag-container">
+            <!-- 좌측 애니메이션 (모바일은 상단) -->
+            <div class="zigzag-svg-wrapper">
+                <svg viewBox="0 0 200 600">
+                    <defs>
+                      <filter id="scribble" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="600">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+                      </filter>
+                    </defs>
+                    <path class="zigzag-path" d="M 100 5 L 100 95 M 100 105 L 100 195 M 100 205 L 100 295 M 100 305 L 100 395 M 100 405 L 100 495 M 100 505 L 100 595"></path>
+                </svg>
+            </div>
+            
+            <!-- 우측 텍스트 (모바일은 하단) -->
+            <div class="zigzag-text-wrapper">
+                <p class="main-heading">
+                    [Graphic Detail Sentence]
+                </p>
+                <p class="body-en">
+                    This section explains the mechanism alongside the graphic.<br>
+                    It highlights specific features dynamically.
+                </p>
+                <p class="body-kr">
+                    그래픽과 함께 세부 메커니즘을 설명하는 공간입니다.<br>
+                    텍스트를 추가하여 애니메이션에 대한 설명을 작성하세요.
+                </p>
+            </div>
+        </div>
+        <!-- // 새로 추가된 지그재그 컨테이너 끝 -->
 
         <div class="full-image-block">
             <img src="/img/projects/project img/placeholder.webp" alt="Detail" loading="lazy">
