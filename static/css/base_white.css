@@ -123,7 +123,11 @@ video::-webkit-media-controls-panel { display: none !important; }
 }
 .text-section-split.align-center { align-items: center; }
 .text-left { flex: 0 0 40%; }
-.text-right { flex: 1; padding-top: 10px; }
+.text-right { 
+    flex: 1; 
+    padding-top: 10px; padding-left: 40px; padding-right: 40px; 
+    box-sizing: border-box; max-width: 1200px; margin: 0 auto 60px; 
+}s
 .text-section-split.align-center .text-right { padding-top: 0; }
 .image-text-split {
     display: flex; align-items: center; justify-content: space-between;
