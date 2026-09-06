@@ -17,7 +17,6 @@
     <meta property="og:description" content="최은준(Eun Jun Choi) — Industrial Designer 약력 타임라인">
     <meta property="og:image" content="img/main/favicon.webp">
 
-    <!-- contact.html과 동일한 방식으로 파비콘 설정 -->
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
 
     <!-- Pretendard Font -->
@@ -647,7 +646,6 @@
         document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
 
-            // 로고 및 네비게이션 클릭 시 부드러운 페이지 전환 로직
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
@@ -663,7 +661,6 @@
                 });
             });
 
-            // [디자인 경력 카테고리 필터 기능 + 하단 버그 수정 반영]
             const filterBtns = document.querySelectorAll('.filter-btn');
             const timelineItems = document.querySelectorAll('.timeline-section:not(.education-group) .timeline-item');
             const yearGroups = document.querySelectorAll('.timeline-section:not(.education-group) .year-group');
@@ -708,7 +705,6 @@
                 });
             });
 
-            // [1] 헤더 스크롤 숨김 및 필터 바 스티키 위치 동기화 로직
             const header = document.getElementById('main-header');
             const filterContainer = document.getElementById('filter-container');
 
@@ -752,7 +748,6 @@
                 }
             });
 
-            // [2] 모든 스크롤 리빌 요소가 화면 위쪽 1/4 (25%) 지점에서 페이드아웃 되도록 처리
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -776,7 +771,6 @@
             
             document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
-            // [3] 게이지 바 연동 및 상단 1/4 지점 마스크 페이드 처리
             const allYearGroups = document.querySelectorAll('.education-group, .year-group');
             window.addEventListener('scroll', () => {
                 let triggerPoint = window.innerHeight * 0.5; 
@@ -819,7 +813,6 @@
                 });
             }, { passive: true });
 
-            // [4] 팝업북 디테일 뷰 처리
             const overlay = document.getElementById('detail-overlay');
             const closeBtn = document.getElementById('detail-close');
             const renderPeriod = document.getElementById('render-period');
