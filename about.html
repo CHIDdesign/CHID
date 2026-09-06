@@ -226,6 +226,22 @@
         .education-group .timeline-track { bottom: 0; }
         .education-group .entry:hover { transform: none; background-color: transparent; cursor: default; }
 
+        /* ==========================================================
+            [학력(학교) 로고 스타일]
+            ========================================================== */
+        .school-logo {
+            margin-bottom: 8px; /* 타이틀과의 간격 */
+            display: flex;
+            align-items: center;
+        }
+        .school-logo img {
+            height: 64px; /* 로고가 너무 크지 않도록 높이 제한 */
+            width: auto;
+            max-width: 100%; /* 모바일 환경에서 부모 영역을 넘어가지 않게 방지 */
+            object-fit: contain;
+            display: block;
+        }
+
         .timeline-item { position: relative; margin-bottom: 30px; transition: opacity 0.4s ease; }
         .timeline-item.hidden { display: none; }
 
@@ -304,6 +320,7 @@
             .timeline-track { left: 4px; }
             .timeline-item::before { left: -20px; width: 10px; }
             .entry { padding: 20px 15px; }
+            .school-logo img { height: 48px; } /* 모바일에서 학교 로고 크기 축소 */
         }
 
         /* ==========================================================
@@ -394,14 +411,15 @@
                 </p>
             </div>
             <div class="intro-image">
-                <img src="img/about/Profile.png" onerror="this.src='https://via.placeholder.com/400x500/transparent/888?text=Profile+Image'" alt="최은준 프로필 이미지">
+                <!-- 메인 페이지 이미지 레이지 로딩 적용 -->
+                <img src="img/about/Profile.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x500/transparent/888?text=Profile+Image'" alt="최은준 프로필 이미지">
             </div>
         </section>
 
         <!-- ==========================================
              [섹션 1: Education (필터 제외 영역)]
              ========================================== -->
-        <div class="section-header scroll-reveal">
+        <div class="section-header">
             <h2>Education</h2>
         </div>
         <section class="timeline-section education-group">
@@ -409,16 +427,33 @@
                 <div class="timeline-track"><div class="timeline-progress"></div></div>
                 <div class="timeline-item">
                     <div class="entry scroll-reveal">
+                        <!-- 학교 로고 1 -->
+                        <div class="school-logo">
+                            <img src="img/about/school/hongik.svg" alt="Hong-ik University Logo">
+                        </div>
                         <div class="entry-title">Hong-ik University School of Fine Arts (Seoul Korea)</div>
                         <p class="entry-role">Bachelor's of Industrial Design (Product Design)</p>
                         <p class="entry-org">홍익대학교 서울캠퍼스 미술대학 / 디자인학부 산업디자인전공(제품디자인)</p>
                         <p class="entry-period">2023.03 ~ 2028.03</p>
                     </div>
+                    <div class="entry scroll-reveal">
+                        <!-- 학교 로고 2 -->
+                        <div class="school-logo">
+                            <img src="img/about/school/tu_berlin.svg" alt="Technische Universität Berlin Logo">
+                        </div>
+                        <div class="entry-title">Technische Universität Berlin (Berlin Germany)</div>
+                        <p class="entry-role">Summer School Exchange</p>
+                        <p class="entry-org">베를린 공과 대학교 / 여름학기 교환 학생</p>
+                        <p class="entry-period">2024.07 ~ 2024.08</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- [디자인 경력 필터 탭 (모바일 All 단독 줄바꿈 대응)] -->
+        <div class="section-header">
+            <h2>Experiences.</h2>
+        </div>
+        
         <div class="filter-container" id="filter-container">
             <div class="filter-inner">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -430,12 +465,6 @@
             </div>
         </div>
 
-        <!-- ==========================================
-             [섹션 2: Experiences]
-             ========================================== -->
-        <div class="section-header scroll-reveal">
-            <h2>Experiences.</h2>
-        </div>
         <section class="timeline-section">
 
             <!-- [2026] -->
@@ -486,13 +515,15 @@
                         
                         <template class="detail-content">
                             <meta data-period="2025.06 – 2026.12" data-title="U.S. Eighth Army Headquarters Public Affairs" data-org="Public Affairs Specialist (KATUSA) · 대한민국 육군 카투사 / 주한미8군 본부 공보과 정훈병">
-                            <div class="detail-hero"><img src="img/about/katusa.png" onerror="this.style.display='none'" alt="Hero Image"></div>
+                            <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                            <div class="detail-hero"><img data-src="img/about/katusa.png" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                 <p>대한민국 육군 카투사로 복무하며 주한미8군 본부 공보과에서 정훈병으로 근무했습니다.</p>
                                 <p>주로 부대 내 행사 촬영, 공보 자료 편집, 시각 디자인물 제작 등의 업무를 담당하며, 다국적 환경에서의 소통과 디자인 역량을 키울 수 있었습니다.</p>
                             </div>
                             <a href="https://www.dvidshub.net/portfolio/1899475/eun-jun-choi" class="shortcut-card">
-                                <img src="img/about/dvids logo.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                                <img data-src="img/about/dvids logo.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">United States of America <br> Defense Visual Information Distribution Service</h3>
                                     <p class="shortcut-desc">2026 · Photography & Visual Storytelling<br>United States of America</p>
@@ -501,7 +532,8 @@
                             </a>
 
                             <a href="projects/kfw.html" class="shortcut-card">
-                                <img src="img/projects/Thumbnail/project_7.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                                <img data-src="img/projects/Thumbnail/project_7.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">KFW 2026</h3>
                                     <p class="shortcut-desc">2026 · Branding<br>Eighth Army Headquarters</p>
@@ -577,13 +609,15 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2024.09 – 2025.03" data-title="Samsung Life Insurance 'Life-nology Lab'" data-org="3D Visualizer & Product Designer · 삼성생명 라이프놀로지랩 산학 프로젝트">
-                            <div class="detail-hero"><img src="img/about/hero_seesaw.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
+                            <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                            <div class="detail-hero"><img data-src="img/about/hero_seesaw.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                 <p>삼성생명 라이프놀리지랩과의 산학 프로젝트에 참여해 시니어 세대를 위한 자이로 센서 기반 웨어러블 디바이스 'Seesaw' 프로젝트를 진행했습니다.</p>
                                 <p>제품의 컨셉 도출부터 형태 디자인, 그리고 3D 렌더링 및 시각화 작업을 총괄하여 클라이언트에게 디자인 솔루션을 제안했습니다.</p>
                             </div>
                             <a href="seesaw.html" class="shortcut-card">
-                                <img src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
+                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                                <img data-src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Project Seesaw</h3>
                                     <p class="shortcut-desc">2025 · Wearable Device Design<br>Samsung Life Insurance</p>
@@ -687,7 +721,8 @@
                                 <p>보행 압력을 전기에너지로 변환하는 서스테이너블(Sustainable) 신발 컨셉을 디자인하여 전시했습니다.</p>
                             </div>
                             <a href="cosmoes.html" class="shortcut-card">
-                                <img src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
+                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
+                                <img data-src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Cosmo-es 2024</h3>
                                     <p class="shortcut-desc">2024 · Product Design<br>개인작 전시</p>
@@ -818,7 +853,6 @@
             window.addEventListener('scroll', () => {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 let isMobile = window.innerWidth <= 768;
-                // 문서 상단에서 필터 컨테이너가 원래 위치하는 Y 좌표 (헤더 높이 등 오차 방지를 위해 -150 처리)
                 let filterOffset = filterContainer.offsetTop - 150; 
                 
                 if (currentScroll <= 0) { 
@@ -830,26 +864,21 @@
                 }
                 
                 if (currentScroll > lastScrollTop) { 
-                    // 스크롤 내릴 때 (Down)
                     header.classList.add('header-hidden'); 
                     scrollUpDistance = 0; 
                     filterContainer.style.top = '0px'; 
                 } else {
-                    // 스크롤 올릴 때 (Up)
                     scrollUpDistance += (lastScrollTop - currentScroll);
                     
                     if (isMobile) {
-                        // 모바일: 스크롤이 필터 본래 위치보다 위로 올라갔을 때만 네비게이션을 나타나게 함
                         if (currentScroll < filterOffset) {
                             header.classList.remove('header-hidden'); 
                             filterContainer.style.top = header.offsetHeight + 'px';
                         } else {
-                            // 필터가 sticky 상태인 영역에서는 네비게이션을 계속 숨기고 필터를 화면 상단에 붙임
                             header.classList.add('header-hidden'); 
                             filterContainer.style.top = '0px'; 
                         }
                     } else {
-                        // 데스크탑: 기존 방식대로 조금만 올려도 네비게이션 표시
                         if (scrollUpDistance > scrollThreshold) { 
                             header.classList.remove('header-hidden'); 
                             scrollUpDistance = scrollThreshold; 
@@ -960,6 +989,13 @@
                 const metaClone = contentClone.querySelector('meta');
                 if(metaClone) metaClone.remove(); 
                 
+                /* [지연 로딩 적용 로직]:
+                   data-src로 숨겨둔 이미지 경로를 진짜 src 속성으로 옮겨서 이미지를 띄움 */
+                contentClone.querySelectorAll('img[data-src]').forEach(img => {
+                    img.setAttribute('src', img.getAttribute('data-src'));
+                    img.removeAttribute('data-src');
+                });
+                
                 renderBody.innerHTML = '';
                 renderBody.appendChild(contentClone);
 
@@ -977,6 +1013,34 @@
             closeBtn.addEventListener('click', closeDetail);
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && overlay.classList.contains('open')) closeDetail();
+            });
+
+            /* ==========================================================
+               [초기 로딩 속도 최적화] - 상세 페이지 이미지 백그라운드 프리로드
+               메인 페이지 렌더링이 완전히 끝난 후 브라우저가 유휴 상태일 때,
+               상세 페이지 안의 이미지들을 은몰래 캐시에 다운로드합니다.
+               ========================================================== */
+            window.addEventListener('load', () => {
+                const preloadDetailAssets = () => {
+                    const templates = document.querySelectorAll('template.detail-content');
+                    templates.forEach(template => {
+                        const images = template.content.querySelectorAll('img[data-src]');
+                        images.forEach(img => {
+                            const src = img.getAttribute('data-src');
+                            if(src) {
+                                const preloader = new Image();
+                                preloader.src = src; // 이 순간 브라우저가 백그라운드에서 이미지를 다운받아 캐시에 저장
+                            }
+                        });
+                    });
+                };
+
+                // 메인 스레드 점유를 피해 모바일 기기에서의 버벅임을 방지 (지원 브라우저는 requestIdleCallback, 미지원은 setTimeout)
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(preloadDetailAssets, { timeout: 2000 });
+                } else {
+                    setTimeout(preloadDetailAssets, 1500); 
+                }
             });
         });
     </script>
