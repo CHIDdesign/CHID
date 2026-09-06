@@ -447,7 +447,7 @@
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
                     <!-- 군 경력 -->
-                    <div class="timeline-item" data-category="branding">
+                    <div class="timeline-item" data-category="military">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Public Affairs Specialist (KATUSA)</p>
                             <div class="entry-title">
@@ -660,7 +660,7 @@
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
                     <!-- 2023 항목 1: Cosmo-es 2024 -->
-                    <div class="timeline-item" data-category="exhibition">
+                    <div class="timeline-item" data-category="product exhibition">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Product Design Exhibition</p>
                             <div class="entry-title">
@@ -698,7 +698,7 @@
                     </div>
 
                     <!-- 2023 항목 2: Hanyang University -->
-                    <div class="timeline-item" data-category="uiux">
+                    <div class="timeline-item" data-category="uiux branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">UX/UI & Brand Designer</p>
                             <div class="entry-title">
@@ -815,7 +815,10 @@
             
             window.addEventListener('scroll', () => {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                // 현재 기기가 모바일 환경인지 확인 (창 너비 768px 이하 기준)
+                let isMobile = window.innerWidth <= 768; 
                 
+                // 스크롤이 최상단일 경우
                 if (currentScroll <= 0) { 
                     header.classList.remove('header-hidden'); 
                     lastScrollTop = 0; 
@@ -825,15 +828,33 @@
                 }
                 
                 if (currentScroll > lastScrollTop) { 
+                    // 스크롤 다운 시 네비게이션 숨김
                     header.classList.add('header-hidden'); 
                     scrollUpDistance = 0; 
                     filterContainer.style.top = '0px'; 
                 } else {
+                    // 스크롤 업 시
                     scrollUpDistance += (lastScrollTop - currentScroll);
-                    if (scrollUpDistance > scrollThreshold) { 
-                        header.classList.remove('header-hidden'); 
-                        scrollUpDistance = scrollThreshold; 
-                        filterContainer.style.top = header.offsetHeight + 'px'; 
+                    
+                    if (isMobile) {
+                        // 모바일 환경: 현재 스크롤 위치가 필터 블럭의 원래(자연스러운) 위치보다 아래에 있다면
+                        // 네비게이션 바가 내려오지 않도록 계속 숨김 유지
+                        if (currentScroll > filterContainer.offsetTop) {
+                            header.classList.add('header-hidden');
+                            filterContainer.style.top = '0px';
+                            scrollUpDistance = 0; // 초기화하여 블럭 위로 완전히 올라갈 때까지 대기
+                        } else {
+                            // 필터 블럭 구간을 완전히 지나 위로 올라갔을 때 네비게이션 바 노출
+                            header.classList.remove('header-hidden'); 
+                            filterContainer.style.top = header.offsetHeight + 'px'; 
+                        }
+                    } else {
+                        // 데스크탑 환경: 기존처럼 지정된 임계값(scrollThreshold) 만큼 올리면 네비게이션 바 노출
+                        if (scrollUpDistance > scrollThreshold) { 
+                            header.classList.remove('header-hidden'); 
+                            scrollUpDistance = scrollThreshold; 
+                            filterContainer.style.top = header.offsetHeight + 'px'; 
+                        }
                     }
                 }
                 lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
