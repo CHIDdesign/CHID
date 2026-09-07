@@ -130,10 +130,6 @@
             width: 100%;
         }
 
-        .filter-break {
-            display: none;
-        }
-
         .filter-btn {
             background: rgba(0,0,0,0.04); border: 1px solid transparent; padding: 10px 20px; border-radius: 30px;
             font-size: 14px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
@@ -144,11 +140,6 @@
         @media (max-width: 768px) {
             .filter-container { padding: 14px 22px; box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.08); }
             .filter-inner { justify-content: center; }
-            .filter-break {
-                display: block;
-                flex-basis: 100%;
-                height: 0;
-            }
         }
 
         .section-header {
@@ -177,7 +168,6 @@
         @media (max-width: 768px) {
             .scroll-reveal {
                 transform: translateY(65px) scale(0.94);
-                /* 모바일 한정 애니메이션 속도를 0.45초로 단축하여 더 빠르게 나타나게 적용 */
                 transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
                             transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
                             background-color 0.3s ease;
@@ -431,11 +421,11 @@
         <div class="filter-container" id="filter-container">
             <div class="filter-inner">
                 <button class="filter-btn active" data-filter="all">All</button>
-                <div class="filter-break"></div>
-                <button class="filter-btn" data-filter="product">Product Design</button>
+                <button class="filter-btn" data-filter="product">Product</button>
                 <button class="filter-btn" data-filter="branding">Branding</button>
-                <button class="filter-btn" data-filter="uiux">UI/UX & Digital</button>
+                <button class="filter-btn" data-filter="interaction">Interaction</button>
                 <button class="filter-btn" data-filter="exhibition">Exhibition</button>
+                <button class="filter-btn" data-filter="award">Award</button>
             </div>
         </div>
 
@@ -448,7 +438,7 @@
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
-                    <div class="timeline-item" data-category="product">
+                    <div class="timeline-item" data-category="product award">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Award</p>
                             <div class="entry-title">
@@ -481,7 +471,7 @@
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                 <p class="en-desc">This project began by questioning modern stretchers that compromise their core purpose—safe and rapid patient transport—for the sake of lightweight storage.</p>
-                                <p class="ko-desc">평상시의 보관 용이성과 경량성에 치중해 '환자의 신속하고 안전한 이송'이라는 본질을 놓치고 있는 현대 들것의 한계에 의문을 품고 시작한 프로젝트 프로젝트입니다.</p>
+                                <p class="ko-desc">평상시의 보관 용이성과 경량성에 치중해 '환자의 신속하고 안전한 이송'이라는 본질을 놓치고 있는 현대 들것의 한계에 의문을 품고 시작한 프로젝트입니다.</p>
                                 <p class="en-desc">Drawing insights from operating U.S. Army rescue equipment during my KATUSA service, I designed a stretcher that flexes along the patient’s hip joints. This allows rescuers to navigate extreme disaster environments, such as curved tunnels and steep slopes, which are inaccessible with conventional rigid stretchers.</p>
                                 <p class="ko-desc">카투사 복무 중 실제 미군 구조 장비를 다뤄본 경험을 바탕으로, 환자의 고관절 마디를 따라 구부러질 수 있는 구조를 제안하여 기존 일자형 들것으로는 진입이 불가능했던 구부러진 터널이나 가파른 경사 등 극한의 재난 현장에서도 유연하게 대응할 수 있도록 설계했습니다.</p>
                             </div>
@@ -504,7 +494,7 @@
                         </template>
                     </div>
 
-                    <div class="timeline-item" data-category="product">
+                    <div class="timeline-item" data-category="product interaction award">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Award (KOSME Chairman’s Award (Encouragement))</p>
                             <div class="entry-title">
@@ -560,7 +550,7 @@
                         </template>
                     </div>
 
-                    <div class="timeline-item" data-category="military">
+                    <div class="timeline-item" data-category="branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Public Affairs Specialist (KATUSA)</p>
                             <div class="entry-title">
@@ -680,7 +670,7 @@
                         </template>
                     </div>
 
-                    <div class="timeline-item" data-category="product">
+                    <div class="timeline-item" data-category="product interaction">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">3D Visualizer & Product Designer</p>
                             <div class="entry-title">
@@ -763,7 +753,7 @@
                         </template>
                     </div>
 
-                    <div class="timeline-item" data-category="uiux">
+                    <div class="timeline-item" data-category="interaction">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">VR Game Content Designer</p>
                             <div class="entry-title">
@@ -846,7 +836,7 @@
                         </template>
                     </div>
 
-                    <div class="timeline-item" data-category="uiux branding">
+                    <div class="timeline-item" data-category="interaction branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">UX/UI & Brand Designer</p>
                             <div class="entry-title">
@@ -1049,7 +1039,6 @@
                 });
             }, { 
                 threshold: 0.1, 
-                // 모바일 환경일 경우, 하단 마진을 -10%로 설정하여 스크롤 시 화면에 아이템이 더 빨리 등장하도록 개선
                 rootMargin: isMobileView ? '0px 0px -10% 0px' : '-25% 0px -33% 0px' 
             }); 
             
