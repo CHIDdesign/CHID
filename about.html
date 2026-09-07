@@ -91,8 +91,9 @@
         .intro-image img { width: 100%; height: auto; display: block; object-fit: contain; aspect-ratio: 4/5; }
 
         .intro-eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.12em; color: var(--text-sub); text-transform: uppercase; margin-bottom: 18px; }
-        .intro-name { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 22px; }
+        .intro-name { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 12px; }
         .intro-name span { display: block; font-size: clamp(1rem, 1.6vw, 1.3rem); font-weight: 400; color: var(--text-sub); margin-top: 10px; }
+        .intro-tagline { font-size: clamp(20px, 1.6vw, 24px); font-weight: 400; font-style: italic; color: #333; margin-bottom: 24px; word-break: keep-all; line-height: 1.4; letter-spacing: -0.01em; }
         .intro-desc { font-size: clamp(15px, 1.15vw, 18px); line-height: 1.75; color: #444; max-width: 620px; word-break: keep-all; }
 
         @media (max-width: 768px) {
@@ -100,6 +101,7 @@
             .intro-text { width: 100%; text-align: left; }
             .intro-image { width: 90%; max-width: 100%; flex: 0 0 auto; border-radius: 20px; }
             .intro-image img { aspect-ratio: 1/1; }
+            .intro-tagline { margin-bottom: 20px; }
         }
 
         .filter-container {
@@ -366,9 +368,9 @@
                     Choi. Eun Jun
                     <span>Eun Jun Choi — Industrial / Product Designer</span>
                 </h1>
+                <p class="intro-tagline">"Where aesthetic vision meets uncompromising feasibility."</p>
                 <p class="intro-desc">
-                    산업디자인을 전공하며 제품 디자인, 브랜드 디자인, 전시 기획까지 다양한 프로젝트를 이어오고 있습니다.
-                    시기별 활동을 나타내는 타임라인을 확인해 보세요.
+                    I believe that good design proves itself in reality. As an industrial designer, I focus on bridging the gap between creative imagination and practical feasibility. By continuously validating concepts through 1:1 scale mockups and rigorous technical research, I strive to turn compelling ideas into tangible solutions. Explore my timeline to see how I bring designs to life across products, brands, and interactive experiences.
                 </p>
             </div>
             <div class="intro-image">
@@ -461,8 +463,10 @@
                             <meta data-period="2026.01 – 2026.09" data-title="The James Dyson Awards" data-org="Award · 제임스 다이슨 어워드 / 제임스 다이슨 재단">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Prepared a submission for the 2026 James Dyson Award competition by assembling and leading a collaborative team of design and mechanical engineering students.</p>
-                                <p class="ko-desc">제임스 다이슨 어워드 2026 출품을 위해 디자인 및 기계공학 전공 학생들로 구성된 팀을 결성하고 프로젝트를 주도했습니다.</p>
+                                <p class="en-desc">This project began by questioning modern stretchers that compromise their core purpose—safe and rapid patient transport—for the sake of lightweight storage.</p>
+                                <p class="ko-desc">평상시의 보관 용이성과 경량성에 치중해 '환자의 신속하고 안전한 이송'이라는 본질을 놓치고 있는 현대 들것의 한계에 의문을 품고 시작한 프로젝트입니다.</p>
+                                <p class="en-desc">Drawing insights from operating U.S. Army rescue equipment during my KATUSA service, I designed a stretcher that flexes along the patient’s hip joints. This allows rescuers to navigate extreme disaster environments, such as curved tunnels and steep slopes, which are inaccessible with conventional rigid stretchers.</p>
+                                <p class="ko-desc">카투사 복무 중 실제 미군 구조 장비를 다뤄본 경험을 바탕으로, 환자의 고관절 마디를 따라 구부러질 수 있는 구조를 제안하여 기존 일자형 들것으로는 진입이 불가능했던 구부러진 터널이나 가파른 경사 등 극한의 재난 현장에서도 유연하게 대응할 수 있도록 설계했습니다.</p>
                             </div>
                             <a href="https://youtu.be/7bX-PxF36bk?si=BzKGYRPzLzQVx5cO" class="shortcut-card">
                                 <img data-src="img/about/info/snaked.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
@@ -515,8 +519,10 @@
                             <meta data-period="2026.03 – 2026.05" data-title="15th ROK Army Startup Competition" data-org="Award (KOSME Chairman's Award) · 제 15회 육군창업경진대회 / 대한민국 육군">
                             <div class="detail-hero"><img data-src="img/about/info/startup2026.jpg" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Developed 'Tessera', an offline NFC-enabled military dog tag identification and tactical scanner system, participating in the 15th ROK Army Startup Challenge.</p>
-                                <p class="ko-desc">제 15회 육군창업경진대회에 참가하여 오프라인 NFC 기반 군번줄 인식 및 전술 스캐너 시스템 'Tessera'를 개발했습니다.</p>
+                                <p class="en-desc">Driven by the need for efficient personnel and information management in the advanced military, we developed an offline tactical scanner system embedding NFC chips into the most familiar military item: the dog tag.</p>
+                                <p class="ko-desc">선진 병영을 위한 효율적인 인력 및 정보 관리의 필요성에서 출발하여, 군인에게 가장 익숙한 '군번줄'에 NFC 칩을 내장한 오프라인 기반 전술 스캐너 시스템을 기획했습니다.</p>
+                                <p class="en-desc">Considering the military's unique nature, we maximized security through high-level offline encryption rather than external networks. My role focused on visual storytelling and designing a durable, highly intuitive reader device to precisely decode this encrypted data.</p>
+                                <p class="ko-desc">군이라는 특수성을 고려해 외부 네트워크 대신 높은 수준의 암호화 기술을 적용하여 보안성을 극대화했으며, 이 암호화된 데이터를 정밀하게 해독할 수 있도록 내구성과 직관성을 갖춘 리더기 디바이스의 외형 및 시스템 전반의 비주얼 스토리텔링을 완성했습니다.</p>
                             </div>
                             <a href="https://youtu.be/Up7zPfRmlWo" class="shortcut-card">
                                 <img data-src="img/about/info/startup2026_2.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
@@ -578,10 +584,10 @@
                             <meta data-period="2025.06 – 2026.12" data-title="U.S. Eighth Army Headquarters Public Affairs" data-org="Public Affairs Specialist (KATUSA) · 대한민국 육군 카투사 / 주한미8군 본부 공보과 정훈병">
                             <div class="detail-hero"><img data-src="img/about/info/katusa.png" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Served as a KATUSA in the Republic of Korea Army, working as a Public Affairs Specialist at the U.S. Eighth Army Headquarters Public Affairs Office.</p>
-                                <p class="ko-desc">대한민국 육군 카투사로 복무하며 주한미8군 본부 공보과에서 정훈병으로 근무했습니다.</p>
-                                <p class="en-desc">Primarily responsible for photographing unit events, editing public affairs materials, and creating visual designs, developing communication and design skills in a multinational environment.</p>
-                                <p class="ko-desc">주로 부대 내 행사 촬영, 공보 자료 편집, 시각 디자인물 제작 등의 업무를 담당하며, 다국적 환경에서의 소통과 디자인 역량을 키울 수 있었습니다.</p>
+                                <p class="en-desc">Serving as a Public Affairs Specialist at the U.S. Eighth Army Headquarters, I managed visual design and public relations for a massive, multinational organization of professional soldiers.</p>
+                                <p class="ko-desc">주한미8군 본부 공보과에서 정훈병으로 복무하며 전문 직업 군인들로 구성된 거대한 다국적 조직의 시각 디자인 및 공보 업무를 전담했습니다.</p>
+                                <p class="en-desc">I was trained to seamlessly integrate the U.S. Army's core message, "Always Ready," into my own design language, developing practical communication skills to effectively harmonize organizational brand identity with personal creativity.</p>
+                                <p class="ko-desc">"우리는 언제나 최고로 준비되어 있다(Always Ready)"는 미 육군의 확고한 메시지를 저만의 디자인 언어로 조화롭게 녹여내는 훈련을 거쳤으며, 조직의 브랜딩 아이덴티티와 개인의 창의성을 효과적으로 융합하는 실무적인 커뮤니케이션 역량을 길렀습니다.</p>
                             </div>
                             <a href="https://www.dvidshub.net/portfolio/1899475/eun-jun-choi" class="shortcut-card">
                                 <img data-src="img/about/info/dvids logo.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
@@ -641,8 +647,10 @@
                             <meta data-period="2025.01 – 2025.06" data-title="COREAMED" data-org="Freelance Industrial Design · 프리랜스 의료기기 제품 디자인 / 코리아메드">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Executed an independent freelance contract with COREAMED to structurally redesign a medical suction liner dispenser bag.</p>
-                                <p class="ko-desc">코리아메드와 함께 프리랜서로 의료기기 제품 디자인 프로젝트를 진행했습니다.</p>
+                                <p class="en-desc">This project solved the critical issue of conventional flimsy disposable suction liner bags in operating rooms, which posed risks of medical accidents due to their unstable form.</p>
+                                <p class="ko-desc">수술실에서 감염 위험 물질을 보관하는 기존 일회용 석션 라이너 백이 흐물거리는 재질 탓에 의료 사고로 이어질 수 있다는 현장의 한계를 파괴적인 아이디어로 해결한 프로젝트입니다.</p>
+                                <p class="en-desc">By applying origami structures used in space satellites, I proposed a groundbreaking design that compresses for packaging but expands into a rigid structure when used. Through repetitive 1:1 scale TPU 3D printing mockups, I rigorously validated the precise mass-production requirements essential for medical devices.</p>
+                                <p class="ko-desc">우주 위성에 쓰이는 오리가미(종이접기) 구조를 적용해 포장 시에는 압축되고 팽창 시에는 견고한 형태를 유지하는 획기적인 디자인을 제안했으며, TPU 소재의 1:1 스케일 3D 프린팅 목업을 반복 제작하며 의료기기에 요구되는 정밀한 양산 설계 조건을 철저하게 검증했습니다.</p>
                             </div>
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
@@ -679,10 +687,10 @@
                             <meta data-period="2024.09 – 2025.03" data-title="Samsung Life Insurance 'Life-nology Lab'" data-org="3D Visualizer & Product Designer · 삼성생명 라이프놀로지랩 산학 프로젝트">
                             <div class="detail-hero"><img data-src="img/about/hero_seesaw.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Participated in an industry-academic project with Samsung Life Insurance's Life-nology Lab to develop 'Seesaw', a gyro-sensor-based wearable device for the senior generation.</p>
-                                <p class="ko-desc">삼성생명 라이프놀리지랩과의 산학 프로젝트에 참여해 시니어 세대를 위한 자이로 센서 기반 웨어러블 디바이스 'Seesaw' 프로젝트를 진행했습니다.</p>
-                                <p class="en-desc">Managed the entire process from concept derivation and form design to 3D rendering and visualization, proposing design solutions to the client.</p>
-                                <p class="ko-desc">제품의 컨셉 도출부터 형태 디자인, 그리고 3D 렌더링 및 시각화 작업을 총괄하여 클라이언트에게 디자인 솔루션을 제안했습니다.</p>
+                                <p class="en-desc">Based on the vision of shifting the insurance paradigm from post-care to "proactive prevention," we designed a gyro-sensor-based wearable device for the 'Active Senior' generation who actively manages their health.</p>
+                                <p class="ko-desc">보험의 패러다임을 사후 처리에서 '사전 예방'으로 전환하고자 하는 비전을 바탕으로, 자신의 건강을 능동적으로 관리하는 욜드족(Active Senior)을 위한 자이로 센서 기반 웨어러블 디바이스를 디자인했습니다.</p>
+                                <p class="en-desc">Tracking daily posture and gait to provide real-time correction solutions, the device was ergonomically engineered for continuous comfort. To eliminate the stigma of medical devices, I refined the exterior to feel like a stylish everyday fashion accessory.</p>
+                                <p class="ko-desc">일상 속 자세와 걸음걸이를 실시간으로 트래킹해 교정 솔루션을 제공하는 기기인 만큼 항상 착용해도 불편함이 없도록 인체공학적 설계를 적용했으며, 특유의 거부감을 덜어내기 위해 마치 세련된 일상 패션 아이템처럼 느껴지도록 외형을 다듬었습니다.</p>
                             </div>
                             <a href="seesaw.html" class="shortcut-card">
                                 <img data-src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
@@ -722,8 +730,10 @@
                             <meta data-period="2024.07 – 2025.03" data-title="Platypus Project 2025" data-org="Exhibition Director & Content Designer · 홍익대학교 x 한국예술종합학교 예술 연합전시">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Participated as an exhibition director and content designer in 'Platypus Project 2025', a joint art exhibition by Hongik University and Korea National University of Arts.</p>
-                                <p class="ko-desc">홍익대학교와 한국예술종합학교가 함께한 예술 연합전시 'Platypus Project 2025'에서 전시 기획 및 콘텐츠 디자이너로 참여했습니다.</p>
+                                <p class="en-desc">To resolve the frustration of discarding fun ideas due to target audience or commercial constraints, I directed and organized a joint exhibition where students from Hongik University and K-Arts could freely unleash their artistic individuality.</p>
+                                <p class="ko-desc">타겟층이나 상업적 제약 때문에 폐기되는 재미있는 아이디어들에 대한 아쉬움을 해소하고자, 홍익대학교와 한국예술종합학교 학생들이 각자의 예술적 개성을 마음껏 발산할 수 있는 자유 주제형 연합 전시를 기획하고 운영했습니다.</p>
+                                <p class="en-desc">Collaborating with peers from fine arts and dance, we broke down academic boundaries and designed a multidimensional exhibition experience that celebrated the pure joy of creation.</p>
+                                <p class="ko-desc">디자인뿐만 아니라 무용 등 순수 예술 분야의 학우들과 팀 단위로 협업하며, 전공의 경계를 허물고 순수한 창작의 즐거움을 나누는 입체적인 전시 경험을 디자인했습니다.</p>
                             </div>
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
@@ -756,8 +766,10 @@
                             <meta data-period="2024.07 – 2024.08" data-title="Technische Universität Berlin Summer" data-org="VR Game Content Designer · 베를린 공과대학교 (여름학기 교환학생)">
                             <div class="detail-hero"><img data-src="img/about/info/tu.jpg" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Participated in the summer exchange program at Technische Universität Berlin, working as a VR game content designer.</p>
-                                <p class="ko-desc">베를린 공과대학교 여름학기 교환학생 프로그램에 참여하여 VR 게임 콘텐츠 디자이너로 활동했습니다.</p>
+                                <p class="en-desc">Participating in the summer exchange program at TU Berlin, I teamed up with international students to develop an interactive VR game for the Meta Quest 3.</p>
+                                <p class="ko-desc">베를린 공과대학교 여름학기 교환학생 프로그램에 참여하여 다국적 학우들과 팀을 이뤄 Meta Quest 3 기반의 인터랙티브 가상현실(VR) 게임을 제작했습니다.</p>
+                                <p class="en-desc">Using Unity and various design software, we created a casual game where players pop incoming balloons. Through this, I gained the core XR interaction insight that maximizing user immersion in a virtual space paradoxically requires highly precise reflections of real-world physics.</p>
+                                <p class="ko-desc">유니티(Unity)를 비롯한 디자인 소프트웨어를 활용해 다가오는 풍선을 터뜨리는 캐주얼 게임을 기획했으며, 이 과정에서 가상 공간 내 사용자의 몰입도를 극대화하려면 오히려 현실 세계의 물리 법칙을 정교하게 반영해야 한다는 XR 인터랙션 디자인의 핵심 인사이트를 얻었습니다.</p>
                             </div>
                             <a href="/projects/invasion.html" class="shortcut-card">
                                 <img data-src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
@@ -801,10 +813,10 @@
                             <meta data-period="2023.09 – 2024.03" data-title="Cosmo-es 2024" data-org="Product Design Exhibition · 서울대 x 홍익대 x 국민대 디자인 연합전시">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">Participated with individual work in 'Cosmo-es 2024', a joint design exhibition by Seoul National University, Hongik University, and Kookmin University.</p>
-                                <p class="ko-desc">서울대학교, 홍익대학교, 국민대학교가 함께한 디자인 연합전시 'Cosmo-es 2024'에 개인작으로 참가했습니다.</p>
-                                <p class="en-desc">Designed and exhibited a sustainable shoe concept that converts walking pressure into electrical energy.</p>
-                                <p class="ko-desc">보행 압력을 전기에너지로 변환하는 서스테이너블(Sustainable) 신발 컨셉을 디자인하여 전시했습니다.</p>
+                                <p class="en-desc">This was a personal project developed under the unique constraint of "a user whose memory resets every 24 hours," exhibited at a joint design exhibition for freshmen from SNU, Hongik, and Kookmin University.</p>
+                                <p class="ko-desc">서울대, 홍익대, 국민대 디자인 전공 1학년 연합 전시에서 '24시간마다 기억이 리셋되는 사용자'라는 독특한 제약 시나리오 아래 전개한 개인 프로젝트입니다.</p>
+                                <p class="en-desc">Based on the idea that the user must generate their own electricity to survive, I devised a sustainable wearable shoe generator that converts walking pressure into electrical energy, attempting a seamless integration of complex mechanical elements with an aesthetic form.</p>
+                                <p class="ko-desc">사용자가 스스로 생존에 필요한 전력을 생산해야 한다는 발상에서 착안하여, 일상적인 보행 시 발생하는 압력을 전기에너지로 변환해 주는 서스테이너블(Sustainable) 웨어러블 신발형 발전기를 고안해 내며 복잡한 기계적 요소와 심미적 형태의 이질감 없는 융합을 시도했습니다.</p>
                             </div>
                             <a href="cosmoes.html" class="shortcut-card">
                                 <img data-src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
@@ -841,8 +853,10 @@
                             <meta data-period="2023.05 – 2024.03" data-title="Hanyang University (Startup Team)" data-org="UX/UI & Brand Designer · 한양대학교 창업동아리">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p class="en-desc">In charge of UX/UI and brand design for a startup team at Hanyang University.</p>
-                                <p class="ko-desc">한양대학교 창업동아리에서 UX/UI 및 브랜드 디자인을 담당했습니다.</p>
+                                <p class="en-desc">Joining a Hanyang University startup team preparing to launch a survey platform for college students, I solidly established the visual foundation of the initial service.</p>
+                                <p class="ko-desc">대학생 타겟의 설문조사 플랫폼 런칭을 준비하던 한양대학교 창업팀에 합류하여 초기 서비스의 시각적 기틀을 단단하게 다졌습니다.</p>
+                                <p class="en-desc">I defined the overall Brand Identity (BI) and created promotional materials to capture early users' attention and build trust. Building on this, I expanded the consistent brand mood into the actual web interface (UI/UX), significantly enhancing the platform's completeness.</p>
+                                <p class="ko-desc">초기 유저들의 시선을 사로잡고 서비스의 신뢰도를 구축할 수 있도록 각종 홍보물 및 전반적인 브랜드 아이덴티티(BI)를 정립했으며, 이를 바탕으로 실제 사용자가 경험하는 웹 인터페이스(UI/UX)까지 일관된 무드로 전개하여 플랫폼의 완성도를 높이는 데 기여했습니다.</p>
                             </div>
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
