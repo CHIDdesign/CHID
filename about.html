@@ -116,7 +116,8 @@
             width: 100%;
             display: flex; 
             justify-content: center;
-            transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.07);
+            transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
         }
         
         .filter-inner {
@@ -141,7 +142,7 @@
         .filter-btn.active { background: var(--text-main); color: #fff; font-weight: 600; }
 
         @media (max-width: 768px) {
-            .filter-container { padding: 14px 22px; }
+            .filter-container { padding: 14px 22px; box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.08); }
             .filter-inner { justify-content: center; }
             .filter-break {
                 display: block;
@@ -172,6 +173,18 @@
         }
         .scroll-reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
         .scroll-reveal.out-view { opacity: 0; transform: translateY(-40px) scale(0.95); pointer-events: none; }
+
+        @media (max-width: 768px) {
+            .scroll-reveal {
+                transform: translateY(65px) scale(0.94);
+            }
+            .scroll-reveal.in-view {
+                transform: translateY(0) scale(1);
+            }
+            .scroll-reveal.out-view {
+                transform: translateY(-50px) scale(0.94);
+            }
+        }
 
         .timeline-section { max-width: 1040px; margin: 0 auto; padding: 0 40px 400px; }
         
