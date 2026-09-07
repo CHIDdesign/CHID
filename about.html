@@ -3,30 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>CHID - About</title>
-
     <meta name="description" content="About CHID. Industrial Designer 최은준(Eun Jun Choi)의 약력과 시기별 활동 타임라인. 서울 기반 산업 디자이너 포트폴리오.">
     <meta name="keywords" content="CHID, About, 최은준, Eun Jun Choi, Industrial Design, Product Design, Portfolio, Designer, 산업디자인, 제품디자인, 타임라인, 이력">
     <meta name="author" content="CHID">
     <meta name="robots" content="index, follow">
-
     <meta property="og:type" content="profile">
     <meta property="og:url" content="https://chid.kr/about.html">
     <meta property="og:title" content="CHID - About">
     <meta property="og:description" content="최은준(Eun Jun Choi) — Industrial Designer 약력 타임라인">
     <meta property="og:image" content="img/main/favicon.webp">
-
-    <!-- 파비콘 설정 -->
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
-
-    <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <style>
-        /* ==========================================================
-            [기본 설정 및 변수]
-            ========================================================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -55,9 +45,6 @@
         body.fade-in { opacity: 1; }
         body.detail-open { overflow: hidden; }
 
-        /* ==========================================================
-            [헤더 / 네비게이션]
-            ========================================================== */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px;
@@ -93,9 +80,6 @@
             nav ul li a { font-size: 16px; font-weight: 500; }
         }
 
-        /* ==========================================================
-            [인트로 영역]
-            ========================================================== */
         .intro { 
             min-height: 100vh; 
             display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 60px;
@@ -103,7 +87,7 @@
             max-width: 1040px; margin: 0 auto; 
         }
         .intro-text { flex: 1; }
-        .intro-image { flex: 0 0 64%; max-width: 840px; border-radius: 24px; overflow: hidden; }
+        .intro-image { flex: 0 0 38%; max-width: 400px; border-radius: 24px; overflow: hidden; }
         .intro-image img { width: 100%; height: auto; display: block; object-fit: contain; aspect-ratio: 4/5; }
 
         .intro-eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.12em; color: var(--text-sub); text-transform: uppercase; margin-bottom: 18px; }
@@ -118,9 +102,6 @@
             .intro-image img { aspect-ratio: 1/1; }
         }
 
-        /* ==========================================================
-            [반응형 스티키 필터 탭 (모바일 All 단독 줄바꿈 대응)]
-            ========================================================== */
         .filter-container {
             position: sticky;
             top: 90px;
@@ -167,9 +148,6 @@
             }
         }
 
-        /* ==========================================================
-            [섹션 헤더]
-            ========================================================== */
         .section-header {
             display: flex; align-items: center; gap: 16px;
             max-width: 1040px; margin: 0 auto 40px; padding: 0 40px;
@@ -183,9 +161,6 @@
             letter-spacing: -0.02em; color: var(--text-main); line-height: 1;
         }
 
-        /* ==========================================================
-            [공통 스크롤 페이드 & 스케일 애니메이션]
-            ========================================================== */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(40px) scale(0.95);
@@ -196,9 +171,6 @@
         .scroll-reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
         .scroll-reveal.out-view { opacity: 0; transform: translateY(-40px) scale(0.95); pointer-events: none; }
 
-        /* ==========================================================
-            [타임라인 구조]
-            ========================================================== */
         .timeline-section { max-width: 1040px; margin: 0 auto; padding: 0 40px 400px; }
         
         .year-group { position: relative; margin-bottom: 12vh; z-index: 1; transition: opacity 0.4s ease; }
@@ -226,18 +198,15 @@
         .education-group .timeline-track { bottom: 0; }
         .education-group .entry:hover { transform: none; background-color: transparent; cursor: default; }
 
-        /* ==========================================================
-            [학력(학교) 로고 스타일]
-            ========================================================== */
         .school-logo {
-            margin-bottom: 8px; /* 타이틀과의 간격 */
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
         }
         .school-logo img {
-            height: 64px; /* 로고가 너무 크지 않도록 높이 제한 */
+            height: 64px;
             width: auto;
-            max-width: 100%; /* 모바일 환경에서 부모 영역을 넘어가지 않게 방지 */
+            max-width: 100%;
             object-fit: contain;
             display: block;
         }
@@ -262,23 +231,19 @@
         .entry-org { font-size: clamp(13px, 1vw, 14px); color: #888; font-weight: 400; line-height: 1.6; margin-bottom: 12px; }
         .entry-period { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; color: var(--text-main); }
 
-        /* ==========================================================
-            [툴 로고 뱃지 디자인 - CSS Class 연동 및 텍스트 추가]
-            ========================================================== */
         .entry-tools {
             display: flex; gap: 8px; align-items: center; margin-top: 14px; flex-wrap: wrap;
         }
         .tool-badge {
             height: 30px;
-            padding: 0 10px; /* 로고와 텍스트를 위해 좌우 여백 확보 */
+            padding: 0 10px;
             border-radius: 8px; 
             background: rgba(0,0,0,0.0);
-            display: flex; align-items: center; justify-content: center; gap: 6px; /* 로고와 텍스트 사이 간격 */
+            display: flex; align-items: center; justify-content: center; gap: 6px;
             border: 1px solid rgba(0,0,0,0.12); 
             transition: all 0.2s ease;
         }
 
-        /* 툴 이름 텍스트 속성 */
         .tool-name {
             font-size: 13px;
             font-weight: 500;
@@ -287,7 +252,6 @@
             opacity: 0.9;
         }
 
-        /* 툴 아이콘 공통 속성 (원래 색상과 형태 보존을 위해 background-image 사용) */
         .tool-icon {
             width: 14px; height: 14px;
             background-size: contain;
@@ -295,7 +259,6 @@
             background-repeat: no-repeat;
         }
 
-        /* 툴별 SVG 경로 클래스 */
         .icon-rhino { background-image: url('img/about/tool/rhinoceros.svg'); }
         .icon-keyshot { background-image: url('img/about/tool/keyshot.svg'); }
         .icon-illustrator { background-image: url('img/about/tool/adobe_illustrator.svg'); }
@@ -320,12 +283,9 @@
             .timeline-track { left: 4px; }
             .timeline-item::before { left: -20px; width: 10px; }
             .entry { padding: 20px 15px; }
-            .school-logo img { height: 48px; } /* 모바일에서 학교 로고 크기 축소 */
+            .school-logo img { height: 48px; }
         }
 
-        /* ==========================================================
-            [상세 패널 오버레이]
-            ========================================================== */
         .detail-overlay {
             position: fixed; inset: 0; z-index: 1000; background-color: var(--dark-bg);
             clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%); transition: clip-path 0.7s cubic-bezier(0.77, 0, 0.175, 1);
@@ -355,7 +315,9 @@
         
         .detail-hero { width: 100%; margin: 20px 0 60px; border-radius: 12px; overflow: hidden; }
         .detail-hero img { width: 100%; height: auto; display: block; object-fit: cover; }
-        .detail-body p { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.9; color: #dcdcdc; font-weight: 300; word-break: keep-all; margin-bottom: 24px; }
+        
+        .detail-body p.en-desc { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.9; color: #dcdcdc; font-weight: 300; word-break: keep-all; margin-bottom: 6px; }
+        .detail-body p.ko-desc { font-size: clamp(14px, 1.1vw, 15px); line-height: 1.8; color: #8a8a8a; font-weight: 300; word-break: keep-all; margin-bottom: 28px; }
 
         .shortcut-card {
             display: flex; align-items: center; justify-content: space-between;
@@ -397,7 +359,6 @@
     </header>
 
     <main>
-        <!-- 인트로 영역 -->
         <section class="intro">
             <div class="intro-text">
                 <p class="intro-eyebrow">C H I D</p>
@@ -411,14 +372,10 @@
                 </p>
             </div>
             <div class="intro-image">
-                <!-- 메인 페이지 이미지 레이지 로딩 적용 -->
                 <img src="img/about/Profile.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x500/transparent/888?text=Profile+Image'" alt="최은준 프로필 이미지">
             </div>
         </section>
 
-        <!-- ==========================================
-             [섹션 1: Education (필터 제외 영역)]
-             ========================================== -->
         <div class="section-header">
             <h2>Education</h2>
         </div>
@@ -427,7 +384,6 @@
                 <div class="timeline-track"><div class="timeline-progress"></div></div>
                 <div class="timeline-item">
                     <div class="entry scroll-reveal">
-                        <!-- 학교 로고 1 -->
                         <div class="school-logo">
                             <img src="img/about/school/hongik.svg" alt="Hong-ik University Logo">
                         </div>
@@ -437,7 +393,6 @@
                         <p class="entry-period">2023.03 ~ 2028.03</p>
                     </div>
                     <div class="entry scroll-reveal">
-                        <!-- 학교 로고 2 -->
                         <div class="school-logo">
                             <img src="img/about/school/tu_berlin.svg" alt="Technische Universität Berlin Logo">
                         </div>
@@ -467,7 +422,6 @@
 
         <section class="timeline-section">
 
-            <!-- [2026] -->
             <div class="year-group" data-year="2026">
                 <div class="year-heading">
                     <h3 class="year-text scroll-reveal">2026</h3>
@@ -504,11 +458,12 @@
                             </div>
                         </div>
                         <template class="detail-content">
-                            <meta data-period="2025.01 – 2025.06" data-title="COREAMED" data-org="Freelance Industrial Design · 프리랜스 의료기기 제품 디자인 / 코리아메드">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
+                            <meta data-period="2026.01 – 2026.09" data-title="The James Dyson Awards" data-org="Award · 제임스 다이슨 어워드 / 제임스 다이슨 재단">
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
-                            <div class="detail-body"><p>코리아메드와 함께 프리랜서로 의료기기 제품 디자인 프로젝트를 진행했습니다.</p></div>
-                            <!-- 누락되었던 바로가기 카드 추가 -->
+                            <div class="detail-body">
+                                <p class="en-desc">Prepared a submission for the 2026 James Dyson Award competition by assembling and leading a collaborative team of design and mechanical engineering students.</p>
+                                <p class="ko-desc">제임스 다이슨 어워드 2026 출품을 위해 디자인 및 기계공학 전공 학생들로 구성된 팀을 결성하고 프로젝트를 주도했습니다.</p>
+                            </div>
                             <a href="https://youtu.be/7bX-PxF36bk?si=BzKGYRPzLzQVx5cO" class="shortcut-card">
                                 <img data-src="img/about/info/snaked.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
@@ -557,11 +512,12 @@
                             </div>
                         </div>
                         <template class="detail-content">
-                            <meta data-period="2025.01 – 2025.06" data-title="COREAMED" data-org="Freelance Industrial Design · 프리랜스 의료기기 제품 디자인 / 코리아메드">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
+                            <meta data-period="2026.03 – 2026.05" data-title="15th ROK Army Startup Competition" data-org="Award (KOSME Chairman's Award) · 제 15회 육군창업경진대회 / 대한민국 육군">
                             <div class="detail-hero"><img data-src="img/about/info/startup2026.jpg" onerror="this.style.display='none'" alt="Hero Image"></div>
-                            <div class="detail-body"><p>코리아메드와 함께 프리랜서로 의료기기 제품 디자인 프로젝트를 진행했습니다.</p></div>
-                            <!-- 누락되었던 바로가기 카드 추가 -->
+                            <div class="detail-body">
+                                <p class="en-desc">Developed 'Tessera', an offline NFC-enabled military dog tag identification and tactical scanner system, participating in the 15th ROK Army Startup Challenge.</p>
+                                <p class="ko-desc">제 15회 육군창업경진대회에 참가하여 오프라인 NFC 기반 군번줄 인식 및 전술 스캐너 시스템 'Tessera'를 개발했습니다.</p>
+                            </div>
                             <a href="https://youtu.be/Up7zPfRmlWo" class="shortcut-card">
                                 <img data-src="img/about/info/startup2026_2.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
@@ -581,7 +537,6 @@
                         </template>
                     </div>
 
-                    <!-- 군 경력 -->
                     <div class="timeline-item" data-category="military">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Public Affairs Specialist (KATUSA)</p>
@@ -621,14 +576,14 @@
                         
                         <template class="detail-content">
                             <meta data-period="2025.06 – 2026.12" data-title="U.S. Eighth Army Headquarters Public Affairs" data-org="Public Affairs Specialist (KATUSA) · 대한민국 육군 카투사 / 주한미8군 본부 공보과 정훈병">
-                            <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                             <div class="detail-hero"><img data-src="img/about/info/katusa.png" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>대한민국 육군 카투사로 복무하며 주한미8군 본부 공보과에서 정훈병으로 근무했습니다.</p>
-                                <p>주로 부대 내 행사 촬영, 공보 자료 편집, 시각 디자인물 제작 등의 업무를 담당하며, 다국적 환경에서의 소통과 디자인 역량을 키울 수 있었습니다.</p>
+                                <p class="en-desc">Served as a KATUSA in the Republic of Korea Army, working as a Public Affairs Specialist at the U.S. Eighth Army Headquarters Public Affairs Office.</p>
+                                <p class="ko-desc">대한민국 육군 카투사로 복무하며 주한미8군 본부 공보과에서 정훈병으로 근무했습니다.</p>
+                                <p class="en-desc">Primarily responsible for photographing unit events, editing public affairs materials, and creating visual designs, developing communication and design skills in a multinational environment.</p>
+                                <p class="ko-desc">주로 부대 내 행사 촬영, 공보 자료 편집, 시각 디자인물 제작 등의 업무를 담당하며, 다국적 환경에서의 소통과 디자인 역량을 키울 수 있었습니다.</p>
                             </div>
                             <a href="https://www.dvidshub.net/portfolio/1899475/eun-jun-choi" class="shortcut-card">
-                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                                 <img data-src="img/about/info/dvids logo.jpg" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">United States of America <br> Defense Visual Information Distribution Service</h3>
@@ -636,9 +591,7 @@
                                 </div>
                                 <div class="shortcut-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             </a>
-
                             <a href="projects/kfw.html" class="shortcut-card">
-                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                                 <img data-src="img/projects/Thumbnail/project_7.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">KFW 2026</h3>
@@ -651,13 +604,11 @@
                 </div>
             </div>
 
-            <!-- [2025] -->
             <div class="year-group" data-year="2025">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2025</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
-                    <!-- 2025 항목 1: COREAMED -->
                     <div class="timeline-item" data-category="product">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Freelance Industrial Design</p>
@@ -688,10 +639,11 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2025.01 – 2025.06" data-title="COREAMED" data-org="Freelance Industrial Design · 프리랜스 의료기기 제품 디자인 / 코리아메드">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
-                            <div class="detail-body"><p>코리아메드와 함께 프리랜서로 의료기기 제품 디자인 프로젝트를 진행했습니다.</p></div>
-                            <!-- 누락되었던 바로가기 카드 추가 -->
+                            <div class="detail-body">
+                                <p class="en-desc">Executed an independent freelance contract with COREAMED to structurally redesign a medical suction liner dispenser bag.</p>
+                                <p class="ko-desc">코리아메드와 함께 프리랜서로 의료기기 제품 디자인 프로젝트를 진행했습니다.</p>
+                            </div>
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
@@ -703,7 +655,6 @@
                         </template>
                     </div>
 
-                    <!-- 2025 항목 2: Samsung Life Insurance -->
                     <div class="timeline-item" data-category="product">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">3D Visualizer & Product Designer</p>
@@ -726,14 +677,14 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2024.09 – 2025.03" data-title="Samsung Life Insurance 'Life-nology Lab'" data-org="3D Visualizer & Product Designer · 삼성생명 라이프놀로지랩 산학 프로젝트">
-                            <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                             <div class="detail-hero"><img data-src="img/about/hero_seesaw.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>삼성생명 라이프놀리지랩과의 산학 프로젝트에 참여해 시니어 세대를 위한 자이로 센서 기반 웨어러블 디바이스 'Seesaw' 프로젝트를 진행했습니다.</p>
-                                <p>제품의 컨셉 도출부터 형태 디자인, 그리고 3D 렌더링 및 시각화 작업을 총괄하여 클라이언트에게 디자인 솔루션을 제안했습니다.</p>
+                                <p class="en-desc">Participated in an industry-academic project with Samsung Life Insurance's Life-nology Lab to develop 'Seesaw', a gyro-sensor-based wearable device for the senior generation.</p>
+                                <p class="ko-desc">삼성생명 라이프놀리지랩과의 산학 프로젝트에 참여해 시니어 세대를 위한 자이로 센서 기반 웨어러블 디바이스 'Seesaw' 프로젝트를 진행했습니다.</p>
+                                <p class="en-desc">Managed the entire process from concept derivation and form design to 3D rendering and visualization, proposing design solutions to the client.</p>
+                                <p class="ko-desc">제품의 컨셉 도출부터 형태 디자인, 그리고 3D 렌더링 및 시각화 작업을 총괄하여 클라이언트에게 디자인 솔루션을 제안했습니다.</p>
                             </div>
                             <a href="seesaw.html" class="shortcut-card">
-                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                                 <img data-src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Project Seesaw</h3>
@@ -746,13 +697,11 @@
                 </div>
             </div>
 
-            <!-- [2024] -->
             <div class="year-group" data-year="2024">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2024</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
-                    <!-- 2024 항목 1: Platypus Project -->
                     <div class="timeline-item" data-category="exhibition">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Exhibition Director & Content Designer</p>
@@ -771,12 +720,11 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2024.07 – 2025.03" data-title="Platypus Project 2025" data-org="Exhibition Director & Content Designer · 홍익대학교 x 한국예술종합학교 예술 연합전시">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>홍익대학교와 한국예술종합학교가 함께한 예술 연합전시 'Platypus Project 2025'에서 전시 기획 및 콘텐츠 디자이너로 참여했습니다.</p>
+                                <p class="en-desc">Participated as an exhibition director and content designer in 'Platypus Project 2025', a joint art exhibition by Hongik University and Korea National University of Arts.</p>
+                                <p class="ko-desc">홍익대학교와 한국예술종합학교가 함께한 예술 연합전시 'Platypus Project 2025'에서 전시 기획 및 콘텐츠 디자이너로 참여했습니다.</p>
                             </div>
-                            <!-- 누락되었던 바로가기 카드 추가 -->
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
@@ -788,7 +736,6 @@
                         </template>
                     </div>
 
-                    <!-- 2024 항목 2: TU Berlin -->
                     <div class="timeline-item" data-category="uiux">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">VR Game Content Designer</p>
@@ -806,14 +753,13 @@
                             </div>
                         </div>
                         <template class="detail-content">
-                            <meta data-period="2024.07 – 2025.08" data-title="Technische Universität Berlin Summer" data-org="VR Game Content Designer · 베를린 공과대학교 (여름학기 교환학생)">
+                            <meta data-period="2024.07 – 2024.08" data-title="Technische Universität Berlin Summer" data-org="VR Game Content Designer · 베를린 공과대학교 (여름학기 교환학생)">
                             <div class="detail-hero"><img data-src="img/about/info/tu.jpg" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>삼성생명 라이프놀리지랩과의 산학 프로젝트에 참여해 시니어 세대를 위한 자이로 센서 기반 웨어러블 디바이스 'Seesaw' 프로젝트를 진행했습니다.</p>
-                                <p>제품의 컨셉 도출부터 형태 디자인, 그리고 3D 렌더링 및 시각화 작업을 총괄하여 클라이언트에게 디자인 솔루션을 제안했습니다.</p>
+                                <p class="en-desc">Participated in the summer exchange program at Technische Universität Berlin, working as a VR game content designer.</p>
+                                <p class="ko-desc">베를린 공과대학교 여름학기 교환학생 프로그램에 참여하여 VR 게임 콘텐츠 디자이너로 활동했습니다.</p>
                             </div>
                             <a href="/projects/invasion.html" class="shortcut-card">
-                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                                 <img data-src="img/about/thumb_seesaw.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Project Seesaw</h3>
@@ -826,13 +772,11 @@
                 </div>
             </div>
 
-            <!-- [2023] -->
             <div class="year-group" data-year="2023">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2023</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
 
-                    <!-- 2023 항목 1: Cosmo-es 2024 -->
                     <div class="timeline-item" data-category="product exhibition">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Product Design Exhibition</p>
@@ -855,14 +799,14 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2023.09 – 2024.03" data-title="Cosmo-es 2024" data-org="Product Design Exhibition · 서울대 x 홍익대 x 국민대 디자인 연합전시">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>서울대학교, 홍익대학교, 국민대학교가 함께한 디자인 연합전시 'Cosmo-es 2024'에 개인작으로 참가했습니다.</p>
-                                <p>보행 압력을 전기에너지로 변환하는 서스테이너블(Sustainable) 신발 컨셉을 디자인하여 전시했습니다.</p>
+                                <p class="en-desc">Participated with individual work in 'Cosmo-es 2024', a joint design exhibition by Seoul National University, Hongik University, and Kookmin University.</p>
+                                <p class="ko-desc">서울대학교, 홍익대학교, 국민대학교가 함께한 디자인 연합전시 'Cosmo-es 2024'에 개인작으로 참가했습니다.</p>
+                                <p class="en-desc">Designed and exhibited a sustainable shoe concept that converts walking pressure into electrical energy.</p>
+                                <p class="ko-desc">보행 압력을 전기에너지로 변환하는 서스테이너블(Sustainable) 신발 컨셉을 디자인하여 전시했습니다.</p>
                             </div>
                             <a href="cosmoes.html" class="shortcut-card">
-                                <!-- 지연 로딩을 위해 src 속성을 data-src로 변경 -->
                                 <img data-src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Cosmo-es 2024</h3>
@@ -873,7 +817,6 @@
                         </template>
                     </div>
 
-                    <!-- 2023 항목 2: Hanyang University -->
                     <div class="timeline-item" data-category="uiux branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">UX/UI & Brand Designer</p>
@@ -896,12 +839,11 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2023.05 – 2024.03" data-title="Hanyang University (Startup Team)" data-org="UX/UI & Brand Designer · 한양대학교 창업동아리">
-                            <!-- 누락되었던 히어로 이미지 추가 -->
                             <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                <p>한양대학교 창업동아리에서 UX/UI 및 브랜드 디자인을 담당했습니다.</p>
+                                <p class="en-desc">In charge of UX/UI and brand design for a startup team at Hanyang University.</p>
+                                <p class="ko-desc">한양대학교 창업동아리에서 UX/UI 및 브랜드 디자인을 담당했습니다.</p>
                             </div>
-                            <!-- 누락되었던 바로가기 카드 추가 -->
                             <a href="#" class="shortcut-card">
                                 <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
@@ -918,7 +860,6 @@
         </section>
     </main>
 
-    <!-- [상세 패널 오버레이] -->
     <div class="detail-overlay" id="detail-overlay">
         <div class="detail-close" id="detail-close" aria-label="닫기">
             <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1141,8 +1082,6 @@
                 const metaClone = contentClone.querySelector('meta');
                 if(metaClone) metaClone.remove(); 
                 
-                /* [지연 로딩 적용 로직]:
-                   data-src로 숨겨둔 이미지 경로를 진짜 src 속성으로 옮겨서 이미지를 띄움 */
                 contentClone.querySelectorAll('img[data-src]').forEach(img => {
                     img.setAttribute('src', img.getAttribute('data-src'));
                     img.removeAttribute('data-src');
@@ -1167,11 +1106,6 @@
                 if (e.key === 'Escape' && overlay.classList.contains('open')) closeDetail();
             });
 
-            /* ==========================================================
-               [초기 로딩 속도 최적화] - 상세 페이지 이미지 백그라운드 프리로드
-               메인 페이지 렌더링이 완전히 끝난 후 브라우저가 유휴 상태일 때,
-               상세 페이지 안의 이미지들을 은몰래 캐시에 다운로드합니다.
-               ========================================================== */
             window.addEventListener('load', () => {
                 const preloadDetailAssets = () => {
                     const templates = document.querySelectorAll('template.detail-content');
@@ -1181,13 +1115,12 @@
                             const src = img.getAttribute('data-src');
                             if(src) {
                                 const preloader = new Image();
-                                preloader.src = src; // 이 순간 브라우저가 백그라운드에서 이미지를 다운받아 캐시에 저장
+                                preloader.src = src;
                             }
                         });
                     });
                 };
 
-                // 메인 스레드 점유를 피해 모바일 기기에서의 버벅임을 방지 (지원 브라우저는 requestIdleCallback, 미지원은 setTimeout)
                 if ('requestIdleCallback' in window) {
                     requestIdleCallback(preloadDetailAssets, { timeout: 2000 });
                 } else {
