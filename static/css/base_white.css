@@ -305,7 +305,7 @@ video::-webkit-media-controls-panel { display: none !important; }
 }
 
 /* =======================================================
-   커스텀 커서 오버레이 전용 스타일 (plus-darker 적용)
+   커스텀 커서 오버레이 전용 스타일 (오류 해결 및 multiply 적용)
    ======================================================= */
 @media (pointer: fine) {
   * {
@@ -321,6 +321,7 @@ video::-webkit-media-controls-panel { display: none !important; }
   height: 100vh;
   z-index: 9999;
   pointer-events: none;
-  mix-blend-mode: plus-darker;
+  /* 라이트 모드에서는 어두운 빛을 정상적으로 합성하는 multiply 사용 */
+  mix-blend-mode: multiply;
   background: transparent;
 }

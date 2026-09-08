@@ -310,7 +310,7 @@ video::-webkit-media-controls-panel { display: none !important; }
 }
 
 /* =======================================================
-   커스텀 커서 오버레이 전용 스타일 (plus-darker 적용)
+   커스텀 커서 오버레이 전용 스타일
    ======================================================= */
 @media (pointer: fine) {
   * {
@@ -326,6 +326,7 @@ video::-webkit-media-controls-panel { display: none !important; }
   height: 100vh;
   z-index: 9999;
   pointer-events: none;
-  mix-blend-mode: plus-darker;
+  /* 다크 테마이므로 plus-lighter 사용 */
+  mix-blend-mode: plus-lighter;
   background: transparent;
 }

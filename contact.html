@@ -247,7 +247,8 @@
             // --- [커스텀 커서 및 리플 효과 시스템] ---
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            ctx.globalCompositeOperation = 'plus-darker';
+            
+            let cursorColorMode = 'black'; 
 
             const PT_TO_PX = 1.333;
             const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
@@ -414,7 +415,9 @@
                     if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
                         ctx.beginPath();
                         ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(17, 17, 17, ${point.colorFactor})`;
+                        ctx.fillStyle = cursorColorMode === 'white' 
+                            ? `rgba(255, 255, 255, ${point.colorFactor})` 
+                            : `rgba(17, 17, 17, ${point.colorFactor})`;
                         ctx.fill();
                     } else {
                         point.size = baseRadius;

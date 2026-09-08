@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. 페이지 페이드인
     setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
     
-    // 2. 헤더 로고 클릭 이동
     const backBtn = document.getElementById('back-to-home');
     if(backBtn) {
         backBtn.addEventListener('click', function() {
@@ -18,11 +16,18 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
-    // plus-darker 블렌드 컴포지션 명시적 적용
-    ctx.globalCompositeOperation = 'plus-darker';
+    
+    // 현재 페이지 배경색을 자동 감지하여 모드 설정 (전체 페이지 호환)
+    let cursorColorMode = 'black'; 
+    const checkTheme = () => {
+        const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim().toLowerCase();
+        if (bgColor === '#000000' || bgColor === '#000') {
+            cursorColorMode = 'white';
+        }
+    };
+    checkTheme();
 
     const PT_TO_PX = 1.333;
-    // 요구사항 반영: 크기와 간격을 기존의 1/2로 축소
     const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
     const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
     const gridStep = (10 * PT_TO_PX) / 2;        
@@ -43,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
         points = [];
         activePoints.clear();
 
-        // 평소 기본 점들은 완전 투명 상태로 시작
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const x = c * gridStep;
@@ -58,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // 데스크톱 마우스 이동 이벤트
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
@@ -69,14 +72,12 @@ document.addEventListener("DOMContentLoaded", function() {
         mouse.y = -1000;
     });
 
-    // 데스크톱 클릭 이벤트
     window.addEventListener('mousedown', (e) => {
         if (e.button === 0) {
             triggerRipple(e.clientX, e.clientY);
         }
     });
 
-    // 모바일 터치 이벤트 (터치 시 리플 효과 작동)
     window.addEventListener('touchstart', (e) => {
         if (e.touches.length > 0) {
             const touchX = e.touches[0].clientX;
@@ -188,11 +189,12 @@ document.addEventListener("DOMContentLoaded", function() {
             point.size += (targetSize - point.size) * speed;
             point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
-            // 커서가 닿거나 리플이 발생할 때만 알파(투명도)가 0에서 부드럽게 증가하도록 설정
             if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(17, 17, 17, ${point.colorFactor})`;
+                ctx.fillStyle = cursorColorMode === 'white' 
+                    ? `rgba(255, 255, 255, ${point.colorFactor})` 
+                    : `rgba(17, 17, 17, ${point.colorFactor})`;
                 ctx.fill();
             } else {
                 point.size = baseRadius;
@@ -207,9 +209,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initPoints();
     requestAnimationFrame(draw);
 
-    // -------------------------------------------------------
-    // [기존 유지] 비디오 옵저버 시스템
-    // -------------------------------------------------------
     const videos = Array.from(document.querySelectorAll('video.locked-video'));
 
     videos.forEach(video => {
@@ -254,9 +253,6 @@ document.addEventListener("DOMContentLoaded", function() {
         playObserver.observe(video);
     });
 
-    // -------------------------------------------------------
-    // [기존 유지] 헤더 제어 시스템
-    // -------------------------------------------------------
     let lastScrollTop = 0;
     let scrollUpDistance = 0;     
     const scrollThreshold = 600;  

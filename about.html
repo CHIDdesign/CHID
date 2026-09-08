@@ -356,6 +356,10 @@
           background: transparent;
         }
 
+        body.detail-open #canvas {
+          mix-blend-mode: plus-lighter;
+        }
+
         @media (max-width: 768px) {
             .detail-inner { padding: 80px 22px; }
             .shortcut-card { flex-direction: column; align-items: flex-start; padding: 16px; border-radius: 20px; }
@@ -931,7 +935,8 @@
             // --- [커스텀 커서 및 리플 효과 시스템] ---
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            ctx.globalCompositeOperation = 'plus-darker';
+            
+            let cursorColorMode = 'black'; // 기본 커서 색상은 검은색
 
             const PT_TO_PX = 1.333;
             const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
@@ -1098,7 +1103,10 @@
                     if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
                         ctx.beginPath();
                         ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(17, 17, 17, ${point.colorFactor})`;
+                        // 커서 색상 모드에 따라 색상 렌더링
+                        ctx.fillStyle = cursorColorMode === 'white'
+                            ? `rgba(255, 255, 255, ${point.colorFactor})`
+                            : `rgba(17, 17, 17, ${point.colorFactor})`;
                         ctx.fill();
                     } else {
                         point.size = baseRadius;
@@ -1315,14 +1323,20 @@
                 renderBody.innerHTML = '';
                 renderBody.appendChild(contentClone);
 
+                // --- [다크 모달 오픈 시 커서 다크 모드로 변경] ---
                 overlay.classList.add('open');
                 document.body.classList.add('detail-open');
+                cursorColorMode = 'white';
+                
                 setTimeout(() => { overlay.scrollTop = 0; }, 10);
             };
 
             function closeDetail() {
+                // --- [다크 모달 종료 시 커서 화이트 모드로 복귀] ---
                 overlay.classList.remove('open');
                 document.body.classList.remove('detail-open');
+                cursorColorMode = 'black';
+                
                 setTimeout(() => { renderBody.innerHTML = ''; }, 600);
             }
 
