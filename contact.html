@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <title>CHID - Contact</title>
-
     <meta name="description" content="Contact CHID. Industrial Design portfolio based in Seoul. 서울 기반 산업 디자이너 CHID 이메일 및 연락처.">
     <meta name="keywords" content="CHID, Contact, Industrial Design, Product Design, Portfolio, Designer, 칫, 산업디자인, 제품디자인, 연락처, 의뢰">
     <meta name="author" content="CHID">
     <meta name="robots" content="index, follow">
-
     <meta property="og:type" content="profile">
     <meta property="og:url" content="https://chid.kr/contact.html">
     <meta property="og:title" content="CHID - Contact">
     <meta property="og:description" content="Industrial Designer CHID | eunjun0505@gmail.com">
     <meta property="og:image" content="img/main/favicon.webp"> 
-
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -37,10 +32,8 @@
       }
     }
     </script>
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
@@ -55,9 +48,7 @@
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
         }
-        
         body.fade-in { opacity: 1; }
-
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -68,13 +59,10 @@
             transition: all 0.5s ease;
             height: 90px;
         }
-
         .logo-container { cursor: pointer; }
         .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
-
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
-        
         nav ul li a {
             text-decoration: none; color: #111111;
             font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
@@ -82,34 +70,28 @@
             opacity: 0.8; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; text-align: center; pointer-events: auto;
         }
-
         nav ul li a::before {
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
-
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
         nav ul li.active a { font-weight: 700; opacity: 1; }
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
-
         main { 
             flex: 1; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             padding: 0 20px;
         }
-
         .contact-info { 
             text-align: center; display: flex; flex-direction: column; align-items: center;
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0; transform: translateY(20px); animation-delay: 0.2s; width: 100%;
         }
-
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
         }
-        
         .email-link {
             font-size: clamp(24px, 3.5vw, 50px);
             font-weight: 700; color: #111; text-decoration: none;
@@ -117,13 +99,10 @@
             transition: color 0.3s ease, transform 0.3s ease;
             letter-spacing: -0.02em; word-break: break-all; cursor: pointer;
         }
-        
         .email-link:hover { color: #555; transform: scale(1.02); }
-
         .social-links { display: flex; gap: 40px; align-items: center; }
         .social-links a { display: inline-block; width: 36px; height: 42px; transition: transform 0.3s ease; }
         .social-links a:hover { transform: translateY(-5px); }
-
         .social-icon {
             display: block; width: 100%; height: 100%;
             background-color: #111; opacity: 0.3; 
@@ -132,27 +111,22 @@
             -webkit-mask-position: center; mask-position: center;
             -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
         }
-
         .instagram-icon {
             -webkit-mask-image: url('img/contact/social/instagram.svg');
             mask-image: url('img/contact/social/instagram.svg');
         }
-
         .behance-icon {
             -webkit-mask-image: url('img/contact/social/Behance.svg');
             mask-image: url('img/contact/social/Behance.svg');
         }
-
         .linkedin-icon {
             -webkit-mask-image: url('img/contact/social/linkedin.svg');
             mask-image: url('img/contact/social/linkedin.svg');
         }
-
         .social-links a:hover .social-icon { opacity: 1; }
         .social-links a:hover .instagram-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .social-links a:hover .behance-icon { background: #1769ff; }
         .social-links a:hover .linkedin-icon { background: #0a66c2; }
-
         .toast {
             position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(24px);
@@ -164,20 +138,16 @@
             transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
             z-index: 1000; white-space: nowrap;
         }
-
         .toast.show {
             opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
         }
-
         @media (pointer: fine) {
           * { cursor: none !important; }
         }
-
         #canvas {
           position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
           z-index: 9999; pointer-events: none; mix-blend-mode: multiply; background: transparent;
         }
-
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 20px; }
             .logo-img { height: 50px; }
@@ -192,7 +162,6 @@
     </style>
 </head>
 <body>
-
     <header>
         <div class="logo-container" id="back-to-home">
             <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
@@ -205,7 +174,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <div class="contact-info">
             <a href="mailto:eunjun0505@gmail.com" class="email-link">eunjun0505@gmail.com</a>
@@ -222,21 +190,16 @@
             </div>
         </div>
     </main>
-
     <canvas id="canvas"></canvas>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
-            
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
                 setTimeout(() => { window.location.href = targetUrl; }, 500);
             }
-            
             document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
-            
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -246,26 +209,22 @@
 
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            
             const dotCanvasBlack = document.createElement('canvas');
-            dotCanvasBlack.width = 16; dotCanvasBlack.height = 16;
+            dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
             const ctxB = dotCanvasBlack.getContext('2d');
             ctxB.fillStyle = '#111111';
-            ctxB.beginPath(); ctxB.arc(8, 8, 8, 0, Math.PI * 2); ctxB.fill();
-
+            ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
             const dotCanvasWhite = document.createElement('canvas');
-            dotCanvasWhite.width = 16; dotCanvasWhite.height = 16;
+            dotCanvasWhite.width = 24; dotCanvasWhite.height = 24;
             const ctxW = dotCanvasWhite.getContext('2d');
             ctxW.fillStyle = '#ffffff';
-            ctxW.beginPath(); ctxW.arc(8, 8, 8, 0, Math.PI * 2); ctxW.fill();
+            ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
 
             let cursorColorMode = 'black'; 
-
             const PT_TO_PX = 1.333;
-            const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
-            const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
-            const gridStep = (10 * PT_TO_PX) / 2;        
-            
+            const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
+            const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
+            const gridStep = ((10 * PT_TO_PX) / 2) * 1.1;        
             const effectRadius = gridStep * 15; 
             const effectRadiusSq = effectRadius * effectRadius;
             const maxRippleRadius = gridStep * 24; 
@@ -293,7 +252,6 @@
                     }
                 }
             }
-
             window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
             window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
             window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
@@ -302,15 +260,13 @@
             }, { passive: true });
 
             function triggerRipple(x, y) {
-                ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 0.8 }); }, 150);
+                ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
+                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 80);
             }
-
             window.addEventListener('resize', initPoints);
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 let targetC = -100;
                 let targetR = -100;
 
@@ -329,7 +285,7 @@
                     let r = ripples[i];
                     let progress = Math.min(1, r.radius / maxRippleRadius);
                     let speedFactor = 1 - progress; 
-                    r.radius += gridStep * (0.2 * speedFactor + 0.05); 
+                    r.radius += gridStep * (1.2 * speedFactor + 0.4); 
                     if (r.radius - gridStep * 4 > maxRippleRadius) {
                         ripples.splice(i, 1);
                         continue;
@@ -378,7 +334,7 @@
                             const dist = Math.sqrt(distSq);
                             const distanceFade = 1 - (dist / maxRippleRadius);
                             const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.5)));
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 3.5)));
                             rippleEffect += (ring * r.strength) * distanceFade;
                         }
                     }
@@ -386,7 +342,7 @@
                     let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
                     let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
 
-                    const speed = 0.12; 
+                    const speed = 0.28; 
                     point.size += (targetSize - point.size) * speed;
                     point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
@@ -400,11 +356,9 @@
                         activePoints.delete(index);
                     }
                 }
-
                 ctx.globalAlpha = 1.0;
                 requestAnimationFrame(draw);
             }
-
             initPoints();
             requestAnimationFrame(draw);
 
@@ -420,7 +374,6 @@
                 emailLink.addEventListener('click', function(e) {
                     e.preventDefault(); 
                     const emailAddress = 'eunjun0505@gmail.com';
-                    
                     navigator.clipboard.writeText(emailAddress).then(() => {
                         clearTimeout(toastTimeout);
                         toast.classList.add('show');

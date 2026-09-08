@@ -15,7 +15,6 @@
     <meta property="og:image" content="img/main/favicon.webp">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -846,44 +845,36 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
-
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
                 setTimeout(() => { window.location.href = targetUrl; }, 500);
             }
-            
             document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
-            
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     fadeAndMove(this.getAttribute('href'));
                 });
             });
-
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            
             const dotCanvasBlack = document.createElement('canvas');
-            dotCanvasBlack.width = 16; dotCanvasBlack.height = 16;
+            dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
             const ctxB = dotCanvasBlack.getContext('2d');
             ctxB.fillStyle = '#111111';
-            ctxB.beginPath(); ctxB.arc(8, 8, 8, 0, Math.PI * 2); ctxB.fill();
-
+            ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
             const dotCanvasWhite = document.createElement('canvas');
-            dotCanvasWhite.width = 16; dotCanvasWhite.height = 16;
+            dotCanvasWhite.width = 24; dotCanvasWhite.height = 24;
             const ctxW = dotCanvasWhite.getContext('2d');
             ctxW.fillStyle = '#ffffff';
-            ctxW.beginPath(); ctxW.arc(8, 8, 8, 0, Math.PI * 2); ctxW.fill();
+            ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
 
             let cursorColorMode = 'black'; 
-
             const PT_TO_PX = 1.333;
-            const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
-            const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
-            const gridStep = (10 * PT_TO_PX) / 2;        
-            
+            const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
+            const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
+            const gridStep = ((10 * PT_TO_PX) / 2) * 1.1;        
             const effectRadius = gridStep * 15; 
             const effectRadiusSq = effectRadius * effectRadius;
             const maxRippleRadius = gridStep * 24; 
@@ -911,7 +902,6 @@
                     }
                 }
             }
-
             window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
             window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
             window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
@@ -920,15 +910,13 @@
             }, { passive: true });
 
             function triggerRipple(x, y) {
-                ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 0.8 }); }, 150);
+                ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
+                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 80);
             }
-
             window.addEventListener('resize', initPoints);
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 let targetC = -100;
                 let targetR = -100;
 
@@ -947,7 +935,7 @@
                     let r = ripples[i];
                     let progress = Math.min(1, r.radius / maxRippleRadius);
                     let speedFactor = 1 - progress; 
-                    r.radius += gridStep * (0.2 * speedFactor + 0.05); 
+                    r.radius += gridStep * (1.2 * speedFactor + 0.4); 
                     if (r.radius - gridStep * 4 > maxRippleRadius) {
                         ripples.splice(i, 1);
                         continue;
@@ -996,7 +984,7 @@
                             const dist = Math.sqrt(distSq);
                             const distanceFade = 1 - (dist / maxRippleRadius);
                             const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.5)));
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 3.5)));
                             rippleEffect += (ring * r.strength) * distanceFade;
                         }
                     }
@@ -1004,7 +992,7 @@
                     let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
                     let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
 
-                    const speed = 0.12; 
+                    const speed = 0.28; 
                     point.size += (targetSize - point.size) * speed;
                     point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
@@ -1018,11 +1006,9 @@
                         activePoints.delete(index);
                     }
                 }
-
                 ctx.globalAlpha = 1.0;
                 requestAnimationFrame(draw);
             }
-
             initPoints();
             requestAnimationFrame(draw);
 
@@ -1034,13 +1020,10 @@
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-
                     const filter = btn.getAttribute('data-filter');
-
                     timelineItems.forEach(item => {
                         const categories = item.getAttribute('data-category') || '';
                         const reveals = item.querySelectorAll('.scroll-reveal');
-
                         if (filter === 'all' || categories.includes(filter)) {
                             item.classList.remove('hidden');
                             reveals.forEach(el => {
@@ -1058,7 +1041,6 @@
                             item.classList.add('hidden');
                         }
                     });
-
                     yearGroups.forEach(group => {
                         const visibleItems = group.querySelectorAll('.timeline-item:not(.hidden)');
                         if (visibleItems.length === 0) {
@@ -1089,14 +1071,12 @@
                     filterContainer.style.top = header.offsetHeight + 'px';
                     return; 
                 }
-                
                 if (currentScroll > lastScrollTop) { 
                     header.classList.add('header-hidden'); 
                     scrollUpDistance = 0; 
                     filterContainer.style.top = '0px'; 
                 } else {
                     scrollUpDistance += (lastScrollTop - currentScroll);
-                    
                     if (isMobile) {
                         if (currentScroll < filterOffset) {
                             header.classList.remove('header-hidden'); 
@@ -1136,10 +1116,8 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
                         entry.target.classList.remove('out-view');
-                        
                         const parentItem = entry.target.closest('.timeline-item');
                         if (parentItem) parentItem.classList.add('item-in-view');
-
                     } else {
                         if(entry.boundingClientRect.top < window.innerHeight * 0.25) {
                             entry.target.classList.add('out-view');
@@ -1160,31 +1138,24 @@
             const allYearGroups = document.querySelectorAll('.education-group, .year-group');
             window.addEventListener('scroll', () => {
                 let triggerPoint = window.innerHeight * 0.5; 
-                
                 const scrollBottom = window.innerHeight + window.scrollY;
                 const docHeight = document.documentElement.scrollHeight;
-                
                 const distanceToBottom = docHeight - scrollBottom;
                 if (distanceToBottom < window.innerHeight * 0.5) {
                     triggerPoint += (window.innerHeight * 0.5 - distanceToBottom);
                 }
-                
                 const fadePos = window.innerHeight * 0.25;
 
                 allYearGroups.forEach((groupEl) => {
                     const progressEl = groupEl.querySelector('.timeline-progress');
                     const trackEl = groupEl.querySelector('.timeline-track');
                     if(!progressEl || !trackEl) return;
-                    
                     const rect = trackEl.getBoundingClientRect();
                     const startDraw = rect.top; 
                     const maxDrawHeight = rect.height;
-
                     let scrolled = triggerPoint - startDraw;
                     let progress = Math.min(Math.max(scrolled / maxDrawHeight, 0), 1);
-                    
                     progressEl.style.transform = `scaleY(${progress})`;
-
                     const pRect = progressEl.getBoundingClientRect();
                     let overlap = fadePos - pRect.top;
                     if (overlap > 0) {
@@ -1210,28 +1181,22 @@
                 const parent = entryElement.closest('.timeline-item');
                 const template = parent.querySelector('.detail-content');
                 if(!template) return;
-
                 const meta = template.querySelector('meta');
                 renderPeriod.textContent = meta ? meta.getAttribute('data-period') : '';
                 renderTitle.textContent = meta ? meta.getAttribute('data-title') : '';
                 renderOrg.textContent = meta ? meta.getAttribute('data-org') : '';
-
                 const contentClone = template.content.cloneNode(true);
                 const metaClone = contentClone.querySelector('meta');
                 if(metaClone) metaClone.remove(); 
-                
                 contentClone.querySelectorAll('img[data-src]').forEach(img => {
                     img.setAttribute('src', img.getAttribute('data-src'));
                     img.removeAttribute('data-src');
                 });
-                
                 renderBody.innerHTML = '';
                 renderBody.appendChild(contentClone);
-
                 overlay.classList.add('open');
                 document.body.classList.add('detail-open');
                 cursorColorMode = 'white';
-                
                 setTimeout(() => { overlay.scrollTop = 0; }, 10);
             };
 
@@ -1239,7 +1204,6 @@
                 overlay.classList.remove('open');
                 document.body.classList.remove('detail-open');
                 cursorColorMode = 'black';
-                
                 setTimeout(() => { renderBody.innerHTML = ''; }, 600);
             }
 
@@ -1262,7 +1226,6 @@
                         });
                     });
                 };
-
                 if ('requestIdleCallback' in window) {
                     requestIdleCallback(preloadDetailAssets, { timeout: 2000 });
                 } else {
