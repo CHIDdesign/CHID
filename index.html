@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <title>CHID</title>
-    
     <meta name="description" content="CHID Industrial Design Portfolio. Seoul based Product Designer. 서울 기반 산업 디자이너 CHID의 포트폴리오.">
     <meta name="keywords" content="CHID, Industrial Design, Product Design, Portfolio, Designer, 칫, 산업디자인, 제품디자인">
     <meta name="author" content="CHID">
     <meta name="robots" content="index, follow">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chid.kr">
     <meta property="og:title" content="CHID">
     <meta property="og:description" content="Industrial Design Portfolio">
     <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
-
     <link rel="preload" as="image" href="img/main/loop/poster1.jpg">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
-
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -34,10 +29,8 @@
       ]
     }
     </script>
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
@@ -53,14 +46,11 @@
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
         }
-
         body.fade-in { opacity: 1; }
-
         #video-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; background-color: #000000; overflow: hidden;
         }
-
         #video-container::after {
             content: "";
             position: absolute;
@@ -70,7 +60,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
             opacity: 0.04; 
         }
-
         #poster-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('img/main/loop/poster1.jpg'); 
@@ -80,9 +69,7 @@
             transition: opacity 0.8s ease-out;
             opacity: 1;
         }
-        
         #poster-layer.hidden { opacity: 0; pointer-events: none; }
-
         .bg-video {
             position: absolute;
             top: 0; left: 0;
@@ -94,9 +81,7 @@
             will-change: opacity;
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
-
         .bg-video.active { opacity: 1; z-index: 1; }
-
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -108,21 +93,16 @@
             color: #111111;
             height: 90px;
         }
-
         header.white-skin { color: #ffffff !important; }
         header.white-skin .logo-img { filter: invert(1); }
-
         .logo-container { cursor: pointer; z-index: 101; pointer-events: auto; }
-        
         .logo-img { 
             height: 60px; 
             width: auto; display: block; 
             transition: height 0.3s ease, filter 0.5s ease; 
         }
-
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
-
         nav ul li a {
             text-decoration: none; color: inherit; 
             font-size: clamp(15px, 1.2vw, 18px); 
@@ -136,13 +116,10 @@
             text-align: center;
             pointer-events: auto;
         }
-
         nav ul li a::before {
             display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
         }
-
         header.white-skin nav ul li a { text-shadow: 0 0 20px rgba(0,0,0,0.8); }
-
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
         nav ul li.active a { font-weight: 700; opacity: 1; }
         nav ul li.active a::after {
@@ -151,13 +128,10 @@
             margin-top: 5px; 
             border-radius: 2px;
         }
-
         main { flex: 1; width: 100%; height: 100%; }
-
         @media (pointer: fine) {
           * { cursor: none !important; }
         }
-
         #canvas {
           position: fixed;
           top: 0;
@@ -166,10 +140,9 @@
           height: 100vh;
           z-index: 9999;
           pointer-events: none;
-          mix-blend-mode: multiply; /* 기본: 라이트모드용 설정 */
+          mix-blend-mode: multiply;
           background: transparent;
         }
-
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
@@ -186,10 +159,8 @@
     </style>
 </head>
 <body>
-
     <div id="video-container">
         <div id="poster-layer"></div>
-
         <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
@@ -206,7 +177,6 @@
             <source src="img/main/loop/video 5.mp4" type="video/mp4">
         </video>
     </div>
-
     <header id="main-header">
         <div class="logo-container" id="main-logo">
             <img src="img/main/Head Logo.svg" alt="Logo" class="logo-img">
@@ -219,10 +189,8 @@
             </ul>
         </nav>
     </header>
-
     <main></main>
     <canvas id="canvas"></canvas>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
@@ -244,16 +212,32 @@
             const mainLogo = document.getElementById('main-logo');
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
-            // --- [커스텀 커서 및 리플 효과 시스템] ---
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
             
+            const dotCanvasBlack = document.createElement('canvas');
+            dotCanvasBlack.width = 16; dotCanvasBlack.height = 16;
+            const ctxB = dotCanvasBlack.getContext('2d');
+            ctxB.fillStyle = '#111111';
+            ctxB.beginPath(); ctxB.arc(8, 8, 8, 0, Math.PI * 2); ctxB.fill();
+
+            const dotCanvasWhite = document.createElement('canvas');
+            dotCanvasWhite.width = 16; dotCanvasWhite.height = 16;
+            const ctxW = dotCanvasWhite.getContext('2d');
+            ctxW.fillStyle = '#ffffff';
+            ctxW.beginPath(); ctxW.arc(8, 8, 8, 0, Math.PI * 2); ctxW.fill();
+
             let cursorColorMode = 'black'; 
 
             const PT_TO_PX = 1.333;
             const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
             const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
             const gridStep = (10 * PT_TO_PX) / 2;        
+            
+            const effectRadius = gridStep * 15; 
+            const effectRadiusSq = effectRadius * effectRadius;
+            const maxRippleRadius = gridStep * 24; 
+            const maxRippleRadiusSq = maxRippleRadius * maxRippleRadius;
 
             let cols, rows;
             let points = [];
@@ -264,56 +248,30 @@
             function initPoints() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-
                 cols = Math.ceil(canvas.width / gridStep) + 1;
                 rows = Math.ceil(canvas.height / gridStep) + 1;
-                
                 points = [];
                 activePoints.clear();
-
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
-                        const x = c * gridStep;
-                        const y = r * gridStep;
-                        
                         points.push({
-                            c, r, x, y,
-                            size: baseRadius,
-                            colorFactor: 0
+                            c, r, x: c * gridStep, y: r * gridStep,
+                            size: baseRadius, colorFactor: 0
                         });
                     }
                 }
             }
 
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-
-            window.addEventListener('mouseleave', () => {
-                mouse.x = -1000;
-                mouse.y = -1000;
-            });
-
-            window.addEventListener('mousedown', (e) => {
-                if (e.button === 0) {
-                    triggerRipple(e.clientX, e.clientY);
-                }
-            });
-
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+            window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
             window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) {
-                    const touchX = e.touches[0].clientX;
-                    const touchY = e.touches[0].clientY;
-                    triggerRipple(touchX, touchY);
-                }
+                if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
             }, { passive: true });
 
             function triggerRipple(x, y) {
                 ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
-                setTimeout(() => {
-                    ripples.push({ x: x, y: y, radius: 0, strength: 0.8 });
-                }, 150);
+                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 0.8 }); }, 150);
             }
 
             window.addEventListener('resize', initPoints);
@@ -327,66 +285,54 @@
                 if (mouse.x >= 0 && mouse.y >= 0) {
                     targetC = Math.round(mouse.x / gridStep);
                     targetR = Math.round(mouse.y / gridStep);
-
-                    const checkRadius = 8; 
+                    const checkRadius = 12; 
                     for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
                         for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                            if (c >= 0 && c < cols && r >= 0 && r < rows) {
-                                activePoints.add(r * cols + c);
-                            }
+                            if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
                         }
                     }
                 }
 
-                const maxRippleRadius = gridStep * 16;
-
                 for (let i = ripples.length - 1; i >= 0; i--) {
                     let r = ripples[i];
-                    
-                    let progress = Math.min(1, Math.max(0, r.radius / maxRippleRadius));
-                    let speedFactor = Math.pow(1 - progress, 1.2);
-                    
-                    r.radius += gridStep * (0.2 * speedFactor + 0.03); 
-
+                    let progress = Math.min(1, r.radius / maxRippleRadius);
+                    let speedFactor = 1 - progress; 
+                    r.radius += gridStep * (0.2 * speedFactor + 0.05); 
                     if (r.radius - gridStep * 4 > maxRippleRadius) {
                         ripples.splice(i, 1);
                         continue;
                     }
-
                     let maxDist = r.radius + gridStep * 2;
                     let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
                     let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
                     let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
                     let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
-
                     for(let col = cMin; col <= cMax; col++) {
-                        for(let row = rMin; row <= rMax; row++) {
-                            activePoints.add(row * cols + col);
-                        }
+                        for(let row = rMin; row <= rMax; row++) activePoints.add(row * cols + col);
                     }
                 }
 
+                const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
+
                 for (let index of activePoints) {
                     const point = points[index];
-                    
                     let mouseTargetSize = baseRadius;
                     let mouseTargetColorFactor = 0;
 
                     if (point.c === targetC && point.r === targetR) {
                         mouseTargetSize = maxRadius;
                         mouseTargetColorFactor = 1; 
-                    } 
-                    else {
+                    } else {
                         const dx = point.x - mouse.x;
                         const dy = point.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        
-                        const effectRadius = gridStep * 10; 
-
-                        if (dist < effectRadius) {
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < effectRadiusSq) {
+                            const dist = Math.sqrt(distSq);
                             const factor = 1 - (dist / effectRadius);
-                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * Math.pow(factor, 5);
-                            mouseTargetColorFactor = Math.pow(factor, 8); 
+                            const f2 = factor * factor;
+                            const f4 = f2 * f2;
+                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
+                            mouseTargetColorFactor = f4 * f4; 
                         }
                     }
 
@@ -394,31 +340,28 @@
                     for (let r of ripples) {
                         const dx = point.x - r.x;
                         const dy = point.y - r.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist <= maxRippleRadius) {
-                            const distanceFade = Math.pow(1 - (dist / maxRippleRadius), 1.2);
+                        if (Math.abs(dx) > maxRippleRadius || Math.abs(dy) > maxRippleRadius) continue; 
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq <= maxRippleRadiusSq) {
+                            const dist = Math.sqrt(distSq);
+                            const distanceFade = 1 - (dist / maxRippleRadius);
                             const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.2)));
-
-                            rippleEffect += (ring * 1.0 * r.strength) * distanceFade;
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.5)));
+                            rippleEffect += (ring * r.strength) * distanceFade;
                         }
                     }
 
                     let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
                     let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
 
-                    const speed = 0.05;
+                    const speed = 0.12; 
                     point.size += (targetSize - point.size) * speed;
                     point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
                     if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
-                        ctx.beginPath();
-                        ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
-                        ctx.fillStyle = cursorColorMode === 'white' 
-                            ? `rgba(255, 255, 255, ${point.colorFactor})` 
-                            : `rgba(17, 17, 17, ${point.colorFactor})`;
-                        ctx.fill();
+                        ctx.globalAlpha = point.colorFactor; 
+                        const drawSize = point.size * 2;
+                        ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
                     } else {
                         point.size = baseRadius;
                         point.colorFactor = 0;
@@ -426,13 +369,13 @@
                     }
                 }
 
+                ctx.globalAlpha = 1.0;
                 requestAnimationFrame(draw);
             }
 
             initPoints();
             requestAnimationFrame(draw);
 
-            // --- [비디오 배경 및 테마 동기화 로직 (치명적 오류 해결)] ---
             const videos = Array.from(document.querySelectorAll('.bg-video'));
             let currentPlaylist = [];
             let playlistCursor = 0;
@@ -466,7 +409,7 @@
                 } else {
                     header.classList.remove("white-skin");
                     cursorColorMode = 'black';
-                    canvas.style.mixBlendMode = 'multiply'; // 에러 수정됨!
+                    canvas.style.mixBlendMode = 'multiply';
                 }
             }
 
@@ -476,7 +419,6 @@
                 video.playsInline = true;
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
-
                 video.addEventListener('ended', () => {
                     if (domIndex === activeVideoIndex) {
                         playNextVideo();
@@ -486,23 +428,17 @@
 
             function playNextVideo() {
                 playlistCursor++;
-                if (playlistCursor >= currentPlaylist.length) {
-                    generatePlaylist();
-                }
-
+                if (playlistCursor >= currentPlaylist.length) generatePlaylist();
                 const nextDomIndex = currentPlaylist[playlistCursor];
                 const currentVideo = videos[activeVideoIndex];
                 const nextVideo = videos[nextDomIndex];
-
                 activeVideoIndex = nextDomIndex;
                 nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
-
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         nextVideo.classList.add('active'); 
                         updateHeaderColor(nextVideo); 
-
                         setTimeout(() => {
                             currentVideo.classList.remove('active');
                             currentVideo.pause(); 
@@ -522,15 +458,12 @@
 
             firstVideo.addEventListener('playing', () => {
                 firstVideo.classList.add('active');
-                setTimeout(() => {
-                    posterLayer.classList.add('hidden');
-                }, 100);
+                setTimeout(() => { posterLayer.classList.add('hidden'); }, 100);
             }, { once: true });
 
             function tryPlayFirstVideo() {
                 firstVideo.muted = true;
                 var playPromise = firstVideo.play();
-
                 if (playPromise !== undefined) {
                     playPromise.catch((error) => {
                         const interactionHandler = () => {
@@ -548,11 +481,7 @@
                 tryPlayFirstVideo();
             } else {
                 firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
-                setTimeout(() => {
-                    if (firstVideo.paused) {
-                        tryPlayFirstVideo(); 
-                    }
-                }, 2500);
+                setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2500);
             }
         });
     </script>

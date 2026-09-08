@@ -18,7 +18,6 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
             --bg-color: #f4f4f4;
             --text-main: #111111;
@@ -27,9 +26,7 @@
             --line-color: #eaeaea;
             --dark-bg: #0a0a0a;
         }
-
         html { scroll-behavior: auto; }
-
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
@@ -41,10 +38,8 @@
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
         }
-
         body.fade-in { opacity: 1; }
         body.detail-open { overflow: hidden; }
-
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px;
@@ -55,10 +50,8 @@
             height: 90px;
         }
         header.header-hidden { transform: translateY(-100%); }
-
         .logo-container { cursor: pointer; pointer-events: auto; }
         .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
-
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li a {
             text-decoration: none; color: var(--text-main); font-size: clamp(15px, 1.2vw, 18px);
@@ -72,14 +65,12 @@
             content: ''; display: block; width: 100%; height: 2px;
             background: currentColor; margin-top: 5px; border-radius: 2px;
         }
-
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
             .logo-img { height: 50px; }
             nav ul { justify-content: center; gap: 25px; width: 100%; }
             nav ul li a { font-size: 16px; font-weight: 500; }
         }
-
         .intro { 
             min-height: 100vh; 
             display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 36px;
@@ -89,13 +80,11 @@
         .intro-text { flex: 1; }
         .intro-image { flex: 0 0 56%; max-width: 1200px; border-radius: 24px; overflow: hidden; }
         .intro-image img { width: 100%; height: auto; display: block; object-fit: contain; aspect-ratio: 4/5; }
-
         .intro-eyebrow { font-size: 14px; font-weight: 600; letter-spacing: 0.12em; color: var(--text-sub); text-transform: uppercase; margin-bottom: 18px; }
         .intro-name { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 12px; }
         .intro-name span { display: block; font-size: clamp(1rem, 1.6vw, 1.3rem); font-weight: 400; color: var(--text-sub); margin-top: 10px; }
         .intro-tagline { font-size: clamp(20px, 1.6vw, 24px); font-weight: 400; font-style: italic; color: #333; margin-bottom: 24px; word-break: keep-all; line-height: 1.4; letter-spacing: -0.01em; }
         .intro-desc { font-size: clamp(15px, 1.15vw, 18px); line-height: 1.75; color: #444; max-width: 620px; word-break: keep-all; }
-
         @media (max-width: 768px) {
             .intro { flex-direction: column-reverse; justify-content: center; gap: 40px; padding: 120px 22px 80px; }
             .intro-text { width: 100%; text-align: left; }
@@ -103,7 +92,6 @@
             .intro-image img { aspect-ratio: 1/1; }
             .intro-tagline { margin-bottom: 20px; }
         }
-
         .filter-container {
             position: sticky;
             top: 90px;
@@ -119,7 +107,6 @@
             box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.07);
             transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
         }
-        
         .filter-inner {
             display: flex;
             flex-wrap: wrap;
@@ -129,19 +116,16 @@
             max-width: 1040px;
             width: 100%;
         }
-
         .filter-btn {
             background: rgba(0,0,0,0.04); border: 1px solid transparent; padding: 10px 20px; border-radius: 30px;
             font-size: 14px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
         }
         .filter-btn:hover { color: var(--text-main); background: rgba(0,0,0,0.08); }
         .filter-btn.active { background: var(--text-main); color: #fff; font-weight: 600; }
-
         @media (max-width: 768px) {
             .filter-container { padding: 14px 22px; box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.08); }
             .filter-inner { justify-content: center; }
         }
-
         .section-header {
             display: flex; align-items: center; gap: 16px;
             max-width: 1040px; margin: 0 auto 40px; padding: 0 40px;
@@ -154,7 +138,6 @@
             font-size: clamp(2.5rem, 4.5vw, 4rem); font-weight: 800;
             letter-spacing: -0.02em; color: var(--text-main); line-height: 1;
         }
-
         .scroll-reveal {
             opacity: 0;
             transform: translateY(40px) scale(0.95);
@@ -164,7 +147,6 @@
         }
         .scroll-reveal.in-view { opacity: 1; transform: translateY(0) scale(1); }
         .scroll-reveal.out-view { opacity: 0; transform: translateY(-40px) scale(0.95); pointer-events: none; }
-
         @media (max-width: 768px) {
             .scroll-reveal {
                 transform: translateY(65px) scale(0.94);
@@ -179,19 +161,14 @@
                 transform: translateY(-50px) scale(0.94);
             }
         }
-
         .timeline-section { max-width: 1040px; margin: 0 auto; padding: 0 40px 400px; }
-        
         .year-group { position: relative; margin-bottom: 12vh; z-index: 1; transition: opacity 0.4s ease; }
         .year-group.hidden { display: none; }
-
         .year-heading {
             padding: 10px 0 20px;
         }
         .year-heading .year-text { font-size: clamp(1.4rem, 2vw, 1.8rem); font-weight: 500; letter-spacing: -0.02em; color: var(--text-sub); }
-
         .year-body { position: relative; padding-left: 40px; margin-top: 10px; }
-
         .timeline-track { position: absolute; left: 10px; top: 0; bottom: -12vh; width: 2px; background: transparent; }
         .timeline-progress {
             position: absolute; left: -1px; top: 0; width: 4px; height: 100%;
@@ -199,11 +176,9 @@
             transform-origin: top; transform: scaleY(0); 
             will-change: transform; border-radius: 2px;
         }
-
         .education-group { margin-bottom: 60px; padding-left: 40px; }
         .education-group .timeline-track { bottom: 0; }
         .education-group .entry:hover { transform: none; background-color: transparent; cursor: default; }
-
         .school-logo {
             margin-bottom: 8px;
             display: flex;
@@ -216,10 +191,8 @@
             object-fit: contain;
             display: block;
         }
-
         .timeline-item { position: relative; margin-bottom: 30px; transition: opacity 0.4s ease; }
         .timeline-item.hidden { display: none; }
-
         .timeline-item::before {
             content: ''; position: absolute; left: -30px; top: 32px;
             width: 16px; height: 2px; background: rgba(0,0,0,0.2); 
@@ -227,16 +200,13 @@
             opacity: 0;
         }
         .timeline-item.item-in-view::before { opacity: 1; }
-
         .entry { position: relative; padding: 20px 30px; border-radius: 16px; }
         .entry.clickable { cursor: pointer; }
         .entry.clickable:hover { background-color: #ebebeb; transform: translateY(0) scale(1.01); }
-
         .entry-title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; color: var(--text-main); }
         .entry-role { font-size: clamp(14px, 1.2vw, 15px); font-weight: 400; color: #444; margin-bottom: 6px; }
         .entry-org { font-size: clamp(13px, 1vw, 14px); color: #888; font-weight: 400; line-height: 1.6; margin-bottom: 12px; }
         .entry-period { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; color: var(--text-main); }
-
         .entry-tools {
             display: flex; gap: 8px; align-items: center; margin-top: 14px; flex-wrap: wrap;
         }
@@ -249,7 +219,6 @@
             border: 1px solid rgba(0,0,0,0.12); 
             transition: all 0.2s ease;
         }
-
         .tool-name {
             font-size: 13px;
             font-weight: 500;
@@ -257,14 +226,12 @@
             letter-spacing: -0.01em;
             opacity: 0.9;
         }
-
         .tool-icon {
             width: 14px; height: 14px;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
         }
-
         .icon-rhino { background-image: url('img/about/tool/rhinoceros.svg'); }
         .icon-keyshot { background-image: url('img/about/tool/keyshot.svg'); }
         .icon-illustrator { background-image: url('img/about/tool/adobe_illustrator.svg'); }
@@ -273,13 +240,11 @@
         .icon-premierepro { background-image: url('img/about/tool/adobe_premierepro.svg'); }
         .icon-blender { background-image: url('img/about/tool/blender.svg'); }
         .icon-figma { background-image: url('img/about/tool/figma.svg'); }
-
         .entry-arrow {
             width: 20px; height: 20px; flex-shrink: 0; opacity: 0; transform: translateX(-10px);
             transition: transform 0.4s ease, opacity 0.4s ease; stroke: var(--text-main);
         }
         .entry.clickable:hover .entry-arrow { transform: translateX(0); opacity: 1; }
-
         @media (max-width: 768px) {
             .section-header { margin: 60px auto 30px; padding: 0 22px; }
             .section-header h2 { font-size: 2.2rem; }
@@ -291,14 +256,12 @@
             .entry { padding: 20px 15px; }
             .school-logo img { height: 48px; }
         }
-
         .detail-overlay {
             position: fixed; inset: 0; z-index: 1000; background-color: var(--dark-bg);
             clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%); transition: clip-path 0.7s cubic-bezier(0.77, 0, 0.175, 1);
             pointer-events: none; display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
         .detail-overlay.open { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); pointer-events: auto; }
-
         .detail-close {
             position: fixed; top: 40px; right: 40px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 1010; opacity: 0; transform: scale(0.8) rotate(-45deg);
@@ -306,25 +269,20 @@
         }
         .detail-overlay.open .detail-close { opacity: 1; transform: scale(1) rotate(0deg); }
         .detail-close svg { width: 24px; height: 24px; stroke: #ffffff; stroke-width: 1.5px; }
-
         .detail-inner {
             max-width: 900px; width: 100%; margin: 0 auto; padding: 100px 40px; color: #ffffff;
             transform-style: preserve-3d; transform: translateY(60px) scale(0.9) rotateX(-10deg);
             opacity: 0; transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s, opacity 0.6s ease 0.3s;
         }
         .detail-overlay.open .detail-inner { transform: translateY(0) scale(1) rotateX(0); opacity: 1; }
-
         .detail-period { font-size: 14px; font-weight: 600; letter-spacing: 0.1em; color: var(--point-color); margin-bottom: 24px; text-transform: uppercase; }
         .detail-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; word-break: keep-all; }
         .detail-org { font-size: clamp(15px, 1.4vw, 18px); color: #888; font-weight: 400; margin-bottom: 50px; line-height: 1.6; }
         .detail-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.15); margin-bottom: 50px; }
-        
         .detail-hero { width: 100%; margin: 20px 0 60px; border-radius: 12px; overflow: hidden; }
         .detail-hero img { width: 100%; height: auto; display: block; object-fit: cover; }
-        
         .detail-body p.en-desc { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.9; color: #dcdcdc; font-weight: 300; word-break: keep-all; margin-bottom: 6px; }
         .detail-body p.ko-desc { font-size: clamp(14px, 1.1vw, 15px); line-height: 1.8; color: #8a8a8a; font-weight: 300; word-break: keep-all; margin-bottom: 28px; }
-
         .shortcut-card {
             display: flex; align-items: center; justify-content: space-between;
             background: #ffffff; border-radius: 28px; padding: 12px 24px 12px 12px;
@@ -339,11 +297,9 @@
         .shortcut-btn { width: 54px; height: 54px; border-radius: 50%; border: 1.5px solid #111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.3s ease, color 0.3s ease; }
         .shortcut-card:hover .shortcut-btn { background: #111; color: #fff; }
         .shortcut-btn svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5px; }
-
         @media (pointer: fine) {
           * { cursor: none !important; }
         }
-
         #canvas {
           position: fixed;
           top: 0;
@@ -352,14 +308,12 @@
           height: 100vh;
           z-index: 9999;
           pointer-events: none;
-          mix-blend-mode: plus-darker;
+          mix-blend-mode: multiply;
           background: transparent;
         }
-
         body.detail-open #canvas {
           mix-blend-mode: plus-lighter;
         }
-
         @media (max-width: 768px) {
             .detail-inner { padding: 80px 22px; }
             .shortcut-card { flex-direction: column; align-items: flex-start; padding: 16px; border-radius: 20px; }
@@ -370,7 +324,6 @@
     </style>
 </head>
 <body>
-
     <header id="main-header">
         <div class="logo-container" id="back-to-home">
             <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
@@ -383,7 +336,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <section class="intro">
             <div class="intro-text">
@@ -401,7 +353,6 @@
                 <img src="img/about/Profile.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x500/transparent/888?text=Profile+Image'" alt="최은준 프로필 이미지">
             </div>
         </section>
-
         <div class="section-header">
             <h2>Education</h2>
         </div>
@@ -430,11 +381,9 @@
                 </div>
             </div>
         </section>
-
         <div class="section-header">
             <h2>Experiences.</h2>
         </div>
-        
         <div class="filter-container" id="filter-container">
             <div class="filter-inner">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -445,16 +394,13 @@
                 <button class="filter-btn" data-filter="award">Award</button>
             </div>
         </div>
-
         <section class="timeline-section">
-
             <div class="year-group" data-year="2026">
                 <div class="year-heading">
                     <h3 class="year-text scroll-reveal">2026</h3>
                 </div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
-
                     <div class="timeline-item" data-category="product award">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Award</p>
@@ -510,7 +456,6 @@
                             </a>
                         </template>
                     </div>
-
                     <div class="timeline-item" data-category="product interaction award">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Award (KOSME Chairman’s Award (Encouragement))</p>
@@ -566,7 +511,6 @@
                             </a>
                         </template>
                     </div>
-
                     <div class="timeline-item" data-category="branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Public Affairs Specialist (KATUSA)</p>
@@ -603,7 +547,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <template class="detail-content">
                             <meta data-period="2025.06 – 2026.12" data-title="U.S. Eighth Army Headquarters Public Affairs" data-org="Public Affairs Specialist (KATUSA) · 대한민국 육군 카투사 / 주한미8군 본부 공보과 정훈병">
                             <div class="detail-hero"><img data-src="img/about/info/katusa.png" onerror="this.style.display='none'" alt="Hero Image"></div>
@@ -633,12 +576,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="year-group" data-year="2025">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2025</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
-
                     <div class="timeline-item" data-category="product">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Freelance Industrial Design</p>
@@ -686,7 +627,6 @@
                             </a>
                         </template>
                     </div>
-
                     <div class="timeline-item" data-category="product interaction">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">3D Visualizer & Product Designer</p>
@@ -728,12 +668,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="year-group" data-year="2024">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2024</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
-
                     <div class="timeline-item" data-category="exhibition">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Exhibition Director & Content Designer</p>
@@ -769,7 +707,6 @@
                             </a>
                         </template>
                     </div>
-
                     <div class="timeline-item" data-category="interaction">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">VR Game Content Designer</p>
@@ -807,12 +744,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="year-group" data-year="2023">
                 <div class="year-heading"><h3 class="year-text scroll-reveal">2023</h3></div>
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
-
                     <div class="timeline-item" data-category="product exhibition">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">Product Design Exhibition</p>
@@ -852,7 +787,6 @@
                             </a>
                         </template>
                     </div>
-
                     <div class="timeline-item" data-category="interaction branding">
                         <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
                             <p class="entry-role">UX/UI & Brand Designer</p>
@@ -894,10 +828,8 @@
                     </div>
                 </div>
             </div>
-
         </section>
     </main>
-
     <div class="detail-overlay" id="detail-overlay">
         <div class="detail-close" id="detail-close" aria-label="닫기">
             <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -910,9 +842,7 @@
             <div id="render-body"></div>
         </div>
     </div>
-    
     <canvas id="canvas"></canvas>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
@@ -932,16 +862,32 @@
                 });
             });
 
-            // --- [커스텀 커서 및 리플 효과 시스템] ---
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
             
-            let cursorColorMode = 'black'; // 기본 커서 색상은 검은색
+            const dotCanvasBlack = document.createElement('canvas');
+            dotCanvasBlack.width = 16; dotCanvasBlack.height = 16;
+            const ctxB = dotCanvasBlack.getContext('2d');
+            ctxB.fillStyle = '#111111';
+            ctxB.beginPath(); ctxB.arc(8, 8, 8, 0, Math.PI * 2); ctxB.fill();
+
+            const dotCanvasWhite = document.createElement('canvas');
+            dotCanvasWhite.width = 16; dotCanvasWhite.height = 16;
+            const ctxW = dotCanvasWhite.getContext('2d');
+            ctxW.fillStyle = '#ffffff';
+            ctxW.beginPath(); ctxW.arc(8, 8, 8, 0, Math.PI * 2); ctxW.fill();
+
+            let cursorColorMode = 'black'; 
 
             const PT_TO_PX = 1.333;
             const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
             const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
             const gridStep = (10 * PT_TO_PX) / 2;        
+            
+            const effectRadius = gridStep * 15; 
+            const effectRadiusSq = effectRadius * effectRadius;
+            const maxRippleRadius = gridStep * 24; 
+            const maxRippleRadiusSq = maxRippleRadius * maxRippleRadius;
 
             let cols, rows;
             let points = [];
@@ -952,56 +898,30 @@
             function initPoints() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-
                 cols = Math.ceil(canvas.width / gridStep) + 1;
                 rows = Math.ceil(canvas.height / gridStep) + 1;
-                
                 points = [];
                 activePoints.clear();
-
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
-                        const x = c * gridStep;
-                        const y = r * gridStep;
-                        
                         points.push({
-                            c, r, x, y,
-                            size: baseRadius,
-                            colorFactor: 0
+                            c, r, x: c * gridStep, y: r * gridStep,
+                            size: baseRadius, colorFactor: 0
                         });
                     }
                 }
             }
 
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-
-            window.addEventListener('mouseleave', () => {
-                mouse.x = -1000;
-                mouse.y = -1000;
-            });
-
-            window.addEventListener('mousedown', (e) => {
-                if (e.button === 0) {
-                    triggerRipple(e.clientX, e.clientY);
-                }
-            });
-
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+            window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
             window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) {
-                    const touchX = e.touches[0].clientX;
-                    const touchY = e.touches[0].clientY;
-                    triggerRipple(touchX, touchY);
-                }
+                if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
             }, { passive: true });
 
             function triggerRipple(x, y) {
                 ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
-                setTimeout(() => {
-                    ripples.push({ x: x, y: y, radius: 0, strength: 0.8 });
-                }, 150);
+                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 0.8 }); }, 150);
             }
 
             window.addEventListener('resize', initPoints);
@@ -1015,66 +935,54 @@
                 if (mouse.x >= 0 && mouse.y >= 0) {
                     targetC = Math.round(mouse.x / gridStep);
                     targetR = Math.round(mouse.y / gridStep);
-
-                    const checkRadius = 8; 
+                    const checkRadius = 12; 
                     for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
                         for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                            if (c >= 0 && c < cols && r >= 0 && r < rows) {
-                                activePoints.add(r * cols + c);
-                            }
+                            if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
                         }
                     }
                 }
 
-                const maxRippleRadius = gridStep * 16;
-
                 for (let i = ripples.length - 1; i >= 0; i--) {
                     let r = ripples[i];
-                    
-                    let progress = Math.min(1, Math.max(0, r.radius / maxRippleRadius));
-                    let speedFactor = Math.pow(1 - progress, 1.2);
-                    
-                    r.radius += gridStep * (0.2 * speedFactor + 0.03); 
-
+                    let progress = Math.min(1, r.radius / maxRippleRadius);
+                    let speedFactor = 1 - progress; 
+                    r.radius += gridStep * (0.2 * speedFactor + 0.05); 
                     if (r.radius - gridStep * 4 > maxRippleRadius) {
                         ripples.splice(i, 1);
                         continue;
                     }
-
                     let maxDist = r.radius + gridStep * 2;
                     let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
                     let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
                     let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
                     let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
-
                     for(let col = cMin; col <= cMax; col++) {
-                        for(let row = rMin; row <= rMax; row++) {
-                            activePoints.add(row * cols + col);
-                        }
+                        for(let row = rMin; row <= rMax; row++) activePoints.add(row * cols + col);
                     }
                 }
 
+                const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
+
                 for (let index of activePoints) {
                     const point = points[index];
-                    
                     let mouseTargetSize = baseRadius;
                     let mouseTargetColorFactor = 0;
 
                     if (point.c === targetC && point.r === targetR) {
                         mouseTargetSize = maxRadius;
                         mouseTargetColorFactor = 1; 
-                    } 
-                    else {
+                    } else {
                         const dx = point.x - mouse.x;
                         const dy = point.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        
-                        const effectRadius = gridStep * 10; 
-
-                        if (dist < effectRadius) {
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < effectRadiusSq) {
+                            const dist = Math.sqrt(distSq);
                             const factor = 1 - (dist / effectRadius);
-                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * Math.pow(factor, 5);
-                            mouseTargetColorFactor = Math.pow(factor, 8); 
+                            const f2 = factor * factor;
+                            const f4 = f2 * f2;
+                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
+                            mouseTargetColorFactor = f4 * f4; 
                         }
                     }
 
@@ -1082,32 +990,28 @@
                     for (let r of ripples) {
                         const dx = point.x - r.x;
                         const dy = point.y - r.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist <= maxRippleRadius) {
-                            const distanceFade = Math.pow(1 - (dist / maxRippleRadius), 1.2);
+                        if (Math.abs(dx) > maxRippleRadius || Math.abs(dy) > maxRippleRadius) continue; 
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq <= maxRippleRadiusSq) {
+                            const dist = Math.sqrt(distSq);
+                            const distanceFade = 1 - (dist / maxRippleRadius);
                             const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.2)));
-
-                            rippleEffect += (ring * 1.0 * r.strength) * distanceFade;
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.5)));
+                            rippleEffect += (ring * r.strength) * distanceFade;
                         }
                     }
 
                     let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
                     let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
 
-                    const speed = 0.05;
+                    const speed = 0.12; 
                     point.size += (targetSize - point.size) * speed;
                     point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
                     if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
-                        ctx.beginPath();
-                        ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
-                        // 커서 색상 모드에 따라 색상 렌더링
-                        ctx.fillStyle = cursorColorMode === 'white'
-                            ? `rgba(255, 255, 255, ${point.colorFactor})`
-                            : `rgba(17, 17, 17, ${point.colorFactor})`;
-                        ctx.fill();
+                        ctx.globalAlpha = point.colorFactor; 
+                        const drawSize = point.size * 2;
+                        ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
                     } else {
                         point.size = baseRadius;
                         point.colorFactor = 0;
@@ -1115,6 +1019,7 @@
                     }
                 }
 
+                ctx.globalAlpha = 1.0;
                 requestAnimationFrame(draw);
             }
 
@@ -1323,7 +1228,6 @@
                 renderBody.innerHTML = '';
                 renderBody.appendChild(contentClone);
 
-                // --- [다크 모달 오픈 시 커서 다크 모드로 변경] ---
                 overlay.classList.add('open');
                 document.body.classList.add('detail-open');
                 cursorColorMode = 'white';
@@ -1332,7 +1236,6 @@
             };
 
             function closeDetail() {
-                // --- [다크 모달 종료 시 커서 화이트 모드로 복귀] ---
                 overlay.classList.remove('open');
                 document.body.classList.remove('detail-open');
                 cursorColorMode = 'black';
