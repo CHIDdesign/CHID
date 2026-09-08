@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // -------------------------------------------------------
-    // [커스텀 커서 및 리플 효과 시스템 자동 주입 (최적화 버전)]
+    // [커스텀 커서 및 리플 효과 시스템 자동 주입 (모바일 완벽 대응 버전)]
     // -------------------------------------------------------
     const canvas = document.createElement('canvas');
     canvas.id = 'canvas';
@@ -71,26 +71,34 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // --- 모바일 및 PC 이벤트 리스너 수정 부분 ---
-    let lastTouchTime = 0;
+    // --- 모바일 가짜 마우스 이벤트 원천 차단 로직 ---
+    let isTouchContext = false; // 터치 기기 여부 판별
     let touchStartX = 0;
     let touchStartY = 0;
     let isScrolling = false;
 
+    // 접속 초기부터 터치 기기인지 CSS 미디어쿼리로 감지
+    if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+        isTouchContext = true;
+    }
+
     window.addEventListener('touchstart', (e) => {
-        lastTouchTime = Date.now();
-        isScrolling = false; // 스크롤 여부 초기화
+        isTouchContext = true; // 화면을 한 번이라도 터치하면 무조건 터치 환경으로 고정
+        isScrolling = false;
         if (e.touches.length > 0) {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }
+        // 커서 위치 강제 은닉
+        mouse.x = -1000; 
+        mouse.y = -1000;
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
         if (e.touches.length === 0) return;
         const dx = e.touches[0].clientX - touchStartX;
         const dy = e.touches[0].clientY - touchStartY;
-        // 터치 시작 지점에서 5px 이상 움직이면 스크롤로 판단
+        // 약간만 스와이프해도 스크롤로 판별 (리플 발생 방지)
         if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
             isScrolling = true;
         }
@@ -98,20 +106,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.addEventListener('touchend', (e) => {
         if (!isScrolling && e.changedTouches.length > 0) {
-            // 스크롤이 아닌 단순 터치(탭)일 때만 리플 효과 발생
+            // 스크롤이 아닌 순수 '터치(탭)' 일 때만 리플 애니메이션 발동
             triggerRipple(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         }
-        // 터치 기기에서 강제로 가상 마우스 커서가 남는 현상 방지
+        // 이메일 복사, 버튼 클릭 등 어떤 상황에서도 커서가 남지 않도록 다시 은닉
         mouse.x = -1000;
         mouse.y = -1000;
     });
 
     window.addEventListener('mousemove', (e) => {
-        // 마지막 터치 후 500ms 이내에 발생하는 마우스 이동은 
-        // 모바일 브라우저의 가짜 이벤트이므로 무시 (Sticky Cursor 해결)
-        if (Date.now() - lastTouchTime < 500) return; 
-        mouse.x = e.clientX; 
-        mouse.y = e.clientY; 
+        // 터치 기기에서는 브라우저가 생성하는 가짜 마우스 이벤트를 완벽하게 무시합니다.
+        // PC 마우스 환경일 때만 반응합니다.
+        if (isTouchContext) return; 
+        
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
     });
 
     window.addEventListener('mouseleave', () => { 
@@ -120,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener('mousedown', (e) => { 
-        if (Date.now() - lastTouchTime < 500) return; // 모바일 가짜 클릭으로 인한 중복 리플 방지
+        if (isTouchContext) return; // 모바일에서는 mousedown 리플 무시 (touchend에서 처리함)
         if (e.button === 0) triggerRipple(e.clientX, e.clientY); 
     });
     // ---------------------------------------------
