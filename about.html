@@ -911,7 +911,7 @@
 
             function triggerRipple(x, y) {
                 ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 80);
+                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 200);
             }
             window.addEventListener('resize', initPoints);
 
