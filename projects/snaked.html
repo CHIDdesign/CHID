@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID - SNAKED Stretcher</title>
+    
+    <!-- [최적화 적용] 가장 먼저 보이는 메인 이미지를 1순위로 로딩 -->
+    <link rel="preload" as="image" href="/img/projects/project img/placeholder.webp">
+
+    <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+    
+    <link rel="stylesheet" href="/static/css/base_white.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" id="back-to-home">
+            <img src="/img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/about.html" title="About">About</a></li>
+                <li class="active"><a href="/projects.html" title="Projects">Projects</a></li>
+                <li><a href="/contact.html" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="back-nav-container">
+            <a href="/projects.html" class="back-btn" title="Back to Projects">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+        </div>
+
+        <section class="hero-section">
+            <img src="/img/projects/project img/8. snaked/snaked 1.webp" alt="Hero Image" class="hero-image">
+        </section>
+
+        <section class="project-header">
+            <div class="project-title">
+                <h1>SNAKED</h1>
+            </div>
+            <div class="project-specs">
+                The James Dyson Awards 2026<br>
+                Medical Emergency Stretcher<br>
+                2026
+            </div>
+        </section>
+
+        <div class="text-right">
+            <p class="intro-lead">
+                SNAKED is a rescue stretcher developed for entrapped victim rescue in collapsed structures.
+            </p>
+            <p class="body-en">
+                Through a structure of 45-degree rotating square modules, the product flawlessly collapses into a flat plane along pre-formed geometric folds.<br>
+                Users can securely stand the bag upright after use for convenient storage, while its singular material composition guarantees cost-effective and streamlined manufacturing.<br>
+                By maximizing space efficiency to just 20% of its expanded volume, Foldisafe overcomes the limits of bulk packaging, offering a revolutionary storage solution for intensive care environments.<br>
+            </p>
+            <p class="body-kr">
+                Foldisafe는 종이접기 원리가 적용된 완전 접힘 구조의 의료용 석션 라이너백입니다.<br>
+                45도씩 회전하는 정사각형 모듈을 적용하여, 기하학적인 주름을 따라 제품이 완벽한 평면 상태로 압축됩니다.<br>
+                사용 후에는 수직으로 세워 보관할 수 있는 기존의 핵심 편의성을 그대로 제공하며, 단일 재질 설계를 통해 생산 공정과 원가를 최적화했습니다.<br>
+                최대 전개 상태 대비 20% 수준이라는 획기적인 압축률로 대량 포장의 한계를 허물고, Foldisafe는 중환자실의 물류 및 수납 공간에 새로운 기준을 제시합니다.
+            </p>
+        </div>
+
+        <!-- 새로 추가된 지그재그 컨테이너 -->
+        <div class="zigzag-container">
+            <!-- 좌측 애니메이션 (모바일은 상단) -->
+            <div class="zigzag-svg-wrapper">
+                <svg viewBox="0 0 200 600">
+                    <defs>
+                      <filter id="scribble" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="600">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+                      </filter>
+                    </defs>
+                    <path class="zigzag-path" d="M 100 5 L 100 95 M 100 105 L 100 195 M 100 205 L 100 295 M 100 305 L 100 395 M 100 405 L 100 495 M 100 505 L 100 595"></path>
+                </svg>
+            </div>
+            
+            <!-- 우측 텍스트 (모바일은 하단) -->
+            <div class="zigzag-text-wrapper">
+                <p class="main-heading">
+                    [Graphic Detail Sentence]
+                </p>
+                <p class="body-en">
+                    This section explains the mechanism alongside the graphic.<br>
+                    It highlights specific features dynamically.
+                </p>
+                <p class="body-kr">
+                    그래픽과 함께 세부 메커니즘을 설명하는 공간입니다.<br>
+                    텍스트를 추가하여 애니메이션에 대한 설명을 작성하세요.
+                </p>
+            </div>
+        </div>
+        <!-- // 새로 추가된 지그재그 컨테이너 끝 -->
+
+        <div class="full-image-block">
+            <img src="/img/projects/project img/placeholder.webp" alt="Detail" loading="lazy">
+        </div>
+
+        <div class="credit-section">
+            <div class="credit-grid">
+                <div class="credit-label">Project</div>
+                <div class="credit-content">
+                    COREAMED<br>
+                    2025.01 - 2025.06
+                </div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Industrial Designer</div>
+                <div class="credit-content">Eunjun Choi<br></div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Visualization</div>
+                <div class="credit-content">Eunjun Choi</div>
+            </div>
+        </div>
+
+        <div class="next-project" onclick="location.href='NEXT_PROJECT.html'" style="--next-bg: url('/img/projects/Thumbnail/project_N.webp');">
+            <div class="next-label">Next Project</div>
+            <div class="next-title">Next Project Title &rarr;</div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+    <script src="/static/js/page_effect.js"></script>
+
+</body>
+</html>
