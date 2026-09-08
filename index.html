@@ -17,9 +17,7 @@
     <meta property="og:description" content="Industrial Design Portfolio">
     <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
 
-    <!-- 포스터 이미지를 1순위로 즉시 로딩 -->
     <link rel="preload" as="image" href="img/main/loop/poster1.jpg">
-
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
@@ -38,7 +36,6 @@
     </script>
 
     <style>
-        /* [기본 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -59,24 +56,18 @@
 
         body.fade-in { opacity: 1; }
 
-        /* [비디오 배경] */
         #video-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; background-color: #000000; overflow: hidden;
         }
 
-        /* 밴딩(깨짐) 방지 필터 개선 */
         #video-container::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 5;
             pointer-events: none;
-            
-            /* 노이즈 패턴 SVG */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            
-            /* 투명도를 낮춰서 자연스럽게 덮어씌움 */
             opacity: 0.04; 
         }
 
@@ -106,7 +97,6 @@
 
         .bg-video.active { opacity: 1; z-index: 1; }
 
-        /* [헤더 스타일] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
@@ -130,7 +120,6 @@
             transition: height 0.3s ease, filter 0.5s ease; 
         }
 
-        /* [네비게이션 스타일] */
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
 
@@ -165,6 +154,22 @@
 
         main { flex: 1; width: 100%; height: 100%; }
 
+        @media (pointer: fine) {
+          * { cursor: none !important; }
+        }
+
+        #canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 9999;
+          pointer-events: none;
+          mix-blend-mode: plus-darker;
+          background: transparent;
+        }
+
         @media (max-width: 768px) {
             header { 
                 padding: 15px 20px; 
@@ -197,7 +202,6 @@
         <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
-        <!-- 중복되었던 v4 아이디를 v5로 수정 -->
         <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 5.mp4" type="video/mp4">
         </video>
@@ -217,6 +221,7 @@
     </header>
 
     <main></main>
+    <canvas id="canvas"></canvas>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -239,15 +244,197 @@
             const mainLogo = document.getElementById('main-logo');
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
-            // DOM에 추가된 모든 .bg-video 요소들을 자동으로 배열로 가져옵니다.
+            // --- [커스텀 커서 및 리플 효과 시스템] ---
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.globalCompositeOperation = 'plus-darker';
+
+            const PT_TO_PX = 1.333;
+            const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
+            const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
+            const gridStep = (10 * PT_TO_PX) / 2;        
+
+            let cols, rows;
+            let points = [];
+            let activePoints = new Set();
+            let mouse = { x: -1000, y: -1000 };
+            let ripples = [];
+
+            function initPoints() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                cols = Math.ceil(canvas.width / gridStep) + 1;
+                rows = Math.ceil(canvas.height / gridStep) + 1;
+                
+                points = [];
+                activePoints.clear();
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const x = c * gridStep;
+                        const y = r * gridStep;
+                        
+                        points.push({
+                            c, r, x, y,
+                            size: baseRadius,
+                            colorFactor: 0
+                        });
+                    }
+                }
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
+            });
+
+            window.addEventListener('mousedown', (e) => {
+                if (e.button === 0) {
+                    triggerRipple(e.clientX, e.clientY);
+                }
+            });
+
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    const touchX = e.touches[0].clientX;
+                    const touchY = e.touches[0].clientY;
+                    triggerRipple(touchX, touchY);
+                }
+            }, { passive: true });
+
+            function triggerRipple(x, y) {
+                ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
+                setTimeout(() => {
+                    ripples.push({ x: x, y: y, radius: 0, strength: 0.8 });
+                }, 150);
+            }
+
+            window.addEventListener('resize', initPoints);
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let targetC = -100;
+                let targetR = -100;
+
+                if (mouse.x >= 0 && mouse.y >= 0) {
+                    targetC = Math.round(mouse.x / gridStep);
+                    targetR = Math.round(mouse.y / gridStep);
+
+                    const checkRadius = 8; 
+                    for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
+                        for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
+                            if (c >= 0 && c < cols && r >= 0 && r < rows) {
+                                activePoints.add(r * cols + c);
+                            }
+                        }
+                    }
+                }
+
+                const maxRippleRadius = gridStep * 16;
+
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    let r = ripples[i];
+                    
+                    let progress = Math.min(1, Math.max(0, r.radius / maxRippleRadius));
+                    let speedFactor = Math.pow(1 - progress, 1.2);
+                    
+                    r.radius += gridStep * (0.2 * speedFactor + 0.03); 
+
+                    if (r.radius - gridStep * 4 > maxRippleRadius) {
+                        ripples.splice(i, 1);
+                        continue;
+                    }
+
+                    let maxDist = r.radius + gridStep * 2;
+                    let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
+                    let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
+                    let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
+                    let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
+
+                    for(let col = cMin; col <= cMax; col++) {
+                        for(let row = rMin; row <= rMax; row++) {
+                            activePoints.add(row * cols + col);
+                        }
+                    }
+                }
+
+                for (let index of activePoints) {
+                    const point = points[index];
+                    
+                    let mouseTargetSize = baseRadius;
+                    let mouseTargetColorFactor = 0;
+
+                    if (point.c === targetC && point.r === targetR) {
+                        mouseTargetSize = maxRadius;
+                        mouseTargetColorFactor = 1; 
+                    } 
+                    else {
+                        const dx = point.x - mouse.x;
+                        const dy = point.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        const effectRadius = gridStep * 10; 
+
+                        if (dist < effectRadius) {
+                            const factor = 1 - (dist / effectRadius);
+                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * Math.pow(factor, 5);
+                            mouseTargetColorFactor = Math.pow(factor, 8); 
+                        }
+                    }
+
+                    let rippleEffect = 0;
+                    for (let r of ripples) {
+                        const dx = point.x - r.x;
+                        const dy = point.y - r.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist <= maxRippleRadius) {
+                            const distanceFade = Math.pow(1 - (dist / maxRippleRadius), 1.2);
+                            const diff = Math.abs(dist - r.radius);
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.2)));
+
+                            rippleEffect += (ring * 1.0 * r.strength) * distanceFade;
+                        }
+                    }
+
+                    let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
+                    let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
+
+                    const speed = 0.05;
+                    point.size += (targetSize - point.size) * speed;
+                    point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
+
+                    if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(17, 17, 17, ${point.colorFactor})`;
+                        ctx.fill();
+                    } else {
+                        point.size = baseRadius;
+                        point.colorFactor = 0;
+                        activePoints.delete(index);
+                    }
+                }
+
+                requestAnimationFrame(draw);
+            }
+
+            initPoints();
+            requestAnimationFrame(draw);
+
+            // --- [비디오 배경 로직] ---
             const videos = Array.from(document.querySelectorAll('.bg-video'));
-            
-            // --- [랜덤 라인업(Playlist) 관리 변수] ---
             let currentPlaylist = [];
             let playlistCursor = 0;
-            let activeVideoIndex = -1; // 현재 재생 중인 비디오의 실제 DOM 인덱스
+            let activeVideoIndex = -1;
 
-            // 배열 셔플 함수 (Fisher-Yates 알고리즘)
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -255,16 +442,11 @@
                 }
             }
 
-            // 새로운 랜덤 플레이리스트 생성 함수
             function generatePlaylist() {
-                // 0부터 (비디오개수-1) 까지의 숫자로 배열을 만듭니다.
                 let newPlaylist = videos.map((_, i) => i);
                 shuffleArray(newPlaylist);
-
-                // 이전 사이클의 마지막 비디오와 새 사이클의 첫 비디오가 겹치지 않도록 방지
                 if (activeVideoIndex !== -1 && newPlaylist[0] === activeVideoIndex) {
                     if (newPlaylist.length > 1) {
-                        // 첫 번째 비디오가 겹치면 두 번째 비디오와 순서를 바꿈
                         [newPlaylist[0], newPlaylist[1]] = [newPlaylist[1], newPlaylist[0]];
                     }
                 }
@@ -278,7 +460,6 @@
                 else header.classList.remove("white-skin");
             }
 
-            // 모든 비디오 초기 설정 및 종료 이벤트 등록
             videos.forEach((video, domIndex) => {
                 video.muted = true;
                 video.defaultMuted = true;
@@ -287,18 +468,14 @@
                 video.setAttribute('webkit-playsinline', '');
 
                 video.addEventListener('ended', () => {
-                    // 현재 재생 중인 비디오가 끝났을 때만 다음 비디오 실행
                     if (domIndex === activeVideoIndex) {
                         playNextVideo();
                     }
                 });
             });
 
-            // 다음 랜덤 비디오 재생 함수
             function playNextVideo() {
                 playlistCursor++;
-                
-                // 플레이리스트 끝에 도달하면 새로운 랜덤 순서를 다시 생성
                 if (playlistCursor >= currentPlaylist.length) {
                     generatePlaylist();
                 }
@@ -307,9 +484,7 @@
                 const currentVideo = videos[activeVideoIndex];
                 const nextVideo = videos[nextDomIndex];
 
-                // 현재 활성화된 인덱스를 업데이트
                 activeVideoIndex = nextDomIndex;
-
                 nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
 
@@ -318,7 +493,6 @@
                         nextVideo.classList.add('active'); 
                         updateHeaderColor(nextVideo); 
 
-                        // 이전 비디오는 서서히 숨기고 정지
                         setTimeout(() => {
                             currentVideo.classList.remove('active');
                             currentVideo.pause(); 
@@ -330,22 +504,14 @@
                 }
             }
 
-            // --- [초기 로딩 및 첫 비디오 실행] ---
-            
-            // 페이지 진입 시 첫 번째 라인업 생성
             generatePlaylist();
-            activeVideoIndex = currentPlaylist[playlistCursor]; // 셔플된 첫 번째 비디오 인덱스
-            
+            activeVideoIndex = currentPlaylist[playlistCursor];
             const firstVideo = videos[activeVideoIndex];
             updateHeaderColor(firstVideo);
-            
-            // 브라우저에게 백그라운드 다운로드를 강제 지시
             firstVideo.load();
 
-            // 첫 프레임이 그려지기 시작할 때 포스터를 숨김
             firstVideo.addEventListener('playing', () => {
                 firstVideo.classList.add('active');
-                
                 setTimeout(() => {
                     posterLayer.classList.add('hidden');
                 }, 100);
@@ -357,7 +523,6 @@
 
                 if (playPromise !== undefined) {
                     playPromise.catch((error) => {
-                        // 자동재생 차단 대비
                         const interactionHandler = () => {
                             firstVideo.play(); 
                             document.removeEventListener('click', interactionHandler);
@@ -369,12 +534,10 @@
                 }
             }
 
-            // 비디오 로딩 상태에 맞춰 재생 트리거
             if (firstVideo.readyState >= 4) {
                 tryPlayFirstVideo();
             } else {
                 firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
-                
                 setTimeout(() => {
                     if (firstVideo.paused) {
                         tryPlayFirstVideo(); 

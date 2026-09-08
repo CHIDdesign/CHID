@@ -39,22 +39,18 @@
     </script>
 
     <style>
-        /* [기본 스타일] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #ffffff;
             color: #111111;
-            
             min-height: 100vh;
             min-height: 100dvh; 
-            
             display: flex;
             flex-direction: column;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
-            
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
@@ -62,15 +58,11 @@
         
         body.fade-in { opacity: 1; }
 
-        /* =========================================
-           [헤더 스타일]
-           ========================================= */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; 
             width: 100%;
             position: fixed; top: 0; left: 0; z-index: 100;
-            
             background-color: rgba(255, 255, 255, 0.01); 
             backdrop-filter: blur(0px); 
             transition: all 0.5s ease;
@@ -78,31 +70,17 @@
         }
 
         .logo-container { cursor: pointer; }
-        
-        .logo-img { 
-            height: 60px; 
-            width: auto; 
-            display: block; 
-            transition: height 0.3s ease;
-        }
+        .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
 
-        /* [네비게이션 스타일] */
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
         
         nav ul li a {
-            text-decoration: none; 
-            color: #111111;
-            font-size: clamp(15px, 1.2vw, 18px); 
-            font-weight: 400; 
-            display: block; 
-            padding: 10px 0; 
-            letter-spacing: -0.02em;
-            opacity: 0.8; 
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            text-align: center;
-            pointer-events: auto;
+            text-decoration: none; color: #111111;
+            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            display: block; padding: 10px 0; letter-spacing: -0.02em;
+            opacity: 0.8; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative; text-align: center; pointer-events: auto;
         }
 
         nav ul li a::before {
@@ -110,91 +88,51 @@
         }
 
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
-
         nav ul li.active a { font-weight: 700; opacity: 1; }
-        
         nav ul li.active a::after {
             content: ''; display: block; width: 100%; height: 2px; 
-            background: currentColor;
-            margin-top: 5px; 
-            border-radius: 2px;
+            background: currentColor; margin-top: 5px; border-radius: 2px;
         }
 
-        /* [메인 영역] */
         main { 
-            flex: 1; 
-            width: 100%; 
-            height: 100%;
+            flex: 1; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             padding: 0 20px;
         }
 
         .contact-info { 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+            text-align: center; display: flex; flex-direction: column; align-items: center;
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
-            animation-delay: 0.2s;
-            width: 100%;
+            opacity: 0; transform: translateY(20px); animation-delay: 0.2s; width: 100%;
         }
 
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* 이메일 링크 스타일 */
         .email-link {
             font-size: clamp(24px, 3.5vw, 50px);
-            font-weight: 700; 
-            color: #111; 
-            text-decoration: none;
-            margin-bottom: 50px; 
-            display: block; 
+            font-weight: 700; color: #111; text-decoration: none;
+            margin-bottom: 50px; display: block; 
             transition: color 0.3s ease, transform 0.3s ease;
-            letter-spacing: -0.02em;
-            word-break: break-all;
-            cursor: pointer;
+            letter-spacing: -0.02em; word-break: break-all; cursor: pointer;
         }
         
-        .email-link:hover { 
-            color: #555; 
-            transform: scale(1.02); 
-        }
+        .email-link:hover { color: #555; transform: scale(1.02); }
 
-        /* 소셜 아이콘 스타일 */
         .social-links { display: flex; gap: 40px; align-items: center; }
-        
-        .social-links a { 
-            display: inline-block; 
-            width: 36px; 
-            height: 42px; 
-            transition: transform 0.3s ease; 
-        }
-        
+        .social-links a { display: inline-block; width: 36px; height: 42px; transition: transform 0.3s ease; }
         .social-links a:hover { transform: translateY(-5px); }
 
-        /* 마스크(Mask)를 활용한 아이콘 공통 스타일 */
         .social-icon {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-color: #111; /* 평상시 기본 색상 */
-            opacity: 0.3; /* 평상시 투명도 */
+            display: block; width: 100%; height: 100%;
+            background-color: #111; opacity: 0.3; 
             transition: opacity 0.3s ease, background 0.3s ease;
-            
-            /* SVG를 스텐실처럼 활용 */
-            -webkit-mask-size: contain;
-            mask-size: contain;
-            -webkit-mask-position: center;
-            mask-position: center;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
+            -webkit-mask-size: contain; mask-size: contain;
+            -webkit-mask-position: center; mask-position: center;
+            -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
         }
 
-        /* 각 아이콘에 SVG 이미지 연결 */
         .instagram-icon {
             -webkit-mask-image: url('img/contact/social/instagram.svg');
             mask-image: url('img/contact/social/instagram.svg');
@@ -210,85 +148,46 @@
             mask-image: url('img/contact/social/linkedin.svg');
         }
 
-        /* --- [마우스 오버(Hover) 효과] --- */
-        .social-links a:hover .social-icon {
-            opacity: 1; /* 투명도를 100%로 변경 */
-        }
+        .social-links a:hover .social-icon { opacity: 1; }
+        .social-links a:hover .instagram-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-links a:hover .behance-icon { background: #1769ff; }
+        .social-links a:hover .linkedin-icon { background: #0a66c2; }
 
-        /* 인스타그램: 브랜드 고유 그라데이션 적용 */
-        .social-links a:hover .instagram-icon {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        }
-
-        /* 비핸스: 비핸스 블루 적용 */
-        .social-links a:hover .behance-icon {
-            background: #1769ff; 
-        }
-
-        /* 링크드인: 링크드인 블루 적용 */
-        .social-links a:hover .linkedin-icon {
-            background: #0a66c2; 
-        }
-
-        /* [플로팅 토스트 메시지 스타일 추가] */
         .toast {
-            position: fixed;
-            bottom: 100px; /* 화면 하단에서의 거리 */
-            left: 50%;
+            position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(24px);
-            
-            /* 디자인 요구사항 반영 */
             background-color: rgba(0, 0, 0, 0.48);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px); /* Safari 지원 */
-            
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 240;
-            padding: 14px 24px;
-            border-radius: 999px; /* 완전한 알약 형태(Pill-shape) */
-            
-            pointer-events: none; /* 클릭 방해 금지 */
-            opacity: 0;
-            visibility: hidden;
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            color: #ffffff; font-size: 16px; font-weight: 240;
+            padding: 14px 24px; border-radius: 999px;
+            pointer-events: none; opacity: 0; visibility: hidden;
             transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
-            z-index: 1000;
-            white-space: nowrap;
+            z-index: 1000; white-space: nowrap;
         }
 
         .toast.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
         }
 
-        /* [모바일 최적화] */
+        @media (pointer: fine) {
+          * { cursor: none !important; }
+        }
+
+        #canvas {
+          position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+          z-index: 9999; pointer-events: none; mix-blend-mode: plus-darker; background: transparent;
+        }
+
         @media (max-width: 768px) {
-            header { 
-                padding: 15px 20px; 
-                flex-direction: column; 
-                gap: 20px; 
-            }
+            header { padding: 15px 20px; flex-direction: column; gap: 20px; }
             .logo-img { height: 50px; }
-            
             nav { width: 100%; }
             nav ul { justify-content: center; gap: 25px; width: 100%; }
             nav ul li a { font-size: 16px; font-weight: 500; }
-
-            .email-link { 
-                font-size: clamp(24px, 6vw, 32px); 
-                margin-bottom: 40px; 
-                line-height: 1.3;
-            }
-            
+            .email-link { font-size: clamp(24px, 6vw, 32px); margin-bottom: 40px; line-height: 1.3; }
             .social-links { gap: 40px; }
             .social-links a { width: 36px; height: 36px; }
-
-            .toast {
-                font-size: 16px;
-                padding: 14px 32px;
-                bottom: 160px;
-            }
+            .toast { font-size: 16px; padding: 14px 32px; bottom: 160px; }
         }
     </style>
 </head>
@@ -324,6 +223,8 @@
         </div>
     </main>
 
+    <canvas id="canvas"></canvas>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
@@ -343,10 +244,192 @@
                 });
             });
 
-            // --- [클립보드 복사 & 플로팅 토스트 메시지 기능 시작] ---
+            // --- [커스텀 커서 및 리플 효과 시스템] ---
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.globalCompositeOperation = 'plus-darker';
+
+            const PT_TO_PX = 1.333;
+            const baseRadius = ((4 * PT_TO_PX) / 2) / 2; 
+            const maxRadius = ((9 * PT_TO_PX) / 2) / 2;  
+            const gridStep = (10 * PT_TO_PX) / 2;        
+
+            let cols, rows;
+            let points = [];
+            let activePoints = new Set();
+            let mouse = { x: -1000, y: -1000 };
+            let ripples = [];
+
+            function initPoints() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                cols = Math.ceil(canvas.width / gridStep) + 1;
+                rows = Math.ceil(canvas.height / gridStep) + 1;
+                
+                points = [];
+                activePoints.clear();
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const x = c * gridStep;
+                        const y = r * gridStep;
+                        
+                        points.push({
+                            c, r, x, y,
+                            size: baseRadius,
+                            colorFactor: 0
+                        });
+                    }
+                }
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
+            });
+
+            window.addEventListener('mousedown', (e) => {
+                if (e.button === 0) {
+                    triggerRipple(e.clientX, e.clientY);
+                }
+            });
+
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    const touchX = e.touches[0].clientX;
+                    const touchY = e.touches[0].clientY;
+                    triggerRipple(touchX, touchY);
+                }
+            }, { passive: true });
+
+            function triggerRipple(x, y) {
+                ripples.push({ x: x, y: y, radius: 0, strength: 2.0 });
+                setTimeout(() => {
+                    ripples.push({ x: x, y: y, radius: 0, strength: 0.8 });
+                }, 150);
+            }
+
+            window.addEventListener('resize', initPoints);
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let targetC = -100;
+                let targetR = -100;
+
+                if (mouse.x >= 0 && mouse.y >= 0) {
+                    targetC = Math.round(mouse.x / gridStep);
+                    targetR = Math.round(mouse.y / gridStep);
+
+                    const checkRadius = 8; 
+                    for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
+                        for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
+                            if (c >= 0 && c < cols && r >= 0 && r < rows) {
+                                activePoints.add(r * cols + c);
+                            }
+                        }
+                    }
+                }
+
+                const maxRippleRadius = gridStep * 16;
+
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    let r = ripples[i];
+                    
+                    let progress = Math.min(1, Math.max(0, r.radius / maxRippleRadius));
+                    let speedFactor = Math.pow(1 - progress, 1.2);
+                    
+                    r.radius += gridStep * (0.2 * speedFactor + 0.03); 
+
+                    if (r.radius - gridStep * 4 > maxRippleRadius) {
+                        ripples.splice(i, 1);
+                        continue;
+                    }
+
+                    let maxDist = r.radius + gridStep * 2;
+                    let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
+                    let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
+                    let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
+                    let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
+
+                    for(let col = cMin; col <= cMax; col++) {
+                        for(let row = rMin; row <= rMax; row++) {
+                            activePoints.add(row * cols + col);
+                        }
+                    }
+                }
+
+                for (let index of activePoints) {
+                    const point = points[index];
+                    
+                    let mouseTargetSize = baseRadius;
+                    let mouseTargetColorFactor = 0;
+
+                    if (point.c === targetC && point.r === targetR) {
+                        mouseTargetSize = maxRadius;
+                        mouseTargetColorFactor = 1; 
+                    } 
+                    else {
+                        const dx = point.x - mouse.x;
+                        const dy = point.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        const effectRadius = gridStep * 10; 
+
+                        if (dist < effectRadius) {
+                            const factor = 1 - (dist / effectRadius);
+                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * Math.pow(factor, 5);
+                            mouseTargetColorFactor = Math.pow(factor, 8); 
+                        }
+                    }
+
+                    let rippleEffect = 0;
+                    for (let r of ripples) {
+                        const dx = point.x - r.x;
+                        const dy = point.y - r.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist <= maxRippleRadius) {
+                            const distanceFade = Math.pow(1 - (dist / maxRippleRadius), 1.2);
+                            const diff = Math.abs(dist - r.radius);
+                            const ring = Math.max(0, 1 - (diff / (gridStep * 1.2)));
+
+                            rippleEffect += (ring * 1.0 * r.strength) * distanceFade;
+                        }
+                    }
+
+                    let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
+                    let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
+
+                    const speed = 0.05;
+                    point.size += (targetSize - point.size) * speed;
+                    point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
+
+                    if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(17, 17, 17, ${point.colorFactor})`;
+                        ctx.fill();
+                    } else {
+                        point.size = baseRadius;
+                        point.colorFactor = 0;
+                        activePoints.delete(index);
+                    }
+                }
+
+                requestAnimationFrame(draw);
+            }
+
+            initPoints();
+            requestAnimationFrame(draw);
+
             const emailLink = document.querySelector('.email-link');
-            
-            // 토스트 메시지 요소 동적 생성
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = 'Copied to Clipboard';
@@ -357,17 +440,11 @@
             if (emailLink) {
                 emailLink.addEventListener('click', function(e) {
                     e.preventDefault(); 
-                    
                     const emailAddress = 'eunjun0505@gmail.com';
                     
                     navigator.clipboard.writeText(emailAddress).then(() => {
-                        // 기존 타이머 초기화 (연속 클릭 시 애니메이션 끊김 방지)
                         clearTimeout(toastTimeout);
-                        
-                        // 토스트 메시지 표시
                         toast.classList.add('show');
-                        
-                        // 2.5초 후 메시지 숨김
                         toastTimeout = setTimeout(() => {
                             toast.classList.remove('show');
                         }, 2500);
@@ -377,7 +454,6 @@
                     });
                 });
             }
-            // --- [클립보드 복사 & 플로팅 토스트 메시지 기능 끝] ---
         });
     </script>
 </body>
