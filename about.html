@@ -299,17 +299,6 @@
         @media (pointer: fine) {
           * { cursor: none !important; }
         }
-        #canvas {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 9999;
-          pointer-events: none;
-          mix-blend-mode: multiply;
-          background: transparent;
-        }
         body.detail-open #canvas {
           mix-blend-mode: plus-lighter;
         }
@@ -319,6 +308,10 @@
             .shortcut-img { width: 100%; height: 180px; margin-bottom: 20px; }
             .shortcut-info { padding: 0 10px; margin-bottom: 20px; }
             .shortcut-btn { align-self: flex-end; margin-right: 10px; }
+        }
+        #canvas {
+          position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+          z-index: 9999; pointer-events: none; mix-blend-mode: multiply; background: transparent;
         }
     </style>
 </head>
@@ -842,175 +835,23 @@
         </div>
     </div>
     <canvas id="canvas"></canvas>
+
+    <script src="/static/js/page_effect.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
                 setTimeout(() => { window.location.href = targetUrl; }, 500);
             }
-            document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
+
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     fadeAndMove(this.getAttribute('href'));
                 });
             });
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
-            const dotCanvasBlack = document.createElement('canvas');
-            dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
-            const ctxB = dotCanvasBlack.getContext('2d');
-            ctxB.fillStyle = '#111111';
-            ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
-            const dotCanvasWhite = document.createElement('canvas');
-            dotCanvasWhite.width = 24; dotCanvasWhite.height = 24;
-            const ctxW = dotCanvasWhite.getContext('2d');
-            ctxW.fillStyle = '#ffffff';
-            ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
-
-            let cursorColorMode = 'black'; 
-            const PT_TO_PX = 1.333;
-            const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
-            const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
-            const gridStep = ((10 * PT_TO_PX) / 2) * 1.1;        
-            const effectRadius = gridStep * 15; 
-            const effectRadiusSq = effectRadius * effectRadius;
-            const maxRippleRadius = gridStep * 24; 
-            const maxRippleRadiusSq = maxRippleRadius * maxRippleRadius;
-
-            let cols, rows;
-            let points = [];
-            let activePoints = new Set();
-            let mouse = { x: -1000, y: -1000 };
-            let ripples = [];
-
-            function initPoints() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                cols = Math.ceil(canvas.width / gridStep) + 1;
-                rows = Math.ceil(canvas.height / gridStep) + 1;
-                points = [];
-                activePoints.clear();
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        points.push({
-                            c, r, x: c * gridStep, y: r * gridStep,
-                            size: baseRadius, colorFactor: 0
-                        });
-                    }
-                }
-            }
-            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-            window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
-            window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
-            window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
-            }, { passive: true });
-
-            function triggerRipple(x, y) {
-                ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 200);
-            }
-            window.addEventListener('resize', initPoints);
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                let targetC = -100;
-                let targetR = -100;
-
-                if (mouse.x >= 0 && mouse.y >= 0) {
-                    targetC = Math.round(mouse.x / gridStep);
-                    targetR = Math.round(mouse.y / gridStep);
-                    const checkRadius = 12; 
-                    for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
-                        for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                            if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
-                        }
-                    }
-                }
-
-                for (let i = ripples.length - 1; i >= 0; i--) {
-                    let r = ripples[i];
-                    let progress = Math.min(1, r.radius / maxRippleRadius);
-                    let speedFactor = 1 - progress; 
-                    r.radius += gridStep * (1.2 * speedFactor + 0.4); 
-                    if (r.radius - gridStep * 4 > maxRippleRadius) {
-                        ripples.splice(i, 1);
-                        continue;
-                    }
-                    let maxDist = r.radius + gridStep * 2;
-                    let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
-                    let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
-                    let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
-                    let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
-                    for(let col = cMin; col <= cMax; col++) {
-                        for(let row = rMin; row <= rMax; row++) activePoints.add(row * cols + col);
-                    }
-                }
-
-                const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
-
-                for (let index of activePoints) {
-                    const point = points[index];
-                    let mouseTargetSize = baseRadius;
-                    let mouseTargetColorFactor = 0;
-
-                    if (point.c === targetC && point.r === targetR) {
-                        mouseTargetSize = maxRadius;
-                        mouseTargetColorFactor = 1; 
-                    } else {
-                        const dx = point.x - mouse.x;
-                        const dy = point.y - mouse.y;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < effectRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const factor = 1 - (dist / effectRadius);
-                            const f2 = factor * factor;
-                            const f4 = f2 * f2;
-                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
-                            mouseTargetColorFactor = f4 * f4; 
-                        }
-                    }
-
-                    let rippleEffect = 0;
-                    for (let r of ripples) {
-                        const dx = point.x - r.x;
-                        const dy = point.y - r.y;
-                        if (Math.abs(dx) > maxRippleRadius || Math.abs(dy) > maxRippleRadius) continue; 
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq <= maxRippleRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const distanceFade = 1 - (dist / maxRippleRadius);
-                            const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 3.5)));
-                            rippleEffect += (ring * r.strength) * distanceFade;
-                        }
-                    }
-
-                    let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
-                    let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
-
-                    const speed = 0.28; 
-                    point.size += (targetSize - point.size) * speed;
-                    point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
-
-                    if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
-                        ctx.globalAlpha = point.colorFactor; 
-                        const drawSize = point.size * 2;
-                        ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
-                    } else {
-                        point.size = baseRadius;
-                        point.colorFactor = 0;
-                        activePoints.delete(index);
-                    }
-                }
-                ctx.globalAlpha = 1.0;
-                requestAnimationFrame(draw);
-            }
-            initPoints();
-            requestAnimationFrame(draw);
 
             const filterBtns = document.querySelectorAll('.filter-btn');
             const timelineItems = document.querySelectorAll('.timeline-section:not(.education-group) .timeline-item');
@@ -1021,16 +862,17 @@
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const filter = btn.getAttribute('data-filter');
+                    
                     timelineItems.forEach(item => {
                         const categories = item.getAttribute('data-category') || '';
                         const reveals = item.querySelectorAll('.scroll-reveal');
+                        
                         if (filter === 'all' || categories.includes(filter)) {
                             item.classList.remove('hidden');
                             reveals.forEach(el => {
                                 const rect = el.getBoundingClientRect();
                                 if (rect.top < window.innerHeight * 0.75 && rect.bottom > 0) {
-                                    el.classList.add('in-view');
-                                    el.classList.remove('out-view');
+                                    el.classList.add('in-view'); el.classList.remove('out-view');
                                     const parentItem = el.closest('.timeline-item');
                                     if (parentItem) parentItem.classList.add('item-in-view');
                                 } else {
@@ -1041,13 +883,11 @@
                             item.classList.add('hidden');
                         }
                     });
+                    
                     yearGroups.forEach(group => {
                         const visibleItems = group.querySelectorAll('.timeline-item:not(.hidden)');
-                        if (visibleItems.length === 0) {
-                            group.classList.add('hidden');
-                        } else {
-                            group.classList.remove('hidden');
-                        }
+                        if (visibleItems.length === 0) group.classList.add('hidden');
+                        else group.classList.remove('hidden');
                     });
                 });
             });
@@ -1055,51 +895,15 @@
             const header = document.getElementById('main-header');
             const filterContainer = document.getElementById('filter-container');
 
-            let lastScrollTop = 0; 
-            let scrollUpDistance = 0; 
-            const scrollThreshold = 100;
-            
             window.addEventListener('scroll', () => {
-                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                let isMobile = window.innerWidth <= 768;
-                let filterOffset = filterContainer.offsetTop - 150; 
-                
-                if (currentScroll <= 0) { 
-                    header.classList.remove('header-hidden'); 
-                    lastScrollTop = 0; 
-                    scrollUpDistance = 0; 
-                    filterContainer.style.top = header.offsetHeight + 'px';
-                    return; 
+                if (header && filterContainer) {
+                    if (header.classList.contains('header-hidden')) filterContainer.style.top = '0px';
+                    else filterContainer.style.top = header.offsetHeight + 'px';
                 }
-                if (currentScroll > lastScrollTop) { 
-                    header.classList.add('header-hidden'); 
-                    scrollUpDistance = 0; 
-                    filterContainer.style.top = '0px'; 
-                } else {
-                    scrollUpDistance += (lastScrollTop - currentScroll);
-                    if (isMobile) {
-                        if (currentScroll < filterOffset) {
-                            header.classList.remove('header-hidden'); 
-                            filterContainer.style.top = header.offsetHeight + 'px';
-                        } else {
-                            header.classList.add('header-hidden'); 
-                            filterContainer.style.top = '0px'; 
-                        }
-                    } else {
-                        if (scrollUpDistance > scrollThreshold) { 
-                            header.classList.remove('header-hidden'); 
-                            scrollUpDistance = scrollThreshold; 
-                            filterContainer.style.top = header.offsetHeight + 'px'; 
-                        }
-                    }
-                }
-                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
             }, { passive: true });
 
             window.addEventListener('load', () => {
-                if (header && filterContainer) {
-                    filterContainer.style.top = header.offsetHeight + 'px';
-                }
+                if (header && filterContainer) filterContainer.style.top = header.offsetHeight + 'px';
             });
 
             window.addEventListener('resize', () => {
@@ -1114,24 +918,19 @@
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        entry.target.classList.remove('out-view');
+                        entry.target.classList.add('in-view'); entry.target.classList.remove('out-view');
                         const parentItem = entry.target.closest('.timeline-item');
                         if (parentItem) parentItem.classList.add('item-in-view');
                     } else {
-                        if(entry.boundingClientRect.top < window.innerHeight * 0.25) {
-                            entry.target.classList.add('out-view');
-                        } else {
+                        if(entry.boundingClientRect.top < window.innerHeight * 0.25) entry.target.classList.add('out-view');
+                        else {
                             entry.target.classList.remove('in-view');
                             const parentItem = entry.target.closest('.timeline-item');
                             if (parentItem) parentItem.classList.remove('item-in-view');
                         }
                     }
                 });
-            }, { 
-                threshold: 0.1, 
-                rootMargin: isMobileView ? '0px 0px -10% 0px' : '-25% 0px -33% 0px' 
-            }); 
+            }, { threshold: 0.1, rootMargin: isMobileView ? '0px 0px -10% 0px' : '-25% 0px -33% 0px' }); 
             
             document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
@@ -1151,11 +950,11 @@
                     const trackEl = groupEl.querySelector('.timeline-track');
                     if(!progressEl || !trackEl) return;
                     const rect = trackEl.getBoundingClientRect();
-                    const startDraw = rect.top; 
-                    const maxDrawHeight = rect.height;
+                    const startDraw = rect.top; const maxDrawHeight = rect.height;
                     let scrolled = triggerPoint - startDraw;
                     let progress = Math.min(Math.max(scrolled / maxDrawHeight, 0), 1);
                     progressEl.style.transform = `scaleY(${progress})`;
+                    
                     const pRect = progressEl.getBoundingClientRect();
                     let overlap = fadePos - pRect.top;
                     if (overlap > 0) {
@@ -1164,8 +963,7 @@
                         progressEl.style.webkitMaskImage = `linear-gradient(to bottom, transparent ${transparentEnd}px, black ${overlap}px)`;
                         progressEl.style.maskImage = `linear-gradient(to bottom, transparent ${transparentEnd}px, black ${overlap}px)`;
                     } else {
-                        progressEl.style.webkitMaskImage = 'none';
-                        progressEl.style.maskImage = 'none';
+                        progressEl.style.webkitMaskImage = 'none'; progressEl.style.maskImage = 'none';
                     }
                 });
             }, { passive: true });
@@ -1181,29 +979,38 @@
                 const parent = entryElement.closest('.timeline-item');
                 const template = parent.querySelector('.detail-content');
                 if(!template) return;
+                
                 const meta = template.querySelector('meta');
                 renderPeriod.textContent = meta ? meta.getAttribute('data-period') : '';
                 renderTitle.textContent = meta ? meta.getAttribute('data-title') : '';
                 renderOrg.textContent = meta ? meta.getAttribute('data-org') : '';
+                
                 const contentClone = template.content.cloneNode(true);
                 const metaClone = contentClone.querySelector('meta');
                 if(metaClone) metaClone.remove(); 
+                
                 contentClone.querySelectorAll('img[data-src]').forEach(img => {
                     img.setAttribute('src', img.getAttribute('data-src'));
                     img.removeAttribute('data-src');
                 });
-                renderBody.innerHTML = '';
-                renderBody.appendChild(contentClone);
-                overlay.classList.add('open');
-                document.body.classList.add('detail-open');
-                cursorColorMode = 'white';
+                
+                renderBody.innerHTML = ''; renderBody.appendChild(contentClone);
+                overlay.classList.add('open'); document.body.classList.add('detail-open');
+                
+                window.cursorColorMode = 'white'; 
+                const dynamicCanvas = document.getElementById('canvas');
+                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'plus-lighter';
+                
                 setTimeout(() => { overlay.scrollTop = 0; }, 10);
             };
 
             function closeDetail() {
-                overlay.classList.remove('open');
-                document.body.classList.remove('detail-open');
-                cursorColorMode = 'black';
+                overlay.classList.remove('open'); document.body.classList.remove('detail-open');
+                
+                window.cursorColorMode = 'black'; 
+                const dynamicCanvas = document.getElementById('canvas');
+                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'multiply';
+                
                 setTimeout(() => { renderBody.innerHTML = ''; }, 600);
             }
 
@@ -1219,18 +1026,12 @@
                         const images = template.content.querySelectorAll('img[data-src]');
                         images.forEach(img => {
                             const src = img.getAttribute('data-src');
-                            if(src) {
-                                const preloader = new Image();
-                                preloader.src = src;
-                            }
+                            if(src) { const preloader = new Image(); preloader.src = src; }
                         });
                     });
                 };
-                if ('requestIdleCallback' in window) {
-                    requestIdleCallback(preloadDetailAssets, { timeout: 2000 });
-                } else {
-                    setTimeout(preloadDetailAssets, 1500); 
-                }
+                if ('requestIdleCallback' in window) requestIdleCallback(preloadDetailAssets, { timeout: 2000 });
+                else setTimeout(preloadDetailAssets, 1500); 
             });
         });
     </script>

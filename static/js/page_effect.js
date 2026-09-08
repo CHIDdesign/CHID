@@ -9,14 +9,27 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // -------------------------------------------------------
-    // [커스텀 커서 및 리플 효과 시스템 자동 주입 (모바일 완벽 차단 버전)]
+    // [커스텀 커서 시스템: index.html 디자인 값 통합 및 모바일 완벽 차단]
     // -------------------------------------------------------
-    const canvas = document.createElement('canvas');
-    canvas.id = 'canvas';
-    document.body.appendChild(canvas);
+    let canvas = document.getElementById('canvas');
+    if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.id = 'canvas';
+        document.body.appendChild(canvas);
+    }
+    
+    // CSS 누락으로 인한 레이아웃 파괴 방지 (강제 안전장치)
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.zIndex = '9999';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.background = 'transparent';
+
     const ctx = canvas.getContext('2d');
 
-    // 프리렌더링 캔버스
     const dotCanvasBlack = document.createElement('canvas');
     dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
     const ctxB = dotCanvasBlack.getContext('2d');
@@ -29,16 +42,22 @@ document.addEventListener("DOMContentLoaded", function() {
     ctxW.fillStyle = '#ffffff';
     ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
 
-    // 배경색 감지 모드 설정
-    let cursorColorMode = 'black'; 
+    window.cursorColorMode = 'black'; 
     const checkTheme = () => {
         const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim().toLowerCase();
-        if (bgColor === '#000000' || bgColor === '#000') {
-            cursorColorMode = 'white';
+        if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black') {
+            window.cursorColorMode = 'white';
+            canvas.style.mixBlendMode = 'plus-lighter';
+        } else {
+            window.cursorColorMode = 'black';
+            canvas.style.mixBlendMode = 'multiply';
         }
     };
     checkTheme();
 
+    // -------------------------------------------------------
+    // [index.html 디자인 설정값 적용]
+    // -------------------------------------------------------
     const PT_TO_PX = 1.333;
     const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
     const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
@@ -63,23 +82,19 @@ document.addEventListener("DOMContentLoaded", function() {
         activePoints.clear();
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                points.push({
-                    c, r, x: c * gridStep, y: r * gridStep,
-                    size: baseRadius, colorFactor: 0
-                });
+                points.push({ c, r, x: c * gridStep, y: r * gridStep, size: baseRadius, colorFactor: 0 });
             }
         }
     }
 
-    // --- 모바일 가짜 마우스 이벤트 원천 차단 및 캡처 로직 ---
-    let isTouchDevice = false; // 터치 기기 여부 판별
+    // --- 모바일 가짜 마우스 이벤트 원천 차단 로직 ---
+    let isTouchDevice = false; 
     let touchStartX = 0;
     let touchStartY = 0;
     let isScrolling = false;
 
-    // capture: true 를 사용하여 버튼 등 자식 요소가 이벤트를 막아도 무조건 최우선으로 감지합니다.
     document.addEventListener('touchstart', (e) => {
-        isTouchDevice = true; // 화면을 터치하는 순간 모바일 모드로 영구 고정
+        isTouchDevice = true; 
         isScrolling = false;
         if (e.touches.length > 0) {
             touchStartX = e.touches[0].clientX;
@@ -91,35 +106,29 @@ document.addEventListener("DOMContentLoaded", function() {
         if (e.touches.length === 0) return;
         const dx = e.touches[0].clientX - touchStartX;
         const dy = e.touches[0].clientY - touchStartY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-            isScrolling = true;
-        }
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) isScrolling = true;
     }, { passive: true, capture: true });
 
     document.addEventListener('touchend', (e) => {
         if (!isScrolling && e.changedTouches.length > 0) {
-            // 스크롤이 아닐 때만 물결(Ripple) 애니메이션 발동
             triggerRipple(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         }
     }, { passive: true, capture: true });
 
-    // PC 환경을 위한 마우스 이벤트 처리
     document.addEventListener('mousemove', (e) => {
-        if (isTouchDevice) return; // 터치 기기면 좌표 업데이트 무시
+        if (isTouchDevice) return; 
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     }, { capture: true });
 
     document.addEventListener('mouseleave', () => { 
-        mouse.x = -1000; 
-        mouse.y = -1000; 
+        mouse.x = -1000; mouse.y = -1000; 
     }, { capture: true });
 
     document.addEventListener('mousedown', (e) => { 
-        if (isTouchDevice) return; // 터치 기기면 마우스 클릭 효과 무시
+        if (isTouchDevice) return; 
         if (e.button === 0) triggerRipple(e.clientX, e.clientY); 
     }, { capture: true });
-    // ---------------------------------------------
 
     function triggerRipple(x, y) {
         ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
@@ -130,11 +139,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
         let targetC = -100;
         let targetR = -100;
 
-        // 터치 기기가 아닐 때만 마우스 주변 점들을 활성화
         if (!isTouchDevice && mouse.x >= 0 && mouse.y >= 0) {
             targetC = Math.round(mouse.x / gridStep);
             targetR = Math.round(mouse.y / gridStep);
@@ -165,14 +172,13 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
+        const dotImg = window.cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
 
         for (let index of activePoints) {
             const point = points[index];
             let mouseTargetSize = baseRadius;
             let mouseTargetColorFactor = 0;
 
-            // 터치 기기에서는 호버 크기 계산을 일절 수행하지 않음 (오직 Ripple에만 반응)
             if (!isTouchDevice) {
                 if (point.c === targetC && point.r === targetR) {
                     mouseTargetSize = maxRadius;
@@ -232,10 +238,9 @@ document.addEventListener("DOMContentLoaded", function() {
     requestAnimationFrame(draw);
 
     // -------------------------------------------------------
-    // [비디오 처리 및 스크롤 이벤트 유지]
+    // [비디오 및 스크롤 공통 유지]
     // -------------------------------------------------------
     const videos = Array.from(document.querySelectorAll('video.locked-video'));
-
     videos.forEach(video => {
         video.muted = true;
         video.playsInline = true;
@@ -260,15 +265,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const video = entry.target;
             if (entry.isIntersecting) {
                 const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Play blocked:", error);
-                    });
-                }
+                if (playPromise !== undefined) playPromise.catch(error => console.log("Play blocked:", error));
             } else {
-                if (!video.paused) {
-                    video.pause();
-                }
+                if (!video.paused) video.pause();
             }
         });
     }, { rootMargin: "50px 0px", threshold: 0 });
@@ -281,35 +280,30 @@ document.addEventListener("DOMContentLoaded", function() {
     let lastScrollTop = 0;
     let scrollUpDistance = 0;     
     const scrollThreshold = 600;  
-
     const header = document.querySelector('header');
     const backNav = document.querySelector('.back-nav-container'); 
     
     window.addEventListener('scroll', function() {
         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-        
         if (currentScroll <= 0) {
-            header.classList.remove('header-hidden');
+            if(header) header.classList.remove('header-hidden');
             if(backNav) backNav.classList.remove('nav-up');
-            lastScrollTop = 0;
-            scrollUpDistance = 0; 
+            lastScrollTop = 0; scrollUpDistance = 0; 
             return; 
         }
 
         if (currentScroll > lastScrollTop) {
-            header.classList.add('header-hidden');
+            if(header) header.classList.add('header-hidden');
             if(backNav) backNav.classList.add('nav-up');
             scrollUpDistance = 0; 
         } else {
             scrollUpDistance += (lastScrollTop - currentScroll);
-            
             if (scrollUpDistance > scrollThreshold) {
-                header.classList.remove('header-hidden');
+                if(header) header.classList.remove('header-hidden');
                 if(backNav) backNav.classList.remove('nav-up');
                 scrollUpDistance = scrollThreshold; 
             }
         }
-        
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
     }, { passive: true });
 });

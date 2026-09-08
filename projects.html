@@ -10,168 +10,81 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: #ffffff;
-            color: #111111;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #ffffff; color: #111111; min-height: 100vh;
+            display: flex; flex-direction: column; opacity: 0;
+            transition: opacity 0.5s ease-in-out; -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent;
         }
         body.fade-in { opacity: 1; }
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px; 
-            width: 100%;
-            position: fixed; top: 0; left: 0; z-index: 100;
-            background-color: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
-            height: 90px;
+            padding: 20px 40px; width: 100%; position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease; height: 90px;
         }
-        header.header-hidden {
-            transform: translateY(-100%);
-        }
+        header.header-hidden { transform: translateY(-100%); }
         .logo-container { cursor: pointer; }
         .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
         nav ul li a {
-            text-decoration: none; color: #111111;
-            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
-            display: block; padding: 10px 0; letter-spacing: -0.02em;
-            opacity: 0.8; 
+            text-decoration: none; color: #111111; font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            display: block; padding: 10px 0; letter-spacing: -0.02em; opacity: 0.8; 
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; text-align: center; pointer-events: auto;
         }
-        nav ul li a::before {
-            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
-        }
+        nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
         nav ul li.active a { font-weight: 700; opacity: 1; }
-        nav ul li.active a::after {
-            content: ''; display: block; width: 100%; height: 2px; 
-            background: currentColor; margin-top: 5px; border-radius: 2px;
-        }
-        main { 
-            flex: 1; width: 100%; 
-            padding-top: 140px; padding-bottom: 80px; 
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 0 40px;
-        }
+        nav ul li.active a::after { content: ''; display: block; width: 100%; height: 2px; background: currentColor; margin-top: 5px; border-radius: 2px; }
+        main { flex: 1; width: 100%; padding-top: 140px; padding-bottom: 80px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 0 40px; }
         .project-item { 
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer; 
-            opacity: 0; 
-            transform: translateY(30px);
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            -webkit-tap-highlight-color: transparent; 
+            display: block; text-decoration: none; color: inherit; cursor: pointer; opacity: 0; 
+            transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; -webkit-tap-highlight-color: transparent; 
         }
-        .project-item:nth-child(1) { animation-delay: 0.1s; }
-        .project-item:nth-child(2) { animation-delay: 0.2s; }
-        .project-item:nth-child(3) { animation-delay: 0.3s; }
-        .project-item:nth-child(4) { animation-delay: 0.4s; }
-        .project-item:nth-child(5) { animation-delay: 0.5s; }
-        .project-item:nth-child(6) { animation-delay: 0.6s; }
+        .project-item:nth-child(1) { animation-delay: 0.1s; } .project-item:nth-child(2) { animation-delay: 0.2s; }
+        .project-item:nth-child(3) { animation-delay: 0.3s; } .project-item:nth-child(4) { animation-delay: 0.4s; }
+        .project-item:nth-child(5) { animation-delay: 0.5s; } .project-item:nth-child(6) { animation-delay: 0.6s; }
         .project-item:nth-child(7) { animation-delay: 0.7s; }
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .image-wrapper {
-            position: relative; width: 100%; aspect-ratio: 3 / 4;
-            overflow: hidden; 
-            background-color: transparent; 
-            transform: translateZ(0); 
-        }
-        .skeleton {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #f0f0f0; 
-            z-index: 5;
-            transition: opacity 0.4s ease;
-        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .image-wrapper { position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; background-color: transparent; transform: translateZ(0); }
+        .skeleton { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #f0f0f0; z-index: 5; transition: opacity 0.4s ease; }
         .skeleton::after {
-            content: "";
-            position: absolute;
-            top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            animation: shimmer 1.5s infinite;
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent); animation: shimmer 1.5s infinite;
         }
-        @keyframes shimmer {
-            100% { left: 150%; }
-        }
-        .image-wrapper img, 
-        .image-wrapper video {
-            width: 100%; height: 100%; object-fit: cover;
-            display: block; 
+        @keyframes shimmer { 100% { left: 150%; } }
+        .image-wrapper img, .image-wrapper video {
+            width: 100%; height: 100%; object-fit: cover; display: block; 
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-            transform: scale(1.01); 
-            opacity: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            will-change: transform;
-            z-index: 1;
+            transform: scale(1.01); opacity: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; will-change: transform; z-index: 1;
         }
-        .image-wrapper.loaded .skeleton {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .image-wrapper.loaded img {
-            opacity: 1;
-        }
+        .image-wrapper.loaded .skeleton { opacity: 0; pointer-events: none; }
+        .image-wrapper.loaded img { opacity: 1; }
         .project-info-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); 
-            color: #ffffff;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px;
-            z-index: 10;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); 
+            color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; opacity: 0; transition: opacity 0.4s ease; padding: 20px; z-index: 10;
         }
         .project-item:hover .project-info-overlay { opacity: 1; }
-        .project-item:hover .image-wrapper img,
-        .project-item:hover .image-wrapper video { 
-            transform: scale(1.06); 
-        }
-        .info-title { 
-            font-size: 18px; font-weight: 700; margin-bottom: 10px; 
-            text-transform: uppercase; letter-spacing: 0.05em; 
-        }
-        .info-desc { 
-            font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; 
-        }
-        @media (pointer: fine) {
-          * { cursor: none !important; }
-        }
+        .project-item:hover .image-wrapper img, .project-item:hover .image-wrapper video { transform: scale(1.06); }
+        .info-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .info-desc { font-size: 14px; font-weight: 300; line-height: 1.5; color: #eeeeee; }
+        
+        @media (pointer: fine) { * { cursor: none !important; } }
         #canvas {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 9999;
-          pointer-events: none;
-          mix-blend-mode: multiply;
-          background: transparent;
+          position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+          z-index: 9999; pointer-events: none; mix-blend-mode: multiply; background: transparent;
         }
         @media (max-width: 1200px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
-            .logo-img { height: 50px; } 
-            nav { width: 100%; }
+            .logo-img { height: 50px; } nav { width: 100%; }
             nav ul { justify-content: center; gap: 25px; width: 100%; }
             nav ul li a { font-size: 16px; font-weight: 500; }
-            main { padding-top: 140px; } 
-            .gallery-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 20px; }
+            main { padding-top: 140px; } .gallery-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 20px; }
         }
     </style>
 </head>
@@ -192,287 +105,79 @@
         <div class="gallery-grid">
             <a href="projects/snaked.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_8.webp" alt="SNAKED">
-                    <div class="project-info-overlay">
-                        <div class="info-title">SNAKED</div>
-                        <div class="info-desc">James Dyson Awards 2026<br>Rescue Gear<br>2026</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_8.webp" alt="SNAKED">
+                    <div class="project-info-overlay"><div class="info-title">SNAKED</div><div class="info-desc">James Dyson Awards 2026<br>Rescue Gear<br>2026</div></div>
                 </div>
             </a> 
             <a href="projects/kfw.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026">
-                    <div class="project-info-overlay">
-                        <div class="info-title">KFW 2026</div>
-                        <div class="info-desc">Eighth Army<br>Branding<br>2026</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_7.webp" alt="KFW 2026">
+                    <div class="project-info-overlay"><div class="info-title">KFW 2026</div><div class="info-desc">Eighth Army<br>Branding<br>2026</div></div>
                 </div>
             </a> 
             <a href="projects/foldiSafe.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_6.webp" alt="FoldiSafe">
-                    <div class="project-info-overlay">
-                        <div class="info-title">FoldiSafe</div>
-                        <div class="info-desc">COREAMED<br>Suction Liner Bag<br>2025</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_6.webp" alt="FoldiSafe">
+                    <div class="project-info-overlay"><div class="info-title">FoldiSafe</div><div class="info-desc">COREAMED<br>Suction Liner Bag<br>2025</div></div>
                 </div>
             </a>
             <a href="projects/kunst.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_5.webp" alt="KUNST">
-                    <div class="project-info-overlay">
-                        <div class="info-title">KUNST</div>
-                        <div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_5.webp" alt="KUNST">
+                    <div class="project-info-overlay"><div class="info-title">KUNST</div><div class="info-desc">CHID<br>AR Docent Glasses<br>2025</div></div>
                 </div>
             </a>
             <a href="projects/seesaw.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_4.webp" alt="Seesaw">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Seesaw</div>
-                        <div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_4.webp" alt="Seesaw">
+                    <div class="project-info-overlay"><div class="info-title">Seesaw</div><div class="info-desc">Samsung Life Insurance<br>Life-nology Lab<br>2024</div></div>
                 </div>
             </a>
             <a href="projects/aetheris.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_3.webp" alt="Aetheris">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Aetheris</div>
-                        <div class="info-desc">CHID<br>XR Glasses<br>2024</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_3.webp" alt="Aetheris">
+                    <div class="project-info-overlay"><div class="info-title">Aetheris</div><div class="info-desc">CHID<br>XR Glasses<br>2024</div></div>
                 </div>
             </a>
             <a href="projects/invasion.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_2.webp" alt="Invasion">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Invasion</div>
-                        <div class="info-desc">TU Berlin<br>XR Game<br>2024</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_2.webp" alt="Invasion">
+                    <div class="project-info-overlay"><div class="info-title">Invasion</div><div class="info-desc">TU Berlin<br>XR Game<br>2024</div></div>
                 </div>
             </a>
             <a href="projects/nezhnost.html" class="project-item">
                 <div class="image-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="img/projects/Thumbnail/project_1.webp" alt="Nezhnost">
-                    <div class="project-info-overlay">
-                        <div class="info-title">Nezhnost</div>
-                        <div class="info-desc">CHID<br>Speaker for ISS<br>2024</div>
-                    </div>
+                    <div class="skeleton"></div><img src="img/projects/Thumbnail/project_1.webp" alt="Nezhnost">
+                    <div class="project-info-overlay"><div class="info-title">Nezhnost</div><div class="info-desc">CHID<br>Speaker for ISS<br>2024</div></div>
                 </div>
             </a>
         </div>
     </main>
     <canvas id="canvas"></canvas>
+
+    <script src="static/js/page_effect.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
                 setTimeout(() => { window.location.href = targetUrl; }, 500);
             }
-            document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
+
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fadeAndMove(this.getAttribute('href'));
+                    e.preventDefault(); fadeAndMove(this.getAttribute('href'));
                 });
             });
-
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
-            const dotCanvasBlack = document.createElement('canvas');
-            dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
-            const ctxB = dotCanvasBlack.getContext('2d');
-            ctxB.fillStyle = '#111111';
-            ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
-            const dotCanvasWhite = document.createElement('canvas');
-            dotCanvasWhite.width = 24; dotCanvasWhite.height = 24;
-            const ctxW = dotCanvasWhite.getContext('2d');
-            ctxW.fillStyle = '#ffffff';
-            ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
-
-            let cursorColorMode = 'black'; 
-            const PT_TO_PX = 1.333;
-            const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
-            const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
-            const gridStep = ((10 * PT_TO_PX) / 2) * 1.1;        
-            const effectRadius = gridStep * 15; 
-            const effectRadiusSq = effectRadius * effectRadius;
-            const maxRippleRadius = gridStep * 24; 
-            const maxRippleRadiusSq = maxRippleRadius * maxRippleRadius;
-
-            let cols, rows;
-            let points = [];
-            let activePoints = new Set();
-            let mouse = { x: -1000, y: -1000 };
-            let ripples = [];
-
-            function initPoints() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                cols = Math.ceil(canvas.width / gridStep) + 1;
-                rows = Math.ceil(canvas.height / gridStep) + 1;
-                points = [];
-                activePoints.clear();
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        points.push({
-                            c, r, x: c * gridStep, y: r * gridStep,
-                            size: baseRadius, colorFactor: 0
-                        });
-                    }
-                }
-            }
-            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-            window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
-            window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
-            window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
-            }, { passive: true });
-
-            function triggerRipple(x, y) {
-                ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 200);
-            }
-            window.addEventListener('resize', initPoints);
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                let targetC = -100;
-                let targetR = -100;
-
-                if (mouse.x >= 0 && mouse.y >= 0) {
-                    targetC = Math.round(mouse.x / gridStep);
-                    targetR = Math.round(mouse.y / gridStep);
-                    const checkRadius = 12; 
-                    for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
-                        for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                            if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
-                        }
-                    }
-                }
-
-                for (let i = ripples.length - 1; i >= 0; i--) {
-                    let r = ripples[i];
-                    let progress = Math.min(1, r.radius / maxRippleRadius);
-                    let speedFactor = 1 - progress; 
-                    r.radius += gridStep * (1.2 * speedFactor + 0.4); 
-                    if (r.radius - gridStep * 4 > maxRippleRadius) {
-                        ripples.splice(i, 1);
-                        continue;
-                    }
-                    let maxDist = r.radius + gridStep * 2;
-                    let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
-                    let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
-                    let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
-                    let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
-                    for(let col = cMin; col <= cMax; col++) {
-                        for(let row = rMin; row <= rMax; row++) activePoints.add(row * cols + col);
-                    }
-                }
-
-                const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
-
-                for (let index of activePoints) {
-                    const point = points[index];
-                    let mouseTargetSize = baseRadius;
-                    let mouseTargetColorFactor = 0;
-
-                    if (point.c === targetC && point.r === targetR) {
-                        mouseTargetSize = maxRadius;
-                        mouseTargetColorFactor = 1; 
-                    } else {
-                        const dx = point.x - mouse.x;
-                        const dy = point.y - mouse.y;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < effectRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const factor = 1 - (dist / effectRadius);
-                            const f2 = factor * factor;
-                            const f4 = f2 * f2;
-                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
-                            mouseTargetColorFactor = f4 * f4; 
-                        }
-                    }
-
-                    let rippleEffect = 0;
-                    for (let r of ripples) {
-                        const dx = point.x - r.x;
-                        const dy = point.y - r.y;
-                        if (Math.abs(dx) > maxRippleRadius || Math.abs(dy) > maxRippleRadius) continue; 
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq <= maxRippleRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const distanceFade = 1 - (dist / maxRippleRadius);
-                            const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 3.5)));
-                            rippleEffect += (ring * r.strength) * distanceFade;
-                        }
-                    }
-
-                    let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
-                    let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
-
-                    const speed = 0.28; 
-                    point.size += (targetSize - point.size) * speed;
-                    point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
-
-                    if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
-                        ctx.globalAlpha = point.colorFactor; 
-                        const drawSize = point.size * 2;
-                        ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
-                    } else {
-                        point.size = baseRadius;
-                        point.colorFactor = 0;
-                        activePoints.delete(index);
-                    }
-                }
-                ctx.globalAlpha = 1.0;
-                requestAnimationFrame(draw);
-            }
-            initPoints();
-            requestAnimationFrame(draw);
 
             const imageWrappers = document.querySelectorAll('.image-wrapper');
             imageWrappers.forEach(wrapper => {
                 const img = wrapper.querySelector('img');
                 if (img) {
-                    if (img.complete) {
-                        wrapper.classList.add('loaded');
-                    } else {
-                        img.addEventListener('load', () => {
-                            wrapper.classList.add('loaded');
-                        });
-                    }
+                    if (img.complete) wrapper.classList.add('loaded');
+                    else img.addEventListener('load', () => wrapper.classList.add('loaded'));
                 }
             });
-
-            let lastScrollTop = 0;
-            let scrollUpDistance = 0;
-            const scrollThreshold = 400;
-            const header = document.querySelector('header');
-            
-            window.addEventListener('scroll', function() {
-                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                if (currentScroll <= 0) {
-                    header.classList.remove('header-hidden');
-                    lastScrollTop = 0;
-                    return; 
-                }
-                (currentScroll > lastScrollTop) ? (header.classList.add('header-hidden'), scrollUpDistance = 0) : (scrollUpDistance += (lastScrollTop - currentScroll), scrollUpDistance > scrollThreshold && (header.classList.remove('header-hidden'), scrollUpDistance = scrollThreshold));
-                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
-            }, false);
         });
     </script>
 </body>

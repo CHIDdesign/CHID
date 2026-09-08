@@ -36,67 +36,40 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: #ffffff;
-            color: #111111;
-            min-height: 100vh;
-            min-height: 100dvh; 
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #ffffff; color: #111111; min-height: 100vh; min-height: 100dvh; 
+            display: flex; flex-direction: column; opacity: 0; transition: opacity 0.5s ease-in-out;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent;
         }
         body.fade-in { opacity: 1; }
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px; 
-            width: 100%;
-            position: fixed; top: 0; left: 0; z-index: 100;
-            background-color: rgba(255, 255, 255, 0.01); 
-            backdrop-filter: blur(0px); 
-            transition: all 0.5s ease;
-            height: 90px;
+            padding: 20px 40px; width: 100%; position: fixed; top: 0; left: 0; z-index: 100;
+            background-color: rgba(255, 255, 255, 0.01); backdrop-filter: blur(0px); 
+            transition: all 0.5s ease; height: 90px;
         }
         .logo-container { cursor: pointer; }
         .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
         nav ul { display: flex; list-style: none; gap: 50px; }
         nav ul li { margin-left: 0; }
         nav ul li a {
-            text-decoration: none; color: #111111;
-            font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
+            text-decoration: none; color: #111111; font-size: clamp(15px, 1.2vw, 18px); font-weight: 400; 
             display: block; padding: 10px 0; letter-spacing: -0.02em;
             opacity: 0.8; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative; text-align: center; pointer-events: auto;
         }
-        nav ul li a::before {
-            display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden;
-        }
+        nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
         nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
         nav ul li.active a { font-weight: 700; opacity: 1; }
-        nav ul li.active a::after {
-            content: ''; display: block; width: 100%; height: 2px; 
-            background: currentColor; margin-top: 5px; border-radius: 2px;
-        }
-        main { 
-            flex: 1; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 0 20px;
-        }
+        nav ul li.active a::after { content: ''; display: block; width: 100%; height: 2px; background: currentColor; margin-top: 5px; border-radius: 2px; }
+        main { flex: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 20px; }
         .contact-info { 
             text-align: center; display: flex; flex-direction: column; align-items: center;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0; transform: translateY(20px); animation-delay: 0.2s; width: 100%;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); animation-delay: 0.2s; width: 100%;
         }
-        @keyframes slideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
         .email-link {
-            font-size: clamp(24px, 3.5vw, 50px);
-            font-weight: 700; color: #111; text-decoration: none;
-            margin-bottom: 50px; display: block; 
-            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: clamp(24px, 3.5vw, 50px); font-weight: 700; color: #111; text-decoration: none;
+            margin-bottom: 50px; display: block; transition: color 0.3s ease, transform 0.3s ease;
             letter-spacing: -0.02em; word-break: break-all; cursor: pointer;
         }
         .email-link:hover { color: #555; transform: scale(1.02); }
@@ -104,59 +77,39 @@
         .social-links a { display: inline-block; width: 36px; height: 42px; transition: transform 0.3s ease; }
         .social-links a:hover { transform: translateY(-5px); }
         .social-icon {
-            display: block; width: 100%; height: 100%;
-            background-color: #111; opacity: 0.3; 
+            display: block; width: 100%; height: 100%; background-color: #111; opacity: 0.3; 
             transition: opacity 0.3s ease, background 0.3s ease;
-            -webkit-mask-size: contain; mask-size: contain;
-            -webkit-mask-position: center; mask-position: center;
+            -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center;
             -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
         }
-        .instagram-icon {
-            -webkit-mask-image: url('img/contact/social/instagram.svg');
-            mask-image: url('img/contact/social/instagram.svg');
-        }
-        .behance-icon {
-            -webkit-mask-image: url('img/contact/social/Behance.svg');
-            mask-image: url('img/contact/social/Behance.svg');
-        }
-        .linkedin-icon {
-            -webkit-mask-image: url('img/contact/social/linkedin.svg');
-            mask-image: url('img/contact/social/linkedin.svg');
-        }
+        .instagram-icon { -webkit-mask-image: url('img/contact/social/instagram.svg'); mask-image: url('img/contact/social/instagram.svg'); }
+        .behance-icon { -webkit-mask-image: url('img/contact/social/Behance.svg'); mask-image: url('img/contact/social/Behance.svg'); }
+        .linkedin-icon { -webkit-mask-image: url('img/contact/social/linkedin.svg'); mask-image: url('img/contact/social/linkedin.svg'); }
         .social-links a:hover .social-icon { opacity: 1; }
         .social-links a:hover .instagram-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .social-links a:hover .behance-icon { background: #1769ff; }
         .social-links a:hover .linkedin-icon { background: #0a66c2; }
         .toast {
-            position: fixed; bottom: 100px; left: 50%;
-            transform: translateX(-50%) translateY(24px);
-            background-color: rgba(0, 0, 0, 0.48);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            color: #ffffff; font-size: 16px; font-weight: 240;
-            padding: 14px 24px; border-radius: 999px;
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(24px);
+            background-color: rgba(0, 0, 0, 0.48); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            color: #ffffff; font-size: 16px; font-weight: 240; padding: 14px 24px; border-radius: 999px;
             pointer-events: none; opacity: 0; visibility: hidden;
-            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
-            z-index: 1000; white-space: nowrap;
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; z-index: 1000; white-space: nowrap;
         }
-        .toast.show {
-            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
-        }
-        @media (pointer: fine) {
-          * { cursor: none !important; }
-        }
+        .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        
+        @media (pointer: fine) { * { cursor: none !important; } }
         #canvas {
           position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
           z-index: 9999; pointer-events: none; mix-blend-mode: multiply; background: transparent;
         }
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 20px; }
-            .logo-img { height: 50px; }
-            nav { width: 100%; }
+            .logo-img { height: 50px; } nav { width: 100%; }
             nav ul { justify-content: center; gap: 25px; width: 100%; }
             nav ul li a { font-size: 16px; font-weight: 500; }
             .email-link { font-size: clamp(24px, 6vw, 32px); margin-bottom: 40px; line-height: 1.3; }
-            .social-links { gap: 40px; }
-            .social-links a { width: 36px; height: 36px; }
+            .social-links { gap: 40px; } .social-links a { width: 36px; height: 36px; }
             .toast { font-size: 16px; padding: 14px 32px; bottom: 160px; }
         }
     </style>
@@ -178,211 +131,44 @@
         <div class="contact-info">
             <a href="mailto:eunjun0505@gmail.com" class="email-link">eunjun0505@gmail.com</a>
             <div class="social-links">
-                <a href="https://www.instagram.com/chid_design/" target="_blank" aria-label="Instagram">
-                    <span class="social-icon instagram-icon"></span>
-                </a>
-                <a href="https://www.behance.net/chiddesign/" target="_blank" aria-label="Behance">
-                    <span class="social-icon behance-icon"></span>
-                </a>
-                <a href="https://www.linkedin.com/in/eunjunchoi/" target="_blank" aria-label="LinkedIn">
-                    <span class="social-icon linkedin-icon"></span>
-                </a>
+                <a href="https://www.instagram.com/chid_design/" target="_blank" aria-label="Instagram"><span class="social-icon instagram-icon"></span></a>
+                <a href="https://www.behance.net/chiddesign/" target="_blank" aria-label="Behance"><span class="social-icon behance-icon"></span></a>
+                <a href="https://www.linkedin.com/in/eunjunchoi/" target="_blank" aria-label="LinkedIn"><span class="social-icon linkedin-icon"></span></a>
             </div>
         </div>
     </main>
     <canvas id="canvas"></canvas>
+
+    <script src="static/js/page_effect.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(() => { document.body.classList.add('fade-in'); }, 50);
             function fadeAndMove(targetUrl) {
                 if(window.location.href.includes(targetUrl)) return;
                 document.body.classList.remove('fade-in');
                 setTimeout(() => { window.location.href = targetUrl; }, 500);
             }
-            document.getElementById('back-to-home').addEventListener('click', function() { fadeAndMove('index.html'); });
+
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fadeAndMove(this.getAttribute('href'));
+                    e.preventDefault(); fadeAndMove(this.getAttribute('href'));
                 });
             });
 
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
-            const dotCanvasBlack = document.createElement('canvas');
-            dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
-            const ctxB = dotCanvasBlack.getContext('2d');
-            ctxB.fillStyle = '#111111';
-            ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
-            const dotCanvasWhite = document.createElement('canvas');
-            dotCanvasWhite.width = 24; dotCanvasWhite.height = 24;
-            const ctxW = dotCanvasWhite.getContext('2d');
-            ctxW.fillStyle = '#ffffff';
-            ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
-
-            let cursorColorMode = 'black'; 
-            const PT_TO_PX = 1.333;
-            const baseRadius = (((4 * PT_TO_PX) / 2) / 2) * 1.1; 
-            const maxRadius = (((9 * PT_TO_PX) / 2) / 2) * 1.1;  
-            const gridStep = ((10 * PT_TO_PX) / 2) * 1.1;        
-            const effectRadius = gridStep * 15; 
-            const effectRadiusSq = effectRadius * effectRadius;
-            const maxRippleRadius = gridStep * 24; 
-            const maxRippleRadiusSq = maxRippleRadius * maxRippleRadius;
-
-            let cols, rows;
-            let points = [];
-            let activePoints = new Set();
-            let mouse = { x: -1000, y: -1000 };
-            let ripples = [];
-
-            function initPoints() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                cols = Math.ceil(canvas.width / gridStep) + 1;
-                rows = Math.ceil(canvas.height / gridStep) + 1;
-                points = [];
-                activePoints.clear();
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        points.push({
-                            c, r, x: c * gridStep, y: r * gridStep,
-                            size: baseRadius, colorFactor: 0
-                        });
-                    }
-                }
-            }
-            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-            window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
-            window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
-            window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
-            }, { passive: true });
-
-            function triggerRipple(x, y) {
-                ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
-                setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 200);
-            }
-            window.addEventListener('resize', initPoints);
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                let targetC = -100;
-                let targetR = -100;
-
-                if (mouse.x >= 0 && mouse.y >= 0) {
-                    targetC = Math.round(mouse.x / gridStep);
-                    targetR = Math.round(mouse.y / gridStep);
-                    const checkRadius = 12; 
-                    for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
-                        for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                            if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
-                        }
-                    }
-                }
-
-                for (let i = ripples.length - 1; i >= 0; i--) {
-                    let r = ripples[i];
-                    let progress = Math.min(1, r.radius / maxRippleRadius);
-                    let speedFactor = 1 - progress; 
-                    r.radius += gridStep * (1.2 * speedFactor + 0.4); 
-                    if (r.radius - gridStep * 4 > maxRippleRadius) {
-                        ripples.splice(i, 1);
-                        continue;
-                    }
-                    let maxDist = r.radius + gridStep * 2;
-                    let cMin = Math.max(0, Math.floor((r.x - maxDist) / gridStep));
-                    let cMax = Math.min(cols - 1, Math.ceil((r.x + maxDist) / gridStep));
-                    let rMin = Math.max(0, Math.floor((r.y - maxDist) / gridStep));
-                    let rMax = Math.min(rows - 1, Math.ceil((r.y + maxDist) / gridStep));
-                    for(let col = cMin; col <= cMax; col++) {
-                        for(let row = rMin; row <= rMax; row++) activePoints.add(row * cols + col);
-                    }
-                }
-
-                const dotImg = cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
-
-                for (let index of activePoints) {
-                    const point = points[index];
-                    let mouseTargetSize = baseRadius;
-                    let mouseTargetColorFactor = 0;
-
-                    if (point.c === targetC && point.r === targetR) {
-                        mouseTargetSize = maxRadius;
-                        mouseTargetColorFactor = 1; 
-                    } else {
-                        const dx = point.x - mouse.x;
-                        const dy = point.y - mouse.y;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < effectRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const factor = 1 - (dist / effectRadius);
-                            const f2 = factor * factor;
-                            const f4 = f2 * f2;
-                            mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
-                            mouseTargetColorFactor = f4 * f4; 
-                        }
-                    }
-
-                    let rippleEffect = 0;
-                    for (let r of ripples) {
-                        const dx = point.x - r.x;
-                        const dy = point.y - r.y;
-                        if (Math.abs(dx) > maxRippleRadius || Math.abs(dy) > maxRippleRadius) continue; 
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq <= maxRippleRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const distanceFade = 1 - (dist / maxRippleRadius);
-                            const diff = Math.abs(dist - r.radius);
-                            const ring = Math.max(0, 1 - (diff / (gridStep * 3.5)));
-                            rippleEffect += (ring * r.strength) * distanceFade;
-                        }
-                    }
-
-                    let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
-                    let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
-
-                    const speed = 0.28; 
-                    point.size += (targetSize - point.size) * speed;
-                    point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
-
-                    if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
-                        ctx.globalAlpha = point.colorFactor; 
-                        const drawSize = point.size * 2;
-                        ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
-                    } else {
-                        point.size = baseRadius;
-                        point.colorFactor = 0;
-                        activePoints.delete(index);
-                    }
-                }
-                ctx.globalAlpha = 1.0;
-                requestAnimationFrame(draw);
-            }
-            initPoints();
-            requestAnimationFrame(draw);
-
             const emailLink = document.querySelector('.email-link');
             const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = 'Copied to Clipboard';
+            toast.className = 'toast'; toast.textContent = 'Copied to Clipboard';
             document.body.appendChild(toast);
             
             let toastTimeout;
-
             if (emailLink) {
                 emailLink.addEventListener('click', function(e) {
                     e.preventDefault(); 
                     const emailAddress = 'eunjun0505@gmail.com';
                     navigator.clipboard.writeText(emailAddress).then(() => {
-                        clearTimeout(toastTimeout);
-                        toast.classList.add('show');
-                        toastTimeout = setTimeout(() => {
-                            toast.classList.remove('show');
-                        }, 2500);
+                        clearTimeout(toastTimeout); toast.classList.add('show');
+                        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 2500);
                     }).catch(err => {
-                        console.error('클립보드 복사 실패:', err);
-                        alert('클립보드 복사에 실패했습니다.');
+                        console.error('클립보드 복사 실패:', err); alert('클립보드 복사에 실패했습니다.');
                     });
                 });
             }
