@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
 
-    // 프리렌더링 캔버스 (projects.html 최적화 로직 통합)
+    // 프리렌더링 캔버스
     const dotCanvasBlack = document.createElement('canvas');
     dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
     const ctxB = dotCanvasBlack.getContext('2d');
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
     ctxW.fillStyle = '#ffffff';
     ctxW.beginPath(); ctxW.arc(12, 12, 12, 0, Math.PI * 2); ctxW.fill();
 
-    // 현재 페이지 배경색을 자동 감지하여 모드 설정 (전체 페이지 호환)
+    // 배경색 감지 모드 설정
     let cursorColorMode = 'black'; 
     const checkTheme = () => {
         const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim().toLowerCase();
@@ -71,12 +71,59 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
-    window.addEventListener('mousedown', (e) => { if (e.button === 0) triggerRipple(e.clientX, e.clientY); });
+    // --- 모바일 및 PC 이벤트 리스너 수정 부분 ---
+    let lastTouchTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isScrolling = false;
+
     window.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 0) triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
+        lastTouchTime = Date.now();
+        isScrolling = false; // 스크롤 여부 초기화
+        if (e.touches.length > 0) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
     }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 0) return;
+        const dx = e.touches[0].clientX - touchStartX;
+        const dy = e.touches[0].clientY - touchStartY;
+        // 터치 시작 지점에서 5px 이상 움직이면 스크롤로 판단
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            isScrolling = true;
+        }
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+        if (!isScrolling && e.changedTouches.length > 0) {
+            // 스크롤이 아닌 단순 터치(탭)일 때만 리플 효과 발생
+            triggerRipple(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        }
+        // 터치 기기에서 강제로 가상 마우스 커서가 남는 현상 방지
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        // 마지막 터치 후 500ms 이내에 발생하는 마우스 이동은 
+        // 모바일 브라우저의 가짜 이벤트이므로 무시 (Sticky Cursor 해결)
+        if (Date.now() - lastTouchTime < 500) return; 
+        mouse.x = e.clientX; 
+        mouse.y = e.clientY; 
+    });
+
+    window.addEventListener('mouseleave', () => { 
+        mouse.x = -1000; 
+        mouse.y = -1000; 
+    });
+
+    window.addEventListener('mousedown', (e) => { 
+        if (Date.now() - lastTouchTime < 500) return; // 모바일 가짜 클릭으로 인한 중복 리플 방지
+        if (e.button === 0) triggerRipple(e.clientX, e.clientY); 
+    });
+    // ---------------------------------------------
 
     function triggerRipple(x, y) {
         ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
