@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // -------------------------------------------------------
-    // [커스텀 커서 및 리플 효과 시스템 자동 주입 (모바일 완벽 대응 버전)]
+    // [커스텀 커서 및 리플 효과 시스템 자동 주입 (모바일 완벽 차단 버전)]
     // -------------------------------------------------------
     const canvas = document.createElement('canvas');
     canvas.id = 'canvas';
@@ -71,67 +71,54 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // --- 모바일 가짜 마우스 이벤트 원천 차단 로직 ---
-    let isTouchContext = false; // 터치 기기 여부 판별
+    // --- 모바일 가짜 마우스 이벤트 원천 차단 및 캡처 로직 ---
+    let isTouchDevice = false; // 터치 기기 여부 판별
     let touchStartX = 0;
     let touchStartY = 0;
     let isScrolling = false;
 
-    // 접속 초기부터 터치 기기인지 CSS 미디어쿼리로 감지
-    if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-        isTouchContext = true;
-    }
-
-    window.addEventListener('touchstart', (e) => {
-        isTouchContext = true; // 화면을 한 번이라도 터치하면 무조건 터치 환경으로 고정
+    // capture: true 를 사용하여 버튼 등 자식 요소가 이벤트를 막아도 무조건 최우선으로 감지합니다.
+    document.addEventListener('touchstart', (e) => {
+        isTouchDevice = true; // 화면을 터치하는 순간 모바일 모드로 영구 고정
         isScrolling = false;
         if (e.touches.length > 0) {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }
-        // 커서 위치 강제 은닉
-        mouse.x = -1000; 
-        mouse.y = -1000;
-    }, { passive: true });
+    }, { passive: true, capture: true });
 
-    window.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', (e) => {
         if (e.touches.length === 0) return;
         const dx = e.touches[0].clientX - touchStartX;
         const dy = e.touches[0].clientY - touchStartY;
-        // 약간만 스와이프해도 스크롤로 판별 (리플 발생 방지)
         if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
             isScrolling = true;
         }
-    }, { passive: true });
+    }, { passive: true, capture: true });
 
-    window.addEventListener('touchend', (e) => {
+    document.addEventListener('touchend', (e) => {
         if (!isScrolling && e.changedTouches.length > 0) {
-            // 스크롤이 아닌 순수 '터치(탭)' 일 때만 리플 애니메이션 발동
+            // 스크롤이 아닐 때만 물결(Ripple) 애니메이션 발동
             triggerRipple(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         }
-        // 이메일 복사, 버튼 클릭 등 어떤 상황에서도 커서가 남지 않도록 다시 은닉
-        mouse.x = -1000;
-        mouse.y = -1000;
-    });
+    }, { passive: true, capture: true });
 
-    window.addEventListener('mousemove', (e) => {
-        // 터치 기기에서는 브라우저가 생성하는 가짜 마우스 이벤트를 완벽하게 무시합니다.
-        // PC 마우스 환경일 때만 반응합니다.
-        if (isTouchContext) return; 
-        
+    // PC 환경을 위한 마우스 이벤트 처리
+    document.addEventListener('mousemove', (e) => {
+        if (isTouchDevice) return; // 터치 기기면 좌표 업데이트 무시
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-    });
+    }, { capture: true });
 
-    window.addEventListener('mouseleave', () => { 
+    document.addEventListener('mouseleave', () => { 
         mouse.x = -1000; 
         mouse.y = -1000; 
-    });
+    }, { capture: true });
 
-    window.addEventListener('mousedown', (e) => { 
-        if (isTouchContext) return; // 모바일에서는 mousedown 리플 무시 (touchend에서 처리함)
+    document.addEventListener('mousedown', (e) => { 
+        if (isTouchDevice) return; // 터치 기기면 마우스 클릭 효과 무시
         if (e.button === 0) triggerRipple(e.clientX, e.clientY); 
-    });
+    }, { capture: true });
     // ---------------------------------------------
 
     function triggerRipple(x, y) {
@@ -143,10 +130,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
         let targetC = -100;
         let targetR = -100;
 
-        if (mouse.x >= 0 && mouse.y >= 0) {
+        // 터치 기기가 아닐 때만 마우스 주변 점들을 활성화
+        if (!isTouchDevice && mouse.x >= 0 && mouse.y >= 0) {
             targetC = Math.round(mouse.x / gridStep);
             targetR = Math.round(mouse.y / gridStep);
             const checkRadius = 12; 
@@ -183,20 +172,23 @@ document.addEventListener("DOMContentLoaded", function() {
             let mouseTargetSize = baseRadius;
             let mouseTargetColorFactor = 0;
 
-            if (point.c === targetC && point.r === targetR) {
-                mouseTargetSize = maxRadius;
-                mouseTargetColorFactor = 1; 
-            } else {
-                const dx = point.x - mouse.x;
-                const dy = point.y - mouse.y;
-                const distSq = dx * dx + dy * dy;
-                if (distSq < effectRadiusSq) {
-                    const dist = Math.sqrt(distSq);
-                    const factor = 1 - (dist / effectRadius);
-                    const f2 = factor * factor;
-                    const f4 = f2 * f2;
-                    mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
-                    mouseTargetColorFactor = f4 * f4; 
+            // 터치 기기에서는 호버 크기 계산을 일절 수행하지 않음 (오직 Ripple에만 반응)
+            if (!isTouchDevice) {
+                if (point.c === targetC && point.r === targetR) {
+                    mouseTargetSize = maxRadius;
+                    mouseTargetColorFactor = 1; 
+                } else {
+                    const dx = point.x - mouse.x;
+                    const dy = point.y - mouse.y;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq < effectRadiusSq) {
+                        const dist = Math.sqrt(distSq);
+                        const factor = 1 - (dist / effectRadius);
+                        const f2 = factor * factor;
+                        const f4 = f2 * f2;
+                        mouseTargetSize = baseRadius + (maxRadius - baseRadius) * (f4 * factor);
+                        mouseTargetColorFactor = f4 * f4; 
+                    }
                 }
             }
 
