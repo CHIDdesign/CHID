@@ -13,6 +13,76 @@
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
     
     <link rel="stylesheet" href="/static/css/base_white.css">
+    <style>
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+        }
+        .carousel-track-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            padding: 10px;
+            color: #777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s;
+        }
+        .carousel-btn:hover {
+            color: #111;
+        }
+        .carousel-btn svg {
+            width: 48px;
+            height: 48px;
+        }
+        .prev-btn { left: -60px; }
+        .next-btn { right: -60px; }
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #d1d1d1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .dot.active {
+            background-color: #333;
+            transform: scale(1.3);
+        }
+        @media (max-width: 1320px) {
+            .prev-btn { left: 10px; }
+            .next-btn { right: 10px; }
+            .carousel-btn { color: #fff; background: rgba(0,0,0,0.1); border-radius: 50%; padding: 4px; }
+            .carousel-btn:hover { color: #fff; background: rgba(0,0,0,0.3); }
+            .carousel-btn svg { width: 32px; height: 32px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -52,6 +122,10 @@
                 2026
             </div>
         </section>
+        
+        <div class="full-image-block">
+                <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
+        </div>
 
         <div class="text-right">
             <p class="intro-lead">
@@ -69,41 +143,30 @@
                 최대 전개 상태 대비 20% 수준이라는 획기적인 압축률로 대량 포장의 한계를 허물고, Foldisafe는 중환자실의 물류 및 수납 공간에 새로운 기준을 제시합니다.
             </p>
         </div>
-
-        <!-- 새로 추가된 지그재그 컨테이너 -->
-        <div class="zigzag-container">
-            <!-- 좌측 애니메이션 (모바일은 상단) -->
-            <div class="zigzag-svg-wrapper">
-                <svg viewBox="0 0 200 600">
-                    <defs>
-                      <filter id="scribble" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="600">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise" />
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
-                      </filter>
-                    </defs>
-                    <path class="zigzag-path" d="M 100 5 L 100 95 M 100 105 L 100 195 M 100 205 L 100 295 M 100 305 L 100 395 M 100 405 L 100 495 M 100 505 L 100 595"></path>
+        
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
+            </button>
+            <div class="carousel-track-wrapper">
+                <div class="carousel-track">
+                    <img src="/img/projects/project img/8. snaked/snaked 2.webp" alt="Gallery Image 1" class="carousel-slide">
+                    <img src="/img/projects/project img/8. snaked/snaked 3.webp" alt="Gallery Image 2" class="carousel-slide">
+                    <img src="/img/projects/project img/8. snaked/snaked 4.webp" alt="Gallery Image 3" class="carousel-slide">
+                    <img src="/img/projects/project img/8. snaked/snaked 5.webp" alt="Gallery Image 3" class="carousel-slide">
+                    <img src="/img/projects/project img/8. snaked/snaked 6.webp" alt="Gallery Image 3" class="carousel-slide">
+                </div>
             </div>
-            
-            <!-- 우측 텍스트 (모바일은 하단) -->
-            <div class="zigzag-text-wrapper">
-                <p class="main-heading">
-                    [Graphic Detail Sentence]
-                </p>
-                <p class="body-en">
-                    This section explains the mechanism alongside the graphic.<br>
-                    It highlights specific features dynamically.
-                </p>
-                <p class="body-kr">
-                    그래픽과 함께 세부 메커니즘을 설명하는 공간입니다.<br>
-                    텍스트를 추가하여 애니메이션에 대한 설명을 작성하세요.
-                </p>
+            <button class="carousel-btn next-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+            <div class="carousel-indicators">
+                <!-- Dots will be generated by JS -->
             </div>
-        </div>
-        <!-- // 새로 추가된 지그재그 컨테이너 끝 -->
-
-        <div class="full-image-block">
-            <img src="/img/projects/project img/placeholder.webp" alt="Detail" loading="lazy">
         </div>
 
         <div class="credit-section">
@@ -115,18 +178,22 @@
                 </div>
             </div>
             <div class="credit-grid">
-                <div class="credit-label">Industrial Designer</div>
-                <div class="credit-content">Eunjun Choi<br></div>
+                <div class="credit-label">Designer</div>
+                <div class="credit-content">Eunjun Choi<br>Jaeyoon Lee</div>
+            </div>
+            <div class="credit-grid">
+                <div class="credit-label">Engineering</div>
+                <div class="credit-content">Hongjun Jo<br>Jinmo Lee<br>Jehyeon Kee</div>
             </div>
             <div class="credit-grid">
                 <div class="credit-label">Visualization</div>
-                <div class="credit-content">Eunjun Choi</div>
+                <div class="credit-content">Eunjun Choi<br>Jaeyoon Lee
             </div>
         </div>
 
-        <div class="next-project" onclick="location.href='NEXT_PROJECT.html'" style="--next-bg: url('/img/projects/Thumbnail/project_N.webp');">
+        <div class="next-project" onclick="location.href='/projects/nezhnost.html'" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
             <div class="next-label">Next Project</div>
-            <div class="next-title">Next Project Title &rarr;</div>
+            <div class="next-title">Nezhnost &rarr;</div>
         </div>
 
     </main>
@@ -134,5 +201,47 @@
     <script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
     <script src="/static/js/page_effect.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.next-btn');
+            const prevButton = document.querySelector('.prev-btn');
+            const dotsNav = document.querySelector('.carousel-indicators');
+            
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dotsNav.appendChild(dot);
+            });
+            
+            const dots = Array.from(dotsNav.children);
+            let currentIndex = 0;
+
+            const updateCarousel = (index) => {
+                track.style.transform = `translateX(-${index * 100}%)`;
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[index].classList.add('active');
+            };
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateCarousel(currentIndex);
+            });
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateCarousel(currentIndex);
+            });
+
+            dotsNav.addEventListener('click', e => {
+                const targetDot = e.target.closest('.dot');
+                if (!targetDot) return;
+                currentIndex = dots.findIndex(dot => dot === targetDot);
+                updateCarousel(currentIndex);
+            });
+        });
+    </script>
 </body>
 </html>
