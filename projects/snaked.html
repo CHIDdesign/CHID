@@ -14,6 +14,14 @@
     
     <link rel="stylesheet" href="/static/css/base_white.css">
     <style>
+        :root {
+            --bg-color: #F8F4EE;
+            --text-main: #1B1B1B;
+            --point-color: #FF7033;
+        }
+        header { background-color: rgba(248, 244, 238, 0.95) !important; }
+        .back-btn { background: rgba(248, 244, 238, 0.48) !important; }
+        
         .carousel-container {
             position: relative;
             width: 100%;
@@ -82,6 +90,22 @@
             .carousel-btn:hover { color: #fff; background: rgba(0,0,0,0.3); }
             .carousel-btn svg { width: 32px; height: 32px; }
         }
+        .auto-carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .auto-carousel-slide {
+            width: 100%;
+            display: none;
+            object-fit: cover;
+        }
+        .auto-carousel-slide.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -122,11 +146,18 @@
                 2026
             </div>
         </section>
-        
+
+        <div class="auto-carousel-container">
+            <img src="/img/projects/project img/8. snaked/snaked 8.webp" alt="Auto Gallery 1" class="auto-carousel-slide active">
+            <img src="/img/projects/project img/8. snaked/snaked 9.webp" alt="Auto Gallery 2" class="auto-carousel-slide">
+            <img src="/img/projects/project img/8. snaked/snaked 10.webp" alt="Auto Gallery 3" class="auto-carousel-slide">
+            <img src="/img/projects/project img/8. snaked/snaked 11.webp" alt="Auto Gallery 4" class="auto-carousel-slide">
+        </div>
+
         <div class="full-image-block">
                 <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
         </div>
-
+     
         <div class="text-right">
             <p class="intro-lead">
                 SNAKED is a rescue stretcher developed for entrapped victim rescue in collapsed structures.
@@ -241,6 +272,16 @@
                 currentIndex = dots.findIndex(dot => dot === targetDot);
                 updateCarousel(currentIndex);
             });
+
+            const autoSlides = document.querySelectorAll('.auto-carousel-slide');
+            if (autoSlides.length > 0) {
+                let currentAutoIndex = 0;
+                setInterval(() => {
+                    autoSlides[currentAutoIndex].classList.remove('active');
+                    currentAutoIndex = (currentAutoIndex + 1) % autoSlides.length;
+                    autoSlides[currentAutoIndex].classList.add('active');
+                }, 1000);
+            }
         });
     </script>
 </body>
