@@ -592,6 +592,27 @@
                 font-size: 12px;
                 margin-right: 10px;
             }
+            .disaster-timeline {
+                min-width: auto;
+                width: 100%;
+                padding-left: 0;
+                padding-right: 20px;
+                box-sizing: border-box;
+            }
+            .timeline-node {
+                width: 25%;
+                flex: none;
+            }
+            .timeline-line-track {
+                left: calc((100% - 20px) * 0.125);
+                right: calc((100% - 20px) * 0.125 + 20px);
+            }
+            .node-year { font-size: 11px; }
+            .node-title-grey { font-size: 9px; line-height: 1.2; word-break: keep-all; }
+            .node-title-white, .node-title-orange { font-size: 11px; margin-bottom: 5px; word-break: keep-all; }
+            .node-stats { font-size: 9px; border-spacing: 0; }
+            .node-stats th { padding-right: 2px; }
+            .node-large .node-circle-glow { transform: scale(0.7); }
         }
     </style>
 </head>
