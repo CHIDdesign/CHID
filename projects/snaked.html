@@ -71,6 +71,7 @@
             gap: 10px;
             margin-top: 20px;
         }
+
         .dot {
             width: 6px;
             height: 6px;
@@ -95,16 +96,136 @@
             max-width: 1200px;
             margin: 60px auto;
             position: relative;
-            border-radius: 12px;
-            overflow: hidden;
+            padding: 0 40px;
+            box-sizing: border-box;
         }
         .auto-carousel-slide {
             width: 100%;
             display: none;
             object-fit: cover;
+            border-radius: clamp(12px, 2.5vw, 24px);
+        }
+        @media (max-width: 768px) {
+            .auto-carousel-container {
+                padding: 0 20px;
+            }
         }
         .auto-carousel-slide.active {
             display: block;
+        }
+
+        .conveyor-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .conveyor-track {
+            display: flex;
+            width: fit-content;
+            animation: scroll-conveyor 30s linear infinite;
+        }
+        .conveyor-track img {
+            width: 100vw;
+            height: auto;
+            flex-shrink: 0;
+            display: block; /* Removes bottom spacing issue */
+        }
+        @keyframes scroll-conveyor {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .ops-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 80px auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        .ops-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 10 / 14;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-color: #111; /* fallback */
+        }
+        .ops-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.8); /* base darkening */
+        }
+        .ops-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px 24px 30px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0) 100%);
+            display: flex;
+            flex-direction: column;
+            height: 50%;
+            justify-content: flex-end;
+        }
+        .ops-title {
+            font-size: clamp(28px, 2.5vw, 42px);
+            font-weight: 500;
+            color: var(--point-color);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+        .ops-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #eaeaea;
+            font-weight: 300;
+            text-align: left;
+            word-break: keep-all;
+        }
+        @media (max-width: 768px) {
+            .ops-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 0 20px;
+            }
+            .ops-card {
+                aspect-ratio: 4 / 3;
+            }
+            .ops-card-content {
+                height: 70%;
+            }
+        }
+        .problem-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .problem-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .problem-title {
+            margin-bottom: 0;
+        }
+        .problem-svg-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .problem-svg-img {
+                min-width: 270px;
+            }
         }
     </style>
 </head>
@@ -153,26 +274,327 @@
             <img src="/img/projects/project img/8. snaked/snaked 10.webp" alt="Auto Gallery 3" class="auto-carousel-slide">
             <img src="/img/projects/project img/8. snaked/snaked 11.webp" alt="Auto Gallery 4" class="auto-carousel-slide">
         </div>
-
-        <div class="full-image-block">
-                <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
-        </div>
-     
+           
         <div class="text-right">
             <p class="intro-lead">
-                SNAKED is a rescue stretcher developed for entrapped victim rescue in collapsed structures.
+                SNAKED is a specialized rescue stretcher designed for collapsed environments.
             </p>
             <p class="body-en">
                 Every year, disasters such as earthquakes and wars cause massive casualties due to collapsed structures.<br>
                 Traditional stretchers are inefficient in these narrow and irregular terrains.<br>
-                SNAKED innovates the entire rescue process<br>
-                —Approach, Secure, and Transport—<br>
-                to increase the 1% chance of survival in the golden hour.<br>
+                SNAKED innovates the entire rescue process—Approach, Secure, and Transport—to increase the 1% chance of survival in the golden hour.
             </p>
             <p class="body-kr">
                 SNAKED는 구조물 붕괴라는 특수한 재난 환경에 최적화된 구조용 들것입니다.<br>
                 대지진과 전쟁 등으로 인해 매년 대규모 매몰자가 발생하지만, 기존의 들것은 좁고 불규칙한 지형에서 심각한 구조 지연을 초래합니다.<br>
                 SNAKED는 접근, 고정, 이송이라는 구조의 3단계를 혁신하여 단 1%의 생존 가능성이라도 더 높이고자 합니다.
+            </p>
+        </div>
+
+        <div class="full-image-block">
+                <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
+        </div>
+
+        <section class="title-group">
+             <h2 class="main-quote" style="font-style: italic;">
+              <span class="quote-mark">“</span> We thought it was our lack of skill.<br>
+                 18 months in the dirt taught us otherwise—<br>
+                <span class="highlight-orange">it was the gear itself.</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+
+        <div class="conveyor-wrapper" style="margin-bottom: 120px;">
+            <div class="conveyor-track">
+                <!-- 여기에 원하는 이미지를 몇 장이든 넣으면 자동으로 화면을 채우고 무한 스크롤됩니다. -->
+                <img src="/img/projects/project img/8. snaked/snaked 12.webp" alt="Training">
+            </div>
+        </div>
+
+        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+            <div class="small-label" style="margin-bottom: 24px;">Background / 18 Months of Experience in the Real Field</div>
+            <p class="body-en">
+                Our team shares a unique background: we all served as KATUSA (Korean Augmentation To the United States Army) soldiers.<br>
+                Although we had different specialties:<br>
+                 — three in Public Affairs, one in Combat, and one in Chaplaincy —<br>
+                we spent 18 months living and training closely alongside the US Army.
+            </p>
+            <p class="body-kr">
+                저희 팀은 3명의 공보병, 1명의 전투병, 1명의 군종병으로 구성되어 있습니다.<br>
+                서로 병과는 달랐지만, 모두 카투사(KATUSA)로 복무하며 미군과 함께 약 18개월간 생활하고 훈련을 완수한 특별한 공통점을 가지고 있습니다.
+            </p>
+        </div>
+
+        <div class="ops-grid">
+            <div class="ops-card">
+                <img src="/img/projects/project img/8. snaked/snaked 13.webp" alt="WGX Training">
+                <div class="ops-card-content">
+                    <div class="ops-title">[ WGX ]</div>
+                    <div class="ops-desc">
+                        WGX is a training that projects combat power across water obstacles (such as rivers) using temporary floating bridges or watercraft, maintaining a robust combined defense posture to defend against any threat or adversary.
+                    </div>
+                </div>
+            </div>
+            <div class="ops-card">
+                <img src="/img/projects/project img/8. snaked/snaked 14.webp" alt="MEDEVAC Training">
+                <div class="ops-card-content">
+                    <div class="ops-title">[ MEDEVAC ]</div>
+                    <div class="ops-desc">
+                        MEDEVAC is a training that rapidly transports and treats casualties during large-scale operations, reinforcing medical readiness and ensuring forces remain prepared to support the combined defense of the Korean Peninsula.
+                    </div>
+                </div>
+            </div>
+            <div class="ops-card">
+                <img src="/img/projects/project img/8. snaked/snaked 15.webp" alt="AASLT Training">
+                <div class="ops-card-content">
+                    <div class="ops-title">[ AASLT ]</div>
+                    <div class="ops-desc">
+                        AASLT is a training that conducts fast rope insertions and air assault operations using rotary-wing aircraft to enhance interoperability, mission execution, and rapid force projection capabilities in an urban environment.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+            <p class="body-en">
+                We had the rare opportunity to participate in major joint operations such as WGX, AASLT, and MEDEVAC.<br>
+                By conducting rescue missions using real battlefield equipment across diverse terrains,<br>
+                including mountains, urban areas, and coastlines.<br>
+                we directly experienced how extreme environments critically impact life-saving operations.
+            </p>
+            <p class="body-kr">
+                저희 팀은 3명의 공보병, 1명의 전투병, 1명의 군종병으로 구성되어 있습니다.<br>
+                서로 병과는 달랐지만, 모두 카투사(KATUSA)로 복무하며 미군과 함께 약 18개월간 생활하고 훈련을 완수한 특별한 공통점을 가지고 있습니다.
+            </p>
+        </div>
+
+        <!-- [1] SKED 장비 설명 (이미지 병렬 구조, 제목 없음) -->
+        <div class="text-section-split align-center" style="margin-top: 80px;">
+            <div class="text-left">
+                <img src="/img/projects/project img/8. snaked/snaked 16.webp" alt="SKED Stretcher" style="width: 100%; border-radius: 8px;" loading="lazy">
+            </div>
+            <div class="text-right">
+                <p class="body-en">
+                    The SKED is a semi-rigid, plastic sled-type stretcher that can be tightly rolled up for compact storage and easy carrying.<br>In the U.S. Army, it is used to securely wrap and extract casualties from confined spaces, rugged terrain, or for vertical and horizontal helicopter hoisting.<br>
+                </p>
+                <p class="body-kr" style="margin-top: 20px;">
+                    수많은 훈련 속에서 저희가 가장 많이 사용했던 장비는 반강성 플라스틱 썰매형 구조용 들것 'SKED'였습니다.<br>미군에서 협소한 공간이나 험준한 지형에서 사상자를 구출할 때 널리 쓰이는 장비입니다.<br>
+                </p>
+            </div>
+        </div>
+
+        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 80px;">
+            <img src="/img/projects/project img/8. snaked/snaked 17.webp" alt="SKED Uncomfortable" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); color: #fff; z-index: 1;">
+                <div style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1.2; margin-bottom: 5px;">However,</div>
+                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
+                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">SKED</span>
+                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">was very</span>
+                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Uncomfortable</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- [2] SKED 사용 경험 및 한계 깨달음 (단일 평문 구조, 제목 없음) -->
+        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+            <p class="body-en">
+                During our service, we frequently used this equipment, taking on both the roles of the rescuer dragging the stretcher and the patient being transported in it.<br>Through repeated use in various operations, we realized a critical fact that initiated this project: the widely used SKED is an exceptionally uncomfortable and inefficient piece of gear.<br>Initially, we thought it was just our lack of skill, but countless training sessions proved that the problem lay within the equipment itself.<br>
+            </p>
+            <p class="body-kr" style="margin-top: 20px;">
+                저희는 구조대원이 되어 환자를 SKED에 고정하고 직접 이송하기도 했으며, 반대로 환자가 되어 들것에 실려 이동해 보는 등 실전과 같은 경험을 반복했습니다.<br>군 생활 동안 SKED를 반복해서 사용하며, 저희는 이 프로젝트의 출발점이 된 중요한 사실을 깨달았습니다. 구조 현장에서 널리 쓰이는 이 장비가 실제로는 굉장히 불편하다는 점입니다.<br>처음에는 단순히 익숙하지 않아서 그런 것이라고 생각했습니다. 하지만 수많은 훈련을 반복하면서 문제는 숙련도가 아니라 장비 자체임을 확신하게 되었습니다.<br>
+            </p>
+        </div>
+      
+        <!-- [문제 제기 1] 범용성의 함정 -->
+        <section class="title-group" style="margin-top: 100px;">
+            <h2 class="main-quote" style="font-style: italic;">
+                <span class="quote-mark">“</span> Good Anywhere<br>
+                simply means <span style="color: var(--point-color);">Great Nowhere.</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+
+        <div class="image-text-split" style="margin-top: 60px;">
+            <div class="split-image">
+                <img src="/img/projects/project img/8. snaked/snaked 18.webp" alt="Complex Strapping" loading="lazy">
+            </div>
+            <div class="split-text problem-content">
+                <div class="problem-title-group">
+                    <h2 class="split-heading problem-title">
+                        <span style="color: var(--point-color);">01.</span> Complex Strapping
+                    </h2>
+                    <img src="/img/projects/project img/8. snaked/snaked 18_graphic.svg" class="problem-svg-img" alt="Complex Strapping Graphic" loading="lazy">
+                </div>
+                <div class="problem-desc">
+                    <p class="body-en">
+                        Securing a victim requires connecting more than ten straps and buckles. In dark and confined spaces, even experienced rescuers take over 10 minutes, critically delaying the operation.
+                    </p>
+                    <p class="body-kr">
+                        긴급한 상황에서 환자를 결속하기 위해 10개 이상의 스트랩과 버클을 연결해야 합니다. 어둡고 협소한 공간에서는 고정에만 10분 이상을 소요하며 골든타임을 놓치게 됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-text-split" style="margin-top: 60px;">
+            <div class="split-image">
+                <img src="/img/projects/project img/8. snaked/snaked 19.webp" alt="Complex Strapping" loading="lazy">
+            </div>
+            <div class="split-text problem-content">
+                <div class="problem-title-group">
+                    <h2 class="split-heading problem-title">
+                        <span style="color: var(--point-color);">02.</span> Direct Ground impact
+                    </h2>
+                    <img src="/img/projects/project img/8. snaked/snaked 19_graphic.svg" class="problem-svg-img" alt="Complex Strapping Graphic" loading="lazy">
+                </div>
+                <div class="problem-desc">
+                    <p class="body-en">
+                        With only a thin plastic sheet between the patient and the ground, shocks from rocks and stairs are directly transferred, risking severe secondary injuries.
+                    </p>
+                    <p class="body-kr">
+                        이송 과정에서 환자와 지면 사이에는 얇은 플라스틱 판 하나만 존재합니다. 바위와 계단의 충격이 환자에게 그대로 전달되어 심각한 2차 손상을 유발할 위험이 큽니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+     
+        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+            <div class="small-label" style="margin-bottom: 24px;">The Illusion of Versatility</div>
+            <p class="body-en">
+                The SKED is a semi-rigid stretcher designed to be used in most terrains. However, being usable everywhere also means it is optimized for nowhere. Repeated training convinced us that its profound discomfort was a fundamental flaw, not a lack of proficiency.
+            </p>
+            <p class="body-kr">
+                기존에 가장 많이 사용하던 구조용 들것 SKED. 처음에는 단지 우리의 숙련도가 부족해서 불편한 것이라 생각했습니다. 하지만 수많은 훈련을 거듭하며 확신했습니다. 대부분의 지형에서 쓸 수 있다는 것은, 다시 말해 '어느 환경에서도 최적은 아니라는 뜻'이기도 합니다.
+            </p>
+        </div>
+
+        <!-- [문제 제기 2] 3가지 치명적 한계 -->
+        <section class="title-group" style="margin-top: 100px;">
+            <h2 class="main-quote" style="font-style: italic;">
+                <span class="quote-mark">“</span> Can One stretcher handle Every Disaster?<br>
+                Our answer is <span style="color: var(--point-color);">No.</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+
+        <div class="full-image-block">
+                <img src="/img/projects/project img/8. snaked/snaked 21.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
+        </div>
+
+        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 80px;">
+            <img src="/img/projects/project img/8. snaked/snaked 20.webp" alt="SKED Uncomfortable" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); color: #fff; z-index: 1;">
+                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
+                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">They dictate</span>
+                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Life</span>
+                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">and</span>
+                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Death.</span>
+                </div><br>
+                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
+                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">Specialized environments demand</span><br>
+                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Optimized Stretchers.</span>
+                </div>
+                
+            </div>
+        </div>
+       
+        <div class="full-image-block">
+            <!-- 사망자 통계 타임라인 이미지 12.jpg 자리 -->
+            <img src="/img/projects/project img/8. snaked/snaked 17.webp" alt="Target Environment" loading="lazy">
+        </div>
+
+        <section class="title-group" style="margin-top: 120px;">
+            <h2 class="main-quote" style="font-style: italic;">
+                <span class="quote-mark">“</span> If the space won't yield,<br>
+                why not <span style="color: var(--point-color);">bend the Stretcher?</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+
+        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+            <div class="small-label" style="margin-bottom: 24px;">The Solution / 3-Step Integration</div>
+            <p class="body-en">
+                SNAKED is not a general-purpose gear. It is an innovative system that perfectly integrates the three stages of rescue—Approach, Secure, and Transport—specifically for the deadly collapsed environments.
+            </p>
+            <p class="body-kr">
+                SNAKED는 적당히 모든 환경에서 쓸 수 있는 장비가 아닙니다. 오직 '매몰자 구조'라는 가장 치명적인 환경에서 환자의 생사와 직결되는 접근(Approach), 고정(Secure), 이송(Transport) 3단계를 하나의 시스템으로 완벽하게 통합했습니다.
+            </p>
+        </div>
+
+        <!-- 3단계 설명 -->
+        <div class="image-text-split">
+            <div class="split-image">
+                <!-- 텔레스코픽 애니메이션 GIF -->
+                <img src="/img/projects/project img/8. snaked/snaked_approach.gif" alt="Step 1 Approach" loading="lazy">
+            </div>
+            <div class="split-text">
+                <div class="step-label">Step 1</div>
+                <h2 class="split-heading" style="margin-bottom: 10px;">Approach: Compact & Ready</h2>
+                <p class="body-kr" style="margin-top: 20px;">
+                    캐리어 손잡이처럼 작동하는 텔레스코픽 구조로 들것의 부피를 줄입니다. 좁은 건물 내부로 진입하는 구조대원의 부담을 최소화하며 틈새로 더 빠르게 진입할 수 있습니다.
+                </p>
+            </div>
+        </div> 
+
+        <div class="image-text-split reverse-desktop">
+            <div class="split-image">
+                <!-- 진공조끼 애니메이션 GIF -->
+                <img src="/img/projects/project img/8. snaked/snaked_secure.gif" alt="Step 2 Secure" loading="lazy">
+            </div>
+            <div class="split-text">
+                <div class="step-label">Step 2</div>
+                <h2 class="split-heading" style="margin-bottom: 10px;">Secure: Vacuum Splint</h2>
+                <p class="body-kr" style="margin-top: 20px;">
+                    번데기가 몸을 감싸는 구조에서 영감을 받았습니다. 내부에 1mm EPS 볼이 채워진 조끼의 공기를 빼면 환자의 체형에 맞게 단단히 굳어지며 2차 손상을 완벽히 방지합니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="image-text-split">
+            <div class="split-image">
+                <!-- 수동 윈치 굴절 애니메이션 GIF -->
+                <img src="/img/projects/project img/8. snaked/snaked_transport.gif" alt="Step 3 Transport" loading="lazy">
+            </div>
+            <div class="split-text">
+                <div class="step-label">Step 3</div>
+                <h2 class="split-heading" style="margin-bottom: 10px;">Transport: Flexible Segment</h2>
+                <p class="body-kr" style="margin-top: 20px;">
+                    '무빙 소파 문제'를 해결하기 위해 하체부에 운동 자유도를 부여했습니다. 13:36 기어비의 수동 윈치를 돌리면 다리 부분이 최대 15도씩 굽어지며 좁고 굽은 지형을 매끄럽게 통과합니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- [공학적 검증 및 마무리] -->
+        <section class="title-group" style="margin-top: 120px;">
+            <h2 class="main-quote" style="font-style: italic;">
+                <span class="quote-mark">“</span> We realized gravity wasn't enough.<br>
+                So we fought back with <span style="color: var(--point-color);">Tension.</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+
+        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+            <div class="small-label" style="margin-bottom: 24px;">Engineering / Proving the Mechanics</div>
+            <p class="body-kr">
+                진정한 구조 장비는 책상 위 스케치가 아닌 현장의 한계를 극복할 때 완성됩니다. 우리는 중력에 의존하던 굽힘 메커니즘의 실패를 인정하고, 각 세그먼트에 고무줄의 장력(Tension)을 추가하여 들것의 기울기와 상관없이 안정적으로 작동하는 메커니즘을 완성했습니다.
+            </p>
+        </div>
+
+        <div class="full-image-block">
+            <!-- 윈치 기어비 표나 고무줄 텐션 비교 이미지 등 -->
+            <img src="/img/projects/project img/8. snaked/snaked 18.webp" alt="Engineering Details" loading="lazy">
+        </div>
+
+        <section class="title-group" style="margin-top: 150px; margin-bottom: 80px;">
+            <h2 class="main-quote" style="font-style: italic; text-align: center;">
+                <span class="quote-mark">“</span> Disasters are inevitable.<br>
+                Giving up on a 1% chance of survival,<br>
+                <span style="color: var(--point-color);">is Not.</span> <span class="quote-mark">”</span>
+            </h2>
+        </section>
+        
+        <div class="text-single-block" style="margin-bottom: 120px;">
+            <p class="body-kr" style="text-align: center;">
+                인명지중(人命至重). 사람의 목숨이 무엇보다 귀하다는 믿음이 구조의 본질입니다.<br>
+                복잡하고 협소한 매몰 구조 환경에는 분명한 물리적 한계가 존재합니다. 하지만 그 한계를 극복해 생명을 살릴 가능성을 단 1%라도 높일 수 있다면, 우리의 시도는 충분한 가치가 있습니다.<br><br>
+                <strong>SNAKED가 그 기회를 만드는 들것이 되겠습니다.</strong>
             </p>
         </div>
         
@@ -205,7 +627,7 @@
             <div class="credit-grid">
                 <div class="credit-label">Project</div>
                 <div class="credit-content">
-                    The James Dyson Award 2026<br>
+                    The James Dyson Awards 2026<br>
                     2026.01 - 2026.09
                 </div>
             </div>
@@ -219,7 +641,7 @@
             </div>
             <div class="credit-grid">
                 <div class="credit-label">Visualization</div>
-                <div class="credit-content">Eunjun Choi<br>Jaeyoon Lee
+                <div class="credit-content">Eunjun Choi<br>Jaeyoon Lee</div>
             </div>
         </div>
 
@@ -282,6 +704,14 @@
                     currentAutoIndex = (currentAutoIndex + 1) % autoSlides.length;
                     autoSlides[currentAutoIndex].classList.add('active');
                 }, 1000);
+            }
+
+            // 컨베이어 벨트 자동 복제 로직 (이미지가 100vw이므로 1번만 복제해도 무한 루프 가능)
+            const conveyorTrack = document.querySelector('.conveyor-track');
+            if (conveyorTrack) {
+                const originalItems = Array.from(conveyorTrack.children);
+                // 무한 스크롤 스냅(-50%)을 위해 전체 트랙을 정확히 1번만 복제하여 2배수로 만듦
+                originalItems.forEach(item => conveyorTrack.appendChild(item.cloneNode(true)));
             }
         });
     </script>
