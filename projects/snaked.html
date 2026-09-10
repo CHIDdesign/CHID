@@ -242,6 +242,357 @@
                 max-width: 400px;
             }
         }
+        .dark-stats-wrapper {
+            background: linear-gradient(to bottom, #000000 0%, #1B1B1B 150px, #1B1B1B calc(100% - 400px), var(--bg-color) 100%);
+            color: #fff;
+            padding-top: 200px;
+            padding-bottom: 400px;
+            margin-top: 0;
+            margin-bottom: 0;
+            width: 100%;
+        }
+        .focus-point-box {
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            padding: 40px 50px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .focus-point-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--point-color) 0%, transparent 100%);
+        }
+        .focus-label {
+            display: inline-block;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .focus-label::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-top: 8px;
+        }
+        .focus-text {
+            font-size: clamp(22px, 2.5vw, 32px);
+            font-weight: 300;
+            color: #eee;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+        .focus-text .highlight {
+            font-weight: 600;
+            color: var(--point-color);
+        }
+        .disaster-timeline-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        .disaster-timeline {
+            position: relative;
+            min-width: 800px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .timeline-line-track {
+            position: absolute;
+            top: 50px;
+            left: 100px; /* inset slightly */
+            right: 100px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .timeline-line-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), #fff);
+            transition: width 2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .disaster-timeline.active .timeline-line-fill {
+            width: 100%;
+        }
+        .timeline-nodes {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        .timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        /* 역재생 시 딜레이 (4번부터 1번 순으로 사라짐) */
+        .timeline-node:nth-child(1) { transition-delay: 1.5s; }
+        .timeline-node:nth-child(2) { transition-delay: 1.0s; }
+        .timeline-node:nth-child(3) { transition-delay: 0.5s; }
+        .timeline-node:nth-child(4) { transition-delay: 0s; }
+        
+        .disaster-timeline.active .timeline-node {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* 등장 시 딜레이 (1번부터 4번 순으로 나타남) */
+        .disaster-timeline.active .timeline-node:nth-child(1) { transition-delay: 0.3s; }
+        .disaster-timeline.active .timeline-node:nth-child(2) { transition-delay: 0.8s; }
+        .disaster-timeline.active .timeline-node:nth-child(3) { transition-delay: 1.3s; }
+        .disaster-timeline.active .timeline-node:nth-child(4) { transition-delay: 1.8s; }
+
+        .node-top {
+            height: 30px;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 10px;
+        }
+        .node-year {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+        .node-center {
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .node-small .node-circle {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .node-large .node-circle-glow {
+            width: 36px;
+            height: 36px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .glow-core {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        .glow-ring-1 {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 112, 51, 0.7);
+            z-index: 2;
+        }
+        .glow-ring-2 {
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 112, 51, 0.6);
+            background: rgba(255, 112, 51, 0.15);
+            z-index: 1;
+            box-shadow: 0 0 20px rgba(255, 112, 51, 0.5);
+        }
+        .node-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
+        }
+        .node-small .node-bottom {
+            padding-top: 0;
+            margin-top: -14px; /* 끌어올려서 동그라미에 정확히 붙게 함 */
+        }
+        .dashed-line {
+            width: 1px;
+            height: 24px;
+            border-left: 1px dashed rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+        .node-title-grey {
+            color: #999;
+            font-size: 13px;
+            line-height: 1.4;
+            font-weight: 400;
+            text-align: center;
+        }
+        .node-title-white {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .node-title-orange {
+            color: var(--point-color);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .node-stats {
+            font-size: 13px;
+            line-height: 1.4;
+            border-spacing: 8px 4px;
+        }
+        .node-stats th {
+            color: #fff;
+            font-weight: 600;
+            text-align: right;
+            vertical-align: top;
+            padding-right: 8px;
+        }
+        .node-stats td {
+            color: #ccc;
+            text-align: left;
+            font-weight: 300;
+        }
+        .node-stats td .est {
+            color: #777;
+            font-size: 11px;
+            display: block;
+            margin-top: 2px;
+        }
+        .dark-stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .dark-stats-title {
+            font-size: clamp(28px, 3vw, 42px);
+            font-weight: 700;
+            color: var(--point-color);
+            margin-bottom: 20px;
+        }
+        .dark-stats-subtitle {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 60px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        .dark-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .dark-stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 50px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .dark-stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .dark-stat-number {
+            font-size: clamp(42px, 5vw, 64px);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .dark-stat-desc {
+            font-size: 15px;
+            color: #aaa;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        .dark-split-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 100px auto 100px auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        .dark-split-left {
+            flex: 1;
+            position: relative;
+        }
+        .dark-split-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            text-align: left;
+        }
+        .annotation-container {
+            position: absolute;
+            bottom: 25%;
+            right: 20%;
+            display: flex;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+        .annotation-text {
+            color: #eaeaea;
+            font-size: 14px;
+            text-align: right;
+            line-height: 1.4;
+            font-weight: 300;
+            margin-right: 15px;
+            margin-bottom: -5px;
+        }
+        .annotation-line {
+            overflow: visible;
+        }
+        @media (max-width: 768px) {
+            .dark-stats-wrapper {
+                padding-top: 180px;
+                /* Inherits 400px padding-bottom for the long gradient */
+            }
+            .dark-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .dark-split-section {
+                flex-direction: column;
+                margin-top: 60px;
+                margin-bottom: 60px;
+                gap: 30px;
+            }
+            .annotation-container {
+                right: 10%;
+                bottom: 10%;
+            }
+            .annotation-text {
+                font-size: 12px;
+                margin-right: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -487,11 +838,11 @@
             </p>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 22.webp" alt="Target Environment" loading="lazy">
+        <div class="full-image-block" style="margin-bottom: 0;">
+            <img src="/img/projects/project img/8. snaked/snaked 22.webp" alt="Target Environment" style="display: block; margin-bottom: 0;" loading="lazy">
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 80px;">
+        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
             <img src="/img/projects/project img/8. snaked/snaked 20.webp" alt="SKED Uncomfortable" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none;"></div>
             <div style="position: absolute; bottom: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); color: #fff; z-index: 1;">
@@ -506,6 +857,157 @@
                     <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Optimized Stretchers.</span>
                 </div>
                 
+            </div>
+        </div>
+
+        <div class="dark-stats-wrapper">
+            <div class="dark-stats-container">
+                <div class="focus-point-box">
+                    <div class="focus-label">Main Focus Point</div>
+                    <div class="focus-text">
+                        Recurring tragedy of trapped victims dying in collapsed buildings,<br>
+                        <span class="highlight">Stretchers</span> are the bottleneck in rescue operations
+                    </div>
+                </div>
+                
+                <div class="disaster-timeline-wrapper">
+                    <div class="disaster-timeline" id="disasterTimeline">
+                        <div class="timeline-line-track">
+                            <div class="timeline-line-fill"></div>
+                        </div>
+                        <div class="timeline-nodes">
+                            <!-- Node 1 -->
+                            <div class="timeline-node node-small">
+                                <div class="node-top">
+                                    <div class="node-year">2024</div>
+                                </div>
+                                <div class="node-center">
+                                    <div class="node-circle"></div>
+                                </div>
+                                <div class="node-bottom">
+                                    <div class="dashed-line"></div>
+                                    <div class="node-title-grey">Japan Noto Peninsula<br>Earthquake</div>
+                                </div>
+                            </div>
+                            <!-- Node 2 -->
+                            <div class="timeline-node node-large">
+                                <div class="node-top">
+                                    <div class="node-year">2025</div>
+                                </div>
+                                <div class="node-center">
+                                    <div class="node-circle-glow">
+                                        <div class="glow-ring-1"></div>
+                                        <div class="glow-ring-2"></div>
+                                        <div class="glow-core"></div>
+                                    </div>
+                                </div>
+                                <div class="node-bottom">
+                                    <div class="node-title-white">Myanmar</div>
+                                    <div class="node-title-orange">Earthquake</div>
+                                    <table class="node-stats">
+                                        <tr><th>Magnitude</th><td>7.7</td></tr>
+                                        <tr><th>Deaths</th><td>3,600~5,456<br><span class="est">(Estimated)</span></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Node 3 -->
+                            <div class="timeline-node node-small">
+                                <div class="node-top">
+                                    <div class="node-year">2026</div>
+                                </div>
+                                <div class="node-center">
+                                    <div class="node-circle"></div>
+                                </div>
+                                <div class="node-bottom">
+                                    <div class="dashed-line"></div>
+                                    <div class="node-title-grey">United States-Iran<br>War</div>
+                                </div>
+                            </div>
+                            <!-- Node 4 -->
+                            <div class="timeline-node node-large">
+                                <div class="node-top">
+                                    <div class="node-year">2026</div>
+                                </div>
+                                <div class="node-center">
+                                    <div class="node-circle-glow">
+                                        <div class="glow-ring-1"></div>
+                                        <div class="glow-ring-2"></div>
+                                        <div class="glow-core"></div>
+                                    </div>
+                                </div>
+                                <div class="node-bottom">
+                                    <div class="node-title-white">Venezuela</div>
+                                    <div class="node-title-orange">Earthquakes</div>
+                                    <table class="node-stats">
+                                        <tr><th>Magnitude</th><td>7.2 + 7.5</td></tr>
+                                        <tr><th>Deaths</th><td>4,490~4,561<br><span class="est">(Estimated)</span></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dark-stats-grid" style="margin-bottom: 80px;">
+                    <div class="dark-stat-card">
+                        <div class="dark-stat-number">90<span style="font-size: 0.6em;">%</span></div>
+                        <div class="dark-stat-desc">Of direct earthquake fatalities are caused by collapsed structures, according to studies of over 1,100 cases.</div>
+                    </div>
+                    <div class="dark-stat-card">
+                        <div class="dark-stat-number" style="font-size: clamp(36px, 4vw, 54px);">" Space "</div>
+                        <div class="dark-stat-desc">Rigid, fixed frames demand unnecessarily long, straight pathways, severely delaying extraction through debris.</div>
+                    </div>
+                    <div class="dark-stat-card">
+                        <div class="dark-stat-number" style="font-size: clamp(36px, 4vw, 54px);">" Time "</div>
+                        <div class="dark-stat-desc">Overly complex belt structures waste critical golden hour time when securing victims in dark, confined environments.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
+                <img src="/img/projects/project img/8. snaked/snaked 23.webp" alt="Burial Casualties" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+                <div style="position: absolute; top: 50%; left: clamp(20px, 5vw, 60px); transform: translateY(-50%); color: #fff; z-index: 1;">
+                    <div style="display: flex; flex-direction: column; gap: clamp(5px, 1vw, 10px);">
+                        <div style="font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: var(--point-color); line-height: 1.1;">
+                            Collapsed Structures
+                        </div>
+                        <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
+                            <span style="font-size: clamp(20px, 3vw, 36px); font-weight: 300; line-height: 1;">account for over</span>
+                            <span style="font-size: clamp(42px, 7vw, 96px); font-weight: 700; color: var(--point-color); line-height: 1;">75%</span>
+                            <span style="font-size: clamp(20px, 3vw, 36px); font-weight: 300; line-height: 1;">of earthquake fatalities.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dark-split-section">
+                <div class="dark-split-left">
+                    <img src="/img/projects/project img/8. snaked/snaked 24.webp" alt="Conventional SKED stretcher" style="width: 100%; display: block;" loading="lazy">
+                    <div class="annotation-container">
+                        <div class="annotation-text">
+                            Conventional SKED stretcher<br>used today
+                        </div>
+                        <svg class="annotation-line" width="60" height="40" viewBox="0 0 60 40">
+                            <path d="M 0 35 L 20 35 L 55 5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1"></path>
+                            <circle cx="55" cy="5" r="2.5" fill="#fff"></circle>
+                        </svg>
+                    </div>
+                </div>
+                <div class="dark-split-right">
+                    <h2 style="margin: 0; line-height: 1.1;">
+                        <span style="font-size: clamp(36px, 4vw, 54px); font-weight: 700; color: var(--point-color); display: block;">Limitations</span>
+                        <span style="font-size: clamp(22px, 2.5vw, 36px); font-weight: 300; color: #fff;">of Conventional Stretchers</span>
+                    </h2>
+                    <hr style="width: 100%; border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0 30px 0;">
+                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-top: 0; margin-bottom: 20px;">
+                        Securing a victim with conventional stretchers is time-consuming, delaying evacuation during critical rescue periods.
+                    </p>
+                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-bottom: 20px;">
+                        Furthermore, their rigid, fixed-frame design makes it difficult to navigate collapsed buildings, narrow passages, stairs, and uneven terrain.
+                    </p>
+                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-bottom: 0;">
+                        While alternative solutions like the SKED stretcher address this rigidity, its belt structure is overly complex for securing patients in confined and dark environments.
+                    </p>
+                </div>
             </div>
         </div>
               
@@ -623,6 +1125,24 @@
                 const originalItems = Array.from(conveyorTrack.children);
                 // 무한 스크롤 스냅(-50%)을 위해 전체 트랙을 정확히 1번만 복제하여 2배수로 만듦
                 originalItems.forEach(item => conveyorTrack.appendChild(item.cloneNode(true)));
+            }
+
+            // 재난 타임라인 애니메이션 옵저버
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        // 스크롤 올려서 화면 밖으로 나가면 다시 역재생되도록 클래스 제거
+                        // 약간의 여유를 두고 사라지게 하려면 threshold 조절 가능
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { threshold: 0.3 }); // 30% 정도 보일 때 작동
+
+            const disasterTimeline = document.getElementById('disasterTimeline');
+            if (disasterTimeline) {
+                timelineObserver.observe(disasterTimeline);
             }
         });
     </script>
