@@ -253,12 +253,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 const video = entry.target;
                 if (video.preload !== "auto") {
                     video.preload = "auto";
+                    video.setAttribute("autoplay", "true");
+                    video.autoplay = true;
                     video.load();
                 }
                 observer.unobserve(video);
             }
         });
-    }, { rootMargin: "1500px 0px", threshold: 0 });
+    }, { rootMargin: "2500px 0px", threshold: 0 });
 
     const playObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
