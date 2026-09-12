@@ -47,10 +47,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim().toLowerCase();
         if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black') {
             window.cursorColorMode = 'white';
-            canvas.style.mixBlendMode = 'plus-lighter';
+            // GPU 과부하(비디오 끊김)의 주범인 mix-blend-mode 제거. normal 블렌딩으로도 흑백 도트는 동일한 시각적 효과를 냄.
+            canvas.style.mixBlendMode = 'normal';
         } else {
             window.cursorColorMode = 'black';
-            canvas.style.mixBlendMode = 'multiply';
+            canvas.style.mixBlendMode = 'normal';
         }
     };
     checkTheme();
@@ -72,6 +73,11 @@ document.addEventListener("DOMContentLoaded", function() {
     let activePoints = new Set();
     let mouse = { x: -1000, y: -1000 };
     let ripples = [];
+    
+    // 최적화를 위한 상태 캐싱
+    let lastTargetC = -1000;
+    let lastTargetR = -1000;
+    let isIdle = false;
 
     function initPoints() {
         canvas.width = window.innerWidth;
@@ -85,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 points.push({ c, r, x: c * gridStep, y: r * gridStep, size: baseRadius, colorFactor: 0 });
             }
         }
+        lastTargetC = -1000;
     }
 
     // --- 모바일 가짜 마우스 이벤트 원천 차단 로직 ---
@@ -119,37 +126,56 @@ document.addEventListener("DOMContentLoaded", function() {
         if (isTouchDevice) return; 
         mouse.x = e.clientX;
         mouse.y = e.clientY;
+        isIdle = false; // 마우스 이동 시 렌더링 재개
     }, { capture: true });
 
     document.addEventListener('mouseleave', () => { 
         mouse.x = -1000; mouse.y = -1000; 
+        lastTargetC = -1000;
     }, { capture: true });
 
     document.addEventListener('mousedown', (e) => { 
         if (isTouchDevice) return; 
-        if (e.button === 0) triggerRipple(e.clientX, e.clientY); 
+        if (e.button === 0) {
+            triggerRipple(e.clientX, e.clientY); 
+            isIdle = false;
+        }
     }, { capture: true });
 
     function triggerRipple(x, y) {
         ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
-        setTimeout(() => { ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); }, 200);
+        setTimeout(() => { 
+            ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); 
+            isIdle = false;
+        }, 200);
     }
     
     window.addEventListener('resize', initPoints);
 
     function draw() {
+        if (isIdle) {
+            requestAnimationFrame(draw);
+            return;
+        }
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let targetC = -100;
-        let targetR = -100;
+        let targetC = -1000;
+        let targetR = -1000;
 
         if (!isTouchDevice && mouse.x >= 0 && mouse.y >= 0) {
             targetC = Math.round(mouse.x / gridStep);
             targetR = Math.round(mouse.y / gridStep);
-            const checkRadius = 12; 
-            for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
-                for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
-                    if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
+            
+            // 마우스가 새로운 그리드 셀로 이동했을 때만 연산 수행 (CPU 과부하 방지)
+            if (targetC !== lastTargetC || targetR !== lastTargetR) {
+                const checkRadius = 12; 
+                for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
+                    for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
+                        if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
+                    }
                 }
+                lastTargetC = targetC;
+                lastTargetR = targetR;
             }
         }
 
@@ -173,13 +199,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const dotImg = window.cursorColorMode === 'white' ? dotCanvasWhite : dotCanvasBlack;
+        let pointsAnimating = false;
 
         for (let index of activePoints) {
             const point = points[index];
             let mouseTargetSize = baseRadius;
             let mouseTargetColorFactor = 0;
 
-            if (!isTouchDevice) {
+            if (!isTouchDevice && mouse.x >= 0) {
                 if (point.c === targetC && point.r === targetR) {
                     mouseTargetSize = maxRadius;
                     mouseTargetColorFactor = 1; 
@@ -220,10 +247,11 @@ document.addEventListener("DOMContentLoaded", function() {
             point.size += (targetSize - point.size) * speed;
             point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
-            if (point.size > baseRadius + 0.01 || point.colorFactor > 0.005) {
+            if (point.size > baseRadius + 0.05 || point.colorFactor > 0.01) {
                 ctx.globalAlpha = point.colorFactor; 
                 const drawSize = point.size * 2;
                 ctx.drawImage(dotImg, point.x - point.size, point.y - point.size, drawSize, drawSize);
+                pointsAnimating = true;
             } else {
                 point.size = baseRadius;
                 point.colorFactor = 0;
@@ -231,6 +259,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         ctx.globalAlpha = 1.0;
+        
+        // 애니메이션이 완전히 끝났고 리플도 없다면 GPU 렌더링 휴식 (전력 절약 및 영상 끊김 방지)
+        if (!pointsAnimating && ripples.length === 0) {
+            isIdle = true;
+        }
+        
         requestAnimationFrame(draw);
     }
     
