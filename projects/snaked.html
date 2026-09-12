@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CHID - SNAKED Stretcher</title>
-    
-    <!-- [최적화 적용] 가장 먼저 보이는 메인 이미지를 1순위로 로딩 (LCP 최적화) -->
+
     <link rel="preload" as="image" href="/img/projects/project img/8. snaked/snaked 1.webp" fetchpriority="high">
 
     <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
@@ -13,6 +12,7 @@
     
     <link rel="stylesheet" href="/static/css/base_white.css">
     <style>
+
         :root {
             --bg-color: #F8F4EE;
             --text-main: #1B1B1B;
@@ -132,7 +132,7 @@
             width: 100vw;
             height: auto;
             flex-shrink: 0;
-            display: block; /* Removes bottom spacing issue */
+            display: block; 
         }
         @keyframes scroll-conveyor {
             0% { transform: translateX(0); }
@@ -156,7 +156,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background-color: #111; /* fallback */
+            background-color: #111; 
         }
         .ops-card img {
             position: absolute;
@@ -166,7 +166,7 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-            filter: brightness(0.8); /* base darkening */
+            filter: brightness(0.8); 
         }
         .ops-card-content {
             position: relative;
@@ -330,7 +330,7 @@
         .timeline-line-track {
             position: absolute;
             top: 50px;
-            left: 100px; /* inset slightly */
+            left: 100px; 
             right: 100px;
             height: 2px;
             background: rgba(255, 255, 255, 0.1);
@@ -360,7 +360,7 @@
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        /* 역재생 시 딜레이 (4번부터 1번 순으로 사라짐) */
+        
         .timeline-node:nth-child(1) { transition-delay: 1.5s; }
         .timeline-node:nth-child(2) { transition-delay: 1.0s; }
         .timeline-node:nth-child(3) { transition-delay: 0.5s; }
@@ -370,7 +370,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* 등장 시 딜레이 (1번부터 4번 순으로 나타남) */
+        
         .disaster-timeline.active .timeline-node:nth-child(1) { transition-delay: 0.3s; }
         .disaster-timeline.active .timeline-node:nth-child(2) { transition-delay: 0.8s; }
         .disaster-timeline.active .timeline-node:nth-child(3) { transition-delay: 1.3s; }
@@ -442,7 +442,7 @@
         }
         .node-small .node-bottom {
             padding-top: 0;
-            margin-top: -14px; /* 끌어올려서 동그라미에 정확히 붙게 함 */
+            margin-top: -14px; 
         }
         .dashed-line {
             width: 1px;
@@ -587,7 +587,7 @@
         @media (max-width: 768px) {
             .dark-stats-wrapper {
                 padding-top: 180px;
-                /* Inherits 400px padding-bottom for the long gradient */
+                
             }
             .dark-stats-grid {
                 grid-template-columns: 1fr;
@@ -628,8 +628,7 @@
             .node-stats th { padding-right: 2px; }
             .node-large .node-circle-glow { transform: scale(0.7); }
         }
-        
-        /* 타자기 애니메이션 커서 */
+
         .typing-cursor::after {
             content: '';
             display: inline-block;
@@ -644,7 +643,227 @@
             from, to { opacity: 0; }
             50% { opacity: 1; }
         }
-    </style>
+
+                    .type-char {
+                        opacity: 0;
+                        transition: opacity 0.15s ease-out;
+                    }
+                    .stat-popup-overlay.active .type-char {
+                        opacity: 1;
+                        transition-delay: var(--delay);
+                    }
+                    .dark-stat-card {
+                        cursor: pointer;
+                        position: relative;
+                    }
+                    .dark-stat-card::after {
+                        content: 'Click to read more +';
+                        display: block;
+                        margin-top: 20px;
+                        font-size: 13px;
+                        color: var(--point-color);
+                        opacity: 0.7;
+                        transition: opacity 0.3s;
+                    }
+                    .dark-stat-card:hover::after {
+                        opacity: 1;
+                    }
+                    .stat-popup-overlay {
+                        position: fixed;
+                        top: 0; left: 0; right: 0; bottom: 0;
+                        background: rgba(5, 5, 5, 0.85);
+                        backdrop-filter: blur(25px);
+                        -webkit-backdrop-filter: blur(25px);
+                        z-index: 9999;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.5s;
+                    }
+                    .stat-popup-overlay.active {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    .stat-popup-content {
+                        background: #111;
+                        border: 1px solid rgba(255,255,255,0.05);
+                        border-radius: 24px;
+                        max-width: 480px;
+                        width: 90%;
+                        color: #fff;
+                        text-align: left;
+                        transform: translateY(50px) scale(0.92);
+                        opacity: 0;
+                        filter: blur(12px);
+                        transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1), 
+                                    opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                                    filter 0.6s ease-out;
+                        position: relative;
+                        box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .stat-popup-overlay.active .stat-popup-content {
+                        transform: translateY(0) scale(1);
+                        opacity: 1;
+                        filter: blur(0);
+                    }
+                    .popup-image-wrapper {
+                        width: 100%;
+                        height: 220px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .popup-image-wrapper img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                    .popup-image-wrapper::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0; left: 0; width: 100%; height: 50%;
+                        background: linear-gradient(to top, #111 0%, transparent 100%);
+                    }
+                    .popup-text-wrapper {
+                        padding: 10px 40px 40px 40px;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .stat-popup-title {
+                        font-size: clamp(24px, 3vw, 28px);
+                        font-weight: 700;
+                        color: var(--point-color);
+                        margin-bottom: 15px;
+                        line-height: 1.1;
+                    }
+                    .stat-popup-en {
+                        font-size: 15px;
+                        line-height: 1.6;
+                        color: #eee;
+                        margin-bottom: 20px;
+                        word-break: keep-all;
+                    }
+                    .stat-popup-kr {
+                        font-size: 14px;
+                        line-height: 1.6;
+                        color: #888;
+                        font-weight: 300;
+                        word-break: keep-all;
+                    }
+                    .stat-popup-source {
+                        margin-top: 30px;
+                        font-size: 11px;
+                        color: #555;
+                        line-height: 1.5;
+                        word-break: break-all;
+                    }
+                    .stat-popup-source a {
+                        color: #555;
+                        text-decoration: underline;
+                        transition: color 0.3s;
+                    }
+                    .stat-popup-source a:hover {
+                        color: #888;
+                    }
+                    .touch-to-close {
+                        position: absolute;
+                        bottom: 6vh;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        color: rgba(255,255,255,0.4);
+                        font-size: 12px;
+                        letter-spacing: 0.1em;
+                        text-transform: uppercase;
+                        animation: pulse 2s infinite;
+                        pointer-events: none;
+                    }
+                    @keyframes pulse {
+                        0% { opacity: 0.3; }
+                        50% { opacity: 1; }
+                        100% { opacity: 0.3; }
+                    }
+                    .sp-char {
+                        display: inline-block;
+                        transform-origin: center center;
+                    }
+                    .animate-space .sp-char-q1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-2 { animation: spaceChar2 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-3 { animation: spaceChar3 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-4 { animation: spaceChar4 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-5 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                    .animate-space .sp-char-q2 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+                    @keyframes spaceChar1 {
+                        0% { opacity: 0; transform: scale(1) translateX(0); }
+                        10% { opacity: 1; transform: scale(1) translateX(0); }
+                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(25px); }
+                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(40px); }
+                        60% { opacity: 0; transform: scale(0.1); }
+                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(-5px); }
+                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(2px); }
+                        100% { opacity: 1; transform: scale(1) translateX(0); }
+                    }
+                    @keyframes spaceChar2 {
+                        0% { opacity: 0; transform: scale(1) translateX(0); }
+                        10% { opacity: 1; transform: scale(1) translateX(0); }
+                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(15px); }
+                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(20px); }
+                        60% { opacity: 0; transform: scale(0.1); }
+                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(-3px); }
+                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(1px); }
+                        100% { opacity: 1; transform: scale(1) translateX(0); }
+                    }
+                    @keyframes spaceChar3 {
+                        0% { opacity: 0; transform: scale(1) translateX(0); }
+                        10% { opacity: 1; transform: scale(1) translateX(0); }
+                        40% { opacity: 0.8; transform: scaleY(0.15) scaleX(0.5) translateX(0); }
+                        55% { opacity: 0; transform: scaleY(0.01) scaleX(0.05) translateX(0); }
+                        60% { opacity: 0; transform: scale(0.1); }
+                        75% { opacity: 1; transform: scaleY(1.4) scaleX(1.2) translateX(0); }
+                        85% { transform: scaleY(0.85) scaleX(0.9) translateX(0); }
+                        100% { opacity: 1; transform: scale(1) translateX(0); }
+                    }
+                    @keyframes spaceChar4 {
+                        0% { opacity: 0; transform: scale(1) translateX(0); }
+                        10% { opacity: 1; transform: scale(1) translateX(0); }
+                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(-15px); }
+                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(-20px); }
+                        60% { opacity: 0; transform: scale(0.1); }
+                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(3px); }
+                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(-1px); }
+                        100% { opacity: 1; transform: scale(1) translateX(0); }
+                    }
+                    @keyframes spaceChar5 {
+                        0% { opacity: 0; transform: scale(1) translateX(0); }
+                        10% { opacity: 1; transform: scale(1) translateX(0); }
+                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(-25px); }
+                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(-40px); }
+                        60% { opacity: 0; transform: scale(0.1); }
+                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(5px); }
+                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(-2px); }
+                        100% { opacity: 1; transform: scale(1) translateX(0); }
+                    }
+                    @keyframes urgentTimePulse {
+                        0% { opacity: 0; transform: scale(0.8); }
+                        15% { opacity: 1; transform: scale(1.15); color: #ff3b3b; }
+                        30% { transform: scale(1); color: var(--point-color); }
+                        45% { transform: scale(1.15); color: #ff3b3b; }
+                        60% { transform: scale(1); color: var(--point-color); }
+                        100% { opacity: 1; transform: scale(1); }
+                    }
+                    .animate-time {
+                        animation: urgentTimePulse 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+                    }
+                    .stat-hidden {
+                        opacity: 0;
+                    }
+                
+</style>
 </head>
 <body>
 
@@ -713,29 +932,23 @@
         </div>
 
         <div class="katusa-story-section" id="katusaStoryTrigger" style="position: relative; width: 100%; height: 60vh; min-height: 400px; max-height: 800px; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
-            <!-- Background Image with Smooth Easing Fade Out Mask -->
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;"></div>
             
-            <!-- Dark Overlay -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;"></div>
+
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;  z-index: 1;"></div>
             
             <div class="katusa-content-wrapper" style="position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px);">
-                
-                <!-- Top Graphic Group -->
+
                 <div class="katusa-top-graphic" style="display: flex; align-items: center; width: 100%; margin-bottom: clamp(40px, 8vw, 150px);">
                     <div style="font-size: clamp(14px, 1.5vw, 20px); color: #fff; font-weight: 400; margin-right: 10px; white-space: nowrap;">The Story of</div>
-                    
-                    <!-- [방법 1: 파일 경로로 연결할 경우] 아래 img 태그의 src 경로를 변경하세요 -->
-                    <!-- [방법 2: SVG 코드를 직접 넣을 경우] 아래 img 태그를 통째로 지우고 <svg>...</svg> 코드를 붙여넣으세요 -->
+
                     <div id="snaked-logo-svg-container" style="display: inline-flex; align-items: center; height: 1em;">
                         <img src="/img/projects/project img/8. snaked/snaked_logo.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
                     </div>
-                    
-                    <!-- 긴 선분 -->
+
                     <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); margin-left: 20px;"></div>
                 </div>
-                
-                <!-- Bottom Graphic Group -->
+
                 <div class="katusa-bottom-graphic" style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-start;">
                     <div id="typewriter-part1" style="color: #fff; font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; white-space: pre-wrap; margin-right: 15px;">&#8203;</div>
                     <div style="display: flex; align-items: baseline;">
@@ -756,7 +969,7 @@
 
         <div class="conveyor-wrapper" style="margin-bottom: 120px;">
             <div class="conveyor-track">
-                <!-- 여기에 원하는 이미지를 몇 장이든 넣으면 자동으로 화면을 채우고 무한 스크롤됩니다. -->
+                
                 <img src="/img/projects/project img/8. snaked/snaked 12.webp" alt="Training" loading="lazy" decoding="async">
             </div>
         </div>
@@ -810,7 +1023,6 @@
             </p>
         </div>
 
-        <!-- [1] SKED 장비 설명 (이미지 병렬 구조, 제목 없음) -->
         <div class="text-section-split align-center" style="margin-top: 80px;">
             <div class="text-left">
                 <img src="/img/projects/project img/8. snaked/snaked 16.webp" alt="SKED Stretcher" style="width: 100%; border-radius: 8px;" loading="lazy">
@@ -837,7 +1049,6 @@
             </div>
         </div>
 
-        <!-- [2] SKED 사용 경험 및 한계 깨달음 (단일 평문 구조, 제목 없음) -->
         <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
             <p class="body-en">
                 By taking on the roles of both the rescuer dragging the stretcher and the casualty being transported, we experienced its limitations firsthand. What was supposed to be life-saving gear was, in reality, dangerously inefficient and agonizing for the patient.
@@ -846,8 +1057,7 @@
                 저희는 구조대원으로서 들것을 직접 끌어보고, 때로는 환자가 되어 이송되면서 이 장비의 한계를 온몸으로 겪었습니다. 생명을 구해야 할 장비가 실제 현장에서는 구조를 지연시키고 환자에게 극심한 고통을 주고 있었습니다.
             </p>
         </div>
-      
-        <!-- [문제 제기 1] 범용성의 함정 -->
+
         <section class="title-group" style="margin-top: 100px;">
             <h2 class="main-quote" style="font-style: italic;">
                 <span class="quote-mark">“</span> Good Anywhere<br>
@@ -966,7 +1176,7 @@
                             <div class="timeline-line-fill"></div>
                         </div>
                         <div class="timeline-nodes">
-                            <!-- Node 1 -->
+                            
                             <div class="timeline-node node-small">
                                 <div class="node-top">
                                     <div class="node-year">2024</div>
@@ -979,7 +1189,7 @@
                                     <div class="node-title-grey">Japan Noto Peninsula<br>Earthquake</div>
                                 </div>
                             </div>
-                            <!-- Node 2 -->
+                            
                             <div class="timeline-node node-large">
                                 <div class="node-top">
                                     <div class="node-year">2025</div>
@@ -1000,7 +1210,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <!-- Node 3 -->
+                            
                             <div class="timeline-node node-small">
                                 <div class="node-top">
                                     <div class="node-year">2026</div>
@@ -1013,7 +1223,7 @@
                                     <div class="node-title-grey">United States-Iran<br>War</div>
                                 </div>
                             </div>
-                            <!-- Node 4 -->
+                            
                             <div class="timeline-node node-large">
                                 <div class="node-top">
                                     <div class="node-year">2026</div>
@@ -1037,213 +1247,6 @@
                         </div>
                     </div>
                 </div>
-
-                <style>
-                    /* Typewriter effect for popup text */
-                    .type-char {
-                        opacity: 0;
-                        transition: opacity 0.15s ease-out;
-                    }
-                    .stat-popup-overlay.active .type-char {
-                        opacity: 1;
-                        transition-delay: var(--delay);
-                    }
-                    .dark-stat-card {
-                        cursor: pointer;
-                        position: relative;
-                    }
-                    .dark-stat-card::after {
-                        content: 'Click to read more +';
-                        display: block;
-                        margin-top: 20px;
-                        font-size: 13px;
-                        color: var(--point-color);
-                        opacity: 0.7;
-                        transition: opacity 0.3s;
-                    }
-                    .dark-stat-card:hover::after {
-                        opacity: 1;
-                    }
-                    .stat-popup-overlay {
-                        position: fixed;
-                        top: 0; left: 0; right: 0; bottom: 0;
-                        background: rgba(5, 5, 5, 0.85);
-                        backdrop-filter: blur(25px);
-                        -webkit-backdrop-filter: blur(25px);
-                        z-index: 9999;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        opacity: 0;
-                        visibility: hidden;
-                        transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.5s;
-                    }
-                    .stat-popup-overlay.active {
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    .stat-popup-content {
-                        background: #111;
-                        border: 1px solid rgba(255,255,255,0.05);
-                        border-radius: 24px;
-                        max-width: 480px;
-                        width: 90%;
-                        color: #fff;
-                        text-align: left;
-                        transform: translateY(50px) scale(0.92);
-                        opacity: 0;
-                        filter: blur(12px);
-                        transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1), 
-                                    opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-                                    filter 0.6s ease-out;
-                        position: relative;
-                        box-shadow: 0 40px 80px rgba(0,0,0,0.9);
-                        overflow: hidden;
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .stat-popup-overlay.active .stat-popup-content {
-                        transform: translateY(0) scale(1);
-                        opacity: 1;
-                        filter: blur(0);
-                    }
-                    .popup-image-wrapper {
-                        width: 100%;
-                        height: 220px;
-                        position: relative;
-                        overflow: hidden;
-                    }
-                    .popup-image-wrapper img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                    .popup-image-wrapper::after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0; left: 0; width: 100%; height: 50%;
-                        background: linear-gradient(to top, #111 0%, transparent 100%);
-                    }
-                    .popup-text-wrapper {
-                        padding: 10px 40px 40px 40px;
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .stat-popup-title {
-                        font-size: clamp(24px, 3vw, 28px);
-                        font-weight: 700;
-                        color: var(--point-color);
-                        margin-bottom: 15px;
-                        line-height: 1.1;
-                    }
-                    .stat-popup-en {
-                        font-size: 15px;
-                        line-height: 1.6;
-                        color: #eee;
-                        margin-bottom: 20px;
-                        word-break: keep-all;
-                    }
-                    .stat-popup-kr {
-                        font-size: 14px;
-                        line-height: 1.6;
-                        color: #888;
-                        font-weight: 300;
-                        word-break: keep-all;
-                    }
-                    .touch-to-close {
-                        position: absolute;
-                        bottom: 6vh;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        color: rgba(255,255,255,0.4);
-                        font-size: 12px;
-                        letter-spacing: 0.1em;
-                        text-transform: uppercase;
-                        animation: pulse 2s infinite;
-                        pointer-events: none;
-                    }
-                    @keyframes pulse {
-                        0% { opacity: 0.3; }
-                        50% { opacity: 1; }
-                        100% { opacity: 0.3; }
-                    }
-                    .sp-char {
-                        display: inline-block;
-                        transform-origin: center center;
-                    }
-                    .animate-space .sp-char-q1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-2 { animation: spaceChar2 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-3 { animation: spaceChar3 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-4 { animation: spaceChar4 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-5 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-q2 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-
-                    @keyframes spaceChar1 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(25px); }
-                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(40px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(-5px); }
-                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(2px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar2 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(15px); }
-                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(20px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(-3px); }
-                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(1px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar3 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.15) scaleX(0.5) translateX(0); }
-                        55% { opacity: 0; transform: scaleY(0.01) scaleX(0.05) translateX(0); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.4) scaleX(1.2) translateX(0); }
-                        85% { transform: scaleY(0.85) scaleX(0.9) translateX(0); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar4 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(-15px); }
-                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(-20px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(3px); }
-                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(-1px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar5 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(-25px); }
-                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(-40px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(5px); }
-                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(-2px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes urgentTimePulse {
-                        0% { opacity: 0; transform: scale(0.8); }
-                        15% { opacity: 1; transform: scale(1.15); color: #ff3b3b; }
-                        30% { transform: scale(1); color: var(--point-color); }
-                        45% { transform: scale(1.15); color: #ff3b3b; }
-                        60% { transform: scale(1); color: var(--point-color); }
-                        100% { opacity: 1; transform: scale(1); }
-                    }
-                    .animate-time {
-                        animation: urgentTimePulse 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-                    }
-                    .stat-hidden {
-                        opacity: 0;
-                    }
-                </style>
 
                 <div class="dark-stats-grid" id="statsGridContainer" style="margin-bottom: 80px;">
                     <div class="dark-stat-card" onclick="openStatPopup('popup-90')">
@@ -1271,12 +1274,11 @@
                     </div>
                 </div>
 
-                <!-- Popup Overlay -->
                 <div class="stat-popup-overlay" id="statPopupOverlay" onclick="closeStatPopup(event)">
-                    <!-- Popup 1: 90% -->
+                    
                     <div class="stat-popup-content" id="popup-90" style="display: none;">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 23.webp" alt="Collapsed Structures">
+                            <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">90% Fatalities</div>
@@ -1286,13 +1288,17 @@
                             <div class="stat-popup-kr">
                                 쓰나미 등 2차 재해를 제외하면, 지진 직접 사망 원인의 최대 90%는 구조물 붕괴로 인한 매몰입니다.
                             </div>
+                            <div class="stat-popup-source">
+                                <strong>출처 (Sources)</strong><br><br>
+                                국제지진공학협회(IAEE) 및 NICEE 학술 논문: 지진 시 인명 피해 발생 원인을 모델링한 연구<br>
+                                <a href="https://www.iitk.ac.in/nicee/wcee/article/10_vol10_5989.pdf#:~:text=Figure%201%20shows%20that%20over%2075%25%20of,causes%2C%20accidents%20and%20medical%20conditions%20are%20a." target="_blank" rel="noopener noreferrer">("Factors determining human casualty levels in earthquakes") ↗</a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Popup 2: Space -->
                     <div class="stat-popup-content" id="popup-space" style="display: none;">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 25.webp" alt="Spatial Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Spatial Constraints</div>
@@ -1305,10 +1311,9 @@
                         </div>
                     </div>
 
-                    <!-- Popup 3: Time -->
                     <div class="stat-popup-content" id="popup-time" style="display: none;">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 18.webp" alt="Time Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Time Constraints</div>
@@ -1324,156 +1329,7 @@
                     <div class="touch-to-close">Touch anywhere to close</div>
                 </div>
 
-                <script>
-                function openStatPopup(id) {
-                    document.querySelectorAll('.stat-popup-content').forEach(function(el) { el.style.display = 'none'; });
-                    const popup = document.getElementById(id);
-                    popup.style.display = 'flex';
-                    
-                    // 강제 리플로우(Reflow): display: none에서 해제된 직후 CSS transition이 작동하도록 브라우저 렌더링 강제 업데이트
-                    void popup.offsetWidth;
-                    
-                    document.getElementById('statPopupOverlay').classList.add('active');
-                    
-                    // 스크롤바 너비만큼 패딩 추가하여 배경 움찔거림(Layout Shift) 방지
-                    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-                    document.body.style.paddingRight = scrollbarWidth + 'px';
-                    document.body.style.overflow = 'hidden';
-                }
-                function closeStatPopup(e) {
-                    if(e) e.stopPropagation();
-                    document.getElementById('statPopupOverlay').classList.remove('active');
-                    
-                    document.body.style.overflow = '';
-                    document.body.style.paddingRight = '0px';
-                    
-                    setTimeout(function() {
-                        document.querySelectorAll('.stat-popup-content').forEach(function(el) { el.style.display = 'none'; });
-                    }, 400); // CSS transition 시간에 맞춤
-                }
-
-                // Animate Grid Titles on Scroll & Hover
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Wrap text nodes in spans for Typewriter Effect inside Popups
-                    document.querySelectorAll('.popup-text-wrapper').forEach(wrapper => {
-                        const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT, null, false);
-                        const nodes = [];
-                        while(walker.nextNode()) nodes.push(walker.currentNode);
-                        
-                        let charIndex = 0;
-                        nodes.forEach(node => {
-                            const text = node.nodeValue;
-                            if (!text.trim()) return; // Skip empty whitespace nodes
-                            const fragment = document.createDocumentFragment();
-                            for (let i = 0; i < text.length; i++) {
-                                if (text[i] === ' ' || text[i] === '\n') {
-                                    fragment.appendChild(document.createTextNode(text[i]));
-                                } else {
-                                    const span = document.createElement('span');
-                                    span.textContent = text[i];
-                                    span.className = 'type-char';
-                                    span.style.setProperty('--delay', `${0.3 + (charIndex * 0.008)}s`);
-                                    fragment.appendChild(span);
-                                    charIndex++;
-                                }
-                            }
-                            node.parentNode.replaceChild(fragment, node);
-                        });
-                    });
-
-                    const animateValue = (obj, start, end, duration) => {
-                        let startTimestamp = null;
-                        const step = (timestamp) => {
-                            if (!startTimestamp) startTimestamp = timestamp;
-                            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                            
-                            // 감속(Easing) 없이 일정한 속도(Linear)로 숫자가 올라가게 처리
-                            const easeProgress = progress;
-                            let currentVal = Math.floor(easeProgress * (end - start) + start);
-                            
-                            // 89에서 답답하게 멈추는 느낌을 완전히 없애기 위해 89는 건너뛰고 90으로 스냅
-                            if (currentVal === 89) currentVal = 90;
-                            
-                            obj.innerHTML = currentVal + '<span style="font-size: 0.6em;">%</span>';
-                            
-                            if (progress < 1) {
-                                obj.dataset.animating = "true";
-                                window.requestAnimationFrame(step);
-                            } else {
-                                obj.dataset.animating = "false";
-                                obj.innerHTML = end + '<span style="font-size: 0.6em;">%</span>';
-                            }
-                        };
-                        window.requestAnimationFrame(step);
-                    };
-
-                    const num90 = document.getElementById('stat-num-90');
-                    const numSpace = document.getElementById('stat-num-space');
-                    const numTime = document.getElementById('stat-num-time');
-
-                    const gridObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (!num90 || !numSpace || !numTime) return;
-
-                            if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
-                                if(!entry.target.classList.contains('animated')) {
-                                    entry.target.classList.add('animated');
-                                    // 속도를 800ms로 확 줄여서 빠르게 90%로 도달하게 함
-                                    animateValue(num90, 0, 90, 800);
-                                    
-                                    numSpace.classList.remove('stat-hidden');
-                                    numSpace.classList.add('animate-space');
-                                    
-                                    numTime.classList.remove('stat-hidden');
-                                    numTime.classList.add('animate-time');
-                                }
-                            } else if (entry.intersectionRatio === 0) {
-                                // Reset when completely out of view
-                                entry.target.classList.remove('animated');
-                                num90.innerHTML = '0<span style="font-size: 0.6em;">%</span>';
-                                num90.dataset.animating = "false";
-                                
-                                numSpace.classList.add('stat-hidden');
-                                numSpace.classList.remove('animate-space');
-                                
-                                numTime.classList.add('stat-hidden');
-                                numTime.classList.remove('animate-time');
-                            }
-                        });
-                    }, { threshold: [0, 0.1] });
-                    
-                    const gridContainer = document.getElementById('statsGridContainer');
-                    if(gridContainer) {
-                        gridObserver.observe(gridContainer);
-                        
-                        // Add Hover Events to Replay Animations
-                        const cards = gridContainer.querySelectorAll('.dark-stat-card');
-                        if (cards.length >= 3) {
-                            // Card 1: 90%
-                            cards[0].addEventListener('mouseenter', () => {
-                                if (num90.dataset.animating !== "true") {
-                                    animateValue(num90, 0, 90, 800);
-                                }
-                            });
-                            
-                            // Card 2: Space
-                            cards[1].addEventListener('mouseenter', () => {
-                                numSpace.classList.remove('animate-space');
-                                void numSpace.offsetWidth; // trigger reflow to restart css animation
-                                numSpace.classList.add('animate-space');
-                            });
-                            
-                            // Card 3: Time
-                            cards[2].addEventListener('mouseenter', () => {
-                                numTime.classList.remove('animate-time');
-                                void numTime.offsetWidth; // trigger reflow
-                                numTime.classList.add('animate-time');
-                            });
-                        }
-                    }
-                });
-                </script>
-            </div>
+                </div>
             
             <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
                 <img src="/img/projects/project img/8. snaked/snaked 23.webp" alt="Burial Casualties" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
@@ -1509,35 +1365,36 @@
                         <span style="font-size: clamp(22px, 2.5vw, 36px); font-weight: 300; color: #fff;">of Conventional Stretchers</span>
                     </h2>
                     <hr style="width: 100%; border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0 30px 0;">
-                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-top: 0; margin-bottom: 20px;">
-                        Securing a victim with conventional stretchers is time-consuming, delaying evacuation during critical rescue periods.
+                    
+                    <p style="font-size: 15px; color: #eee; line-height: 1.6; font-weight: 400; margin-top: 0; margin-bottom: 10px;">
+                        Conventional stretchers are rigid, making it extremely difficult to navigate through the unpredictable debris of collapsed buildings.
                     </p>
-                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-bottom: 20px;">
-                        Furthermore, their rigid, fixed-frame design makes it difficult to navigate collapsed buildings, narrow passages, stairs, and uneven terrain.
+                    <p style="font-size: 14px; color: #888; line-height: 1.6; font-weight: 300; margin-top: 0; margin-bottom: 30px; word-break: keep-all;">
+                        기존의 들것은 형태가 단단하여 건물 붕괴 현장의 좁고 불규칙한 잔해를 통과하기가 매우 어렵습니다.
                     </p>
-                    <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-bottom: 0;">
-                        While alternative solutions like the SKED stretcher address this rigidity, its belt structure is overly complex for securing patients in confined and dark environments.
+                    
+                    <p style="font-size: 15px; color: #eee; line-height: 1.6; font-weight: 400; margin-bottom: 10px;">
+                        While alternative solutions like SKED address this rigidity, their overly complex strapping systems waste the critical golden hour in confined, dark environments.
+                    </p>
+                    <p style="font-size: 14px; color: #888; line-height: 1.6; font-weight: 300; margin-bottom: 0; word-break: keep-all;">
+                        SKED와 같은 대안 장비가 이러한 유연성 문제를 다소 해결하긴 했지만, 어둡고 비좁은 공간에서 환자를 결속하기에는 벨트 구조가 지나치게 복잡하여 골든타임을 심각하게 낭비합니다.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- The Working Process of SNAKED Section -->
         <div class="working-process-section" style="position: relative; width: 100%; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
-            <!-- Image with Smooth Easing Fade Out Mask (No cropping) -->
+            
             <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;" alt="Working Process Background">
             
             <div class="working-process-wrapper" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-start; max-width: 1200px; margin: 0 auto; padding: clamp(40px, 8vw, 120px) clamp(20px, 5vw, 60px) 0;">
                 <div style="display: flex; align-items: center; width: 100%;">
                     <div style="font-size: clamp(14px, 1.5vw, 20px); color: var(--text-main); font-weight: 500; margin-right: 10px; white-space: nowrap;">The working process of</div>
-                    
-                    <!-- [방법 1: 파일 경로 연결] 검은색(또는 어두운 색) 로고 SVG 파일을 연결하세요 -->
-                    <!-- [방법 2: 직접 넣기] img 태그 지우고 svg 태그 삽입 (svg의 fill 속성을 어두운 색으로 지정) -->
+
                     <div id="snaked-logo-svg-container-dark" style="display: inline-flex; align-items: center; height: 1em;">
                         <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
                     </div>
-                    
-                    <!-- 긴 선분 (어두운 색상 그라데이션) -->
+
                     <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(27,27,27,0.4) 0%, rgba(27,27,27,0) 100%); margin-left: 20px;"></div>
                 </div>
             </div>
@@ -1648,7 +1505,7 @@
                 </svg>
             </button>
             <div class="carousel-indicators">
-                <!-- Dots will be generated by JS -->
+                
             </div>
         </div>
 
@@ -1684,6 +1541,147 @@
     <script src="/static/js/page_effect.js"></script>
 
     <script>
+
+                function openStatPopup(id) {
+                    document.querySelectorAll('.stat-popup-content').forEach(function(el) { el.style.display = 'none'; });
+                    const popup = document.getElementById(id);
+                    popup.style.display = 'flex';
+
+                    void popup.offsetWidth;
+                    
+                    document.getElementById('statPopupOverlay').classList.add('active');
+
+                    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                    document.body.style.paddingRight = scrollbarWidth + 'px';
+                    document.body.style.overflow = 'hidden';
+                }
+                function closeStatPopup(e) {
+                    if(e) e.stopPropagation();
+                    document.getElementById('statPopupOverlay').classList.remove('active');
+                    
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '0px';
+                    
+                    setTimeout(function() {
+                        document.querySelectorAll('.stat-popup-content').forEach(function(el) { el.style.display = 'none'; });
+                    }, 400); 
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+
+                    document.querySelectorAll('.popup-text-wrapper').forEach(wrapper => {
+                        const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT, null, false);
+                        const nodes = [];
+                        while(walker.nextNode()) nodes.push(walker.currentNode);
+                        
+                        let charIndex = 0;
+                        nodes.forEach(node => {
+                            const text = node.nodeValue;
+                            if (!text.trim()) return; 
+                            const fragment = document.createDocumentFragment();
+                            for (let i = 0; i < text.length; i++) {
+                                if (text[i] === ' ' || text[i] === '\n') {
+                                    fragment.appendChild(document.createTextNode(text[i]));
+                                } else {
+                                    const span = document.createElement('span');
+                                    span.textContent = text[i];
+                                    span.className = 'type-char';
+                                    span.style.setProperty('--delay', `${0.3 + (charIndex * 0.008)}s`);
+                                    fragment.appendChild(span);
+                                    charIndex++;
+                                }
+                            }
+                            node.parentNode.replaceChild(fragment, node);
+                        });
+                    });
+
+                    const animateValue = (obj, start, end, duration) => {
+                        let startTimestamp = null;
+                        const step = (timestamp) => {
+                            if (!startTimestamp) startTimestamp = timestamp;
+                            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+
+                            const easeProgress = progress;
+                            let currentVal = Math.floor(easeProgress * (end - start) + start);
+
+                            if (currentVal === 89) currentVal = 90;
+                            
+                            obj.innerHTML = currentVal + '<span style="font-size: 0.6em;">%</span>';
+                            
+                            if (progress < 1) {
+                                obj.dataset.animating = "true";
+                                window.requestAnimationFrame(step);
+                            } else {
+                                obj.dataset.animating = "false";
+                                obj.innerHTML = end + '<span style="font-size: 0.6em;">%</span>';
+                            }
+                        };
+                        window.requestAnimationFrame(step);
+                    };
+
+                    const num90 = document.getElementById('stat-num-90');
+                    const numSpace = document.getElementById('stat-num-space');
+                    const numTime = document.getElementById('stat-num-time');
+
+                    const gridObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (!num90 || !numSpace || !numTime) return;
+
+                            if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+                                if(!entry.target.classList.contains('animated')) {
+                                    entry.target.classList.add('animated');
+
+                                    animateValue(num90, 0, 90, 800);
+                                    
+                                    numSpace.classList.remove('stat-hidden');
+                                    numSpace.classList.add('animate-space');
+                                    
+                                    numTime.classList.remove('stat-hidden');
+                                    numTime.classList.add('animate-time');
+                                }
+                            } else if (entry.intersectionRatio === 0) {
+
+                                entry.target.classList.remove('animated');
+                                num90.innerHTML = '0<span style="font-size: 0.6em;">%</span>';
+                                num90.dataset.animating = "false";
+                                
+                                numSpace.classList.add('stat-hidden');
+                                numSpace.classList.remove('animate-space');
+                                
+                                numTime.classList.add('stat-hidden');
+                                numTime.classList.remove('animate-time');
+                            }
+                        });
+                    }, { threshold: [0, 0.1] });
+                    
+                    const gridContainer = document.getElementById('statsGridContainer');
+                    if(gridContainer) {
+                        gridObserver.observe(gridContainer);
+
+                        const cards = gridContainer.querySelectorAll('.dark-stat-card');
+                        if (cards.length >= 3) {
+
+                            cards[0].addEventListener('mouseenter', () => {
+                                if (num90.dataset.animating !== "true") {
+                                    animateValue(num90, 0, 90, 800);
+                                }
+                            });
+
+                            cards[1].addEventListener('mouseenter', () => {
+                                numSpace.classList.remove('animate-space');
+                                void numSpace.offsetWidth; 
+                                numSpace.classList.add('animate-space');
+                            });
+
+                            cards[2].addEventListener('mouseenter', () => {
+                                numTime.classList.remove('animate-time');
+                                void numTime.offsetWidth; 
+                                numTime.classList.add('animate-time');
+                            });
+                        }
+                    }
+                });
+
         document.addEventListener('DOMContentLoaded', () => {
             const track = document.querySelector('.carousel-track');
             const slides = Array.from(track.children);
@@ -1734,33 +1732,29 @@
                 }, 1000);
             }
 
-            // 컨베이어 벨트 자동 복제 로직 (이미지가 100vw이므로 1번만 복제해도 무한 루프 가능)
             const conveyorTrack = document.querySelector('.conveyor-track');
             if (conveyorTrack) {
                 const originalItems = Array.from(conveyorTrack.children);
-                // 무한 스크롤 스냅(-50%)을 위해 전체 트랙을 정확히 1번만 복제하여 2배수로 만듦
+
                 originalItems.forEach(item => conveyorTrack.appendChild(item.cloneNode(true)));
             }
 
-            // 재난 타임라인 애니메이션 옵저버
             const timelineObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
                     } else {
-                        // 스크롤 올려서 화면 밖으로 나가면 다시 역재생되도록 클래스 제거
-                        // 약간의 여유를 두고 사라지게 하려면 threshold 조절 가능
+
                         entry.target.classList.remove('active');
                     }
                 });
-            }, { threshold: 0.3 }); // 30% 정도 보일 때 작동
+            }, { threshold: 0.3 }); 
 
             const disasterTimeline = document.getElementById('disasterTimeline');
             if (disasterTimeline) {
                 timelineObserver.observe(disasterTimeline);
             }
 
-            // KATUSA 타자기 효과 애니메이션 옵저버 (JS로 전체 문장 순차 렌더링 & 스크롤 초기화)
             let katusaTimeout = null;
             const typewriterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1781,7 +1775,7 @@
                             const t3 = "s";
                             
                             let i=0, j=0, k=0;
-                            const speed = 40; // 타자 속도 (ms)
+                            const speed = 40; 
                             
                             function typePart3() {
                                 p2.classList.remove('typing-cursor');
@@ -1817,7 +1811,7 @@
                             typePart1();
                         }
                     } else if (!entry.isIntersecting) {
-                        // 화면 밖으로 나가면 초기화하여 다시 들어올 때 재생되도록 함
+
                         trigger.dataset.typed = 'false';
                         clearTimeout(katusaTimeout);
                         p1.textContent = '\u200B'; p2.textContent = '\u200B'; p3.textContent = '\u200B';
@@ -1826,13 +1820,14 @@
                         p3.classList.remove('typing-cursor');
                     }
                 });
-            }, { threshold: [0, 0.5] }); // 화면에 안 보일 때(0), 50% 보일 때(0.5) 감지
+            }, { threshold: [0, 0.5] }); 
 
             const katusaTrigger = document.getElementById('katusaStoryTrigger');
             if (katusaTrigger) {
                 typewriterObserver.observe(katusaTrigger);
             }
         });
-    </script>
+    
+</script>
 </body>
 </html>
