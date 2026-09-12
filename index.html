@@ -300,41 +300,47 @@
                 const nextPlayerIndex = 1 - activePlayerIndex;
                 const nextPlayer = players[nextPlayerIndex];
                 
-                // iOS 등에서 투명도 0인 비디오의 자동재생을 차단하는 것을 막기 위해 사전에 클래스 추가
+                // 시각적 끊김(DOM 순서 역전) 해결: 새로 나타나는 영상을 무조건 위(z-index: 2)로 끌어올림
+                if (currentPlayer) currentPlayer.style.zIndex = "1";
+                nextPlayer.style.zIndex = "2";
+                
                 nextPlayer.classList.add('active');
                 updateHeaderColor(nextPlayer);
                 
                 var playPromise = nextPlayer.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // 정상적으로 재생이 시작되면 상태 업데이트
                         activePlayerIndex = nextPlayerIndex;
                         
                         setTimeout(() => {
                             if (currentPlayer) {
                                 currentPlayer.classList.remove('active');
+                                currentPlayer.style.zIndex = "";
                                 currentPlayer.pause();
                             }
+                            nextPlayer.style.zIndex = "";
                             isTransitioning = false;
                             
-                            // 전환이 완전히 끝난 후 다음 영상을 대기 플레이어에 프리로드
                             preloadNextVideo();
                         }, 800); 
                     }).catch(error => {
                         console.error("Next video play failed:", error);
-                        // 에러 시 시각적 상태 롤백
                         nextPlayer.classList.remove('active');
+                        nextPlayer.style.zIndex = "";
+                        if (currentPlayer) currentPlayer.style.zIndex = "";
                         updateHeaderColor(currentPlayer);
                         isTransitioning = false;
-                        
-                        // 복구 시도
                         setTimeout(playNextVideo, 500); 
                     });
                 } else {
                     activePlayerIndex = nextPlayerIndex;
                     setTimeout(() => {
-                        currentPlayer.classList.remove('active');
-                        currentPlayer.pause();
+                        if (currentPlayer) {
+                            currentPlayer.classList.remove('active');
+                            currentPlayer.style.zIndex = "";
+                            currentPlayer.pause();
+                        }
+                        nextPlayer.style.zIndex = "";
                         isTransitioning = false;
                         preloadNextVideo();
                     }, 800);
