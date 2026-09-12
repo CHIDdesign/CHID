@@ -256,6 +256,8 @@
                 }
             }
 
+            let isTransitioning = false;
+
             videos.forEach((video, domIndex) => {
                 video.muted = true;
                 video.defaultMuted = true;
@@ -263,8 +265,24 @@
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
                 video.setAttribute('preload', 'auto');
+                
+                // 크로스페이드(0.8초) 동안 영상이 멈춰보이는 현상을 방지하기 위해 0.8초 전에 다음 영상 시작
+                video.addEventListener('timeupdate', () => {
+                    if (domIndex === activeVideoIndex && !isTransitioning) {
+                        const timeRemaining = video.duration - video.currentTime;
+                        // 남은 시간이 0.8초 이하일 때 (영상 데이터가 아직 로드되지 않은 경우 제외)
+                        if (timeRemaining <= 0.82 && timeRemaining > 0 && video.duration > 1) {
+                            isTransitioning = true;
+                            playNextVideo();
+                        }
+                    }
+                });
+
                 video.addEventListener('ended', () => {
-                    if (domIndex === activeVideoIndex) playNextVideo();
+                    if (domIndex === activeVideoIndex && !isTransitioning) {
+                        isTransitioning = true;
+                        playNextVideo();
+                    }
                 });
             });
 
@@ -274,7 +292,7 @@
                 if (nextIndex !== undefined) {
                     const nextVid = videos[nextIndex];
                     nextVid.setAttribute('preload', 'auto');
-                    nextVid.load(); // 다음 비디오를 명시적으로 로드하여 끊김 방지
+                    // 일부 브라우저에서 동시 다운로드로 인한 메인 스레드 병목을 막기 위해 load() 호출 생략 (HTML preload 속성에 위임)
                 }
             }
 
@@ -297,12 +315,17 @@
                                 currentVideo.pause(); 
                                 currentVideo.currentTime = 0; 
                             }
+                            isTransitioning = false; // 크로스페이드 완료 후 상태 초기화
                         }, 800); 
                         
                         preloadNextVideo();
                     }).catch(error => {
                         console.error("Next video play failed:", error);
+                        isTransitioning = false;
+                        setTimeout(playNextVideo, 500); // 실패 시 다음 영상으로 빠르게 시도
                     });
+                } else {
+                    isTransitioning = false;
                 }
             }
 
