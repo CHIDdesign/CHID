@@ -1007,7 +1007,7 @@
                 
                 window.cursorColorMode = 'white'; 
                 const dynamicCanvas = document.getElementById('canvas');
-                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'plus-lighter';
+                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 
                 setTimeout(() => { overlay.scrollTop = 0; }, 10);
             };
@@ -1017,7 +1017,7 @@
                 
                 window.cursorColorMode = 'black'; 
                 const dynamicCanvas = document.getElementById('canvas');
-                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'multiply';
+                if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 
                 setTimeout(() => { renderBody.innerHTML = ''; }, 600);
             }
