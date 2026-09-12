@@ -247,7 +247,17 @@
             }
         }
         .dark-stats-wrapper {
-            background: linear-gradient(to bottom, #000000 0%, #1B1B1B 150px, #1B1B1B calc(100% - 400px), var(--bg-color) 100%);
+            background: linear-gradient(to bottom, 
+                #000000 0%, 
+                #1B1B1B 150px, 
+                #1B1B1B calc(100% - 400px), 
+                rgb(49, 49, 48) calc(100% - 320px), 
+                rgb(104, 103, 101) calc(100% - 240px), 
+                rgb(138, 136, 133) calc(100% - 200px), 
+                rgb(171, 168, 164) calc(100% - 160px), 
+                rgb(226, 222, 217) calc(100% - 80px), 
+                var(--bg-color) 100%
+            );
             color: #fff;
             padding-top: 200px;
             padding-bottom: 400px;
@@ -703,8 +713,8 @@
         </div>
 
         <div class="katusa-story-section" id="katusaStoryTrigger" style="position: relative; width: 100%; height: 60vh; min-height: 400px; max-height: 800px; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
-            <!-- Background Image with Fade Out Mask -->
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); z-index: 0;"></div>
+            <!-- Background Image with Smooth Easing Fade Out Mask -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;"></div>
             
             <!-- Dark Overlay -->
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;  z-index: 1;"></div>
@@ -1081,6 +1091,27 @@
                     <p style="font-size: 15px; color: #ccc; line-height: 1.6; font-weight: 300; margin-bottom: 0;">
                         While alternative solutions like the SKED stretcher address this rigidity, its belt structure is overly complex for securing patients in confined and dark environments.
                     </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Working Process of SNAKED Section -->
+        <div class="working-process-section" style="position: relative; width: 100%; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
+            <!-- Image with Smooth Easing Fade Out Mask (No cropping) -->
+            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;" alt="Working Process Background">
+            
+            <div class="working-process-wrapper" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-start; max-width: 1200px; margin: 0 auto; padding: clamp(40px, 8vw, 120px) clamp(20px, 5vw, 60px) 0;">
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <div style="font-size: clamp(14px, 1.5vw, 20px); color: var(--text-main); font-weight: 500; margin-right: 10px; white-space: nowrap;">The working process of</div>
+                    
+                    <!-- [방법 1: 파일 경로 연결] 검은색(또는 어두운 색) 로고 SVG 파일을 연결하세요 -->
+                    <!-- [방법 2: 직접 넣기] img 태그 지우고 svg 태그 삽입 (svg의 fill 속성을 어두운 색으로 지정) -->
+                    <div id="snaked-logo-svg-container-dark" style="display: inline-flex; align-items: center; height: 1em;">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
+                    </div>
+                    
+                    <!-- 긴 선분 (어두운 색상 그라데이션) -->
+                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(27,27,27,0.4) 0%, rgba(27,27,27,0) 100%); margin-left: 20px;"></div>
                 </div>
             </div>
         </div>
