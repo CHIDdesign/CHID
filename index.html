@@ -140,7 +140,6 @@
           height: 100vh;
           z-index: 9999;
           pointer-events: none;
-          mix-blend-mode: multiply;
           background: transparent;
         }
         @media (max-width: 768px) {
@@ -249,11 +248,11 @@
                 if (theme === "dark") {
                     header.classList.add("white-skin");
                     window.cursorColorMode = 'white'; 
-                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'plus-lighter';
+                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 } else {
                     header.classList.remove("white-skin");
                     window.cursorColorMode = 'black'; 
-                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'multiply';
+                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 }
             }
 
