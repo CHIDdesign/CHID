@@ -161,22 +161,22 @@
 <body>
     <div id="video-container">
         <div id="poster-layer"></div>
-        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="none">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="auto">
+        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="none">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="none">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="none">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="none">
             <source src="img/main/loop/video 5.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v6" playsinline webkit-playsinline muted data-theme="light" preload="auto">
+        <video class="bg-video" id="v6" playsinline webkit-playsinline muted data-theme="light" preload="none">
             <source src="img/main/loop/video 6.mp4" type="video/mp4">
         </video>
     </div>
@@ -264,7 +264,6 @@
                 video.playsInline = true;
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
-                video.setAttribute('preload', 'auto');
                 
                 // 크로스페이드(0.8초) 동안 영상이 멈춰보이는 현상을 방지하기 위해 0.8초 전에 다음 영상 시작
                 video.addEventListener('timeupdate', () => {
@@ -292,7 +291,8 @@
                 if (nextIndex !== undefined) {
                     const nextVid = videos[nextIndex];
                     nextVid.setAttribute('preload', 'auto');
-                    // 일부 브라우저에서 동시 다운로드로 인한 메인 스레드 병목을 막기 위해 load() 호출 생략 (HTML preload 속성에 위임)
+                    // 현재 재생될 영상과 다음 재생될 영상에만 다운로드를 집중시켜 네트워크 병목 방지
+                    nextVid.load();
                 }
             }
 
