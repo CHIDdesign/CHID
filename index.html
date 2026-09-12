@@ -303,29 +303,37 @@
                 const nextVideo = videos[nextDomIndex];
                 activeVideoIndex = nextDomIndex;
                 
-                nextVideo.currentTime = 0;
-                var playPromise = nextVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        nextVideo.classList.add('active'); 
-                        updateHeaderColor(nextVideo); 
-                        setTimeout(() => {
-                            if (currentVideo) {
-                                currentVideo.classList.remove('active');
-                                currentVideo.pause(); 
-                                currentVideo.currentTime = 0; 
-                            }
-                            isTransitioning = false; // 크로스페이드 완료 후 상태 초기화
-                        }, 800); 
-                        
-                        preloadNextVideo();
-                    }).catch(error => {
-                        console.error("Next video play failed:", error);
+                try {
+                    // 데이터가 없는 상태(readyState=0)에서 currentTime을 수정하면 Safari 등에서 에러(InvalidStateError)가 발생하며 스크립트가 중단됨.
+                    // 스크립트가 중단되면 isTransitioning이 영원히 true로 남아 화면이 멈추는 원인이 됨.
+                    // preload="none"으로 변경된 이후 이 현상이 발생했으므로 해당 코드를 제거함. (어차피 load()로 인해 초기화됨)
+                    
+                    var playPromise = nextVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            nextVideo.classList.add('active'); 
+                            updateHeaderColor(nextVideo); 
+                            setTimeout(() => {
+                                if (currentVideo) {
+                                    currentVideo.classList.remove('active');
+                                    currentVideo.pause(); 
+                                }
+                                isTransitioning = false; // 크로스페이드 완료 후 상태 초기화
+                            }, 800); 
+                            
+                            preloadNextVideo();
+                        }).catch(error => {
+                            console.error("Next video play failed:", error);
+                            isTransitioning = false;
+                            setTimeout(playNextVideo, 500); // 에러 발생 시 다음 영상 시도
+                        });
+                    } else {
                         isTransitioning = false;
-                        setTimeout(playNextVideo, 500); // 실패 시 다음 영상으로 빠르게 시도
-                    });
-                } else {
+                    }
+                } catch (err) {
+                    console.error("Error starting video:", err);
                     isTransitioning = false;
+                    setTimeout(playNextVideo, 500); // 에러 발생 시 스크립트 중단을 막고 다음 영상 시도
                 }
             }
 
