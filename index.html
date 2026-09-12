@@ -161,24 +161,8 @@
 <body>
     <div id="video-container">
         <div id="poster-layer"></div>
-        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="none">
-            <source src="img/main/loop/video 1.mp4" type="video/mp4">
-        </video>
-        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="none">
-            <source src="img/main/loop/video 2.mp4" type="video/mp4">
-        </video>
-        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="none">
-            <source src="img/main/loop/video 3.mp4" type="video/mp4">
-        </video>
-        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="none">
-            <source src="img/main/loop/video 4.mp4" type="video/mp4">
-        </video>
-        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="none">
-            <source src="img/main/loop/video 5.mp4" type="video/mp4">
-        </video>
-        <video class="bg-video" id="v6" playsinline webkit-playsinline muted data-theme="light" preload="none">
-            <source src="img/main/loop/video 6.mp4" type="video/mp4">
-        </video>
+        <video class="bg-video" id="playerA" playsinline webkit-playsinline muted preload="auto"></video>
+        <video class="bg-video" id="playerB" playsinline webkit-playsinline muted preload="auto"></video>
     </div>
     <header id="main-header">
         <div class="logo-container" id="main-logo">
@@ -216,11 +200,27 @@
             const mainLogo = document.getElementById('main-logo');
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
-            // 비디오 셔플 및 무한 재생 로직
-            const videos = Array.from(document.querySelectorAll('.bg-video'));
+            // ----------------------------------------------------
+            // Ping-Pong Video Player Engine (Enterprise-grade)
+            // 브라우저 디코더 한계(특히 iOS) 및 캐시 문제를 완벽 해결
+            // ----------------------------------------------------
+            const players = [
+                document.getElementById('playerA'),
+                document.getElementById('playerB')
+            ];
+            
+            const playlistData = [
+                { src: "img/main/loop/video 1.mp4", theme: "light" },
+                { src: "img/main/loop/video 2.mp4", theme: "dark" },
+                { src: "img/main/loop/video 3.mp4", theme: "light" },
+                { src: "img/main/loop/video 4.mp4", theme: "light" },
+                { src: "img/main/loop/video 5.mp4", theme: "light" },
+                { src: "img/main/loop/video 6.mp4", theme: "light" }
+            ];
+            
             let videoQueue = [];
-            let activeVideoIndex = -1;
-            const blobCache = {}; // 비디오 URL을 램(RAM)에 캐싱하여 데이터 요금 방지
+            let activePlayerIndex = 0; // 0 (playerA) 또는 1 (playerB)
+            let isTransitioning = false;
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -231,7 +231,7 @@
 
             function ensureQueue() {
                 if (videoQueue.length < 2) {
-                    let newPlaylist = videos.map((_, i) => i);
+                    let newPlaylist = playlistData.map((_, i) => i);
                     shuffleArray(newPlaylist);
                     if (videoQueue.length > 0 && videoQueue[videoQueue.length - 1] === newPlaylist[0]) {
                         if (newPlaylist.length > 1) {
@@ -257,159 +257,131 @@
                 }
             }
 
-            let isTransitioning = false;
-
-            videos.forEach((video, domIndex) => {
-                video.muted = true;
-                video.defaultMuted = true;
-                video.playsInline = true;
-                video.setAttribute('playsinline', '');
-                video.setAttribute('webkit-playsinline', '');
-                video.setAttribute('preload', 'auto');
+            players.forEach((player, idx) => {
+                player.muted = true;
+                player.defaultMuted = true;
                 
-                const source = video.querySelector('source');
-                if (source) {
-                    video.dataset.originalSrc = source.getAttribute('src');
-                    video.removeChild(source);
-                }
-                
-                video.addEventListener('timeupdate', () => {
-                    if (domIndex === activeVideoIndex && !isTransitioning) {
-                        const timeRemaining = video.duration - video.currentTime;
-                        if (timeRemaining <= 0.82 && timeRemaining > 0 && video.duration > 1) {
+                player.addEventListener('timeupdate', () => {
+                    if (idx === activePlayerIndex && !isTransitioning) {
+                        const timeRemaining = player.duration - player.currentTime;
+                        if (timeRemaining <= 0.82 && timeRemaining > 0 && player.duration > 1) {
                             isTransitioning = true;
                             playNextVideo();
                         }
                     }
                 });
 
-                video.addEventListener('ended', () => {
-                    if (domIndex === activeVideoIndex && !isTransitioning) {
+                player.addEventListener('ended', () => {
+                    if (idx === activePlayerIndex && !isTransitioning) {
                         isTransitioning = true;
                         playNextVideo();
                     }
                 });
             });
 
-            // 원본 URL을 받아 한 번만 다운로드하고 메모리(Blob) 주소를 반환
-            async function getCachedVideoUrl(originalUrl) {
-                if (blobCache[originalUrl]) return blobCache[originalUrl];
-                try {
-                    const response = await fetch(originalUrl);
-                    const blob = await response.blob();
-                    const blobUrl = URL.createObjectURL(blob);
-                    blobCache[originalUrl] = blobUrl;
-                    return blobUrl;
-                } catch (e) {
-                    return originalUrl; // 에러 시 일반 URL로 폴백
-                }
-            }
-
-            async function preloadNextVideoDecoder() {
+            function preloadNextVideo() {
                 ensureQueue();
-                const nextIndex = videoQueue[0];
-                if (nextIndex !== undefined) {
-                    const nextVid = videos[nextIndex];
-                    if (!nextVid.getAttribute('src') && nextVid.dataset.originalSrc) {
-                        // 메모리에 캐시된 URL로 즉시 꽂아버림 (추가 다운로드 0바이트)
-                        nextVid.src = await getCachedVideoUrl(nextVid.dataset.originalSrc);
-                    }
-                    nextVid.setAttribute('preload', 'auto');
-                    nextVid.load();
-                }
+                const nextDataIndex = videoQueue[0];
+                const nextPlayerIndex = 1 - activePlayerIndex; // 대기 중인 플레이어
+                const standbyPlayer = players[nextPlayerIndex];
+                const nextData = playlistData[nextDataIndex];
+                
+                // 브라우저의 네이티브 HTTP 캐시를 활용하여 데이터 낭비 없이 로드
+                standbyPlayer.src = nextData.src;
+                standbyPlayer.setAttribute('data-theme', nextData.theme);
+                standbyPlayer.load();
             }
 
             function playNextVideo() {
                 ensureQueue();
-                const nextDomIndex = videoQueue.shift();
-                const currentVideo = videos[activeVideoIndex];
-                const nextVideo = videos[nextDomIndex];
-                activeVideoIndex = nextDomIndex;
+                const nextDataIndex = videoQueue.shift();
                 
-                try {
-                    var playPromise = nextVideo.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            nextVideo.classList.add('active'); 
-                            updateHeaderColor(nextVideo); 
-                            
-                            // 다음 영상을 백그라운드에서 다운로드하여 Blob에 캐싱 (한 번만 수행됨)
-                            ensureQueue();
-                            const upcomingIndex = videoQueue[0];
-                            if (upcomingIndex !== undefined && videos[upcomingIndex].dataset.originalSrc) {
-                                getCachedVideoUrl(videos[upcomingIndex].dataset.originalSrc);
+                const currentPlayer = players[activePlayerIndex];
+                const nextPlayerIndex = 1 - activePlayerIndex;
+                const nextPlayer = players[nextPlayerIndex];
+                
+                // iOS 등에서 투명도 0인 비디오의 자동재생을 차단하는 것을 막기 위해 사전에 클래스 추가
+                nextPlayer.classList.add('active');
+                updateHeaderColor(nextPlayer);
+                
+                var playPromise = nextPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // 정상적으로 재생이 시작되면 상태 업데이트
+                        activePlayerIndex = nextPlayerIndex;
+                        
+                        setTimeout(() => {
+                            if (currentPlayer) {
+                                currentPlayer.classList.remove('active');
+                                currentPlayer.pause();
                             }
-
-                            setTimeout(() => {
-                                if (currentVideo) {
-                                    currentVideo.classList.remove('active');
-                                    currentVideo.pause(); 
-                                    currentVideo.removeAttribute('src');
-                                    currentVideo.load();
-                                }
-                                isTransitioning = false; 
-                                preloadNextVideoDecoder();
-                            }, 800); 
-                        }).catch(error => {
-                            console.error("Next video play failed:", error);
                             isTransitioning = false;
-                            setTimeout(playNextVideo, 500); 
-                        });
-                    } else {
+                            
+                            // 전환이 완전히 끝난 후 다음 영상을 대기 플레이어에 프리로드
+                            preloadNextVideo();
+                        }, 800); 
+                    }).catch(error => {
+                        console.error("Next video play failed:", error);
+                        // 에러 시 시각적 상태 롤백
+                        nextPlayer.classList.remove('active');
+                        updateHeaderColor(currentPlayer);
                         isTransitioning = false;
-                    }
-                } catch (err) {
-                    console.error("Error starting video:", err);
-                    isTransitioning = false;
-                    setTimeout(playNextVideo, 500); 
+                        
+                        // 복구 시도
+                        setTimeout(playNextVideo, 500); 
+                    });
+                } else {
+                    activePlayerIndex = nextPlayerIndex;
+                    setTimeout(() => {
+                        currentPlayer.classList.remove('active');
+                        currentPlayer.pause();
+                        isTransitioning = false;
+                        preloadNextVideo();
+                    }, 800);
                 }
             }
 
-            // 초기화
-            (async function init() {
-                ensureQueue();
-                activeVideoIndex = videoQueue.shift();
-                const firstVideo = videos[activeVideoIndex];
-                
-                if (firstVideo.dataset.originalSrc) {
-                    // 첫 영상도 Blob으로 로드
-                    firstVideo.src = await getCachedVideoUrl(firstVideo.dataset.originalSrc);
-                }
-                firstVideo.classList.add('active');
-                updateHeaderColor(firstVideo);
-                if (posterLayer) posterLayer.style.display = 'none'; 
-                
-                firstVideo.setAttribute('autoplay', 'true'); 
-                firstVideo.load();
-                
-                if (videoQueue[0] !== undefined && videos[videoQueue[0]].dataset.originalSrc) {
-                    getCachedVideoUrl(videos[videoQueue[0]].dataset.originalSrc);
-                }
-                preloadNextVideoDecoder(); 
+            // --- 초기화 로직 ---
+            ensureQueue();
+            const firstDataIndex = videoQueue.shift();
+            const firstData = playlistData[firstDataIndex];
+            
+            const firstPlayer = players[activePlayerIndex];
+            firstPlayer.src = firstData.src;
+            firstPlayer.setAttribute('data-theme', firstData.theme);
+            firstPlayer.classList.add('active');
+            updateHeaderColor(firstPlayer);
+            
+            if (posterLayer) posterLayer.style.display = 'none'; 
+            
+            firstPlayer.setAttribute('autoplay', 'true'); 
+            firstPlayer.load();
+            
+            preloadNextVideo(); // 대기 플레이어에 두 번째 영상 프리로드
 
-                function tryPlayFirstVideo() {
-                    firstVideo.muted = true;
-                    var playPromise = firstVideo.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch((error) => {
-                            const interactionHandler = () => {
-                                firstVideo.play(); 
-                                document.removeEventListener('click', interactionHandler);
-                                document.removeEventListener('touchstart', interactionHandler);
-                            };
-                            document.addEventListener('click', interactionHandler);
-                            document.addEventListener('touchstart', interactionHandler);
-                        });
-                    }
+            function tryPlayFirstVideo() {
+                firstPlayer.muted = true;
+                var playPromise = firstPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch((error) => {
+                        console.warn("Auto-play prevented, waiting for interaction.");
+                        const interactionHandler = () => {
+                            firstPlayer.play(); 
+                            document.removeEventListener('click', interactionHandler);
+                            document.removeEventListener('touchstart', interactionHandler);
+                        };
+                        document.addEventListener('click', interactionHandler);
+                        document.addEventListener('touchstart', interactionHandler);
+                    });
                 }
+            }
 
-                if (firstVideo.readyState >= 3) {
-                    tryPlayFirstVideo();
-                } else {
-                    firstVideo.addEventListener('canplay', tryPlayFirstVideo, { once: true });
-                    setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2000);
-                }
-            })();
+            if (firstPlayer.readyState >= 3) {
+                tryPlayFirstVideo();
+            } else {
+                firstPlayer.addEventListener('canplay', tryPlayFirstVideo, { once: true });
+                setTimeout(() => { if (firstPlayer.paused) tryPlayFirstVideo(); }, 2000);
+            }
         });
     </script>
 </body>
