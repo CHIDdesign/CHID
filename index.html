@@ -161,22 +161,22 @@
 <body>
     <div id="video-container">
         <div id="poster-layer"></div>
-        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="metadata">
+        <video class="bg-video" id="v1" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 1.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="metadata">
+        <video class="bg-video" id="v2" playsinline webkit-playsinline muted data-theme="dark" preload="auto">
             <source src="img/main/loop/video 2.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="metadata">
+        <video class="bg-video" id="v3" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 3.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="metadata">
+        <video class="bg-video" id="v4" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 4.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="metadata">
+        <video class="bg-video" id="v5" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 5.mp4" type="video/mp4">
         </video>
-        <video class="bg-video" id="v6" playsinline webkit-playsinline muted data-theme="light" preload="metadata">
+        <video class="bg-video" id="v6" playsinline webkit-playsinline muted data-theme="light" preload="auto">
             <source src="img/main/loop/video 6.mp4" type="video/mp4">
         </video>
     </div>
@@ -218,8 +218,7 @@
 
             // 비디오 셔플 및 무한 재생 로직
             const videos = Array.from(document.querySelectorAll('.bg-video'));
-            let currentPlaylist = [];
-            let playlistCursor = 0;
+            let videoQueue = [];
             let activeVideoIndex = -1;
 
             function shuffleArray(array) {
@@ -229,16 +228,17 @@
                 }
             }
 
-            function generatePlaylist() {
-                let newPlaylist = videos.map((_, i) => i);
-                shuffleArray(newPlaylist);
-                if (activeVideoIndex !== -1 && newPlaylist[0] === activeVideoIndex) {
-                    if (newPlaylist.length > 1) {
-                        [newPlaylist[0], newPlaylist[1]] = [newPlaylist[1], newPlaylist[0]];
+            function ensureQueue() {
+                if (videoQueue.length < 2) {
+                    let newPlaylist = videos.map((_, i) => i);
+                    shuffleArray(newPlaylist);
+                    if (videoQueue.length > 0 && videoQueue[videoQueue.length - 1] === newPlaylist[0]) {
+                        if (newPlaylist.length > 1) {
+                            [newPlaylist[0], newPlaylist[1]] = [newPlaylist[1], newPlaylist[0]];
+                        }
                     }
+                    videoQueue = videoQueue.concat(newPlaylist);
                 }
-                currentPlaylist = newPlaylist;
-                playlistCursor = 0;
             }
 
             function updateHeaderColor(videoElement) {
@@ -262,18 +262,29 @@
                 video.playsInline = true;
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
+                video.setAttribute('preload', 'auto');
                 video.addEventListener('ended', () => {
                     if (domIndex === activeVideoIndex) playNextVideo();
                 });
             });
 
+            function preloadNextVideo() {
+                ensureQueue();
+                const nextIndex = videoQueue[0];
+                if (nextIndex !== undefined) {
+                    const nextVid = videos[nextIndex];
+                    nextVid.setAttribute('preload', 'auto');
+                    nextVid.load(); // 다음 비디오를 명시적으로 로드하여 끊김 방지
+                }
+            }
+
             function playNextVideo() {
-                playlistCursor++;
-                if (playlistCursor >= currentPlaylist.length) generatePlaylist();
-                const nextDomIndex = currentPlaylist[playlistCursor];
+                ensureQueue();
+                const nextDomIndex = videoQueue.shift();
                 const currentVideo = videos[activeVideoIndex];
                 const nextVideo = videos[nextDomIndex];
                 activeVideoIndex = nextDomIndex;
+                
                 nextVideo.currentTime = 0;
                 var playPromise = nextVideo.play();
                 if (playPromise !== undefined) {
@@ -281,30 +292,41 @@
                         nextVideo.classList.add('active'); 
                         updateHeaderColor(nextVideo); 
                         setTimeout(() => {
-                            currentVideo.classList.remove('active');
-                            currentVideo.pause(); 
-                            currentVideo.currentTime = 0; 
+                            if (currentVideo) {
+                                currentVideo.classList.remove('active');
+                                currentVideo.pause(); 
+                                currentVideo.currentTime = 0; 
+                            }
                         }, 800); 
-                    }).catch(error => console.error("Next video play failed:", error));
+                        
+                        preloadNextVideo();
+                    }).catch(error => {
+                        console.error("Next video play failed:", error);
+                    });
                 }
             }
 
-            generatePlaylist();
-            activeVideoIndex = currentPlaylist[playlistCursor];
+            ensureQueue();
+            activeVideoIndex = videoQueue.shift();
             const firstVideo = videos[activeVideoIndex];
+            
+            // 검은 화면 방지: 첫 비디오를 즉시 active로 만들어 첫 프레임이 보이게 함 (포스터 이미지 미존재시)
+            firstVideo.classList.add('active');
             updateHeaderColor(firstVideo);
+            if (posterLayer) {
+                posterLayer.style.display = 'none'; // 포스터 이미지(poster1.jpg)가 없으므로 화면을 가리지 않게 숨김
+            }
+            
+            firstVideo.setAttribute('autoplay', 'true'); // 모바일 브라우저 자동 재생 유도
             firstVideo.load();
-
-            firstVideo.addEventListener('playing', () => {
-                firstVideo.classList.add('active');
-                setTimeout(() => { posterLayer.classList.add('hidden'); }, 100);
-            }, { once: true });
+            preloadNextVideo(); // 다음 비디오 미리 로드 시작
 
             function tryPlayFirstVideo() {
                 firstVideo.muted = true;
                 var playPromise = firstVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.catch((error) => {
+                        console.warn("Auto-play prevented, waiting for interaction.");
                         const interactionHandler = () => {
                             firstVideo.play(); 
                             document.removeEventListener('click', interactionHandler);
@@ -316,10 +338,11 @@
                 }
             }
 
-            if (firstVideo.readyState >= 4) tryPlayFirstVideo();
-            else {
-                firstVideo.addEventListener('canplaythrough', tryPlayFirstVideo, { once: true });
-                setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2500);
+            if (firstVideo.readyState >= 3) {
+                tryPlayFirstVideo();
+            } else {
+                firstVideo.addEventListener('canplay', tryPlayFirstVideo, { once: true });
+                setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2000);
             }
         });
     </script>
