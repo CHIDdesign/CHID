@@ -219,8 +219,9 @@
             ];
             
             let videoQueue = [];
-            let activePlayerIndex = 0; // 0 (playerA) 또는 1 (playerB)
+            let activePlayerIndex = 0; 
             let isTransitioning = false;
+            const blobCache = {}; // 램(RAM) 캐싱을 통해 재생 중 버퍼링(네트워크 병목) 원천 차단
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -279,15 +280,29 @@
                 });
             });
 
-            function preloadNextVideo() {
+            // 영상을 최초 1회 다운로드하여 RAM에 Blob 객체로 저장 (네트워크 버퍼링 방지)
+            async function getCachedVideoUrl(originalUrl) {
+                if (blobCache[originalUrl]) return blobCache[originalUrl];
+                try {
+                    const response = await fetch(originalUrl);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    blobCache[originalUrl] = blobUrl;
+                    return blobUrl;
+                } catch (e) {
+                    return originalUrl; // 에러 시 일반 URL로 폴백
+                }
+            }
+
+            async function preloadNextVideo() {
                 ensureQueue();
                 const nextDataIndex = videoQueue[0];
-                const nextPlayerIndex = 1 - activePlayerIndex; // 대기 중인 플레이어
+                const nextPlayerIndex = 1 - activePlayerIndex; 
                 const standbyPlayer = players[nextPlayerIndex];
                 const nextData = playlistData[nextDataIndex];
                 
-                // 브라우저의 네이티브 HTTP 캐시를 활용하여 데이터 낭비 없이 로드
-                standbyPlayer.src = nextData.src;
+                // RAM 캐시된 Blob URL을 가져와서 디코더에 할당 (스트리밍 병목 제로)
+                standbyPlayer.src = await getCachedVideoUrl(nextData.src);
                 standbyPlayer.setAttribute('data-theme', nextData.theme);
                 standbyPlayer.load();
             }
@@ -310,7 +325,14 @@
                 var playPromise = nextPlayer.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
+                        // 정상적으로 재생이 시작되면 상태 업데이트
                         activePlayerIndex = nextPlayerIndex;
+                        
+                        // 재생이 성공하면 그 다음(3번째) 영상을 미리 RAM에 백그라운드 다운로드
+                        ensureQueue();
+                        if (videoQueue[0] !== undefined) {
+                            getCachedVideoUrl(playlistData[videoQueue[0]].src);
+                        }
                         
                         setTimeout(() => {
                             if (currentPlayer) {
@@ -321,6 +343,7 @@
                             nextPlayer.style.zIndex = "";
                             isTransitioning = false;
                             
+                            // 전환이 완전히 끝난 후 다음 영상을 대기 플레이어에 프리로드
                             preloadNextVideo();
                         }, 800); 
                     }).catch(error => {
@@ -348,24 +371,30 @@
             }
 
             // --- 초기화 로직 ---
-            ensureQueue();
-            const firstDataIndex = videoQueue.shift();
-            const firstData = playlistData[firstDataIndex];
-            
-            const firstPlayer = players[activePlayerIndex];
-            firstPlayer.src = firstData.src;
-            firstPlayer.setAttribute('data-theme', firstData.theme);
-            firstPlayer.classList.add('active');
-            updateHeaderColor(firstPlayer);
-            
-            if (posterLayer) posterLayer.style.display = 'none'; 
-            
-            firstPlayer.setAttribute('autoplay', 'true'); 
-            firstPlayer.load();
-            
-            preloadNextVideo(); // 대기 플레이어에 두 번째 영상 프리로드
+            (async function init() {
+                ensureQueue();
+                const firstDataIndex = videoQueue.shift();
+                const firstData = playlistData[firstDataIndex];
+                
+                const firstPlayer = players[activePlayerIndex];
+                firstPlayer.src = await getCachedVideoUrl(firstData.src);
+                firstPlayer.setAttribute('data-theme', firstData.theme);
+                firstPlayer.classList.add('active');
+                updateHeaderColor(firstPlayer);
+                
+                if (posterLayer) posterLayer.style.display = 'none'; 
+                
+                firstPlayer.setAttribute('autoplay', 'true'); 
+                firstPlayer.load();
+                
+                // 첫 진입 시 다음 영상도 바로 다운로드 시작
+                if (videoQueue[0] !== undefined) {
+                    getCachedVideoUrl(playlistData[videoQueue[0]].src);
+                }
+                
+                preloadNextVideo(); // 대기 플레이어에 두 번째 영상 프리로드
 
-            function tryPlayFirstVideo() {
+                function tryPlayFirstVideo() {
                 firstPlayer.muted = true;
                 var playPromise = firstPlayer.play();
                 if (playPromise !== undefined) {
@@ -388,6 +417,7 @@
                 firstPlayer.addEventListener('canplay', tryPlayFirstVideo, { once: true });
                 setTimeout(() => { if (firstPlayer.paused) tryPlayFirstVideo(); }, 2000);
             }
+            })();
         });
     </script>
 </body>
