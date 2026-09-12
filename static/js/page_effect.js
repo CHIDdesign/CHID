@@ -126,7 +126,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (isTouchDevice) return; 
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-        isIdle = false; // 마우스 이동 시 렌더링 재개
+        if (isIdle) {
+            isIdle = false;
+            requestAnimationFrame(draw);
+        }
     }, { capture: true });
 
     document.addEventListener('mouseleave', () => { 
@@ -138,7 +141,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (isTouchDevice) return; 
         if (e.button === 0) {
             triggerRipple(e.clientX, e.clientY); 
-            isIdle = false;
+            if (isIdle) {
+                isIdle = false;
+                requestAnimationFrame(draw);
+            }
         }
     }, { capture: true });
 
@@ -146,17 +152,17 @@ document.addEventListener("DOMContentLoaded", function() {
         ripples.push({ x: x, y: y, radius: 0, strength: 2.5 });
         setTimeout(() => { 
             ripples.push({ x: x, y: y, radius: 0, strength: 1.0 }); 
-            isIdle = false;
+            if (isIdle) {
+                isIdle = false;
+                requestAnimationFrame(draw);
+            }
         }, 200);
     }
     
     window.addEventListener('resize', initPoints);
 
     function draw() {
-        if (isIdle) {
-            requestAnimationFrame(draw);
-            return;
-        }
+        if (isIdle) return;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let targetC = -1000;
@@ -263,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // 애니메이션이 완전히 끝났고 리플도 없다면 GPU 렌더링 휴식 (전력 절약 및 영상 끊김 방지)
         if (!pointsAnimating && ripples.length === 0) {
             isIdle = true;
+            return; // Exit loop!
         }
         
         requestAnimationFrame(draw);
