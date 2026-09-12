@@ -221,7 +221,6 @@
             let videoQueue = [];
             let activePlayerIndex = 0; 
             let isTransitioning = false;
-            const blobCache = {}; // 램(RAM) 캐싱을 통해 재생 중 버퍼링(네트워크 병목) 원천 차단
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -280,29 +279,15 @@
                 });
             });
 
-            // 영상을 최초 1회 다운로드하여 RAM에 Blob 객체로 저장 (네트워크 버퍼링 방지)
-            async function getCachedVideoUrl(originalUrl) {
-                if (blobCache[originalUrl]) return blobCache[originalUrl];
-                try {
-                    const response = await fetch(originalUrl);
-                    const blob = await response.blob();
-                    const blobUrl = URL.createObjectURL(blob);
-                    blobCache[originalUrl] = blobUrl;
-                    return blobUrl;
-                } catch (e) {
-                    return originalUrl; // 에러 시 일반 URL로 폴백
-                }
-            }
-
-            async function preloadNextVideo() {
+            function preloadNextVideo() {
                 ensureQueue();
                 const nextDataIndex = videoQueue[0];
                 const nextPlayerIndex = 1 - activePlayerIndex; 
                 const standbyPlayer = players[nextPlayerIndex];
                 const nextData = playlistData[nextDataIndex];
                 
-                // RAM 캐시된 Blob URL을 가져와서 디코더에 할당 (스트리밍 병목 제로)
-                standbyPlayer.src = await getCachedVideoUrl(nextData.src);
+                // 순정 HTTP 캐시 활용: Blob 캐시의 100% 다운로드 대기(await)로 인한 병목을 제거
+                standbyPlayer.src = nextData.src;
                 standbyPlayer.setAttribute('data-theme', nextData.theme);
                 standbyPlayer.load();
             }
@@ -328,12 +313,6 @@
                         // 정상적으로 재생이 시작되면 상태 업데이트
                         activePlayerIndex = nextPlayerIndex;
                         
-                        // 재생이 성공하면 그 다음(3번째) 영상을 미리 RAM에 백그라운드 다운로드
-                        ensureQueue();
-                        if (videoQueue[0] !== undefined) {
-                            getCachedVideoUrl(playlistData[videoQueue[0]].src);
-                        }
-                        
                         setTimeout(() => {
                             if (currentPlayer) {
                                 currentPlayer.classList.remove('active');
@@ -353,6 +332,10 @@
                         if (currentPlayer) currentPlayer.style.zIndex = "";
                         updateHeaderColor(currentPlayer);
                         isTransitioning = false;
+                        
+                        // NEXT VIDEO PRELOAD!
+                        preloadNextVideo();
+                        
                         setTimeout(playNextVideo, 500); 
                     });
                 } else {
@@ -371,13 +354,13 @@
             }
 
             // --- 초기화 로직 ---
-            (async function init() {
+            (function init() {
                 ensureQueue();
                 const firstDataIndex = videoQueue.shift();
                 const firstData = playlistData[firstDataIndex];
                 
                 const firstPlayer = players[activePlayerIndex];
-                firstPlayer.src = await getCachedVideoUrl(firstData.src);
+                firstPlayer.src = firstData.src;
                 firstPlayer.setAttribute('data-theme', firstData.theme);
                 firstPlayer.classList.add('active');
                 updateHeaderColor(firstPlayer);
@@ -386,11 +369,6 @@
                 
                 firstPlayer.setAttribute('autoplay', 'true'); 
                 firstPlayer.load();
-                
-                // 첫 진입 시 다음 영상도 바로 다운로드 시작
-                if (videoQueue[0] !== undefined) {
-                    getCachedVideoUrl(playlistData[videoQueue[0]].src);
-                }
                 
                 preloadNextVideo(); // 대기 플레이어에 두 번째 영상 프리로드
 
