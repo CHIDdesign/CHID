@@ -97,12 +97,16 @@
             position: relative;
             padding: 0 40px;
             box-sizing: border-box;
+            display: grid;
         }
         .auto-carousel-slide {
+            grid-area: 1 / 1;
             width: 100%;
-            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
             object-fit: cover;
             border-radius: clamp(12px, 2.5vw, 24px);
+            pointer-events: none;
         }
         @media (max-width: 768px) {
             .auto-carousel-container {
@@ -110,7 +114,8 @@
             }
         }
         .auto-carousel-slide.active {
-            display: block;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .conveyor-wrapper {
