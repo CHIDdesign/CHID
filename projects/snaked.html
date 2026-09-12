@@ -618,6 +618,22 @@
             .node-stats th { padding-right: 2px; }
             .node-large .node-circle-glow { transform: scale(0.7); }
         }
+        
+        /* 타자기 애니메이션 커서 */
+        .typing-cursor::after {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: #fff;
+            margin-left: 2px;
+            vertical-align: baseline;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -684,6 +700,40 @@
 
         <div class="full-image-block">
                 <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="Detail 1" class="mobile-view-img" loading="lazy">
+        </div>
+
+        <div class="katusa-story-section" id="katusaStoryTrigger" style="position: relative; width: 100%; height: 60vh; min-height: 400px; max-height: 800px; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
+            <!-- Background Image with Fade Out Mask -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); z-index: 0;"></div>
+            
+            <!-- Dark Overlay -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;  z-index: 1;"></div>
+            
+            <div class="katusa-content-wrapper" style="position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px);">
+                
+                <!-- Top Graphic Group -->
+                <div class="katusa-top-graphic" style="display: flex; align-items: center; width: 100%; margin-bottom: clamp(40px, 8vw, 150px);">
+                    <div style="font-size: clamp(14px, 1.5vw, 20px); color: #fff; font-weight: 400; margin-right: 10px; white-space: nowrap;">The Story of</div>
+                    
+                    <!-- [방법 1: 파일 경로로 연결할 경우] 아래 img 태그의 src 경로를 변경하세요 -->
+                    <!-- [방법 2: SVG 코드를 직접 넣을 경우] 아래 img 태그를 통째로 지우고 <svg>...</svg> 코드를 붙여넣으세요 -->
+                    <div id="snaked-logo-svg-container" style="display: inline-flex; align-items: center; height: 1em;">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
+                    </div>
+                    
+                    <!-- 긴 선분 -->
+                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); margin-left: 20px;"></div>
+                </div>
+                
+                <!-- Bottom Graphic Group -->
+                <div class="katusa-bottom-graphic" style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-start;">
+                    <div id="typewriter-part1" style="color: #fff; font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; white-space: pre-wrap; margin-right: 15px;">&#8203;</div>
+                    <div style="display: flex; align-items: baseline;">
+                        <span id="typewriter-part2" style="color: var(--point-color); font-size: clamp(42px, 8vw, 100px); font-weight: 700; line-height: 1; letter-spacing: 0.02em; white-space: pre;">&#8203;</span>
+                        <span id="typewriter-part3" style="color: #fff; font-size: clamp(16px, 2vw, 24px); font-weight: 300; margin-left: 8px; white-space: pre;">&#8203;</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <section class="title-group">
@@ -1250,6 +1300,79 @@
             const disasterTimeline = document.getElementById('disasterTimeline');
             if (disasterTimeline) {
                 timelineObserver.observe(disasterTimeline);
+            }
+
+            // KATUSA 타자기 효과 애니메이션 옵저버 (JS로 전체 문장 순차 렌더링 & 스크롤 초기화)
+            let katusaTimeout = null;
+            const typewriterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const trigger = entry.target;
+                    const p1 = document.getElementById('typewriter-part1');
+                    const p2 = document.getElementById('typewriter-part2');
+                    const p3 = document.getElementById('typewriter-part3');
+                    if(!p1 || !p2 || !p3) return;
+
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        if (trigger.dataset.typed !== 'true') {
+                            trigger.dataset.typed = 'true';
+                            
+                            p1.textContent = '\u200B'; p2.textContent = '\u200B'; p3.textContent = '\u200B';
+                            
+                            const t1 = "It all started as being";
+                            const t2 = "[ KATUSA ]";
+                            const t3 = "s";
+                            
+                            let i=0, j=0, k=0;
+                            const speed = 40; // 타자 속도 (ms)
+                            
+                            function typePart3() {
+                                p2.classList.remove('typing-cursor');
+                                p3.classList.add('typing-cursor');
+                                if(k < t3.length) {
+                                    p3.textContent += t3.charAt(k);
+                                    k++;
+                                    katusaTimeout = setTimeout(typePart3, speed);
+                                }
+                            }
+                            function typePart2() {
+                                p1.classList.remove('typing-cursor');
+                                p2.classList.add('typing-cursor');
+                                if(j < t2.length) {
+                                    p2.textContent += t2.charAt(j);
+                                    j++;
+                                    katusaTimeout = setTimeout(typePart2, speed + 10);
+                                } else {
+                                    katusaTimeout = setTimeout(typePart3, speed);
+                                }
+                            }
+                            function typePart1() {
+                                p1.classList.add('typing-cursor');
+                                if(i < t1.length) {
+                                    p1.textContent += t1.charAt(i);
+                                    i++;
+                                    katusaTimeout = setTimeout(typePart1, speed);
+                                } else {
+                                    katusaTimeout = setTimeout(typePart2, speed);
+                                }
+                            }
+                            
+                            typePart1();
+                        }
+                    } else if (!entry.isIntersecting) {
+                        // 화면 밖으로 나가면 초기화하여 다시 들어올 때 재생되도록 함
+                        trigger.dataset.typed = 'false';
+                        clearTimeout(katusaTimeout);
+                        p1.textContent = '\u200B'; p2.textContent = '\u200B'; p3.textContent = '\u200B';
+                        p1.classList.remove('typing-cursor');
+                        p2.classList.remove('typing-cursor');
+                        p3.classList.remove('typing-cursor');
+                    }
+                });
+            }, { threshold: [0, 0.5] }); // 화면에 안 보일 때(0), 50% 보일 때(0.5) 감지
+
+            const katusaTrigger = document.getElementById('katusaStoryTrigger');
+            if (katusaTrigger) {
+                typewriterObserver.observe(katusaTrigger);
             }
         });
     </script>
