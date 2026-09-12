@@ -220,6 +220,7 @@
             const videos = Array.from(document.querySelectorAll('.bg-video'));
             let videoQueue = [];
             let activeVideoIndex = -1;
+            const blobCache = {}; // 비디오 URL을 램(RAM)에 캐싱하여 데이터 요금 방지
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -264,12 +265,17 @@
                 video.playsInline = true;
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
+                video.setAttribute('preload', 'auto');
                 
-                // 크로스페이드(0.8초) 동안 영상이 멈춰보이는 현상을 방지하기 위해 0.8초 전에 다음 영상 시작
+                const source = video.querySelector('source');
+                if (source) {
+                    video.dataset.originalSrc = source.getAttribute('src');
+                    video.removeChild(source);
+                }
+                
                 video.addEventListener('timeupdate', () => {
                     if (domIndex === activeVideoIndex && !isTransitioning) {
                         const timeRemaining = video.duration - video.currentTime;
-                        // 남은 시간이 0.8초 이하일 때 (영상 데이터가 아직 로드되지 않은 경우 제외)
                         if (timeRemaining <= 0.82 && timeRemaining > 0 && video.duration > 1) {
                             isTransitioning = true;
                             playNextVideo();
@@ -285,13 +291,30 @@
                 });
             });
 
-            function preloadNextVideo() {
+            // 원본 URL을 받아 한 번만 다운로드하고 메모리(Blob) 주소를 반환
+            async function getCachedVideoUrl(originalUrl) {
+                if (blobCache[originalUrl]) return blobCache[originalUrl];
+                try {
+                    const response = await fetch(originalUrl);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    blobCache[originalUrl] = blobUrl;
+                    return blobUrl;
+                } catch (e) {
+                    return originalUrl; // 에러 시 일반 URL로 폴백
+                }
+            }
+
+            async function preloadNextVideoDecoder() {
                 ensureQueue();
                 const nextIndex = videoQueue[0];
                 if (nextIndex !== undefined) {
                     const nextVid = videos[nextIndex];
+                    if (!nextVid.getAttribute('src') && nextVid.dataset.originalSrc) {
+                        // 메모리에 캐시된 URL로 즉시 꽂아버림 (추가 다운로드 0바이트)
+                        nextVid.src = await getCachedVideoUrl(nextVid.dataset.originalSrc);
+                    }
                     nextVid.setAttribute('preload', 'auto');
-                    // 현재 재생될 영상과 다음 재생될 영상에만 다운로드를 집중시켜 네트워크 병목 방지
                     nextVid.load();
                 }
             }
@@ -304,28 +327,33 @@
                 activeVideoIndex = nextDomIndex;
                 
                 try {
-                    // 데이터가 없는 상태(readyState=0)에서 currentTime을 수정하면 Safari 등에서 에러(InvalidStateError)가 발생하며 스크립트가 중단됨.
-                    // 스크립트가 중단되면 isTransitioning이 영원히 true로 남아 화면이 멈추는 원인이 됨.
-                    // preload="none"으로 변경된 이후 이 현상이 발생했으므로 해당 코드를 제거함. (어차피 load()로 인해 초기화됨)
-                    
                     var playPromise = nextVideo.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
                             nextVideo.classList.add('active'); 
                             updateHeaderColor(nextVideo); 
+                            
+                            // 다음 영상을 백그라운드에서 다운로드하여 Blob에 캐싱 (한 번만 수행됨)
+                            ensureQueue();
+                            const upcomingIndex = videoQueue[0];
+                            if (upcomingIndex !== undefined && videos[upcomingIndex].dataset.originalSrc) {
+                                getCachedVideoUrl(videos[upcomingIndex].dataset.originalSrc);
+                            }
+
                             setTimeout(() => {
                                 if (currentVideo) {
                                     currentVideo.classList.remove('active');
                                     currentVideo.pause(); 
+                                    currentVideo.removeAttribute('src');
+                                    currentVideo.load();
                                 }
-                                isTransitioning = false; // 크로스페이드 완료 후 상태 초기화
+                                isTransitioning = false; 
+                                preloadNextVideoDecoder();
                             }, 800); 
-                            
-                            preloadNextVideo();
                         }).catch(error => {
                             console.error("Next video play failed:", error);
                             isTransitioning = false;
-                            setTimeout(playNextVideo, 500); // 에러 발생 시 다음 영상 시도
+                            setTimeout(playNextVideo, 500); 
                         });
                     } else {
                         isTransitioning = false;
@@ -333,48 +361,55 @@
                 } catch (err) {
                     console.error("Error starting video:", err);
                     isTransitioning = false;
-                    setTimeout(playNextVideo, 500); // 에러 발생 시 스크립트 중단을 막고 다음 영상 시도
+                    setTimeout(playNextVideo, 500); 
                 }
             }
 
-            ensureQueue();
-            activeVideoIndex = videoQueue.shift();
-            const firstVideo = videos[activeVideoIndex];
-            
-            // 검은 화면 방지: 첫 비디오를 즉시 active로 만들어 첫 프레임이 보이게 함 (포스터 이미지 미존재시)
-            firstVideo.classList.add('active');
-            updateHeaderColor(firstVideo);
-            if (posterLayer) {
-                posterLayer.style.display = 'none'; // 포스터 이미지(poster1.jpg)가 없으므로 화면을 가리지 않게 숨김
-            }
-            
-            firstVideo.setAttribute('autoplay', 'true'); // 모바일 브라우저 자동 재생 유도
-            firstVideo.load();
-            preloadNextVideo(); // 다음 비디오 미리 로드 시작
-
-            function tryPlayFirstVideo() {
-                firstVideo.muted = true;
-                var playPromise = firstVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch((error) => {
-                        console.warn("Auto-play prevented, waiting for interaction.");
-                        const interactionHandler = () => {
-                            firstVideo.play(); 
-                            document.removeEventListener('click', interactionHandler);
-                            document.removeEventListener('touchstart', interactionHandler);
-                        };
-                        document.addEventListener('click', interactionHandler);
-                        document.addEventListener('touchstart', interactionHandler);
-                    });
+            // 초기화
+            (async function init() {
+                ensureQueue();
+                activeVideoIndex = videoQueue.shift();
+                const firstVideo = videos[activeVideoIndex];
+                
+                if (firstVideo.dataset.originalSrc) {
+                    // 첫 영상도 Blob으로 로드
+                    firstVideo.src = await getCachedVideoUrl(firstVideo.dataset.originalSrc);
                 }
-            }
+                firstVideo.classList.add('active');
+                updateHeaderColor(firstVideo);
+                if (posterLayer) posterLayer.style.display = 'none'; 
+                
+                firstVideo.setAttribute('autoplay', 'true'); 
+                firstVideo.load();
+                
+                if (videoQueue[0] !== undefined && videos[videoQueue[0]].dataset.originalSrc) {
+                    getCachedVideoUrl(videos[videoQueue[0]].dataset.originalSrc);
+                }
+                preloadNextVideoDecoder(); 
 
-            if (firstVideo.readyState >= 3) {
-                tryPlayFirstVideo();
-            } else {
-                firstVideo.addEventListener('canplay', tryPlayFirstVideo, { once: true });
-                setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2000);
-            }
+                function tryPlayFirstVideo() {
+                    firstVideo.muted = true;
+                    var playPromise = firstVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch((error) => {
+                            const interactionHandler = () => {
+                                firstVideo.play(); 
+                                document.removeEventListener('click', interactionHandler);
+                                document.removeEventListener('touchstart', interactionHandler);
+                            };
+                            document.addEventListener('click', interactionHandler);
+                            document.addEventListener('touchstart', interactionHandler);
+                        });
+                    }
+                }
+
+                if (firstVideo.readyState >= 3) {
+                    tryPlayFirstVideo();
+                } else {
+                    firstVideo.addEventListener('canplay', tryPlayFirstVideo, { once: true });
+                    setTimeout(() => { if (firstVideo.paused) tryPlayFirstVideo(); }, 2000);
+                }
+            })();
         });
     </script>
 </body>
