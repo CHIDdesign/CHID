@@ -365,27 +365,65 @@
                 }
             }
 
-            // --- 초기화 로직 ---
+            // --- 초기화 및 프리로딩 로직 (2개 영상 선탑재) ---
             (function init() {
                 ensureQueue();
                 const firstDataIndex = videoQueue.shift();
-                const firstData = playlistData[firstDataIndex];
+                const secondDataIndex = videoQueue[0]; // peek for standby
                 
-                const firstPlayer = players[activePlayerIndex];
-                firstPlayer.src = firstData.src;
-                firstPlayer.setAttribute('data-theme', firstData.theme);
-                firstPlayer.classList.add('active');
-                updateHeaderColor(firstPlayer);
-                
-                if (posterLayer) posterLayer.style.display = 'none'; 
-                
-                firstPlayer.setAttribute('autoplay', 'true'); 
-                firstPlayer.load();
-                
-                preloadNextVideo();
+                const firstPlayer = players[0];
+                const secondPlayer = players[1];
 
-                function tryPlayFirstVideo() {
+                // 두 플레이어에 각각 첫 번째, 두 번째 영상 소스 장착
+                firstPlayer.src = playlistData[firstDataIndex].src;
+                firstPlayer.setAttribute('data-theme', playlistData[firstDataIndex].theme);
+                firstPlayer.load();
+
+                secondPlayer.src = playlistData[secondDataIndex].src;
+                secondPlayer.setAttribute('data-theme', playlistData[secondDataIndex].theme);
+                secondPlayer.load();
+
+                let loadedCount = 0;
+                let hasStarted = false;
+
+                function checkReady() {
+                    loadedCount++;
+                    if (loadedCount >= 2 && !hasStarted) {
+                        hasStarted = true;
+                        startEngine();
+                    }
+                }
+
+                function safeAddListener(player) {
+                    if (player.readyState >= 3) {
+                        checkReady();
+                    } else {
+                        player.addEventListener('canplay', checkReady, { once: true });
+                    }
+                }
+
+                // 두 영상이 모두 버퍼링될 때까지 대기
+                safeAddListener(firstPlayer);
+                safeAddListener(secondPlayer);
+                
+                // 네트워크가 너무 느릴 경우 무한 로딩 방지용 폴백 (3초 후 강제 시작)
+                setTimeout(() => {
+                    if (!hasStarted) {
+                        hasStarted = true;
+                        startEngine();
+                    }
+                }, 3000);
+                
+                function startEngine() {
+                    activePlayerIndex = 0;
+                    firstPlayer.classList.add('active');
+                    updateHeaderColor(firstPlayer);
+                    
+                    if (posterLayer) posterLayer.style.display = 'none'; 
+                    
+                    firstPlayer.setAttribute('autoplay', 'true'); 
                     firstPlayer.muted = true;
+                    
                     const playPromise = firstPlayer.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
@@ -404,13 +442,6 @@
                     } else {
                         transitionRafId = requestAnimationFrame(checkVideoTime);
                     }
-                }
-
-                if (firstPlayer.readyState >= 3) {
-                    tryPlayFirstVideo();
-                } else {
-                    firstPlayer.addEventListener('canplay', tryPlayFirstVideo, { once: true });
-                    setTimeout(() => { if (firstPlayer.paused) tryPlayFirstVideo(); }, 2000);
                 }
             })();
         });
