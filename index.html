@@ -218,6 +218,7 @@
             let videoQueue = [];
             let activePlayerIndex = 0; 
             let isTransitioning = false;
+            let transitionRafId = null;
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -254,27 +255,28 @@
                 }
             }
 
-            players.forEach((player, idx) => {
+            players.forEach((player) => {
                 player.muted = true;
                 player.defaultMuted = true;
-                
-                player.addEventListener('timeupdate', () => {
-                    if (idx === activePlayerIndex && !isTransitioning) {
+                player.setAttribute('playsinline', '');
+                player.setAttribute('webkit-playsinline', '');
+            });
+
+            // Use requestAnimationFrame for precise time checking instead of inaccurate timeupdate event
+            function checkVideoTime() {
+                if (!isTransitioning) {
+                    const player = players[activePlayerIndex];
+                    if (player && player.duration > 1) {
                         const timeRemaining = player.duration - player.currentTime;
-                        if (timeRemaining <= 0.82 && timeRemaining > 0 && player.duration > 1) {
+                        // Start transition 0.8s before end to match CSS transition time exactly
+                        if (timeRemaining <= 0.82 && timeRemaining > 0) {
                             isTransitioning = true;
                             playNextVideo();
                         }
                     }
-                });
-
-                player.addEventListener('ended', () => {
-                    if (idx === activePlayerIndex && !isTransitioning) {
-                        isTransitioning = true;
-                        playNextVideo();
-                    }
-                });
-            });
+                }
+                transitionRafId = requestAnimationFrame(checkVideoTime);
+            }
 
             function preloadNextVideo() {
                 ensureQueue();
@@ -283,14 +285,11 @@
                 const standbyPlayer = players[nextPlayerIndex];
                 const nextData = playlistData[nextDataIndex];
                 
-                // 순정 HTTP 캐시 활용: Blob 캐시의 100% 다운로드 대기(await)로 인한 병목을 제거
-                // 이전 소스 해제 후 새 소스 로드 (메모리 누수 및 디코더 버벅임 방지)
-                standbyPlayer.removeAttribute('src');
-                standbyPlayer.load();
-                
+                if (standbyPlayer.src.includes(nextData.src)) return; // Already loaded
+
                 standbyPlayer.src = nextData.src;
                 standbyPlayer.setAttribute('data-theme', nextData.theme);
-                standbyPlayer.load();
+                standbyPlayer.load(); // Single load call prevents decoder thrashing on iOS
             }
 
             function playNextVideo() {
@@ -301,17 +300,15 @@
                 const nextPlayerIndex = 1 - activePlayerIndex;
                 const nextPlayer = players[nextPlayerIndex];
                 
-                // 시각적 끊김(DOM 순서 역전) 해결: 새로 나타나는 영상을 무조건 위(z-index: 2)로 끌어올림
                 if (currentPlayer) currentPlayer.style.zIndex = "1";
                 nextPlayer.style.zIndex = "2";
                 
                 nextPlayer.classList.add('active');
                 updateHeaderColor(nextPlayer);
                 
-                var playPromise = nextPlayer.play();
+                const playPromise = nextPlayer.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // 정상적으로 재생이 시작되면 상태 업데이트
                         activePlayerIndex = nextPlayerIndex;
                         
                         setTimeout(() => {
@@ -324,7 +321,6 @@
                             nextPlayer.style.zIndex = "";
                             isTransitioning = false;
                             
-                            // 전환이 완전히 끝난 후 다음 영상을 대기 플레이어에 프리로드
                             setTimeout(preloadNextVideo, 50);
                         }, 800); 
                     }).catch(error => {
@@ -335,12 +331,11 @@
                         updateHeaderColor(currentPlayer);
                         isTransitioning = false;
                         
-                        // NEXT VIDEO PRELOAD!
                         setTimeout(preloadNextVideo, 50);
-                        
                         setTimeout(playNextVideo, 500); 
                     });
                 } else {
+                    // Fallback if playPromise is undefined
                     activePlayerIndex = nextPlayerIndex;
                     setTimeout(() => {
                         if (currentPlayer) {
@@ -373,31 +368,36 @@
                 firstPlayer.setAttribute('autoplay', 'true'); 
                 firstPlayer.load();
                 
-                preloadNextVideo(); // 대기 플레이어에 두 번째 영상 프리로드
+                preloadNextVideo();
 
                 function tryPlayFirstVideo() {
-                firstPlayer.muted = true;
-                var playPromise = firstPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch((error) => {
-                        console.warn("Auto-play prevented, waiting for interaction.");
-                        const interactionHandler = () => {
-                            firstPlayer.play(); 
-                            document.removeEventListener('click', interactionHandler);
-                            document.removeEventListener('touchstart', interactionHandler);
-                        };
-                        document.addEventListener('click', interactionHandler);
-                        document.addEventListener('touchstart', interactionHandler);
-                    });
+                    firstPlayer.muted = true;
+                    const playPromise = firstPlayer.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            transitionRafId = requestAnimationFrame(checkVideoTime);
+                        }).catch((error) => {
+                            console.warn("Auto-play prevented, waiting for interaction.", error);
+                            const interactionHandler = () => {
+                                firstPlayer.play();
+                                transitionRafId = requestAnimationFrame(checkVideoTime);
+                                document.removeEventListener('click', interactionHandler);
+                                document.removeEventListener('touchstart', interactionHandler);
+                            };
+                            document.addEventListener('click', interactionHandler);
+                            document.addEventListener('touchstart', interactionHandler);
+                        });
+                    } else {
+                        transitionRafId = requestAnimationFrame(checkVideoTime);
+                    }
                 }
-            }
 
-            if (firstPlayer.readyState >= 3) {
-                tryPlayFirstVideo();
-            } else {
-                firstPlayer.addEventListener('canplay', tryPlayFirstVideo, { once: true });
-                setTimeout(() => { if (firstPlayer.paused) tryPlayFirstVideo(); }, 2000);
-            }
+                if (firstPlayer.readyState >= 3) {
+                    tryPlayFirstVideo();
+                } else {
+                    firstPlayer.addEventListener('canplay', tryPlayFirstVideo, { once: true });
+                    setTimeout(() => { if (firstPlayer.paused) tryPlayFirstVideo(); }, 2000);
+                }
             })();
         });
     </script>
