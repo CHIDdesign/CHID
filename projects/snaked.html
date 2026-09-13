@@ -862,6 +862,62 @@
                     .stat-hidden {
                         opacity: 0;
                     }
+
+                    .parallel-terrain-section {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 120px;
+                        max-width: 1200px;
+                        margin: 80px auto;
+                        padding: 0 40px;
+                        box-sizing: border-box;
+                    }
+                    .terrain-column {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 100%;
+                    }
+                    .terrain-img-main {
+                        display: block;
+                        object-fit: cover;
+                        background-color: #e0e0e0;
+                        width: 100%;
+                        aspect-ratio: 1 / 1;
+                        margin-bottom: 24px;
+                    }
+                    .terrain-title {
+                        color: var(--point-color);
+                        font-size: 22px;
+                        font-weight: 500;
+                        text-align: center;
+                        margin-bottom: 16px;
+                    }
+                    .terrain-img-sub {
+                        display: block;
+                        object-fit: cover;
+                        background-color: #e0e0e0;
+                        width: 100%;
+                        aspect-ratio: 2 / 1;
+                        margin-bottom: 12px;
+                    }
+                    .terrain-desc {
+                        color: var(--text-main);
+                        font-size: 15px;
+                        text-align: center;
+                        font-weight: 300;
+                    }
+                    @media (max-width: 768px) {
+                        .parallel-terrain-section {
+                            grid-template-columns: 1fr;
+                            gap: 60px;
+                            padding: 0 20px;
+                            margin: 60px auto;
+                        }
+                        .terrain-title {
+                            font-size: 20px;
+                        }
+                    }
                 
 </style>
 </head>
@@ -1486,7 +1542,7 @@
 
         <div class="working-process-section" style="position: relative; width: 100%; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
             
-            <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
                 <source src="/img/projects/project img/8. snaked/snaked_intro_3.mp4" type="video/mp4">
             </video>
             
@@ -1576,7 +1632,7 @@
             </div>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
             <source src="/img/projects/project img/8. snaked/snaked 36_1.mp4" type="video/mp4">
         </video>
 
@@ -1608,6 +1664,10 @@
             </div>
         </div>
 
+        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <source src="/img/projects/project img/8. snaked/snaked 36_2.mp4" type="video/mp4">
+        </video>
+
         <div class="full-image-block">
             <img src="/img/projects/project img/8. snaked/snaked 39.webp" alt="Single Image" class="mobile-view-img" loading="lazy">
         </div>
@@ -1628,6 +1688,147 @@
                     여기에 일체형 안전벨트를 결합하여 이송 전 과정에 걸쳐 환자를 흔들림 없이 견고하게 고정합니다.
                 </p>
             </div>
+        </div>
+
+        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <source src="/img/projects/project img/8. snaked/snaked_intro_4.mp4" type="video/mp4">
+        </video>
+
+        <div class="text-single-block" style="margin-top: 80px; margin-bottom: 80px;">
+            <div class="problem-title-group" style="margin-bottom: 30px; text-align: center;">
+                <h2 class="split-heading problem-title" style="font-size: clamp(28px, 3.5vw, 42px); line-height: 1.3;">
+                    GEOMETRIC INSPIRATION:<br>
+                    <span style="color: var(--point-color);">[ Moving Sofa Problem ]</span>
+                </h2>
+            </div>
+            <div class="problem-desc" style="text-align: left;">
+                <p class="body-en">
+                    To overcome spatial constraints in tight passages, the mechanism draws inspiration from the Moving Sofa Problem.<br>
+                    First formulated by Leo Moser in 1966, this iconic geometry challenge seeks the maximum shape capable of navigating a 1-meter-wide L-shaped hallway—an unsolved puzzle recently brought back into the academic spotlight through Dr. Jineon Baek’s (Yonsei University) research on the optimality of Gerver’s Sofa.
+                </p>
+                <p class="body-kr" style="margin-top: 20px;">
+                    협소 공간에서의 이동 한계를 극복하기 위해 '소파 문제'의 기하학적 원리에서 영감을 얻었습니다.<br>
+                    1966년 레오 모저가 제시한 이 고전 수학 난제는 폭 1m의 'L'자형 직각 복도를 통과할 수 있는 도형의 최대 면적을 규명하는 문제로, 최근 연세대 백진언 박사의 '거버 소파의 최적성' 증명 연구를 통해 다시금 주목받은 바 있습니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="full-image-block">
+            <img src="/img/projects/project img/8. snaked/snaked 41.webp" alt="Single Image" class="mobile-view-img" loading="lazy">
+        </div>
+
+        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+            <p class="body-en">
+                The Moving Sofa Problem reveals that spatial passability through confined turns is dictated by rotational degrees of freedom rather than absolute size.<br>
+                Synchronizing an object's geometry with its rotational capacity is the core engineering principle behind overcoming tight spatial constraints.
+            </p>
+            <p class="body-kr" style="margin-top: 20px;">
+                '소파 옮기기 문제'의 핵심은 좁은 곡선 통로의 통과성이 물체의 절대적인 크기가 아닌 '회전 자유도'에 의해 결정된다는 점입니다.<br>
+                물체의 형태와 회전 능력을 유기적으로 연동하는 것이 협소한 공간 제약을 극복하는 핵심 공학 원리입니다.
+            </p>
+        </div>
+
+        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <source src="/img/projects/project img/8. snaked/snaked 42.mp4" type="video/mp4">
+        </video>
+
+        <div class="image-text-split problem-split" style="margin-top: 60px;">
+            <div class="split-image">
+                <img src="/img/projects/project img/8. snaked/snaked 43.webp" alt="Complex Strapping" loading="lazy">
+            </div>
+            <div class="split-text problem-content">
+                <div class="problem-title-group">
+                    <h2 class="split-heading problem-title">
+                        <span style="color: var(--point-color);">Biomechanically Optimized Articulation</span><br>
+                        for Complex Maneuverability
+                    </h2>
+                </div>
+                <div class="problem-desc">
+                    <p class="body-en">
+                        Unlike traditional rigid stretchers that require wide turning radii, this frame maintains upper body rigidity to protect the spine while introducing controlled flexibility exclusively to the lower segments.<br>
+                        By capping the bending angle at 15 degrees, safely below the 20 degree hip extension threshold, it achieves agile navigation without compromising patient safety.
+                    </p>
+                    <p class="body-kr">
+                        넓은 회전 반경이 필요한 기존 일체형 들것과 달리, 척추를 보호하는 상체는 견고하게 고정하고 하체에만 제한적인 회전 자유도를 부여했습니다.<br>
+                        정상 고관절 가동 범위인 20도보다 엄격한 15도로 각 마디의 굴절을 제한하여 협소 공간 기동성과 환자 안전을 모두 확보했습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <source src="/img/projects/project img/8. snaked/snaked 44.mp4" type="video/mp4">
+        </video>
+
+        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+            <p class="body-en">
+                Dividing the lower section at the knee into two 15 degree articulating segments allows the stretcher to dynamically adapt to tight environments.<br>
+                This mechanism drastically enhances maneuverability through steep stairs and L shaped corridors.
+            </p>
+            <p class="body-kr" style="margin-top: 20px;">
+                무릎을 기준으로 하체를 두 개의 마디로 분할하고 각각 15도의 굴절각을 부여했습니다.<br>
+                이 관절형 구조를 통해 협소 공간에 유연하게 대응하며, 계단과 L자형 직각 복도에서의 기동성을 극대화합니다.
+            </p>
+        </div>
+
+        <div class="full-image-block">
+            <img src="/img/projects/project img/8. snaked/snaked 45.webp" alt="Single Image" class="mobile-view-img" loading="lazy">
+        </div>
+
+        <div class="image-text-split problem-split" style="margin-top: 60px;">
+            <div class="split-image">
+                <img src="/img/projects/project img/8. snaked/snaked 46.webp" alt="Complex Strapping" loading="lazy">
+            </div>
+            <div class="split-text problem-content">
+                <div class="problem-title-group">
+                    <h2 class="split-heading problem-title">
+                        <span style="color: var(--point-color);">Optimized Winch Mechanism</span><br>
+                        for Precision Angular Control
+                    </h2>
+                </div>
+                <div class="problem-desc">
+                    <p class="body-en">
+                        A manual winch system governs lower frame articulation by modulating wire tension, releasing to flex under gravity and rewinding to straighten.<br>
+                        After testing five configurations to balance rotational effort and speed, a 13:36 gear ratio was selected for optimal rescue ergonomics and operational efficiency.
+                    </p>
+                    <p class="body-kr">
+                        수동 윈치 시스템은 와이어 장력을 조율해 하체 굴절 각도를 정밀 제어합니다.<br>
+                        와이어를 풀면 중력으로 각도가 꺾이고 감아올리면 수평으로 복원되는 구조입니다.<br>
+                        회전수와 요구 하중 간의 균형을 찾기 위해 다섯 가지 기어비를 테스트한 끝에, 현장 구조 효율과 조작 편의성을 극대화하는 13:36 비율을 최종 채택했습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
+            <img src="/img/projects/project img/8. snaked/snaked 47.webp" alt="Detail 1" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+        </div>
+
+
+        <div class="parallel-terrain-section">
+            <div class="terrain-column">
+                <img src="/img/projects/project img/8. snaked/snaked 48_1.webp" alt="Stepped Incline Terrain Main" class="terrain-img-main" loading="lazy">
+                <div class="terrain-title">[ Stepped Incline Terrain ]</div>
+                <img src="/img/projects/project img/8. snaked/snaked 48_3.webp" alt="Stepped Incline Terrain Sub" class="terrain-img-sub" loading="lazy">
+                <div class="terrain-desc">Stretcher roll-axis tilt</div>
+            </div>
+            <div class="terrain-column">
+                <img src="/img/projects/project img/8. snaked/snaked 48_2.webp" alt="Angled Tunnel Terrain Main" class="terrain-img-main" loading="lazy">
+                <div class="terrain-title">[ Angled Tunnel Terrain ]</div>
+                <img src="/img/projects/project img/8. snaked/snaked 48_4.webp" alt="Angled Tunnel Terrain Sub" class="terrain-img-sub" loading="lazy">
+                <div class="terrain-desc">Stretcher roll-axis tilt</div>
+            </div>
+        </div>
+
+        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+            <p class="body-en">
+                Tilting the stretcher in L shaped turns caused the gravity-dependent articulation to fail due to wire slack.<br>
+                Integrating elastic bands provides continuous tension across all angles, ensuring reliable bending even during sideways navigation.
+            </p>
+            <p class="body-kr" style="margin-top: 20px;">
+                L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다.<br>
+                각 마디에 탄성 밴드를 추가해 들것의 기울기와 무관하게 상시 장력을 유지시킴으로써, 측면 이송 시에도 안정적인 굴절과 통과 성능을 확보했습니다.
+            </p>
         </div>
 
         <div class="carousel-container">
