@@ -197,10 +197,6 @@
             const mainLogo = document.getElementById('main-logo');
             if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
 
-            // ----------------------------------------------------
-            // Ping-Pong Video Player Engine (Enterprise-grade)
-            // 브라우저 디코더 한계(특히 iOS) 및 캐시 문제를 완벽 해결
-            // ----------------------------------------------------
             const players = [
                 document.getElementById('playerA'),
                 document.getElementById('playerB')
@@ -214,31 +210,11 @@
                 { src: "img/main/loop/video 5.mp4", theme: "light" },
                 { src: "img/main/loop/video 6.mp4", theme: "light" }
             ];
-            
-            let videoQueue = [];
-            let activePlayerIndex = 0; 
+
+            let activePlayerIndex = 0;
+            let currentDataIndex = 0;
             let isTransitioning = false;
             let transitionRafId = null;
-
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
-
-            function ensureQueue() {
-                if (videoQueue.length < 2) {
-                    let newPlaylist = playlistData.map((_, i) => i);
-                    shuffleArray(newPlaylist);
-                    if (videoQueue.length > 0 && videoQueue[videoQueue.length - 1] === newPlaylist[0]) {
-                        if (newPlaylist.length > 1) {
-                            [newPlaylist[0], newPlaylist[1]] = [newPlaylist[1], newPlaylist[0]];
-                        }
-                    }
-                    videoQueue = videoQueue.concat(newPlaylist);
-                }
-            }
 
             function updateHeaderColor(videoElement) {
                 const theme = videoElement.getAttribute("data-theme");
@@ -247,11 +223,11 @@
                 if (theme === "dark") {
                     header.classList.add("white-skin");
                     window.cursorColorMode = 'white'; 
-                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
+                    if (dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 } else {
                     header.classList.remove("white-skin");
                     window.cursorColorMode = 'black'; 
-                    if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
+                    if (dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 }
             }
 
@@ -261,7 +237,6 @@
                 player.setAttribute('playsinline', '');
                 player.setAttribute('webkit-playsinline', '');
                 
-                // 백그라운드 탭 등 RAF 중단 시 최후의 보루 (ended 이벤트)
                 player.addEventListener('ended', () => {
                     if (idx === activePlayerIndex && !isTransitioning) {
                         isTransitioning = true;
@@ -270,13 +245,11 @@
                 });
             });
 
-            // timeupdate 대신 RAF를 사용하여 버벅임 없이 정확한 타이밍 계산
             function checkVideoTime() {
                 if (!isTransitioning) {
                     const player = players[activePlayerIndex];
                     if (player && player.duration > 1) {
                         const timeRemaining = player.duration - player.currentTime;
-                        // 영상 종료 0.82초 전 교차 시작 (0초에 도달해도 발동하도록 <= 사용)
                         if (timeRemaining <= 0.82) {
                             isTransitioning = true;
                             playNextVideo();
@@ -287,26 +260,21 @@
             }
 
             function preloadNextVideo() {
-                ensureQueue();
-                const nextDataIndex = videoQueue[0];
                 const nextPlayerIndex = 1 - activePlayerIndex; 
                 const standbyPlayer = players[nextPlayerIndex];
+                const nextDataIndex = (currentDataIndex + 1) % playlistData.length;
                 const nextData = playlistData[nextDataIndex];
                 
-                // iOS 마지막 프레임 고정(프리징) 버그 완벽 차단 로직 (원복)
-                // 브라우저 디코더 버퍼를 완전히 비워주기 위해 src를 날리고 강제 로드
                 standbyPlayer.removeAttribute('src');
                 standbyPlayer.load(); 
 
-                // 그 후 정상적으로 새 소스 장착
                 standbyPlayer.src = nextData.src;
                 standbyPlayer.setAttribute('data-theme', nextData.theme);
                 standbyPlayer.load(); 
             }
 
             function playNextVideo() {
-                ensureQueue();
-                const nextDataIndex = videoQueue.shift();
+                currentDataIndex = (currentDataIndex + 1) % playlistData.length;
                 
                 const currentPlayer = players[activePlayerIndex];
                 const nextPlayerIndex = 1 - activePlayerIndex;
@@ -318,7 +286,6 @@
                 nextPlayer.classList.add('active');
                 updateHeaderColor(nextPlayer);
                 
-                // 무한 루프 차단: play() 성공 여부와 관계없이 활성 인덱스 즉시 변경
                 activePlayerIndex = nextPlayerIndex;
                 
                 const playPromise = nextPlayer.play();
@@ -336,9 +303,7 @@
                             
                             setTimeout(preloadNextVideo, 50);
                         }, 800); 
-                    }).catch(error => {
-                        console.error("Next video play failed:", error);
-                        // 실패 시 즉시 이전 상태 정리 후 다음 영상 로드 시도
+                    }).catch(() => {
                         if (currentPlayer) {
                             currentPlayer.classList.remove('active');
                             currentPlayer.style.zIndex = "";
@@ -365,22 +330,16 @@
                 }
             }
 
-            // --- 초기화 및 프리로딩 로직 (2개 영상 선탑재) ---
             (function init() {
-                ensureQueue();
-                const firstDataIndex = videoQueue.shift();
-                const secondDataIndex = videoQueue[0]; // peek for standby
-                
                 const firstPlayer = players[0];
                 const secondPlayer = players[1];
 
-                // 두 플레이어에 각각 첫 번째, 두 번째 영상 소스 장착
-                firstPlayer.src = playlistData[firstDataIndex].src;
-                firstPlayer.setAttribute('data-theme', playlistData[firstDataIndex].theme);
+                firstPlayer.src = playlistData[0].src;
+                firstPlayer.setAttribute('data-theme', playlistData[0].theme);
                 firstPlayer.load();
 
-                secondPlayer.src = playlistData[secondDataIndex].src;
-                secondPlayer.setAttribute('data-theme', playlistData[secondDataIndex].theme);
+                secondPlayer.src = playlistData[1].src;
+                secondPlayer.setAttribute('data-theme', playlistData[1].theme);
                 secondPlayer.load();
 
                 let loadedCount = 0;
@@ -402,11 +361,9 @@
                     }
                 }
 
-                // 두 영상이 모두 버퍼링될 때까지 대기
                 safeAddListener(firstPlayer);
                 safeAddListener(secondPlayer);
                 
-                // 네트워크가 너무 느릴 경우 무한 로딩 방지용 폴백 (3초 후 강제 시작)
                 setTimeout(() => {
                     if (!hasStarted) {
                         hasStarted = true;
@@ -416,6 +373,8 @@
                 
                 function startEngine() {
                     activePlayerIndex = 0;
+                    currentDataIndex = 0;
+                    
                     firstPlayer.classList.add('active');
                     updateHeaderColor(firstPlayer);
                     
@@ -428,8 +387,7 @@
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
                             transitionRafId = requestAnimationFrame(checkVideoTime);
-                        }).catch((error) => {
-                            console.warn("Auto-play prevented, waiting for interaction.");
+                        }).catch(() => {
                             const interactionHandler = () => {
                                 firstPlayer.play();
                                 transitionRafId = requestAnimationFrame(checkVideoTime);
