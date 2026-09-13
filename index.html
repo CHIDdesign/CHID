@@ -72,7 +72,7 @@
             visibility: hidden;
             transform: translate3d(0,0,0);
             will-change: opacity;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.8s; 
+            transition: opacity 0s, visibility 0s; 
         }
         .bg-video.active { 
             opacity: 1; 
@@ -284,6 +284,10 @@
                 const nextData = playlistData[nextDataIndex];
                 
                 // 순정 HTTP 캐시 활용: Blob 캐시의 100% 다운로드 대기(await)로 인한 병목을 제거
+                // 이전 소스 해제 후 새 소스 로드 (메모리 누수 및 디코더 버벅임 방지)
+                standbyPlayer.removeAttribute('src');
+                standbyPlayer.load();
+                
                 standbyPlayer.src = nextData.src;
                 standbyPlayer.setAttribute('data-theme', nextData.theme);
                 standbyPlayer.load();
@@ -315,12 +319,13 @@
                                 currentPlayer.classList.remove('active');
                                 currentPlayer.style.zIndex = "";
                                 currentPlayer.pause();
+                                currentPlayer.currentTime = 0;
                             }
                             nextPlayer.style.zIndex = "";
                             isTransitioning = false;
                             
                             // 전환이 완전히 끝난 후 다음 영상을 대기 플레이어에 프리로드
-                            preloadNextVideo();
+                            setTimeout(preloadNextVideo, 50);
                         }, 800); 
                     }).catch(error => {
                         console.error("Next video play failed:", error);
@@ -331,7 +336,7 @@
                         isTransitioning = false;
                         
                         // NEXT VIDEO PRELOAD!
-                        preloadNextVideo();
+                        setTimeout(preloadNextVideo, 50);
                         
                         setTimeout(playNextVideo, 500); 
                     });
@@ -342,10 +347,11 @@
                             currentPlayer.classList.remove('active');
                             currentPlayer.style.zIndex = "";
                             currentPlayer.pause();
+                            currentPlayer.currentTime = 0;
                         }
                         nextPlayer.style.zIndex = "";
                         isTransitioning = false;
-                        preloadNextVideo();
+                        setTimeout(preloadNextVideo, 50);
                     }, 800);
                 }
             }
