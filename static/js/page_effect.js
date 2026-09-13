@@ -278,6 +278,25 @@ document.addEventListener("DOMContentLoaded", function() {
     initPoints();
     requestAnimationFrame(draw);
 
+    // [특정 영역(다크모드) 커서 전환 기능]
+    const darkCursorZones = document.querySelectorAll('.dark-cursor-zone, .ops-card, .stat-popup-content, .katusa-story-section');
+    darkCursorZones.forEach(zone => {
+        zone.addEventListener('mouseenter', () => {
+            window.cursorColorMode = 'white';
+            if (isIdle) { 
+                isIdle = false; 
+                requestAnimationFrame(draw); 
+            }
+        });
+        zone.addEventListener('mouseleave', () => {
+            checkTheme(); // 원래 테마 색상으로 복구
+            if (isIdle) { 
+                isIdle = false; 
+                requestAnimationFrame(draw); 
+            }
+        });
+    });
+
     // -------------------------------------------------------
     // [비디오 및 스크롤 공통 유지]
     // -------------------------------------------------------
