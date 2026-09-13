@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const dotCanvasBlack = document.createElement('canvas');
     dotCanvasBlack.width = 24; dotCanvasBlack.height = 24;
     const ctxB = dotCanvasBlack.getContext('2d');
-    ctxB.fillStyle = '#111111';
+    ctxB.fillStyle = '#1B1B1B';
     ctxB.beginPath(); ctxB.arc(12, 12, 12, 0, Math.PI * 2); ctxB.fill();
     
     const dotCanvasWhite = document.createElement('canvas');
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.cursorColorMode = 'black'; 
     const checkTheme = () => {
         const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim().toLowerCase();
-        if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black') {
+        if (bgColor === '#000000' || bgColor === '#000' || bgColor === 'black' || bgColor === '#1b1b1b' || bgColor === '#1B1B1B') {
             window.cursorColorMode = 'white';
             // GPU 과부하(비디오 끊김)의 주범인 mix-blend-mode 제거. normal 블렌딩으로도 흑백 도트는 동일한 시각적 효과를 냄.
             canvas.style.mixBlendMode = 'normal';
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // 마우스가 새로운 그리드 셀로 이동했을 때만 연산 수행 (CPU 과부하 방지)
             if (targetC !== lastTargetC || targetR !== lastTargetR) {
-                const checkRadius = 12; 
+                const checkRadius = 16; // effectRadius(15)보다 약간 넓게 잡아 외곽 점까지 안전하게 계산
                 for (let r = targetR - checkRadius; r <= targetR + checkRadius; r++) {
                     for (let c = targetC - checkRadius; c <= targetC + checkRadius; c++) {
                         if (c >= 0 && c < cols && r >= 0 && r < rows) activePoints.add(r * cols + c);
