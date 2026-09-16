@@ -15,60 +15,32 @@
     <meta property="og:image" content="img/main/favicon.webp">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="static/css/global.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-color: #f4f4f4;
+            --header-bg: rgba(244, 244, 244, 0.85);
             --text-main: #1B1B1B;
             --text-sub: #666666;
             --point-color: #ff4d00;
             --line-color: #eaeaea;
             --dark-bg: #0a0a0a;
+            --nav-text-color: var(--text-main);
         }
         html { scroll-behavior: auto; }
         body {
-            font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
             min-height: 100vh;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -webkit-tap-highlight-color: transparent;
         }
-        body.fade-in { opacity: 1; }
         body.detail-open { overflow: hidden; }
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px;
-            width: 100%; position: fixed; top: 0; left: 0; z-index: 100;
-            background-color: rgba(244, 244, 244, 0.85);
+            background-color: var(--header-bg);
             backdrop-filter: blur(12px);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease;
-            height: 90px;
         }
-        header.header-hidden { transform: translateY(-100%); }
-        .logo-container { cursor: pointer; pointer-events: auto; }
-        .logo-img { height: 60px; width: auto; display: block; transition: height 0.3s ease; }
-        nav ul { display: flex; list-style: none; gap: 50px; }
-        nav ul li a {
-            text-decoration: none; color: var(--text-main); font-size: clamp(15px, 1.2vw, 18px);
-            font-weight: 400; display: block; padding: 10px 0; letter-spacing: -0.02em;
-            opacity: 0.8; transition: all 0.3s ease; position: relative;
-        }
-        nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
-        nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
-        nav ul li.active a { font-weight: 700; opacity: 1; }
-        nav ul li.active a::after {
-            content: ''; display: block; width: 100%; height: 2px;
-            background: currentColor; margin-top: 5px; border-radius: 2px;
-        }
+        .logo-container { pointer-events: auto; }
+        
         @media (max-width: 768px) {
-            header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
             .logo-img { height: 50px; }
-            nav ul { justify-content: center; gap: 25px; width: 100%; }
-            nav ul li a { font-size: 16px; font-weight: 500; }
         }
         .intro { 
             min-height: 100vh; 
