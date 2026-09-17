@@ -51,8 +51,9 @@
     </style>
 </head>
 <body>
+    <script src="static/js/loader.js"></script>
     <header>
-        <div class="logo-container" id="back-to-home">
+        <div class="logo-container" id="back-to-home" data-href="index.html">
             <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
         </div>
         <nav>
@@ -120,18 +121,6 @@
     <script src="static/js/page_effect.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            function fadeAndMove(targetUrl) {
-                if(window.location.href.includes(targetUrl)) return;
-                document.body.classList.remove('fade-in');
-                setTimeout(() => { window.location.href = targetUrl; }, 500);
-            }
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); fadeAndMove(this.getAttribute('href'));
-                });
-            });
-
             const imageWrappers = document.querySelectorAll('.image-wrapper');
             imageWrappers.forEach(wrapper => {
                 const img = wrapper.querySelector('img');

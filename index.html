@@ -13,7 +13,6 @@
     <meta property="og:title" content="CHID">
     <meta property="og:description" content="Industrial Design Portfolio">
     <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
-    <link rel="preload" as="image" href="img/main/loop/poster1.jpg">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <script type="application/ld+json">
@@ -32,7 +31,6 @@
     <link rel="stylesheet" href="static/css/global.css">
     <style>
         :root {
-            --header-bg: rgba(255, 255, 255, 0.01);
             --nav-text-color: inherit;
         }
         body {
@@ -50,9 +48,6 @@
 
         #poster-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('img/main/loop/poster1.jpg'); 
-            background-size: cover;
-            background-position: center;
             z-index: 10;
             transition: opacity 0.8s ease-out;
             opacity: 1;
@@ -79,6 +74,8 @@
         
         header {
             color: #1B1B1B;
+            background: transparent;
+            backdrop-filter: none;
         }
         header.white-skin { color: #ffffff !important; }
         header.white-skin .logo-img { filter: invert(1); }
@@ -92,9 +89,6 @@
         main { flex: 1; width: 100%; height: 100%; }
         
         @media (max-width: 768px) {
-            header { 
-                background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
-            }
             .logo-img { height: 50px; }
             nav { width: 100%; }
             nav ul { justify-content: center; gap: 25px; width: 100%; }
@@ -103,13 +97,14 @@
     </style>
 </head>
 <body>
+    <script src="static/js/loader.js"></script>
     <div id="video-container">
         <div id="poster-layer"></div>
         <video class="bg-video" id="playerA" playsinline webkit-playsinline muted preload="auto"></video>
         <video class="bg-video" id="playerB" playsinline webkit-playsinline muted preload="auto"></video>
     </div>
     <header id="main-header">
-        <div class="logo-container" id="main-logo">
+        <div class="logo-container" id="main-logo" data-href="index.html">
             <img src="img/main/Head Logo.svg" alt="Logo" class="logo-img">
         </div>
         <nav>
@@ -130,20 +125,6 @@
             const header = document.getElementById("main-header");
             const posterLayer = document.getElementById("poster-layer");
             
-            function fadeAndMove(destinationUrl) {
-                if(window.location.href.includes(destinationUrl) && !destinationUrl.includes('index.html')) return;
-                document.body.classList.remove('fade-in'); 
-                setTimeout(() => { window.location.href = destinationUrl; }, 500);
-            }
-
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.addEventListener('click', function(e) {
-                e.preventDefault(); fadeAndMove(this.getAttribute('href')); 
-            }));
-
-            const mainLogo = document.getElementById('main-logo');
-            if(mainLogo) mainLogo.addEventListener('click', function() { fadeAndMove('index.html'); });
-
             const players = [
                 document.getElementById('playerA'),
                 document.getElementById('playerB')

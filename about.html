@@ -288,8 +288,9 @@
     </style>
 </head>
 <body>
+    <script src="static/js/loader.js"></script>
     <header id="main-header">
-        <div class="logo-container" id="back-to-home">
+        <div class="logo-container" id="back-to-home" data-href="index.html">
             <img src="img/main/Head Logo.svg" alt="CHID" class="logo-img">
         </div>
         <nav>
@@ -761,7 +762,7 @@
                                 <p class="en-desc">Based on the idea that the user must generate their own electricity to survive, I devised a sustainable wearable shoe generator that converts walking pressure into electrical energy, attempting a seamless integration of complex mechanical elements with an aesthetic form.</p>
                                 <p class="ko-desc">사용자가 스스로 생존에 필요한 전력을 생산해야 한다는 발상에서 착안하여, 일상적인 보행 시 발생하는 압력을 전기에너지로 변환해 주는 서스테이너블(Sustainable) 웨어러블 신발형 발전기를 고안해 내며 복잡한 기계적 요소와 심미적 형태의 이질감 없는 융합을 시도했습니다.</p>
                             </div>
-                            <a href="cosmoes.html" class="shortcut-card">
+                            <a href="#" class="shortcut-card">
                                 <img data-src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Cosmo-es 2024</h3>
@@ -832,19 +833,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            function fadeAndMove(targetUrl) {
-                if(window.location.href.includes(targetUrl)) return;
-                document.body.classList.remove('fade-in');
-                setTimeout(() => { window.location.href = targetUrl; }, 500);
-            }
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fadeAndMove(this.getAttribute('href'));
-                });
-            });
-
             const filterBtns = document.querySelectorAll('.filter-btn');
             const timelineItems = document.querySelectorAll('.timeline-section:not(.education-group) .timeline-item');
             const yearGroups = document.querySelectorAll('.timeline-section:not(.education-group) .year-group');
