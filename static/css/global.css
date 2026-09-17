@@ -1,0 +1,88 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background-color: var(--bg-color, #ffffff); 
+    color: var(--text-main, #1B1B1B);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; width: 100%;
+}
+
+/* ---------- Page loader (static/js/loader.js) ---------- */
+#chid-loader {
+    position: fixed; inset: 0; z-index: 9998; /* just under the cursor canvas */
+    display: grid; place-items: center;
+    background: #ffffff; color: #000000;
+    opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+}
+.chid-loading #chid-loader { opacity: 1; pointer-events: auto; }
+/* hold the page's own entrance animations until the loader lifts */
+.chid-loading body > :not(#chid-loader), .chid-loading body > :not(#chid-loader) * { animation-play-state: paused !important; }
+
+#chid-loader svg { width: 148px; height: 148px; animation: chid-fade 3s var(--chid-phase, 0s) infinite; }
+#chid-loader mask path { fill: none; stroke: #ffffff; stroke-width: 9; stroke-linejoin: round; stroke-dasharray: 1 1; }
+#chid-loader .chid-s1 { animation: chid-s1 3s var(--chid-phase, 0s) infinite; }
+#chid-loader .chid-s2 { animation: chid-s2 3s var(--chid-phase, 0s) infinite; }
+#chid-loader .chid-s3 { animation: chid-s3 3s var(--chid-phase, 0s) infinite; }
+/* 3s loop = 2s draw (0–66.7%) + 1s interval. Tick 0–0.3s, lift, zigzag 0.4–1.4s, ㅣ down-stroke 1.4–2s */
+@keyframes chid-s1 { 0% { stroke-dashoffset: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); } 10%, 100% { stroke-dashoffset: 0; } }
+@keyframes chid-s2 { 0%, 13.333% { stroke-dashoffset: 1; animation-timing-function: cubic-bezier(0.45, 0, 0.4, 1); } 46.667%, 100% { stroke-dashoffset: 0; } }
+@keyframes chid-s3 { 0%, 46.667% { stroke-dashoffset: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.2, 1); } 66.667%, 100% { stroke-dashoffset: 0; } }
+@keyframes chid-fade { 0%, 90% { opacity: 1; } 100% { opacity: 0; } }
+
+.chid-loader-word {
+    position: absolute; left: 0; right: 0; top: calc(50% + 80px);
+    text-align: center; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em;
+    transition: opacity 0.25s ease;
+}
+.chid-loader-word.is-out { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    #chid-loader svg, #chid-loader mask path[class] { animation: none; }
+}
+
+header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 40px; width: 100%; position: fixed; top: 0; left: 0; z-index: 100;
+    background-color: var(--header-bg, rgba(255, 255, 255, 0.95)); 
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease; height: 90px;
+    border-bottom: var(--header-border, none);
+}
+header.header-hidden { transform: translateY(-100%); }
+
+.logo-container { cursor: pointer; }
+.logo-img { 
+    height: 60px; width: auto; display: block; 
+    filter: var(--logo-filter, none);
+    transition: height 0.3s ease, filter 0.5s ease;
+}
+
+nav ul { display: flex; list-style: none; gap: 50px; }
+nav ul li { margin-left: 0; }
+nav ul li a {
+    text-decoration: none; color: var(--nav-text-color, var(--text-main, #1B1B1B)); font-size: clamp(15px, 1.2vw, 18px); 
+    font-weight: 400; display: block; padding: 10px 0; letter-spacing: -0.02em;
+    opacity: var(--nav-opacity, 0.8); transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative; text-align: center; pointer-events: auto;
+}
+nav ul li a::before { display: block; content: attr(title); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }
+nav ul li:hover a { transform: translateY(-0.33em); opacity: 1; }
+nav ul li.active a { font-weight: 700; opacity: 1; }
+nav ul li.active a::after { content: ''; display: block; width: 100%; height: 2px; background: currentColor; margin-top: 5px; border-radius: 2px; }
+
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+#canvas {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 9999; pointer-events: none; mix-blend-mode: var(--canvas-blend, multiply); background: transparent;
+}
+
+@media (max-width: 768px) {
+    header { padding: 15px 20px; flex-direction: column; gap: 15px; height: auto; }
+    .logo-img { height: 50px; }
+    nav ul { justify-content: center; gap: 25px; width: 100%; }
+    nav ul li a { font-size: 16px; font-weight: 500; }
+}
+

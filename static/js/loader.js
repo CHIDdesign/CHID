@@ -1,0 +1,102 @@
+/* CHID page-transition loader.
+ * Include as the FIRST element inside <body> (plain, non-deferred <script>) so the overlay exists before first paint.
+ * Styles + stroke keyframes: static/css/global.css ("Page loader").
+ * Links (<a href>) and [data-href] elements are routed through the loader automatically. */
+(function () {
+    var WORDS = ['Synthesizing', 'Tangibilizing', 'Orchestrating', 'Hacking', 'Humanizing', 'Decoding', 'Materializing',
+        'Translating', 'Systematizing', 'Catalyzing', 'Sculpting', 'Interfacing', 'Pioneering', 'Narrating', 'Iterating'];
+    var CYCLE = 3000;    // logo loop: 2s draw + 1s interval (keyframes in global.css)
+    var WORD_MS = 6000;
+    var FADE = 500;      // #chid-loader opacity transition
+    var MIN_SHOW = 2000; // keep the loader up until the logo is fully drawn once; 0 = hide as soon as the page loads
+    var KEY = 'chid-loader';
+
+    // Logo outline = img/main/CHID_vector.svg. Mask centerlines trace the handwriting order:
+    // s1 top tick → s2 ㅈ zigzag + ㅗ dip, up to the top of ㅣ → s3 the long ㅣ down-stroke.
+    var SVG = '<svg viewBox="0 0 148 148" aria-hidden="true"><mask id="chid-loader-mask">' +
+        '<path class="chid-s1" pathLength="1" d="M67.5 7.5C67.2 14 66.4 22 66.5 35"/>' +
+        '<path class="chid-s2" pathLength="1" d="M39.8 48.6L46.5 47.7 58 43.95 68 41 73 40.3 70.1 44 60.5 51.65 56.5 54.7 53.3 60.6 60 58.9 67 55.3 72.5 52.3 76.3 50.8 77.9 54.2 80.9 58.6 85.45 54 88 50 90.9 44 92.9 40 94.9 36 96.5 29"/>' +
+        '<path class="chid-s3" pathLength="1" d="M96.4 27L95.8 40 95.5 50 95 60 94.4 70 93.7 80 92.8 90 91.8 100 90.9 110 90 120 89.4 130 89 135 88.4 141.5"/>' +
+        '</mask><path mask="url(#chid-loader-mask)" fill="currentColor" d="M66.8763 8.79655C66.0389 9.03328 65.4004 9.9971 65.0096 11.0243C64.6188 12.0558 64.4757 13.1464 64.3641 14.2455C64.2489 15.3446 64.1652 16.4479 64.1059 17.5512C64.0465 18.6588 64.0151 19.7663 63.9907 20.8697C63.9663 21.9772 63.9488 23.0763 63.9488 24.1881C63.9488 25.2999 63.9663 26.4201 64.0221 27.5023C64.0814 28.5887 64.1791 29.637 64.4199 30.7869C64.6572 31.9367 65.034 33.188 65.7284 33.5938C66.4227 33.9996 67.4381 33.5557 67.9929 32.723C68.5442 31.8944 68.6349 30.6727 68.6768 29.5271C68.7152 28.3773 68.7047 27.3036 68.7326 26.2087C68.7605 25.1139 68.8234 24.0021 68.9315 22.8988C69.0362 21.7997 69.1862 20.709 69.3153 19.6142C69.4479 18.5151 69.5631 17.416 69.7027 16.3253C69.8387 15.2389 70.0027 14.161 70.0202 13.0323C70.0411 11.9036 69.919 10.7242 69.3363 9.88719C68.7571 9.05441 67.7173 8.56405 66.8763 8.79655ZM45.3336 44.5467C44.9218 44.5805 44.5136 44.5467 44.0879 44.5044C43.4284 44.4368 42.7306 44.3438 42.1688 44.6988C41.635 45.037 41.2302 45.781 41.122 46.5293C41.0034 47.3409 41.2337 48.161 41.5477 48.8965C41.8024 49.4926 42.113 50.0337 42.5247 50.4649C43.1214 51.0905 43.9344 51.4879 44.7125 51.4879C45.4662 51.4879 46.1885 51.1074 46.9142 50.803C48.446 50.1563 49.9952 49.8265 51.5689 49.3531C53.3275 48.8247 55.114 48.106 56.7261 47.5227C57.8915 47.1042 58.9627 46.7533 60.4386 46.153C61.3982 45.7599 62.5322 45.2653 62.8602 45.278C63.579 45.3033 60.5294 47.7129 58.4986 49.2897C56.7505 50.6424 55.7525 51.3822 54.5278 52.346C52.9367 53.593 50.9653 55.2163 50.1174 57.4737C49.8243 58.2557 49.6673 59.1181 49.7021 59.9974C49.751 61.2317 50.1837 62.4999 50.9094 63.2947C51.9318 64.4107 53.5403 64.5755 55.0093 64.4107C56.8691 64.1951 58.5056 63.4511 60.1211 62.6267C62.4659 61.4347 64.7653 60.0692 67.1171 58.6954C68.5268 57.8711 69.9574 57.0425 71.3286 56.3323C72.1277 55.9223 72.9058 55.5503 73.827 55.1022C74.1166 54.9585 74.4201 54.8105 74.6539 54.9162C74.8772 55.0176 75.0343 55.3516 75.1738 55.6729C75.596 56.6494 75.8403 57.516 76.2206 58.3656C76.594 59.1942 77.0999 60.0101 77.7175 60.6484C78.4293 61.3839 79.2947 61.8912 80.2193 62.0941C81.1405 62.297 82.121 62.2082 82.9549 61.7813C84.1552 61.1683 85.052 59.8706 85.9208 58.6235C86.6117 57.6301 87.2851 56.6663 87.9201 55.6602C88.7296 54.3793 89.4763 53.0308 90.3068 51.7204C90.6418 51.192 90.9907 50.672 91.2733 50.1351C91.4129 49.8646 91.535 49.594 91.6222 49.2474C91.699 48.9177 91.7444 48.5245 91.9956 48.44C92.0444 48.4231 92.1038 48.4189 92.1491 48.44C92.2399 48.4823 92.2608 48.6387 92.2782 48.7909C92.3899 49.7209 92.2992 50.4226 92.2294 51.1624C92.0584 52.9378 91.9921 54.9162 91.9084 56.8565C91.7374 60.8132 91.4931 64.6136 91.2803 68.4604C91.1023 71.6055 90.9488 74.7759 90.736 77.9422C90.408 82.8796 89.9474 87.7917 89.4903 92.7038C88.8483 99.6366 88.2202 106.574 87.627 113.527C87.2432 118.068 86.8734 122.612 86.9292 127.169C86.9571 129.308 87.0757 131.447 87.2397 133.569C87.3304 134.757 87.4386 135.94 87.5503 137.145C87.5921 137.572 87.6305 138.003 87.805 138.388C87.9376 138.671 88.1434 138.929 88.3912 139.026C88.6668 139.136 88.9983 139.052 89.2495 138.87C89.7101 138.54 89.916 137.893 90.1009 137.268C90.4708 136.008 90.7534 134.824 91.0256 133.62C91.4722 131.646 91.8979 129.608 92.2015 127.554C92.6376 124.603 92.8191 121.623 93.0389 118.647C93.318 114.834 93.66 111.029 94.0089 107.225C94.3892 103.048 94.7766 98.8757 95.2127 94.7076C95.757 89.4573 96.3746 84.2155 96.8492 78.9525C97.3063 73.8924 97.6273 68.8113 97.9204 63.7258C98.2554 57.8499 98.5519 51.974 98.9881 46.1065C99.2638 42.4246 99.5917 38.7426 99.7906 35.0522C99.8395 34.1349 99.8814 33.2176 99.7906 32.296C99.7662 32.0593 99.7348 31.8183 99.6685 31.5985C99.522 31.125 99.2114 30.7446 98.9113 30.3726C98.4333 29.7808 97.9692 29.2185 97.4424 28.7324C97.24 28.5464 97.0271 28.3689 96.7899 28.2505C96.4549 28.0856 96.0711 28.0349 95.7152 28.1237C95.3523 28.2209 95.0173 28.4661 94.7382 28.762C93.9287 29.6075 93.5344 30.8672 93.1052 32.0804C91.8142 35.7159 90.1986 38.9032 88.5761 42.302C87.306 44.9609 86.0324 47.7467 84.6751 50.0421C84.0087 51.1708 83.3213 52.1811 82.3757 53.5212C82.0651 53.9608 81.7232 54.4385 81.3847 54.3666C81.13 54.3159 80.8718 53.9439 80.7462 53.5635C80.4915 52.8025 80.7671 52.012 80.6764 51.3188C80.5822 50.6044 80.1007 49.9872 79.6506 49.37C79.0574 48.5541 78.5131 47.734 77.7838 47.3367C77.0266 46.9224 76.0636 46.9689 75.1738 47.2352C73.7711 47.6622 72.5429 48.6429 71.4682 49.3827C70.5017 50.0506 69.6608 50.524 67.9824 50.8538C67.3613 50.9721 66.6251 51.0736 66.6181 50.8665C66.6112 50.7058 67.0334 50.3719 67.4207 50.0633C69.5073 48.4104 70.7041 47.5988 72.1068 46.3771C73.1989 45.4217 74.4132 44.2169 75.3832 42.9149C75.7321 42.4457 76.0531 41.9596 76.2939 41.3635C76.4195 41.0465 76.5277 40.6956 76.5137 40.387C76.4823 39.605 75.6833 39.0892 75.0691 38.5101C74.5876 38.0578 74.2213 37.5716 73.7851 37.2546C72.4487 36.2654 70.5017 36.8741 68.6943 37.4237C65.0549 38.5228 61.9739 39.3598 58.7149 40.2898C56.5027 40.9197 54.2033 41.5918 51.9737 42.4034C50.1209 43.0756 48.3134 43.8449 46.4222 44.3395C46.0594 44.4325 45.6965 44.5171 45.3336 44.5467Z"/></svg>';
+
+    var root = document.documentElement;
+    var el, timer, leaving = false;
+
+    function shuffle(list) {
+        var a = list.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1)), t = a[i];
+            a[i] = a[j]; a[j] = t;
+        }
+        return a;
+    }
+
+    // Renders the overlay mid-way through its timeline, so logo phase and word survive a page change.
+    function show(state) {
+        var elapsed = Date.now() - state.t0, i = Math.floor(elapsed / WORD_MS), n = state.order.length;
+        if (el) el.remove();
+        clearTimeout(timer);
+
+        el = document.createElement('div');
+        el.id = 'chid-loader';
+        el.style.setProperty('--chid-phase', -(elapsed % CYCLE) + 'ms');
+        el.innerHTML = SVG + '<p class="chid-loader-word"></p>';
+        var word = el.lastChild;
+        word.textContent = state.order[i % n];
+
+        (function next(delay) {
+            timer = setTimeout(function () {
+                word.classList.add('is-out');
+                setTimeout(function () { word.textContent = state.order[++i % n]; word.classList.remove('is-out'); }, 250);
+                next(WORD_MS);
+            }, delay);
+        })(WORD_MS - elapsed % WORD_MS);
+
+        document.body.appendChild(el);
+    }
+
+    function hide() {
+        if (!el || leaving) return;
+        var old = el;
+        el = null;
+        clearTimeout(timer);
+        root.classList.remove('chid-loading');
+        setTimeout(function () { old.remove(); }, FADE);
+    }
+
+    function go(href) {
+        var state = { t0: Date.now(), order: shuffle(WORDS) };
+        try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+        leaving = true;
+        show(state);
+        el.offsetWidth; // flush styles so the overlay fades in
+        root.classList.add('chid-loading');
+        setTimeout(function () { location.href = href; }, FADE);
+    }
+
+    // Arrival: continue the previous page's loader if we got here through go().
+    var state = null;
+    try { state = JSON.parse(sessionStorage.getItem(KEY)); sessionStorage.removeItem(KEY); } catch (e) {}
+    if (!state || !(Date.now() - state.t0 < 10000)) state = { t0: Date.now(), order: shuffle(WORDS) };
+    root.classList.add('chid-loading');
+    show(state);
+
+    addEventListener('load', function () { setTimeout(hide, state.t0 + MIN_SHOW - Date.now()); });
+    addEventListener('pageshow', function (e) { if (e.persisted) { leaving = false; hide(); } }); // back/forward cache
+
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href], [data-href]');
+        if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+        var href = a.getAttribute('href') || a.getAttribute('data-href') || '';
+        if (href.charAt(0) === '#') return;
+        var url = new URL(href, location.href);
+        if (url.origin !== location.origin) return;
+        if (url.pathname === location.pathname && url.search === location.search) {
+            if (!url.hash) e.preventDefault(); // link to the current page: stay put
+            return;
+        }
+        e.preventDefault();
+        go(url.href);
+    });
+})();
