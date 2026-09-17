@@ -923,9 +923,10 @@
 </style>
 </head>
 <body>
+    <script src="/static/js/loader.js"></script>
 
     <header>
-        <div class="logo-container" id="back-to-home">
+        <div class="logo-container" id="back-to-home" data-href="/index.html">
             <img src="/img/main/Head Logo.svg" alt="CHID" class="logo-img">
         </div>
         <nav>
@@ -1879,6 +1880,7 @@
                 <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
                     src="https://www.youtube.com/embed/7bX-PxF36bk?si=LN7xA5ljdWu0ftzX" 
                     title="YouTube video player" 
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen>
                 </iframe>
@@ -1932,7 +1934,7 @@
             </div>
         </div>
 
-        <div class="next-project" onclick="location.href='/projects/nezhnost.html'" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
+        <div class="next-project" data-href="/projects/nezhnost.html" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
             <div class="next-label">Next Project</div>
             <div class="next-title">Nezhnost &rarr;</div>
         </div>

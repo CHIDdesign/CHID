@@ -95,9 +95,10 @@
     </style>
 </head>
 <body>
+    <script src="/static/js/loader.js"></script>
 
     <header>
-        <div class="logo-container" id="back-to-home">
+        <div class="logo-container" id="back-to-home" data-href="/index.html">
             <img src="/img/main/Head Logo.svg" alt="CHID" class="logo-img">
         </div>
         <nav>
@@ -286,7 +287,7 @@
             </div>
         </div>
 
-        <div class="next-project" onclick="location.href='/projects/snaked.html'" style="--next-bg: url('/img/projects/Thumbnail/project_8.webp');">
+        <div class="next-project" data-href="/projects/snaked.html" style="--next-bg: url('/img/projects/Thumbnail/project_8.webp');">
             <div class="next-label">Next Project</div>
             <div class="next-title">SNAKED &rarr;</div>
         </div>
