@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /projects/Base_dark.html
-Disallow: /projects/Base_light.html
+Disallow: /projects/Base_
 
 Sitemap: https://chid.kr/sitemap.xml
