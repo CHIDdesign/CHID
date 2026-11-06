@@ -159,8 +159,14 @@ document.addEventListener("DOMContentLoaded", function() {
         resizeTimer = setTimeout(initPoints, 200);
     });
 
-    function draw() {
-        if (isIdle) return;
+    // Animation steps were tuned per frame at 60Hz; scale by elapsed time so 120/144Hz screens play at the same speed
+    let lastFrameTime = 0;
+
+    function draw(now) {
+        if (isIdle) { lastFrameTime = 0; return; }
+        now = now || performance.now();
+        const dt = lastFrameTime ? Math.min((now - lastFrameTime) / (1000 / 60), 4) : 1;
+        lastFrameTime = now;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let targetC = -1000;
@@ -187,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let r = ripples[i];
             let progress = Math.min(1, r.radius / maxRippleRadius);
             let speedFactor = 1 - progress; 
-            r.radius += gridStep * (1.2 * speedFactor + 0.4); 
+            r.radius += gridStep * (1.2 * speedFactor + 0.4) * dt; 
             if (r.radius - gridStep * 4 > maxRippleRadius) {
                 ripples.splice(i, 1);
                 continue;
@@ -247,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let targetSize = Math.max(mouseTargetSize, baseRadius + (maxRadius - baseRadius) * Math.min(1, rippleEffect));
             let targetColorFactor = Math.max(mouseTargetColorFactor, Math.min(1, rippleEffect * 1.2));
 
-            const speed = 0.28; 
+            const speed = 1 - Math.pow(1 - 0.28, dt); 
             point.size += (targetSize - point.size) * speed;
             point.colorFactor += (targetColorFactor - point.colorFactor) * speed;
 
@@ -267,6 +273,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // 애니메이션이 완전히 끝났고 리플도 없다면 GPU 렌더링 휴식 (전력 절약 및 영상 끊김 방지)
         if (!pointsAnimating && ripples.length === 0) {
             isIdle = true;
+            lastFrameTime = 0;
             return; // Exit loop!
         }
         
