@@ -5,35 +5,35 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://chid.kr/about.html</loc>
+    <loc>https://chid.kr/about</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects.html</loc>
+    <loc>https://chid.kr/projects</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chid.kr/contact.html</loc>
+    <loc>https://chid.kr/contact</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects/snaked.html</loc>
+    <loc>https://chid.kr/projects/snaked</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects/kfw.html</loc>
+    <loc>https://chid.kr/projects/kfw</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects/foldiSafe.html</loc>
+    <loc>https://chid.kr/projects/foldiSafe</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects/kunst.html</loc>
+    <loc>https://chid.kr/projects/kunst</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://chid.kr/projects/seesaw.html</loc>
+    <loc>https://chid.kr/projects/seesaw</loc>
     <priority>0.6</priority>
   </url>
 </urlset>
