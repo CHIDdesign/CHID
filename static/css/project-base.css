@@ -1,4 +1,14 @@
-/* CSS Custom Properties mapping to allow per-page theme overrides */
+/* =====================================================================
+   Project page system (shared by every page in /projects)
+   - Page frame: back button, hero, header, facts strip, credits, next project
+   - Content blocks: media, split, text-block, text-split, text-narrow,
+     text-center, title-block, stack (+ options listed next to each block)
+   - Typography: heading, heading-lg, sub-heading, lead, label, quote, accent, body-en, body-kr
+   Styles used by only one project stay in that page's own <style>.
+   Live samples of every block: /projects/blocks
+   ===================================================================== */
+
+/* ---------- Theme tokens (pages override these in their <style>) ---------- */
 :root {
     /* Fallback variable definitions. Each project page will override these in its own <style> block. */
     --bg-color: #ffffff;
@@ -35,7 +45,8 @@
     --quote-mark-color: #999;
     --canvas-blend: multiply;
 }
-/* Base layouts specific to project pages */
+
+/* ---------- Page frame ---------- */
 .back-nav-container {
     width: 100%; max-width: 100%; padding: 0 40px; margin: 0 auto;
     position: -webkit-sticky; position: sticky; top: 110px; z-index: 50; 
@@ -59,6 +70,9 @@ main { width: 100%; padding-top: 90px; position: relative; }
 .project-header { max-width: 1800px; margin: 0 auto 60px; padding: 0 40px; display: flex; justify-content: space-between; align-items: flex-end; }
 .project-title h1 { font-size: clamp(40px, 6vw, 100px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; margin: 0; color: var(--text-main); }
 .project-specs { text-align: right; font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+
+/* ---------- Block: media (full-width image or video) ----------
+   options: .flush (no bottom gap) · child img/video .narrow (max 1000px, centered) */
 .media { margin-bottom: 60px; width: 100%; }
 .media.flush { margin-bottom: 0; }
 .media img { width: 100%; height: auto; display: block; border-radius: 0; margin-bottom: 20px; }
@@ -68,27 +82,40 @@ main { width: 100%; padding-top: 90px; position: relative; }
 video::-webkit-media-controls { display: none !important; }
 video::-webkit-media-controls-enclosure { display: none !important; }
 video::-webkit-media-controls-panel { display: none !important; }
+
+/* ---------- Typography ---------- */
 .body-en { font-size: 16px; color: var(--body-en-color); line-height: 1.6; margin-bottom: 30px; font-weight: var(--fw-regular); }
 .body-kr { font-size: 14px; color: var(--text-sub); line-height: 1.7; font-weight: var(--fw-light); }
 .lead { display: block; font-size: 24px; font-weight: 700; color: var(--text-main); line-height: 1.3; margin-bottom: 15px; }
-.accent, .accent { color: var(--point-color); font-weight: 700; }
+.accent { color: var(--point-color); font-weight: 700; }
+
+/* ---------- Block: title-block (centered label + quote) ---------- */
 .title-block { width: 100%; text-align: center; padding: 100px 20px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+/* Typography (continued) */
 .label { font-size: 16px; color: var(--text-sub); font-weight: var(--fw-regular); margin-bottom: 60px; letter-spacing: 0.05em; text-transform: uppercase; }
 .quote { font-size: clamp(32px, 5vw, 72px); font-weight: var(--fw-light); color: var(--text-main); line-height: 1.3; letter-spacing: -0.02em; word-break: keep-all; }
 .quote span.quote-mark { font-family: serif; color: var(--quote-mark-color); margin: 0 5px; }
 .heading { font-size: 38px; font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em; }
 .sub-heading { font-size: 18px; color: var(--text-sub); font-weight: var(--fw-semibold); margin-top: 5px; }
 .heading-lg { font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em; }
+
+/* ---------- Block: text-split (title column + text-block) ----------  options: .center */
 .text-split { display: flex; justify-content: space-between; align-items: flex-start; max-width: 1200px; width: 100%; margin: 0 auto 80px; padding: 0 40px; gap: 40px; }
 .text-split.center { align-items: center; }
 .text-split-title { flex: 0 0 40%; }
+/* Block: text-block (paragraphs; also the right column of text-split) */
 .text-block { flex: 1; padding-top: 10px; padding-left: 40px; padding-right: 40px; box-sizing: border-box; max-width: 1200px; margin: 0 auto 60px; }
 .text-split.center .text-block { padding-top: 0; }
+
+/* ---------- Block: split (media + text side by side) ----------
+   options: .reverse (media on the right) · .fixed (stays side by side on mobile) */
 .split { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; width: 100%; margin: 0 auto 80px; padding: 0 40px; gap: 60px; }
 .split-media { flex: 1; width: 50%; display: flex; justify-content: center; }
 .split-media img, .split-media video { width: 100%; max-width: 550px; height: auto; display: block; border-radius: 0; }
 .split-text { flex: 1; width: 50%; padding: 0 40px; box-sizing: border-box; text-align: left; }
-.heading { font-size: 38px; font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 15px; letter-spacing: -0.02em; }
+.split.reverse { flex-direction: row-reverse; }
+
+/* ---------- Blocks: text-center, text-narrow, stack ---------- */
 .text-center { text-align: center; width: 100%; max-width: 1000px; margin: 100px auto; padding: 0 40px; }
 .text-narrow { max-width: 800px; width: 100%; margin: 100px auto; padding: 0 40px; text-align: left; }
 .text-narrow .body-en { margin-bottom: 24px; }
@@ -96,6 +123,8 @@ video::-webkit-media-controls-panel { display: none !important; }
 .stack-head { margin-bottom: 30px; width: 100%; }
 .wide-logo { width: 100%; height: auto; max-width: 800px; display: block; }
 .stack-body { width: 100%; max-width: 100%; }
+
+/* ---------- Page frame: credits + next project ---------- */
 .credit-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding: 40px 40px 0; max-width: 1800px; margin-left: auto; margin-right: auto; }
 .credit-grid { display: grid; grid-template-columns: 180px 1fr; gap: 15px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; }
 .credit-label { font-weight: 700; color: var(--text-main); }
@@ -106,6 +135,8 @@ video::-webkit-media-controls-panel { display: none !important; }
 .next-project:hover::before { filter: blur(5px) brightness(0.7); transform: scale(1.05); }
 .next-label { font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px; letter-spacing: 0.05em; text-transform: uppercase; }
 .next-title { font-size: clamp(32px, 5vw, 72px); font-weight: 800; letter-spacing: -0.02em; }
+
+/* ---------- Mobile ---------- */
 @media (max-width: 768px) {
     .back-nav-container { top: 150px; padding: 0 20px; }
     .project-header { flex-direction: column; align-items: flex-start; padding: 0 20px; margin-bottom: 60px; }
@@ -129,12 +160,15 @@ video::-webkit-media-controls-panel { display: none !important; }
     .split-media video { max-width: 100%; }
     .split-text { width: 100%; padding: 0; }
     .heading { font-size: 32px; margin-bottom: 10px; }
-    .heading { font-size: 32px; margin-bottom: 10px; }
+    .split.fixed { flex-direction: row; gap: 20px; }
+    .split.fixed.reverse { flex-direction: row-reverse; }
+    .split.fixed .split-media, .split.fixed .split-text { width: 50%; }
     .text-center { margin: 60px auto; padding: 0 20px; }
     .text-narrow { margin: 60px auto; padding: 0 20px; max-width: 100%; }
     .media video.narrow { max-width: 100%; }
 }
-/* Fact strip under the project header: repeats the credits so role/client are seen first */
+
+/* ---------- Page frame: facts strip under the project header: repeats the credits so role/client are seen first */
 .project-facts { max-width: 1800px; margin: -20px auto 80px; padding: 0 40px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 28px; }
 .fact { padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--text-main) 18%, transparent); }
 .fact-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 8px; }
