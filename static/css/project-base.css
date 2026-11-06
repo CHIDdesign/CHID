@@ -288,3 +288,11 @@ video::-webkit-media-controls-panel { display: none !important; }
     .hand-tracking-container .body-kr { font-size: 16px; }
 }
 
+/* Fact strip under the project header: repeats the credits so role/client are seen first */
+.project-facts { max-width: 1800px; margin: -20px auto 80px; padding: 0 40px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 32px; }
+.fact { padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--text-main) 18%, transparent); }
+.fact-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 8px; }
+.fact-value { font-size: 15px; line-height: 1.5; color: var(--text-main); font-weight: var(--fw-regular); word-break: keep-all; }
+@media (max-width: 900px) {
+    .project-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px; margin: 0 auto 60px; padding: 0 20px; }
+}
