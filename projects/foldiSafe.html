@@ -21,6 +21,24 @@
     
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
+    <style>
+/* Page-only blocks (moved from project-base.css) */
+.zigzag-container { display: flex; align-items: center; justify-content: space-between; gap: 60px; max-width: 1200px; width: 100%; margin: 0 auto 80px; padding: 0 40px; }
+.zigzag-svg-wrapper { flex: 1; display: flex; justify-content: center; }
+.zigzag-svg-wrapper svg { height: 300px; width: auto; }
+.zigzag-text-wrapper { flex: 1; padding-top: 10px; }
+.zigzag-path { fill: none; stroke: var(--text-main); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; filter: url(#scribble); animation: morph-snappy 1.8s infinite alternate cubic-bezier(0.7, 0, 0.3, 1); }
+@keyframes morph-snappy {
+    0% { d: path("M 100 5 L 100 95 M 100 105 L 100 195 M 100 205 L 100 295 M 100 305 L 100 395 M 100 405 L 100 495 M 100 505 L 100 595"); }
+    100% { d: path("M 73 64 L 127 136 M 127 144 L 73 216 M 73 224 L 127 296 M 127 304 L 73 376 M 73 384 L 127 456 M 127 464 L 73 536"); }
+}
+@media (max-width: 768px) {
+    .zigzag-container { flex-direction: column; gap: 30px; padding: 0 20px; margin-bottom: 60px; }
+    .zigzag-svg-wrapper, .zigzag-text-wrapper { width: 100%; flex: 0 0 auto; }
+    .zigzag-text-wrapper { padding-top: 0; }
+    .zigzag-svg-wrapper svg { height: 250px; }
+}
+    </style>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "최은준 Eun Jun Choi", "item": "https://chid.kr/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://chid.kr/projects"}, {"@type": "ListItem", "position": 3, "name": "Foldisafe", "item": "https://chid.kr/projects/foldiSafe"}]}</script>
 </head>
 <body>
@@ -72,8 +90,8 @@
             <div class="fact"><p class="fact-label">Output</p><p class="fact-value">20 prototypes<br>Patent filed by COREAMED</p></div>
         </section>
 
-        <div class="text-right">
-            <p class="intro-lead">
+        <div class="text-block">
+            <p class="lead">
                 Foldisafe is a fully collapsible medical suction liner bag engineered with origami principles.
             </p>
             <p class="body-en">
@@ -106,7 +124,7 @@
             
             <!-- 우측 텍스트 (모바일은 하단) -->
             <div class="zigzag-text-wrapper">
-                <p class="main-heading">
+                <p class="heading">
                     [Graphic Detail Sentence]
                 </p>
                 <p class="body-en">
@@ -121,7 +139,7 @@
         </div>
         <!-- // 새로 추가된 지그재그 컨테이너 끝 -->
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/placeholder.webp" alt="Foldisafe 접이식 석션 라이너" loading="lazy">
         </div>
 

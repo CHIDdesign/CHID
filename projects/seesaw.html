@@ -20,6 +20,32 @@
     <link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
+    <style>
+/* "How to use" steps */
+.step-label { font-size: 20px; color: #888; font-weight: 300; margin-bottom: 5px; }
+.heading.step-title { margin-bottom: 10px; }
+.sub-heading.step-sub { margin-bottom: 30px; }
+.sponsor-note { margin-top: 40px; font-size: 13px; color: #888; }
+/* Page-only blocks (moved from project-base.css) */
+.content-container { width: 100%; max-width: 100%; margin: 0 auto; padding: 0; }
+.seesaw-logo-img { width: 100%; max-width: 600px; padding: 0 40px; height: auto; display: block; margin: 40px auto 0; }
+.seesaw-logo-img { max-width: 380px; padding: 0; margin-bottom: 30px; }
+.blue-label { color: var(--point-color); font-weight: 700; }
+.blue-label { font-size: 24px; margin-bottom: 15px; display: block; }
+.center-sub-heading { font-size: clamp(18px, 2.5vw, 28px); font-weight: var(--fw-semibold); color: var(--center-sub-heading-color); margin-bottom: 30px; letter-spacing: -0.02em; }
+.center-body-kr { font-size: 16px; font-weight: var(--fw-regular); color: var(--text-sub); line-height: 1.8; }
+.juxtapose { width: 100%; margin: 0 auto; }
+.detail-text { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.7; color: var(--body-en-color); max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 40px; font-weight: var(--fw-light); word-break: keep-all; }
+.gif-grid-section { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; max-width: 100%; margin: 0 auto 60px; gap: 0; }
+.gif-item { width: 100%; position: relative; padding: 0; }
+.gif-item img { width: 100%; height: auto; display: block; object-fit: cover; }
+@media (max-width: 768px) {
+    .seesaw-logo-img { width: 70%; max-width: 400px; margin: 0 auto 30px auto; display: block; }
+    .gif-grid-section { grid-template-columns: repeat(2, 1fr); }
+    .blue-label { font-size: 20px; margin-bottom: 10px; }
+    .detail-text { padding: 0 20px; }
+}
+    </style>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "최은준 Eun Jun Choi", "item": "https://chid.kr/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://chid.kr/projects"}, {"@type": "ListItem", "position": 3, "name": "Seesaw", "item": "https://chid.kr/projects/seesaw"}]}</script>
 </head>
 <body>
@@ -73,23 +99,23 @@
 
         <div class="content-container">
             
-            <div class="full-image-block">
-                <img src="/img/projects/project img/4. seesaw/seesaw 2.webp" alt="Seesaw 자세교정 웨어러블 — Motion-Tracking Wearable Device for Senior" class="mobile-view-img" loading="lazy">
+            <div class="media">
+                <img src="/img/projects/project img/4. seesaw/seesaw 2.webp" alt="Seesaw 자세교정 웨어러블 — Motion-Tracking Wearable Device for Senior" class="narrow" loading="lazy">
             </div>
                 
-            <div class="full-image-block">
+            <div class="media">
                 <video class="locked-video" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/4. seesaw/seesaw 3.mp4" type="video/mp4">
                 </video>
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <span class="blue-label">Background.</span>
-                    <h2 class="main-heading">The Increasing Proportion of<br>YOLD</h2>
+                    <h2 class="heading">The Increasing Proportion of<br>YOLD</h2>
                     <div class="sub-heading">비중이 늘어나고 있는 “욜드족”</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         Currently, senior-related trends are drawing attention as the aging social phenomenon has emerged as a social agenda.<br>
                         By the way, do you know that in this phenomenon, the new keyword "YOLD" is rapidly emerging in the elderly?
@@ -101,16 +127,16 @@
                 </div>
             </div>
             
-            <div class="full-image-block">
-                <img src="/img/projects/project img/4. seesaw/seesaw 3-1.webp" alt="Seesaw 자세교정 웨어러블 — 그런데 이러한 현상에서 “YOLD”라는 새로운 키워드가 노인계층에서 급부상하고 있다는 사실을 알고 있나요?" class="mobile-view-img" loading="lazy">
+            <div class="media">
+                <img src="/img/projects/project img/4. seesaw/seesaw 3-1.webp" alt="Seesaw 자세교정 웨어러블 — 그런데 이러한 현상에서 “YOLD”라는 새로운 키워드가 노인계층에서 급부상하고 있다는 사실을 알고 있나요?" class="narrow" loading="lazy">
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
-                    <h2 class="main-heading">"YOLD"<br>The New Elderly</h2>
+            <div class="text-split">
+                <div class="text-split-title">
+                    <h2 class="heading">"YOLD"<br>The New Elderly</h2>
                     <div class="sub-heading">새로운 시니어 “욜드족”</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         YOLD means "senior people who enjoy an active consumption and cultural life based on generous assets even after retirement and enjoy a young lifestyle."<br>
                         The senior class is largely divided into "OLD" and "YOLD" that are the targets of the medical industry
@@ -122,16 +148,16 @@
                 </div>
             </div>
             
-            <div class="full-image-block">
-                <img src="/img/projects/project img/4. seesaw/seesaw 3-2.webp" alt="Seesaw 자세교정 웨어러블 — 시니어 계층은 크게 메디컬 산업의 대상이 되는 “OLD”와, 액티브한 “YOLD”로 나뉘는 것이죠" class="mobile-view-img" loading="lazy">
+            <div class="media">
+                <img src="/img/projects/project img/4. seesaw/seesaw 3-2.webp" alt="Seesaw 자세교정 웨어러블 — 시니어 계층은 크게 메디컬 산업의 대상이 되는 “OLD”와, 액티브한 “YOLD”로 나뉘는 것이죠" class="narrow" loading="lazy">
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
-                    <h2 class="main-heading">YOLD<br>Invests on "Health"</h2>
+            <div class="text-split">
+                <div class="text-split-title">
+                    <h2 class="heading">YOLD<br>Invests on "Health"</h2>
                     <div class="sub-heading">건강에 투자하는 욜드족</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         YOLD individuals do not focus solely on medical treatment but also actively invest in disease prevention and health management.<br>
                         The fact that they spend over $2,200 per month on health management highlights how much they prioritize their well-being.
@@ -143,20 +169,20 @@
                 </div>
             </div>
             
-            <div class="full-image-block">
-                <img src="/img/projects/project img/4. seesaw/seesaw 3-3.webp" alt="Seesaw 자세교정 웨어러블 — 욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다." class="mobile-view-img" loading="lazy">
+            <div class="media">
+                <img src="/img/projects/project img/4. seesaw/seesaw 3-3.webp" alt="Seesaw 자세교정 웨어러블 — 욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다." class="narrow" loading="lazy">
             </div>
 
-            <div class="full-image-block">
-                <img src="/img/projects/project img/4. seesaw/seesaw 3-4.webp" alt="Seesaw 자세교정 웨어러블 — 욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다." class="mobile-view-img" loading="lazy">
+            <div class="media">
+                <img src="/img/projects/project img/4. seesaw/seesaw 3-4.webp" alt="Seesaw 자세교정 웨어러블 — 욜드는 치료 활동에만 전념하지 않고, 질병 예방과 건강 관리를 위해서도 적극적으로 투자합니다." class="narrow" loading="lazy">
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
-                    <h2 class="main-heading">Focusing on<br><span class="highlight-blue">Balance</span></h2>
+            <div class="text-split">
+                <div class="text-split-title">
+                    <h2 class="heading">Focusing on<br><span class="accent">Balance</span></h2>
                     <div class="sub-heading">‘밸런스’에 집중하다</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         Why do seniors clasp their hands behind their backs while walking?<br>
                         Experts say that as muscle strength weakens, the body's center of gravity shifts forward, leading to this posture as a compensatory movement.<br>
@@ -170,14 +196,14 @@
                 </div>
             </div>
             
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 4.webp" alt="Seesaw 자세교정 웨어러블 — 그러나 이는 건강상 정말 잘못된 자세라고 하죠. 이러한 악순환을 끊기 위해 몸의 균형을 바로잡습니다." loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
-            <div class="text-section-center">
-                <h2 class="center-heading">
-                    Wear a better <span class="highlight-blue">Life-Balance</span>
+            <div class="text-center">
+                <h2 class="heading-lg">
+                    Wear a better <span class="accent">Life-Balance</span>
                 </h2>
                 <div class="center-sub-heading">
                     Consideration beyond Insurance; Design of Balance
@@ -188,11 +214,11 @@
                 </p>
             </div>
 
-            <div class="text-section-split align-center">
-                <div class="text-left">
+            <div class="text-split center">
+                <div class="text-split-title">
                     <img src="/img/projects/project img/4. seesaw/seesaw 4-1.svg" alt="see-saw logo" class="seesaw-logo-img" loading="lazy">
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         Seesaw provides an experience that helps users recognize and correct their posture on their own.<br>
                         With real-time haptic feedback, users can instantly adjust their posture, allowing them to develop proper postural habits.<br>
@@ -204,18 +230,18 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 5.webp" alt="Seesaw 자세교정 웨어러블 — 보험 그 이상의 배려, 균형을 설계하다" loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <span class="blue-label">Product.</span>
-                    <h2 class="main-heading">Motion Tracking<br>Posture Correction Sensor </h2>
+                    <h2 class="heading">Motion Tracking<br>Posture Correction Sensor </h2>
                     <div class="sub-heading">모션트래킹 자세 교정 센서</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         See-saw is a motion-tracking wearable device designed for posture correction in seniors.<br>
                         Gyroscopic sensors to monitor the user's posture in real-time, both indoors and outdoors, providing immediate haptic feedback when misalignment is detected.<br>
@@ -229,13 +255,13 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
-                <video class="locked-video video-limit" muted loop playsinline preload="none">
+            <div class="media">
+                <video class="locked-video narrow" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/4. seesaw/seesaw 6.mp4" type="video/mp4">
                 </video>
             </div>
             
-            <div class="text-single-block">
+            <div class="text-narrow">
                 <p class="body-en">
                     Unlike traditional posture correction methods that rely on periodic check-ups or external assistance, 
                     See-saw offers real-time guidance, making it easier for users to develop and maintain proper posture 
@@ -247,17 +273,17 @@
                 </p>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 7.webp" alt="Seesaw 자세교정 웨어러블 — See-saw는 노인의 자세 교정을 위한 모션 트래킹 웨어러블 기기입니다." loading="lazy">
             </div>
             
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">for upper body positioning</div>
-                    <h2 class="main-heading">Neck</h2>
+                    <h2 class="heading">Neck</h2>
                     <div class="sub-heading">상체 측정을 위한 목 센서</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         The neck sensor of See-saw is a key component that monitors the user's posture in real time.<br>
                         Using a gyroscopic sensor, it detects misalignment and provides haptic feedback for immediate correction. <br>
@@ -271,12 +297,12 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 8.webp" alt="Seesaw 자세교정 웨어러블 — 이를 통해 사용자는 스스로 올바른 자세를 유지하며 건강을 관리할 수 있습니다." loading="lazy">
                 <p class="detail-text"></p>
             </div>
             
-            <div class="text-single-block">
+            <div class="text-narrow">
                 <p class="body-en">
                     By preventing excessive forward head posture, the neck sensor helps reduce strain on the cervical spine, preventing common issues such as neck pain, stiffness, and long-term spinal misalignment.
                 </p>
@@ -285,17 +311,17 @@
                 </p>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 9.webp" alt="Seesaw 자세교정 웨어러블 — 이를 통해 사용자는 스스로 올바른 자세를 유지하며 건강을 관리할 수 있습니다." loading="lazy">
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">for core body positioning</div>
-                    <h2 class="main-heading">Waist</h2>
+                    <h2 class="heading">Waist</h2>
                     <div class="sub-heading">코어 측정을 위한 허리 센서</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         The waist sensor is a core component that helps maintain the user's balance by monitoring posture.<br>
                         Utilizing a gyroscopic sensor, it detects tilt or twisting of the waist and provides haptic feedback when poor posture persists.<br>
@@ -309,12 +335,12 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 10.webp" alt="Seesaw 자세교정 웨어러블 — 이를 통해 사용자는 자연스럽게 올바른 자세를 유지할 수 있습니다." loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
-            <div class="text-single-block">
+            <div class="text-narrow">
                 <p class="body-en">
                     In addition to improving posture, the waist sensor helps stabilize the body’s center of gravity, reducing the risk of falls and supporting better mobility for active seniors.
                 </p>
@@ -323,17 +349,17 @@
                 </p>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 11.webp" alt="Seesaw 자세교정 웨어러블 — 이를 통해 사용자는 자연스럽게 올바른 자세를 유지할 수 있습니다." loading="lazy">
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">for more accuracy</div>
-                    <h2 class="main-heading">Wrist & Ankle</h2>
+                    <h2 class="heading">Wrist & Ankle</h2>
                     <div class="sub-heading">더욱 정확성을 위한  팔목, 발목 센서</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         The additional sensors attached to the wrists and ankles enhance the accuracy of posture analysis by tracking body movements in greater detail.<br>
                         They detect upper and lower body balance, improving the precision of overall posture monitoring, and provide haptic feedback when necessary to assist in posture correction.
@@ -345,12 +371,12 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 12.webp" alt="Seesaw 자세교정 웨어러블 — 팔목과 발목에 부착된 추가 센서는 신체의 움직임을 더욱 정밀하게 분석하는 역할을 합니다." loading="lazy">
                 <p class="detail-text"></p>
             </div>
 
-            <div class="text-single-block">
+            <div class="text-narrow">
                 <p class="body-en">
                     These sensors also help users monitor asymmetrical movements, making them particularly useful for activities like walking, stretching, or exercising, where proper form is crucial for injury prevention and effective movement.
                 </p>
@@ -359,13 +385,13 @@
                 </p>
             </div>
 
-            <div class="text-section-split align-center">
-                <div class="text-left">
+            <div class="text-split center">
+                <div class="text-split-title">
                     <img src="/img/projects/project img/4. seesaw/seesaw 13.webp" alt="see-saw logo" class="seesaw-logo-img" loading="lazy">
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <div class="sub-heading">Watch your every move</div>
-                    <h2 class="main-heading">Gyroscopic Sensor</h2>
+                    <h2 class="heading">Gyroscopic Sensor</h2>
                     <div class="sub-heading">자이로스코프 센서</div>
                     
                     <p class="body-en">
@@ -379,23 +405,23 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 14.webp" alt="Seesaw 자세교정 웨어러블 — 자세가 흐트러지면 즉각적인 햅틱 피드백을 제공해 올바른 자세를 쉽게 유지할 수 있도록 돕습니다." loading="lazy">
             </div>
 
-            <div class="full-image-block">
-                <video class="locked-video video-limit" muted loop playsinline preload="none">
+            <div class="media">
+                <video class="locked-video narrow" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/4. seesaw/seesaw 15.mp4" type="video/mp4">
                 </video>
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">easily put it on</div>
-                    <h2 class="main-heading">Magnetic Charging</h2>
+                    <h2 class="heading">Magnetic Charging</h2>
                     <div class="sub-heading">손쉬운 무선 충전</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         See-saw supports wireless charging, allowing effortless charging by simply placing the sensor on the pad. <br>
                         The LED indicator provides clear charging status at a glance.
@@ -407,14 +433,14 @@
                 </div>
             </div>
 
-            <div class="full-image-block">
-                <div class="juxtapose" style="width: 100%;">
+            <div class="media">
+                <div class="juxtapose">
                     <img src="/img/projects/project img/4. seesaw/seesaw 16-1.webp" loading="lazy">
                     <img src="/img/projects/project img/4. seesaw/seesaw 16-2.webp" loading="lazy">
                 </div>
             </div>
 
-            <div class="text-single-block">
+            <div class="text-narrow">
                 <p class="body-en">
                     The wireless charging pad of See-saw features a slim, flat design.<br>
                     To ensure precise sensor placement, the pad includes outlined markings for each sensor, making the charging process simple and intuitive.
@@ -425,20 +451,20 @@
                 </p>
             </div> 
 
-            <div class="full-image-block">
-                <div class="juxtapose" style="width: 100%;">
+            <div class="media">
+                <div class="juxtapose">
                     <img src="/img/projects/project img/4. seesaw/seesaw 17-1.webp" loading="lazy">
                     <img src="/img/projects/project img/4. seesaw/seesaw 17-2.webp" loading="lazy">
                 </div>
             </div>
 
-            <div class="text-section-split">
-                <div class="text-left">
+            <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">choose your style</div>
-                    <h2 class="main-heading">Color Variations</h2>
+                    <h2 class="heading">Color Variations</h2>
                     <div class="sub-heading">컬러 베리에이션</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         Seesaw is available in two color variations: Gold and Silver.<br>
                         These colors were chosen to reflect a sense of sophistication and timeless elegance, aligning with the refined lifestyle of active seniors.<br>
@@ -452,18 +478,18 @@
                 </div>
             </div> 
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 18.webp" alt="Seesaw 자세교정 웨어러블 — Seesaw는 골드와 실버 두 가지 컬러로 제공됩니다." loading="lazy">
             </div>
 
-            <div class="image-text-split">
-                <div class="split-image">
+            <div class="split">
+                <div class="split-media">
                     <img src="/img/projects/project img/4. seesaw/seesaw 19.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
-                    <h2 class="split-heading">
-                        <span class="highlight-blue">Main Screen.</span><br>
+                    <h2 class="heading">
+                        <span class="accent">Main Screen.</span><br>
                         Live Posture Tracking
                     </h2>
                     <div class="sub-heading">메인 화면</div>
@@ -491,13 +517,13 @@
                 <div class="gif-item"><img src="/img/projects/project img/4. seesaw/seesaw 20-4.gif" alt="Seesaw 자세교정 웨어러블 — 이 화면은 사용자가 자신의 자세 데이터를 활용하는 핵심 허브 역할을 합니다." loading="lazy"></div>
             </div>
 
-           <div class="text-section-split">
-                <div class="text-left">
+           <div class="text-split">
+                <div class="text-split-title">
                     <div class="sub-heading">See Your every move</div>
-                    <h2 class="main-heading">Live Posture Visualization</h2>
+                    <h2 class="heading">Live Posture Visualization</h2>
                     <div class="sub-heading">실시간 자세 시각화</div>
                 </div>
-                <div class="text-right">
+                <div class="text-block">
                     <p class="body-en">
                         The sensors capture real-time posture data that is dynamically reflected on the home screen UI, accurately mirroring each sensor’s angles and movements. <br>
                         This synchronization allows users to instantly visualize how their upper body and core alignments change during daily activities.<br>
@@ -511,13 +537,13 @@
                 </div>
             </div>   
           
-            <div class="image-text-split">
-                <div class="split-image">
+            <div class="split">
+                <div class="split-media">
                     <img src="/img/projects/project img/4. seesaw/seesaw 21.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
-                    <h2 class="split-heading">
+                    <h2 class="heading">
                         Check your<br>
                           Current Posture
                     </h2>
@@ -535,13 +561,13 @@
             </div>
 
 
-            <div class="image-text-split">
-                <div class="split-image">
+            <div class="split">
+                <div class="split-media">
                     <img src="/img/projects/project img/4. seesaw/seesaw 22.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
-                    <h2 class="split-heading">
+                    <h2 class="heading">
                         Plumb Line Perfect
                     </h2>
 
@@ -558,14 +584,14 @@
             </div>
 
 
-            <div class="image-text-split">
-                <div class="split-image">
+            <div class="split">
+                <div class="split-media">
                     <img src="/img/projects/project img/4. seesaw/seesaw 23.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
-                    <h2 class="split-heading">
-                        <span class="highlight-blue">Analysis Screen.</span><br>
+                    <h2 class="heading">
+                        <span class="accent">Analysis Screen.</span><br>
                         data analytics & posture insights
                     </h2>
                     <div class="sub-heading">데이터 분석과 자세 인사이트</div>
@@ -585,14 +611,14 @@
             </div>
 
 
-            <div class="image-text-split">
-                <div class="split-image">
+            <div class="split">
+                <div class="split-media">
                     <img src="/img/projects/project img/4. seesaw/seesaw 24.webp" alt="Main Screen Live Posture Tracking" loading="lazy">
                 </div>
 
                 <div class="split-text">
-                    <h2 class="split-heading">
-                        <span class="highlight-blue">Correction Screen.</span><br>
+                    <h2 class="heading">
+                        <span class="accent">Correction Screen.</span><br>
                         Personalized Posture Solution
                     </h2>
                     <div class="sub-heading">맞춤형 자세 교정 솔루션</div>
@@ -611,14 +637,14 @@
                 </div>
             </div>
 
-           <div class="full-image-block">
+           <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 25.webp" alt="Seesaw 자세교정 웨어러블 — 명확한 안내와 시각적 지침을 통해 사용자가 효과적으로 자세를 교정할 수 있도록 돕습니다." loading="lazy">
             </div>
 
-           <div class="text-section-center">
-                <h2 class="center-heading">
+           <div class="text-center">
+                <h2 class="heading-lg">
                     Correct Your Posture,<br>
-                      <span class="highlight-blue">Enhance</span> Your Life
+                      <span class="accent">Enhance</span> Your Life
                 </h2>
                 <div class="center-sub-heading">
                     How to Use See-saw
@@ -628,18 +654,18 @@
                 </p>
             </div> 
 
-           <div class="image-text-split">
-              <div class="split-image">
-                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+           <div class="split">
+              <div class="split-media">
+                    <video class="locked-video" muted loop playsinline preload="none">
                       <source src="/img/projects/project img/4. seesaw/seesaw 26-1.mp4" type="video/mp4">
                   </video>
                 </div>
 
                <div class="split-text">
-                  <div style="font-size: 20px; color: #888; font-weight: 300; margin-bottom: 5px;">step 1</div>
+                  <div class="step-label">step 1</div>
         
-                 <h2 class="split-heading" style="margin-bottom: 10px;">Wear & Move</h2>
-                    <div class="sub-heading" style="margin-bottom: 30px;">착용하고 움직이기</div>
+                 <h2 class="heading step-title">Wear & Move</h2>
+                    <div class="sub-heading step-sub">착용하고 움직이기</div>
 
                   <p class="body-en">
                         Seesaw seamlessly integrates into daily life, allowing users to wear the sensors and go about their routine.<br>
@@ -654,18 +680,18 @@
                 </div>
             </div> 
 
-            <div class="image-text-split">
-              <div class="split-image">
-                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+            <div class="split">
+              <div class="split-media">
+                    <video class="locked-video" muted loop playsinline preload="none">
                       <source src="/img/projects/project img/4. seesaw/seesaw 26-2.mp4" type="video/mp4">
                   </video>
                 </div>
 
                <div class="split-text">
-                  <div style="font-size: 20px; color: #888; font-weight: 300; margin-bottom: 5px;">step 2</div>
+                  <div class="step-label">step 2</div>
         
-                 <h2 class="split-heading" style="margin-bottom: 10px;">Track & Learn</h2>
-                    <div class="sub-heading" style="margin-bottom: 30px;">분석하고 이해하기</div>
+                 <h2 class="heading step-title">Track & Learn</h2>
+                    <div class="sub-heading step-sub">분석하고 이해하기</div>
 
                   <p class="body-en">
                         After activity, users can check their posture history through the companion app.<br>
@@ -679,18 +705,18 @@
                 </div>
             </div>
 
-            <div class="image-text-split">
-              <div class="split-image">
-                    <video class="locked-video" muted loop playsinline preload="none" style="width: 100%; height: auto; display: block;">
+            <div class="split">
+              <div class="split-media">
+                    <video class="locked-video" muted loop playsinline preload="none">
                       <source src="/img/projects/project img/4. seesaw/seesaw 26-3.mp4" type="video/mp4">
                   </video>
                 </div>
 
                <div class="split-text">
-                  <div style="font-size: 20px; color: #888; font-weight: 300; margin-bottom: 5px;">step 3</div>
+                  <div class="step-label">step 3</div>
         
-                 <h2 class="split-heading" style="margin-bottom: 10px;">Correct & Improve</h2>
-                    <div class="sub-heading" style="margin-bottom: 30px;">교정하고 발전하기</div>
+                 <h2 class="heading step-title">Correct & Improve</h2>
+                    <div class="sub-heading step-sub">교정하고 발전하기</div>
 
                   <p class="body-en">
                         Based on daily posture data, the app suggests personalized stretching and corrective exercises.<br>
@@ -706,7 +732,7 @@
             </div>
 
             
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/4. seesaw/seesaw 27.webp" alt="Seesaw 자세교정 웨어러블 — 이를 통해 장기적으로 더욱 건강한 자세 습관을 형성할 수 있습니다." loading="lazy">
             </div>
 
@@ -749,7 +775,7 @@
                         Process: Eunjun Choi / Taehyun Kim
                     </div>
                 </div>
-                <div style="margin-top: 40px; font-size: 13px; color: #888;">
+                <div class="sponsor-note">
                     Sponsored by Samsung Life Insurance Co., Ltd.
                 </div>
             </div>

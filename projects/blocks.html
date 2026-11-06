@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHID - Block Library</title>
+    <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/project-base.css">
+    <style>
+/* Sample page only: the labels that name each block */
+.demo-tag { max-width: 1800px; margin: 120px auto 24px; padding: 0 40px; font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; color: #e5484d; }
+.demo-tag b { color: var(--text-main); font-weight: 600; }
+@media (max-width: 768px) { .demo-tag { padding: 0 20px; margin-top: 80px; } }
+    </style>
+</head>
+<body>
+    <script src="/static/js/loader.js"></script>
+    <header>
+        <div class="logo-container" id="back-to-home" data-href="/">
+            <img src="/img/main/Head Logo.svg" alt="CHID" class="logo-img">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/about" title="About">About</a></li>
+                <li class="active"><a href="/projects" title="Projects">Projects</a></li>
+                <li><a href="/contact" title="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Every shared block from /static/css/project-base.css. Copy the markup under each red label. -->
+        <div class="back-nav-container">
+            <a href="/projects" class="back-btn" title="Back to Projects">
+                <svg viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </a>
+        </div>
+
+        <section class="hero-section">
+            <img src="/img/projects/project img/4. seesaw/seesaw 1.webp" alt="" class="hero-image">
+        </section>
+        <section class="project-header">
+            <div class="project-title"><h1>Block Library</h1></div>
+            <div class="project-specs">project-header<br>project-title + project-specs<br>2026</div>
+        </section>
+        <section class="project-facts">
+            <div class="fact"><p class="fact-label">Type</p><p class="fact-value">project-facts</p></div>
+            <div class="fact"><p class="fact-label">Client</p><p class="fact-value">fact</p></div>
+            <div class="fact"><p class="fact-label">Period</p><p class="fact-value">fact-label</p></div>
+            <div class="fact"><p class="fact-label">My Role</p><p class="fact-value">fact-value</p></div>
+            <div class="fact"><p class="fact-label">Team</p><p class="fact-value">6 columns · 2 on mobile</p></div>
+            <div class="fact"><p class="fact-label">Output</p><p class="fact-value">—</p></div>
+        </section>
+
+        <p class="demo-tag"><b>.text-block</b> &gt; .lead + .body-en + .body-kr</p>
+        <div class="text-block">
+            <p class="lead">One-sentence summary of the project.</p>
+            <p class="body-en">English description. Paragraph text uses .body-en.</p>
+            <p class="body-kr">국문 설명은 .body-kr을 씁니다.</p>
+        </div>
+
+        <p class="demo-tag"><b>.media</b> &gt; img &nbsp;·&nbsp; options: .media.flush (no bottom gap), img.narrow / video.narrow (max 1000px)</p>
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 25.webp" alt="" class="narrow" loading="lazy">
+        </div>
+
+        <p class="demo-tag"><b>.split</b> &gt; .split-media + .split-text</p>
+        <div class="split">
+            <div class="split-media"><img src="/img/projects/Thumbnail/project_4.webp" alt="" loading="lazy"></div>
+            <div class="split-text">
+                <h2 class="heading">.heading</h2>
+                <div class="sub-heading">.sub-heading</div>
+                <p class="body-en">Media left, text right. Stacks on mobile (media first).</p>
+            </div>
+        </div>
+
+        <p class="demo-tag"><b>.split.reverse</b> — media on the right (still media first on mobile)</p>
+        <div class="split reverse">
+            <div class="split-media"><img src="/img/projects/Thumbnail/project_6.webp" alt="" loading="lazy"></div>
+            <div class="split-text">
+                <h2 class="heading">Reverse</h2>
+                <p class="body-en">Same markup, add <b>reverse</b>.</p>
+            </div>
+        </div>
+
+        <p class="demo-tag"><b>.split.fixed</b> — stays side by side on mobile</p>
+        <div class="split fixed">
+            <div class="split-media"><img src="/img/projects/Thumbnail/project_7.webp" alt="" loading="lazy"></div>
+            <div class="split-text">
+                <h2 class="heading">Fixed</h2>
+                <p class="body-en">Combine with reverse: <b>split fixed reverse</b>.</p>
+            </div>
+        </div>
+
+        <p class="demo-tag"><b>.text-split</b> &gt; .text-split-title + .text-block &nbsp;·&nbsp; option: .center (vertically centered)</p>
+        <div class="text-split">
+            <div class="text-split-title">
+                <h2 class="heading">Title column</h2>
+                <div class="sub-heading">40% wide</div>
+            </div>
+            <div class="text-block">
+                <p class="body-en">Text column. On mobile the title goes above the text.</p>
+                <p class="body-kr">제목 열과 본문 열로 나뉜 텍스트 블록입니다.</p>
+            </div>
+        </div>
+
+        <p class="demo-tag"><b>.title-block</b> &gt; .label + .quote (.quote-mark)</p>
+        <div class="title-block">
+            <div class="label">Label</div>
+            <h2 class="quote"><span class="quote-mark">“</span>A big centered quote with an <span class="accent">.accent</span> word<span class="quote-mark">”</span></h2>
+        </div>
+
+        <p class="demo-tag"><b>.text-center</b> &gt; .heading-lg + .body-en</p>
+        <div class="text-center">
+            <h2 class="heading-lg">.heading-lg</h2>
+            <p class="body-en">Centered section text, max 1000px.</p>
+        </div>
+
+        <p class="demo-tag"><b>.text-narrow</b> &gt; .heading + .body-en</p>
+        <div class="text-narrow">
+            <h2 class="heading">Narrow text</h2>
+            <p class="body-en">Single column, max 800px, left aligned. Good for long explanations.</p>
+        </div>
+
+        <p class="demo-tag"><b>.stack</b> &gt; .stack-head (img.wide-logo) + .stack-body</p>
+        <div class="stack">
+            <div class="stack-head"><img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="" class="wide-logo" style="max-width: 320px;"></div>
+            <div class="stack-body"><p class="body-en">Wide heading or logo on top, full-width body underneath.</p></div>
+        </div>
+
+        <p class="demo-tag"><b>.credit-section</b> &gt; .credit-grid &gt; .credit-label + .credit-content</p>
+        <div class="credit-section">
+            <div class="credit-grid"><div class="credit-label">Project</div><div class="credit-content">Personal · 2026.01 – 2026.06</div></div>
+            <div class="credit-grid"><div class="credit-label">Industrial Designer</div><div class="credit-content">Eunjun Choi</div></div>
+        </div>
+
+        <div class="next-project" data-href="/projects" style="--next-bg: url('/img/projects/Thumbnail/project_8.webp');">
+            <div class="next-label">.next-project</div>
+            <div class="next-title">Next Project &rarr;</div>
+        </div>
+    </main>
+    <script src="/static/js/page_effect.js"></script>
+</body>
+</html>

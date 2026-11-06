@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
     <style>
+        /* SNAKED page styles. Shared blocks (.media, .split, .text-narrow, ...) live in project-base.css;
+           everything here is used by this page only. */
 
+        /* ===== 1. Theme tokens ===== */
         :root {
             --bg-color: #F8F4EE;
             --text-main: #1B1B1B;
@@ -28,193 +31,166 @@
         }
         header { background-color: rgba(248, 244, 238, 0.95) !important; }
         .back-btn { background: rgba(248, 244, 238, 0.48) !important; }
-        
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 60px auto;
-        }
-        .carousel-track-wrapper {
-            overflow: hidden;
-            width: 100%;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            width: 100%;
-        }
-        .carousel-slide {
-            min-width: 100%;
-            object-fit: cover;
-        }
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 10;
-            padding: 10px;
-            color: #777;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.3s;
-        }
-        .carousel-btn:hover {
-            color: #111;
-        }
-        .carousel-btn svg {
-            width: 48px;
-            height: 48px;
-        }
-        .prev-btn { left: -60px; }
-        .next-btn { right: -60px; }
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
 
-        .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #d1d1d1;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .dot.active {
-            background-color: #333;
-            transform: scale(1.3);
-        }
-        @media (max-width: 1320px) {
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
-            .carousel-btn { color: #fff; background: rgba(0,0,0,0.1); border-radius: 50%; padding: 4px; }
-            .carousel-btn:hover { color: #fff; background: rgba(0,0,0,0.3); }
-            .carousel-btn svg { width: 32px; height: 32px; }
-        }
-        .auto-carousel-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 60px auto;
-            position: relative;
-            padding: 0 40px;
-            box-sizing: border-box;
-            display: grid;
-        }
-        .auto-carousel-slide {
-            grid-area: 1 / 1;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            object-fit: cover;
-            border-radius: clamp(12px, 2.5vw, 24px);
-            pointer-events: none;
-        }
-        @media (max-width: 768px) {
-            .auto-carousel-container {
-                padding: 0 20px;
-            }
-        }
-        .auto-carousel-slide.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        /* ===== 2. Layout blocks ===== */
 
-        .conveyor-wrapper {
-            width: 100%;
-            overflow: hidden;
+        /* --- Story intro bands ("The Story of SNAKED", "The working process of SNAKED") --- */
+        .katusa-story-section {
             position: relative;
-        }
-        .conveyor-track {
-            display: flex;
-            width: fit-content;
-            animation: scroll-conveyor 30s linear infinite;
-        }
-        .conveyor-track img {
-            width: 100vw;
-            height: auto;
-            flex-shrink: 0;
-            display: block; 
-        }
-        @keyframes scroll-conveyor {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .ops-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 80px auto;
-            padding: 0 40px;
-            box-sizing: border-box;
-        }
-        .ops-card {
-            position: relative;
-            border-radius: 12px;
+            height: 60vh;
+            min-height: 400px;
+            max-height: 800px;
             overflow: hidden;
-            aspect-ratio: 10 / 14;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            background-color: #111; 
+            background-color: transparent;
+            margin-bottom: 60px;
         }
-        .ops-card img {
+        .katusa-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            filter: brightness(0.8); 
+            background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
         }
-        .ops-card-content {
+        .katusa-veil {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .katusa-content-wrapper {
             position: relative;
             z-index: 2;
-            padding: 40px 24px 30px 24px;
-            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0) 100%);
             display: flex;
             flex-direction: column;
-            height: 50%;
-            justify-content: flex-end;
+            justify-content: center;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 5vw, 60px);
         }
-        .ops-title {
-            font-size: clamp(28px, 2.5vw, 42px);
+        .katusa-top-graphic { margin-bottom: clamp(40px, 8vw, 150px); }
+        .katusa-bottom-graphic {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .working-process-section {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background-color: transparent;
+            margin-bottom: 60px;
+        }
+        .working-process-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(40px, 8vw, 120px) clamp(20px, 5vw, 60px) 0;
+        }
+        /* label + logo + fading rule; dark text by default, white inside the KATUSA band */
+        .story-head {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .story-head-label {
+            font-size: clamp(14px, 1.5vw, 20px);
+            color: var(--text-main);
             font-weight: 500;
-            color: var(--point-color);
-            margin-bottom: 20px;
-            text-align: center;
-            letter-spacing: 0.05em;
+            margin-right: 10px;
+            white-space: nowrap;
         }
-        .ops-desc {
-            font-size: 13px;
-            line-height: 1.6;
-            color: #eaeaea;
-            font-weight: 300;
-            text-align: left;
-            word-break: keep-all;
+        .story-logo {
+            display: inline-flex;
+            align-items: center;
+            height: 1em;
         }
-        @media (max-width: 768px) {
-            .ops-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                padding: 0 20px;
-            }
-            .ops-card {
-                aspect-ratio: 4 / 3;
-            }
-            .ops-card-content {
-                height: 70%;
-            }
+        .story-logo img {
+            height: 1.2em;
+            width: auto;
+            object-fit: contain;
         }
+        .story-rule {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(27,27,27,0.4) 0%, rgba(27,27,27,0) 100%);
+            margin-left: 20px;
+        }
+        .katusa-top-graphic .story-head-label { color: #fff; font-weight: 400; }
+        .katusa-top-graphic .story-rule { background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); }
+
+        /* --- Full-bleed media with soft top/bottom fade --- */
+        .bleed {
+            width: 100%;
+            height: auto;
+            display: block;
+            z-index: 0;
+        }
+        .fade-y {
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%);
+        }
+        .fade-y-thin {
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%);
+        }
+
+        /* --- .media page option: layered = holds an overlay (.ov); images inside it and
+               inside shared .media.flush sit flush too --- */
+        .media.layered {
+            position: relative;
+            overflow: hidden;
+        }
+        .media.layered img, .media.flush img { margin-bottom: 0; }
+        /* overlay box on a .media.layered image/video */
+        .ov {
+            position: absolute;
+            left: clamp(20px, 5vw, 60px);
+            z-index: 1;
+        }
+        .ov-top { top: clamp(20px, 5vw, 60px); }
+        .ov-middle { top: 50%; transform: translateY(-50%); color: #fff; }
+        .ov-bottom { bottom: clamp(20px, 5vw, 60px); color: #fff; }
+        .ov-bottom-high { bottom: clamp(40px, 15vw, 220px); color: #fff; }
+        .ov-shade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
+        }
+        .ov-row {
+            display: flex;
+            align-items: baseline;
+            gap: clamp(8px, 1vw, 15px);
+            flex-wrap: wrap;
+        }
+        .ov-stack {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(5px, 1vw, 10px);
+        }
+
+        /* --- Problem splits (.split option) --- */
+        .problem-split { margin-top: 60px; }
         .problem-content {
             display: flex;
             flex-direction: column;
@@ -228,7 +204,7 @@
         .problem-title {
             margin-bottom: 0;
         }
-        .problem-split .split-image {
+        .problem-split .split-media {
             width: 100% !important;
             display: block !important;
         }
@@ -236,7 +212,7 @@
             width: 100% !important;
             display: flex !important;
         }
-        .problem-split .split-image img {
+        .problem-split .split-media img {
             width: 100% !important;
             max-width: 100% !important;
             border-radius: 12px !important;
@@ -248,22 +224,30 @@
             height: auto;
             display: block;
         }
-        @media (max-width: 768px) {
-            .problem-svg-img {
-                min-width: 300px;
-                max-width: 400px;
-            }
+        /* centered title variant inside .text-narrow */
+        .text-narrow .problem-title-group { margin-bottom: 30px; text-align: center; }
+        .text-narrow .problem-title { font-size: clamp(28px, 3.5vw, 42px); line-height: 1.3; }
+
+        /* --- Small one-off blocks --- */
+        .conveyor-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 120px;
         }
+        .text-split-title img { width: 100%; border-radius: 8px; }
+
+        /* --- Dark stats band (gradient into the page background) --- */
         .dark-stats-wrapper {
-            background: linear-gradient(to bottom, 
-                #000000 0%, 
-                #1B1B1B 150px, 
-                #1B1B1B calc(100% - 400px), 
-                rgb(49, 49, 48) calc(100% - 320px), 
-                rgb(104, 103, 101) calc(100% - 240px), 
-                rgb(138, 136, 133) calc(100% - 200px), 
-                rgb(171, 168, 164) calc(100% - 160px), 
-                rgb(226, 222, 217) calc(100% - 80px), 
+            background: linear-gradient(to bottom,
+                #000000 0%,
+                #1B1B1B 150px,
+                #1B1B1B calc(100% - 400px),
+                rgb(49, 49, 48) calc(100% - 320px),
+                rgb(104, 103, 101) calc(100% - 240px),
+                rgb(138, 136, 133) calc(100% - 200px),
+                rgb(171, 168, 164) calc(100% - 160px),
+                rgb(226, 222, 217) calc(100% - 80px),
                 var(--bg-color) 100%
             );
             color: #fff;
@@ -272,6 +256,13 @@
             margin-top: 0;
             margin-bottom: 0;
             width: 100%;
+        }
+        .dark-stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+            text-align: center;
         }
         .focus-point-box {
             text-align: left;
@@ -322,6 +313,14 @@
             font-weight: 600;
             color: var(--point-color);
         }
+        .focus-kr {
+            font-size: clamp(15px, 1.5vw, 18px);
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* --- Disaster timeline --- */
         .disaster-timeline-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -338,7 +337,7 @@
         .timeline-line-track {
             position: absolute;
             top: 50px;
-            left: 100px; 
+            left: 100px;
             right: 100px;
             height: 2px;
             background: rgba(255, 255, 255, 0.1);
@@ -368,22 +367,19 @@
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        
+        /* nodes appear right-to-left when leaving, left-to-right when entering */
         .timeline-node:nth-child(1) { transition-delay: 1.5s; }
         .timeline-node:nth-child(2) { transition-delay: 1.0s; }
         .timeline-node:nth-child(3) { transition-delay: 0.5s; }
         .timeline-node:nth-child(4) { transition-delay: 0s; }
-        
         .disaster-timeline.active .timeline-node {
             opacity: 1;
             transform: translateY(0);
         }
-        
         .disaster-timeline.active .timeline-node:nth-child(1) { transition-delay: 0.3s; }
         .disaster-timeline.active .timeline-node:nth-child(2) { transition-delay: 0.8s; }
         .disaster-timeline.active .timeline-node:nth-child(3) { transition-delay: 1.3s; }
         .disaster-timeline.active .timeline-node:nth-child(4) { transition-delay: 1.8s; }
-
         .node-top {
             height: 30px;
             display: flex;
@@ -450,7 +446,7 @@
         }
         .node-small .node-bottom {
             padding-top: 0;
-            margin-top: -14px; 
+            margin-top: -14px;
         }
         .dashed-line {
             width: 1px;
@@ -501,57 +497,8 @@
             display: block;
             margin-top: 2px;
         }
-        .dark-stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 40px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .dark-stats-title {
-            font-size: clamp(28px, 3vw, 42px);
-            font-weight: 700;
-            color: var(--point-color);
-            margin-bottom: 20px;
-        }
-        .dark-stats-subtitle {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 60px;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-        .dark-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        .dark-stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 50px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .dark-stat-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .dark-stat-number {
-            font-size: clamp(42px, 5vw, 64px);
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-        .dark-stat-desc {
-            font-size: 15px;
-            color: #aaa;
-            line-height: 1.6;
-            word-break: keep-all;
-        }
+
+        /* --- Dark split: SKED photo + "Limitations" text --- */
         .dark-split-section {
             display: flex;
             align-items: center;
@@ -565,6 +512,7 @@
             flex: 1;
             position: relative;
         }
+        .dark-split-left img { width: 100%; display: block; }
         .dark-split-right {
             flex: 1;
             display: flex;
@@ -592,10 +540,622 @@
         .annotation-line {
             overflow: visible;
         }
+        .limits-title { margin: 0; line-height: 1.1; }
+        .limits-key {
+            font-size: clamp(36px, 4vw, 54px);
+            font-weight: 700;
+            color: var(--point-color);
+            display: block;
+        }
+        .limits-sub {
+            font-size: clamp(22px, 2.5vw, 36px);
+            font-weight: 300;
+            color: #fff;
+        }
+        .limits-rule {
+            width: 100%;
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin: 20px 0 30px 0;
+        }
+        .limits-en {
+            font-size: 15px;
+            color: #eee;
+            line-height: 1.6;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .limits-kr {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+            font-weight: 300;
+            word-break: keep-all;
+        }
+
+        /* --- Dark band around a .problem-split --- */
+        .dark-band {
+            background-color: #1B1B1B;
+            padding: 80px 0;
+            width: 100%;
+            margin-top: 60px;
+        }
+        .dark-band .problem-split { margin-top: 0; }
+        .dark-band .heading { color: #fff; }
+        .dark-band .body-en { color: #eee; }
+        .dark-band .body-kr { color: #aaa; }
+
+        /* --- Parallel terrain columns --- */
+        .parallel-terrain-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        .terrain-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .terrain-img-main {
+            display: block;
+            object-fit: cover;
+            background-color: #e0e0e0;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            margin-bottom: 24px;
+        }
+        .terrain-title {
+            color: var(--point-color);
+            font-size: 22px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .terrain-img-sub {
+            display: block;
+            object-fit: cover;
+            background-color: #e0e0e0;
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            margin-bottom: 12px;
+        }
+        .terrain-desc {
+            color: var(--text-main);
+            font-size: 15px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* --- YouTube embed (16:9) --- */
+        .video-wrapper {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5%;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 16px;
+            background-color: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== 3. Typography ===== */
+        .point-text { color: var(--point-color); }
+        .italic { font-style: italic; }
+
+        /* overlay text on photos/videos: small light words + big orange keywords */
+        .ov-word { font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1; }
+        .ov-intro { line-height: 1.2; margin-bottom: 5px; }
+        .ov-key { font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1; }
+        .ov-step { letter-spacing: 0.02em; }
+        .ov-word-lg { font-size: clamp(20px, 3vw, 36px); font-weight: 300; line-height: 1; }
+        .ov-key-lg { font-size: clamp(42px, 7vw, 96px); font-weight: 700; color: var(--point-color); line-height: 1; }
+        .ov-headline { font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: var(--point-color); line-height: 1.1; }
+
+        /* KATUSA typewriter line (text is typed in by the script) */
+        .tw-intro {
+            color: #fff;
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 300;
+            white-space: pre-wrap;
+            margin-right: 15px;
+        }
+        .tw-line {
+            display: flex;
+            align-items: baseline;
+        }
+        .tw-key {
+            color: var(--point-color);
+            font-size: clamp(42px, 8vw, 100px);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: 0.02em;
+            white-space: pre;
+        }
+        .tw-suffix {
+            color: #fff;
+            font-size: clamp(16px, 2vw, 24px);
+            font-weight: 300;
+            margin-left: 8px;
+            white-space: pre;
+        }
+
+        /* ===== 4. Interactive components ===== */
+
+        /* --- Auto-fading gallery (script cycles .active) --- */
+        .auto-carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+            position: relative;
+            padding: 0 40px;
+            box-sizing: border-box;
+            display: grid;
+        }
+        .auto-carousel-slide {
+            grid-area: 1 / 1;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            object-fit: cover;
+            border-radius: clamp(12px, 2.5vw, 24px);
+            pointer-events: none;
+        }
+        .auto-carousel-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- Conveyor strip (script duplicates the images) --- */
+        .conveyor-track {
+            display: flex;
+            width: fit-content;
+            animation: scroll-conveyor 30s linear infinite;
+        }
+        .conveyor-track img {
+            width: 100vw;
+            height: auto;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        /* --- Ops cards --- */
+        .ops-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 80px auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        .ops-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 10 / 14;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-color: #111;
+        }
+        .ops-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.8);
+        }
+        .ops-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px 24px 30px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0) 100%);
+            display: flex;
+            flex-direction: column;
+            height: 50%;
+            justify-content: flex-end;
+        }
+        .ops-title {
+            font-size: clamp(28px, 2.5vw, 42px);
+            font-weight: 500;
+            color: var(--point-color);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+        .ops-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #eaeaea;
+            font-weight: 300;
+            text-align: left;
+            word-break: keep-all;
+        }
+
+        /* --- Stat cards (click opens a popup) --- */
+        .dark-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        .dark-stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 50px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .dark-stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .dark-stat-card::after {
+            content: 'Click to read more +';
+            display: block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--point-color);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .dark-stat-card:hover::after {
+            opacity: 1;
+        }
+        .dark-stat-number {
+            font-size: clamp(42px, 5vw, 64px);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .stat-unit { font-size: 0.6em; }
+        .stat-word { font-size: clamp(36px, 4vw, 54px); }
+        .stat-word-space { display: flex; justify-content: center; overflow: hidden; }
+        .stat-word-time { white-space: nowrap; }
+        .stat-hidden {
+            opacity: 0;
+        }
+        .sp-char {
+            display: inline-block;
+            transform-origin: center center;
+        }
+        .dark-stat-desc {
+            font-size: 15px;
+            color: #aaa;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        .stat-desc-kr { font-size: 0.85em; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+        /* --- Stat popup (script toggles .active and each content's display) --- */
+        .stat-popup-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.5s;
+        }
+        .stat-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .stat-popup-content {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            max-width: 480px;
+            width: 90%;
+            color: #fff;
+            text-align: left;
+            transform: translateY(50px) scale(0.92);
+            opacity: 0;
+            filter: blur(12px);
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
+                        opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                        filter 0.6s ease-out;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+            overflow: hidden;
+            display: none; /* openStatPopup() sets display:flex inline */
+            flex-direction: column;
+        }
+        .stat-popup-overlay.active .stat-popup-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            filter: blur(0);
+        }
+        .popup-image-wrapper {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        .popup-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .popup-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, #111 0%, transparent 100%);
+        }
+        .popup-text-wrapper {
+            padding: 10px 40px 40px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-popup-title {
+            font-size: clamp(24px, 3vw, 28px);
+            font-weight: 700;
+            color: var(--point-color);
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+        .stat-popup-en {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #eee;
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+        .stat-popup-kr {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #888;
+            font-weight: 300;
+            word-break: keep-all;
+        }
+        .stat-popup-source {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #555;
+            line-height: 1.5;
+            word-break: break-all;
+        }
+        .stat-popup-source a {
+            color: #555;
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+        .stat-popup-source a:hover {
+            color: #888;
+        }
+        .touch-to-close {
+            position: absolute;
+            bottom: 6vh;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        /* popup text is split into .type-char spans by the script */
+        .type-char {
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .stat-popup-overlay.active .type-char {
+            opacity: 1;
+            transition-delay: var(--delay);
+        }
+
+        /* --- Manual carousel (prev/next + dots) --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+        }
+        .carousel-track-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            padding: 10px;
+            color: #777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s;
+        }
+        .carousel-btn:hover {
+            color: #111;
+        }
+        .carousel-btn svg {
+            width: 48px;
+            height: 48px;
+        }
+        .prev-btn { left: -60px; }
+        .next-btn { right: -60px; }
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #d1d1d1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .dot.active {
+            background-color: #333;
+            transform: scale(1.3);
+        }
+
+        /* ===== 5. Animations ===== */
+        @keyframes scroll-conveyor {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .typing-cursor::after {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: #fff;
+            margin-left: 2px;
+            vertical-align: baseline;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        /* " Space " letters squeeze toward the centre and pop back (outer letters travel furthest) */
+        .animate-space .sp-char-1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-space .sp-char-2 { animation: spaceChar2 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-space .sp-char-3 { animation: spaceChar3 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-space .sp-char-4 { animation: spaceChar4 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-space .sp-char-5 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes spaceChar1 {
+            0% { opacity: 0; transform: scale(1) translateX(0); }
+            10%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+            40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(25px); }
+            55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(40px); }
+            60% { opacity: 0; transform: scale(0.1); }
+            75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(-5px); }
+            85% { transform: scaleY(0.95) scaleX(0.95) translateX(2px); }
+        }
+        @keyframes spaceChar2 {
+            0% { opacity: 0; transform: scale(1) translateX(0); }
+            10%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+            40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(15px); }
+            55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(20px); }
+            60% { opacity: 0; transform: scale(0.1); }
+            75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(-3px); }
+            85% { transform: scaleY(0.9) scaleX(0.95) translateX(1px); }
+        }
+        @keyframes spaceChar3 {
+            0% { opacity: 0; transform: scale(1) translateX(0); }
+            10%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+            40% { opacity: 0.8; transform: scaleY(0.15) scaleX(0.5) translateX(0); }
+            55% { opacity: 0; transform: scaleY(0.01) scaleX(0.05) translateX(0); }
+            60% { opacity: 0; transform: scale(0.1); }
+            75% { opacity: 1; transform: scaleY(1.4) scaleX(1.2) translateX(0); }
+            85% { transform: scaleY(0.85) scaleX(0.9) translateX(0); }
+        }
+        @keyframes spaceChar4 {
+            0% { opacity: 0; transform: scale(1) translateX(0); }
+            10%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+            40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(-15px); }
+            55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(-20px); }
+            60% { opacity: 0; transform: scale(0.1); }
+            75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(3px); }
+            85% { transform: scaleY(0.9) scaleX(0.95) translateX(-1px); }
+        }
+        @keyframes spaceChar5 {
+            0% { opacity: 0; transform: scale(1) translateX(0); }
+            10%, 100% { opacity: 1; transform: scale(1) translateX(0); }
+            40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(-25px); }
+            55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(-40px); }
+            60% { opacity: 0; transform: scale(0.1); }
+            75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(5px); }
+            85% { transform: scaleY(0.95) scaleX(0.95) translateX(-2px); }
+        }
+        /* " Time " pulses red twice */
+        .animate-time {
+            animation: urgentTimePulse 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes urgentTimePulse {
+            0% { opacity: 0; transform: scale(0.8); }
+            15% { opacity: 1; transform: scale(1.15); color: #ff3b3b; }
+            30%, 60% { transform: scale(1); color: var(--point-color); }
+            45% { transform: scale(1.15); color: #ff3b3b; }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ===== 6. Responsive ===== */
+        @media (max-width: 1320px) {
+            .prev-btn { left: 10px; }
+            .next-btn { right: 10px; }
+            .carousel-btn { color: #fff; background: rgba(0,0,0,0.1); border-radius: 50%; padding: 4px; }
+            .carousel-btn:hover { color: #fff; background: rgba(0,0,0,0.3); }
+            .carousel-btn svg { width: 32px; height: 32px; }
+        }
         @media (max-width: 768px) {
+            .auto-carousel-container {
+                padding: 0 20px;
+            }
+            .ops-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 0 20px;
+            }
+            .ops-card {
+                aspect-ratio: 4 / 3;
+            }
+            .ops-card-content {
+                height: 70%;
+            }
+            .problem-svg-img {
+                min-width: 300px;
+                max-width: 400px;
+            }
             .dark-stats-wrapper {
                 padding-top: 180px;
-                
             }
             .dark-stats-grid {
                 grid-template-columns: 1fr;
@@ -635,298 +1195,30 @@
             .node-stats { font-size: 9px; border-spacing: 0; }
             .node-stats th { padding-right: 2px; }
             .node-large .node-circle-glow { transform: scale(0.7); }
+            .parallel-terrain-section {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                padding: 0 20px;
+                margin: 60px auto;
+            }
+            .terrain-title {
+                font-size: 20px;
+            }
         }
 
-        .typing-cursor::after {
-            content: '';
-            display: inline-block;
-            width: 2px;
-            height: 1em;
-            background-color: #fff;
-            margin-left: 2px;
-            vertical-align: baseline;
-            animation: blink-caret 0.75s step-end infinite;
-        }
-        @keyframes blink-caret {
-            from, to { opacity: 0; }
-            50% { opacity: 1; }
-        }
-
-                    .type-char {
-                        opacity: 0;
-                        transition: opacity 0.15s ease-out;
-                    }
-                    .stat-popup-overlay.active .type-char {
-                        opacity: 1;
-                        transition-delay: var(--delay);
-                    }
-                    .dark-stat-card {
-                        cursor: pointer;
-                        position: relative;
-                    }
-                    .dark-stat-card::after {
-                        content: 'Click to read more +';
-                        display: block;
-                        margin-top: 20px;
-                        font-size: 13px;
-                        color: var(--point-color);
-                        opacity: 0.7;
-                        transition: opacity 0.3s;
-                    }
-                    .dark-stat-card:hover::after {
-                        opacity: 1;
-                    }
-                    .stat-popup-overlay {
-                        position: fixed;
-                        top: 0; left: 0; right: 0; bottom: 0;
-                        background: rgba(5, 5, 5, 0.85);
-                        backdrop-filter: blur(25px);
-                        -webkit-backdrop-filter: blur(25px);
-                        z-index: 9999;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        opacity: 0;
-                        visibility: hidden;
-                        transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.5s;
-                    }
-                    .stat-popup-overlay.active {
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    .stat-popup-content {
-                        background: #111;
-                        border: 1px solid rgba(255,255,255,0.05);
-                        border-radius: 24px;
-                        max-width: 480px;
-                        width: 90%;
-                        color: #fff;
-                        text-align: left;
-                        transform: translateY(50px) scale(0.92);
-                        opacity: 0;
-                        filter: blur(12px);
-                        transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1), 
-                                    opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-                                    filter 0.6s ease-out;
-                        position: relative;
-                        box-shadow: 0 40px 80px rgba(0,0,0,0.9);
-                        overflow: hidden;
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .stat-popup-overlay.active .stat-popup-content {
-                        transform: translateY(0) scale(1);
-                        opacity: 1;
-                        filter: blur(0);
-                    }
-                    .popup-image-wrapper {
-                        width: 100%;
-                        height: 220px;
-                        position: relative;
-                        overflow: hidden;
-                    }
-                    .popup-image-wrapper img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                    .popup-image-wrapper::after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0; left: 0; width: 100%; height: 50%;
-                        background: linear-gradient(to top, #111 0%, transparent 100%);
-                    }
-                    .popup-text-wrapper {
-                        padding: 10px 40px 40px 40px;
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .stat-popup-title {
-                        font-size: clamp(24px, 3vw, 28px);
-                        font-weight: 700;
-                        color: var(--point-color);
-                        margin-bottom: 15px;
-                        line-height: 1.1;
-                    }
-                    .stat-popup-en {
-                        font-size: 15px;
-                        line-height: 1.6;
-                        color: #eee;
-                        margin-bottom: 20px;
-                        word-break: keep-all;
-                    }
-                    .stat-popup-kr {
-                        font-size: 14px;
-                        line-height: 1.6;
-                        color: #888;
-                        font-weight: 300;
-                        word-break: keep-all;
-                    }
-                    .stat-popup-source {
-                        margin-top: 30px;
-                        font-size: 11px;
-                        color: #555;
-                        line-height: 1.5;
-                        word-break: break-all;
-                    }
-                    .stat-popup-source a {
-                        color: #555;
-                        text-decoration: underline;
-                        transition: color 0.3s;
-                    }
-                    .stat-popup-source a:hover {
-                        color: #888;
-                    }
-                    .touch-to-close {
-                        position: absolute;
-                        bottom: 6vh;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        color: rgba(255,255,255,0.4);
-                        font-size: 12px;
-                        letter-spacing: 0.1em;
-                        text-transform: uppercase;
-                        animation: pulse 2s infinite;
-                        pointer-events: none;
-                    }
-                    @keyframes pulse {
-                        0% { opacity: 0.3; }
-                        50% { opacity: 1; }
-                        100% { opacity: 0.3; }
-                    }
-                    .sp-char {
-                        display: inline-block;
-                        transform-origin: center center;
-                    }
-                    .animate-space .sp-char-q1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-1 { animation: spaceChar1 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-2 { animation: spaceChar2 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-3 { animation: spaceChar3 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-4 { animation: spaceChar4 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-5 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-                    .animate-space .sp-char-q2 { animation: spaceChar5 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-
-                    @keyframes spaceChar1 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(25px); }
-                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(40px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(-5px); }
-                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(2px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar2 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(15px); }
-                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(20px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(-3px); }
-                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(1px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar3 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.15) scaleX(0.5) translateX(0); }
-                        55% { opacity: 0; transform: scaleY(0.01) scaleX(0.05) translateX(0); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.4) scaleX(1.2) translateX(0); }
-                        85% { transform: scaleY(0.85) scaleX(0.9) translateX(0); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar4 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.4) scaleX(0.7) translateX(-15px); }
-                        55% { opacity: 0; transform: scaleY(0.05) scaleX(0.1) translateX(-20px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.2) scaleX(1.1) translateX(3px); }
-                        85% { transform: scaleY(0.9) scaleX(0.95) translateX(-1px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes spaceChar5 {
-                        0% { opacity: 0; transform: scale(1) translateX(0); }
-                        10% { opacity: 1; transform: scale(1) translateX(0); }
-                        40% { opacity: 0.8; transform: scaleY(0.7) scaleX(0.8) translateX(-25px); }
-                        55% { opacity: 0; transform: scaleY(0.1) scaleX(0.1) translateX(-40px); }
-                        60% { opacity: 0; transform: scale(0.1); }
-                        75% { opacity: 1; transform: scaleY(1.1) scaleX(1.1) translateX(5px); }
-                        85% { transform: scaleY(0.95) scaleX(0.95) translateX(-2px); }
-                        100% { opacity: 1; transform: scale(1) translateX(0); }
-                    }
-                    @keyframes urgentTimePulse {
-                        0% { opacity: 0; transform: scale(0.8); }
-                        15% { opacity: 1; transform: scale(1.15); color: #ff3b3b; }
-                        30% { transform: scale(1); color: var(--point-color); }
-                        45% { transform: scale(1.15); color: #ff3b3b; }
-                        60% { transform: scale(1); color: var(--point-color); }
-                        100% { opacity: 1; transform: scale(1); }
-                    }
-                    .animate-time {
-                        animation: urgentTimePulse 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-                    }
-                    .stat-hidden {
-                        opacity: 0;
-                    }
-
-                    .parallel-terrain-section {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 120px;
-                        max-width: 1200px;
-                        margin: 80px auto;
-                        padding: 0 40px;
-                        box-sizing: border-box;
-                    }
-                    .terrain-column {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        width: 100%;
-                    }
-                    .terrain-img-main {
-                        display: block;
-                        object-fit: cover;
-                        background-color: #e0e0e0;
-                        width: 100%;
-                        aspect-ratio: 1 / 1;
-                        margin-bottom: 24px;
-                    }
-                    .terrain-title {
-                        color: var(--point-color);
-                        font-size: 22px;
-                        font-weight: 500;
-                        text-align: center;
-                        margin-bottom: 16px;
-                    }
-                    .terrain-img-sub {
-                        display: block;
-                        object-fit: cover;
-                        background-color: #e0e0e0;
-                        width: 100%;
-                        aspect-ratio: 2 / 1;
-                        margin-bottom: 12px;
-                    }
-                    .terrain-desc {
-                        color: var(--text-main);
-                        font-size: 15px;
-                        text-align: center;
-                        font-weight: 300;
-                    }
-                    @media (max-width: 768px) {
-                        .parallel-terrain-section {
-                            grid-template-columns: 1fr;
-                            gap: 60px;
-                            padding: 0 20px;
-                            margin: 60px auto;
-                        }
-                        .terrain-title {
-                            font-size: 20px;
-                        }
-                    }
-                
+        /* ===== 7. Spacing modifiers (last, so they win like the inline styles they replaced) ===== */
+        .mt-20 { margin-top: 20px; }
+        .mt-40 { margin-top: 40px; }
+        .mt-60 { margin-top: 60px; }
+        .mt-80 { margin-top: 80px; }
+        .mt-100 { margin-top: 100px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-24 { margin-bottom: 24px; }
+        .mb-30 { margin-bottom: 30px; }
+        .mb-60 { margin-bottom: 60px; }
+        .mb-80 { margin-bottom: 80px; }
+        .mb-100 { margin-bottom: 100px; }
 </style>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "최은준 Eun Jun Choi", "item": "https://chid.kr/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://chid.kr/projects"}, {"@type": "ListItem", "position": 3, "name": "SNAKED", "item": "https://chid.kr/projects/snaked"}]}</script>
 </head>
@@ -986,8 +1278,8 @@
             <img src="/img/projects/project img/8. snaked/snaked 11.webp" alt="Auto Gallery 4" class="auto-carousel-slide" loading="lazy" decoding="async">
         </div>
            
-        <div class="text-right">
-            <p class="intro-lead">
+        <div class="text-block">
+            <p class="lead">
                 SNAKED is a specialized rescue stretcher designed for collapsed environments.
             </p>
             <p class="body-en">
@@ -1002,55 +1294,55 @@
             </p>
         </div>
 
-        <div class="full-image-block">
-                <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="SNAKED 구조용 들것 — SNAKED는 구조물 붕괴라는 특수한 재난 환경에 최적화된 구조용 들것입니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+                <img src="/img/projects/project img/8. snaked/snaked 7.webp" alt="SNAKED 구조용 들것 — SNAKED는 구조물 붕괴라는 특수한 재난 환경에 최적화된 구조용 들것입니다." class="narrow" loading="lazy">
         </div>
 
-        <div class="katusa-story-section" id="katusaStoryTrigger" style="position: relative; width: 100%; height: 60vh; min-height: 400px; max-height: 800px; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
+        <div class="katusa-story-section" id="katusaStoryTrigger">
             
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/img/projects/project img/8. snaked/snaked_intro_1.webp'); background-size: cover; background-position: center; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;"></div>
+            <div class="katusa-bg fade-y"></div>
 
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;  z-index: 1;"></div>
+            <div class="katusa-veil"></div>
             
-            <div class="katusa-content-wrapper" style="position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px);">
+            <div class="katusa-content-wrapper">
 
-                <div class="katusa-top-graphic" style="display: flex; align-items: center; width: 100%; margin-bottom: clamp(40px, 8vw, 150px);">
-                    <div style="font-size: clamp(14px, 1.5vw, 20px); color: #fff; font-weight: 400; margin-right: 10px; white-space: nowrap;">The Story of</div>
+                <div class="katusa-top-graphic story-head">
+                    <div class="story-head-label">The Story of</div>
 
-                    <div id="snaked-logo-svg-container" style="display: inline-flex; align-items: center; height: 1em;">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
+                    <div id="snaked-logo-svg-container" class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo.svg" alt="SNAKED Logo">
                     </div>
 
-                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); margin-left: 20px;"></div>
+                    <div class="story-rule"></div>
                 </div>
 
-                <div class="katusa-bottom-graphic" style="display: flex; align-items: baseline; flex-wrap: wrap; justify-content: flex-start;">
-                    <div id="typewriter-part1" style="color: #fff; font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; white-space: pre-wrap; margin-right: 15px;">&#8203;</div>
-                    <div style="display: flex; align-items: baseline;">
-                        <span id="typewriter-part2" style="color: var(--point-color); font-size: clamp(42px, 8vw, 100px); font-weight: 700; line-height: 1; letter-spacing: 0.02em; white-space: pre;">&#8203;</span>
-                        <span id="typewriter-part3" style="color: #fff; font-size: clamp(16px, 2vw, 24px); font-weight: 300; margin-left: 8px; white-space: pre;">&#8203;</span>
+                <div class="katusa-bottom-graphic">
+                    <div id="typewriter-part1" class="tw-intro">&#8203;</div>
+                    <div class="tw-line">
+                        <span id="typewriter-part2" class="tw-key">&#8203;</span>
+                        <span id="typewriter-part3" class="tw-suffix">&#8203;</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section class="title-group">
-             <h2 class="main-quote" style="font-style: italic;">
+        <section class="title-block">
+             <h2 class="quote italic">
               <span class="quote-mark">“</span> We thought it was our lack of skill.<br>
                  18 months in the dirt taught us otherwise—<br>
-                <span class="highlight-orange">it was the gear itself.</span> <span class="quote-mark">”</span>
+                <span class="accent">it was the gear itself.</span> <span class="quote-mark">”</span>
             </h2>
         </section>
 
-        <div class="conveyor-wrapper" style="margin-bottom: 120px;">
+        <div class="conveyor-wrapper">
             <div class="conveyor-track">
                 
                 <img src="/img/projects/project img/8. snaked/snaked 12.webp" alt="Training" loading="lazy" decoding="async">
             </div>
         </div>
 
-        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
-            <div class="small-label" style="margin-bottom: 24px;">Background / 18 Months of Experience in the Real Field</div>
+        <div class="text-narrow mt-60 mb-60">
+            <div class="label mb-24">Background / 18 Months of Experience in the Real Field</div>
             <p class="body-en">
                 Our team of five shares a unique background: we all served as KATUSA (Korean Augmentation To the United States Army) soldiers. Despite having different specialties—three in public affairs, one in combat infantry, and one in chaplaincy—we were brought together by our shared experience of living and training closely alongside the U.S. Army for 18 months.
             </p>
@@ -1089,7 +1381,7 @@
             </div>
         </div>
 
-        <div class="text-single-block" style="margin-top: 60px; margin-bottom: 60px;">
+        <div class="text-narrow mt-60 mb-60">
             <p class="body-en">
                 During this time, we had the rare opportunity to participate in major joint operations, such as WGX, AASLT, and MEDEVAC. Conducting rescue missions across diverse and extreme terrains—including mountains, urban areas, and coastlines—taught us a profound lesson. We experienced firsthand how harsh environments can critically impact life-saving operations.
             </p>
@@ -1098,56 +1390,56 @@
             </p>
         </div>
 
-        <div class="text-section-split align-center" style="margin-top: 80px;">
-            <div class="text-left">
-                <img src="/img/projects/project img/8. snaked/snaked 16.webp" alt="SKED Stretcher" style="width: 100%; border-radius: 8px;" loading="lazy">
+        <div class="text-split center mt-80">
+            <div class="text-split-title">
+                <img src="/img/projects/project img/8. snaked/snaked 16.webp" alt="SKED Stretcher" loading="lazy">
             </div>
-            <div class="text-right">
+            <div class="text-block">
                 <p class="body-en">
                     Among all the battlefield equipment we utilized, the one we relied on most was the <strong>'SKED'</strong> stretcher. It is a semi-rigid, plastic sled-type device designed to securely wrap and extract casualties from confined spaces or rugged terrain.
                 </p>
-                <p class="body-kr" style="margin-top: 20px;">
+                <p class="body-kr mt-20">
                     이 수많은 훈련 과정에서 저희가 가장 많이 다루었던 장비가 바로 <strong>'SKED(스케드)'</strong> 들것이었습니다. SKED는 미군이 협소한 공간이나 험준한 지형에서 사상자를 안전하게 감싸 구출할 때 널리 사용하는 반강성 플라스틱 썰매형 장비입니다.
                 </p>
             </div>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 80px;">
-            <img src="/img/projects/project img/8. snaked/snaked 17.webp" alt="SKED Uncomfortable" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
-            <div style="position: absolute; bottom: clamp(40px, 15vw, 220px); left: clamp(20px, 5vw, 60px); color: #fff; z-index: 1;">
-                <div style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1.2; margin-bottom: 5px;">However,</div>
-                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
-                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">SKED</span>
-                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">was very</span>
-                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Uncomfortable</span>
+        <div class="media layered mb-80">
+            <img src="/img/projects/project img/8. snaked/snaked 17.webp" alt="SKED Uncomfortable" loading="lazy">
+            <div class="ov ov-bottom-high">
+                <div class="ov-word ov-intro">However,</div>
+                <div class="ov-row">
+                    <span class="ov-key">SKED</span>
+                    <span class="ov-word">was very</span>
+                    <span class="ov-key">Uncomfortable</span>
                 </div>
             </div>
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 By taking on the roles of both the rescuer dragging the stretcher and the casualty being transported, we experienced its limitations firsthand. What was supposed to be life-saving gear was, in reality, dangerously inefficient and agonizing for the patient.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 저희는 구조대원으로서 들것을 직접 끌어보고, 때로는 환자가 되어 이송되면서 이 장비의 한계를 온몸으로 겪었습니다. 생명을 구해야 할 장비가 실제 현장에서는 구조를 지연시키고 환자에게 극심한 고통을 주고 있었습니다.
             </p>
         </div>
 
-        <section class="title-group" style="margin-top: 100px;">
-            <h2 class="main-quote" style="font-style: italic;">
+        <section class="title-block mt-100">
+            <h2 class="quote italic">
                 <span class="quote-mark">“</span> Good Anywhere<br>
-                simply means <span style="color: var(--point-color);">Great Nowhere.</span> <span class="quote-mark">”</span>
+                simply means <span class="point-text">Great Nowhere.</span> <span class="quote-mark">”</span>
             </h2>
         </section>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 18.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
-                        <span style="color: var(--point-color);">01.</span> Complex Strapping
+                    <h2 class="heading problem-title">
+                        <span class="accent">01.</span> Complex Strapping
                     </h2>
                     <img src="/img/projects/project img/8. snaked/snaked 18_graphic.svg" class="problem-svg-img" alt="Complex Strapping Graphic" loading="lazy">
                 </div>
@@ -1162,14 +1454,14 @@
             </div>
         </div>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 19.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
-                        <span style="color: var(--point-color);">02.</span> Direct Ground impact
+                    <h2 class="heading problem-title">
+                        <span class="accent">02.</span> Direct Ground impact
                     </h2>
                     <img src="/img/projects/project img/8. snaked/snaked 19_graphic.svg" class="problem-svg-img" alt="Complex Strapping Graphic" loading="lazy">
                 </div>
@@ -1184,46 +1476,46 @@
             </div>
         </div>
      
-        <section class="title-group" style="margin-top: 100px;">
-            <h2 class="main-quote" style="font-style: italic;">
+        <section class="title-block mt-100">
+            <h2 class="quote italic">
                 <span class="quote-mark">“</span> Can One stretcher handle Every Disaster?<br>
-                Our answer is <span style="color: var(--point-color);">No.</span> <span class="quote-mark">”</span>
+                Our answer is <span class="point-text">No.</span> <span class="quote-mark">”</span>
             </h2>
         </section>
 
-        <div class="full-image-block">
-                <img src="/img/projects/project img/8. snaked/snaked 21.webp" alt="SNAKED 구조용 들것 — No." class="mobile-view-img" loading="lazy">
+        <div class="media">
+                <img src="/img/projects/project img/8. snaked/snaked 21.webp" alt="SNAKED 구조용 들것 — No." class="narrow" loading="lazy">
         </div>
 
-        <div class="text-section-center" style="margin-top: 100px; margin-bottom: 20px;">
-            <h2 class="center-heading" style="color: var(--point-color); margin-bottom: 30px; font-style: italic;">The Illusion of Versatility</h2>
-            <p class="body-en" style="margin-bottom: 20px;">
+        <div class="text-center mt-100 mb-20">
+            <h2 class="heading-lg point-text mb-30 italic">The Illusion of Versatility</h2>
+            <p class="body-en mb-20">
                 Being usable everywhere meant it was optimized for nowhere.<br>
                 Its profound discomfort was a fundamental flaw, not a lack of proficiency.
             </p>
-            <p class="body-kr" style="margin-bottom: 0;">
+            <p class="body-kr">
                 어디서든 쓸 수 있다는 것은, 어디서도 최적이 아니라는 뜻이었습니다.<br>
                 수많은 훈련을 거듭하며 저희는 이 불편함이 숙련도 부족이 아닌 '장비 자체의 치명적 결함'임을 깨달았습니다.
             </p>
         </div>
 
-        <div class="full-image-block" style="margin-bottom: 0;">
-            <img src="/img/projects/project img/8. snaked/snaked 22.webp" alt="Target Environment" style="display: block; margin-bottom: 0;" loading="lazy">
+        <div class="media flush">
+            <img src="/img/projects/project img/8. snaked/snaked 22.webp" alt="Target Environment" loading="lazy">
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
-            <img src="/img/projects/project img/8. snaked/snaked 20.webp" alt="SKED Uncomfortable" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none;"></div>
-            <div style="position: absolute; bottom: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); color: #fff; z-index: 1;">
-                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
-                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">They dictate</span>
-                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Life</span>
-                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">and</span>
-                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Death.</span>
+        <div class="media layered flush">
+            <img src="/img/projects/project img/8. snaked/snaked 20.webp" alt="SKED Uncomfortable" loading="lazy">
+            <div class="ov-shade"></div>
+            <div class="ov ov-bottom">
+                <div class="ov-row">
+                    <span class="ov-word">They dictate</span>
+                    <span class="ov-key">Life</span>
+                    <span class="ov-word">and</span>
+                    <span class="ov-key">Death.</span>
                 </div><br>
-                <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
-                    <span style="font-size: clamp(18px, 2vw, 28px); font-weight: 300; line-height: 1;">Specialized environments demand</span><br>
-                    <span style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1;">Optimized Stretchers.</span>
+                <div class="ov-row">
+                    <span class="ov-word">Specialized environments demand</span><br>
+                    <span class="ov-key">Optimized Stretchers.</span>
                 </div>
                 
             </div>
@@ -1234,11 +1526,11 @@
                 <div class="focus-point-box">
                     <div class="focus-label">Main Focus Point</div>
                     <div class="focus-text">
-                        <div style="margin-bottom: 20px;">
+                        <div class="mb-20">
                             In collapsed buildings,<br>
                             <span class="highlight">" Stretchers "</span> are the true bottleneck in rescue operations.
                         </div>
-                        <div style="font-size: clamp(15px, 1.5vw, 18px); color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.6;">
+                        <div class="focus-kr">
                             건물 붕괴 현장에서 인명 구조를 지연시키는 가장 큰 원인은<br>
                             다름 아닌 <span class="highlight">"들것"</span>이었습니다.
                         </div>
@@ -1323,35 +1615,35 @@
                     </div>
                 </div>
 
-                <div class="dark-stats-grid" id="statsGridContainer" style="margin-bottom: 80px;">
+                <div class="dark-stats-grid" id="statsGridContainer">
                     <div class="dark-stat-card" onclick="openStatPopup('popup-90')">
-                        <div class="dark-stat-number" id="stat-num-90">0<span style="font-size: 0.6em;">%</span></div>
+                        <div class="dark-stat-number" id="stat-num-90">0<span class="stat-unit">%</span></div>
                         <div class="dark-stat-desc">
-                            <div style="margin-bottom: 10px;">Of direct earthquake fatalities are caused by collapsed structures.</div>
-                            <div style="font-size: 0.85em; color: rgba(255,255,255,0.5); font-weight: 300;">지진 직접 사망자의 90%는 건물 붕괴로 발생합니다.</div>
+                            <div class="mb-10">Of direct earthquake fatalities are caused by collapsed structures.</div>
+                            <div class="stat-desc-kr">지진 직접 사망자의 90%는 건물 붕괴로 발생합니다.</div>
                         </div>
                     </div>
                     <div class="dark-stat-card" onclick="openStatPopup('popup-space')">
-                        <div class="dark-stat-number stat-hidden" id="stat-num-space" style="font-size: clamp(36px, 4vw, 54px); display: flex; justify-content: center; overflow: hidden;">
-                            <span class="sp-char sp-char-q1">"&nbsp;</span><span class="sp-char sp-char-1">S</span><span class="sp-char sp-char-2">p</span><span class="sp-char sp-char-3">a</span><span class="sp-char sp-char-4">c</span><span class="sp-char sp-char-5">e</span><span class="sp-char sp-char-q2">&nbsp;"</span>
+                        <div class="dark-stat-number stat-hidden stat-word stat-word-space" id="stat-num-space">
+                            <span class="sp-char sp-char-1">"&nbsp;</span><span class="sp-char sp-char-1">S</span><span class="sp-char sp-char-2">p</span><span class="sp-char sp-char-3">a</span><span class="sp-char sp-char-4">c</span><span class="sp-char sp-char-5">e</span><span class="sp-char sp-char-5">&nbsp;"</span>
                         </div>
                         <div class="dark-stat-desc">
-                            <div style="margin-bottom: 10px;">Rigid stretchers fail to navigate narrow, unpredictable debris paths.</div>
-                            <div style="font-size: 0.85em; color: rgba(255,255,255,0.5); font-weight: 300;">기존의 들것은 좁고 험난한 붕괴 현장을 빠져나갈 수 없습니다.</div>
+                            <div class="mb-10">Rigid stretchers fail to navigate narrow, unpredictable debris paths.</div>
+                            <div class="stat-desc-kr">기존의 들것은 좁고 험난한 붕괴 현장을 빠져나갈 수 없습니다.</div>
                         </div>
                     </div>
                     <div class="dark-stat-card" onclick="openStatPopup('popup-time')">
-                        <div class="dark-stat-number stat-hidden" id="stat-num-time" style="font-size: clamp(36px, 4vw, 54px); white-space: nowrap;">" Time "</div>
+                        <div class="dark-stat-number stat-hidden stat-word stat-word-time" id="stat-num-time">" Time "</div>
                         <div class="dark-stat-desc">
-                            <div style="margin-bottom: 10px;">Complex straps waste the critical golden hour in dark, confined areas.</div>
-                            <div style="font-size: 0.85em; color: rgba(255,255,255,0.5); font-weight: 300;">어둡고 비좁은 공간에서의 복잡한 결속은 골든타임을 낭비합니다.</div>
+                            <div class="mb-10">Complex straps waste the critical golden hour in dark, confined areas.</div>
+                            <div class="stat-desc-kr">어둡고 비좁은 공간에서의 복잡한 결속은 골든타임을 낭비합니다.</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="stat-popup-overlay" id="statPopupOverlay" onclick="closeStatPopup(event)">
                     
-                    <div class="stat-popup-content" id="popup-90" style="display: none;">
+                    <div class="stat-popup-content" id="popup-90">
                         <div class="popup-image-wrapper">
                             <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures">
                         </div>
@@ -1371,7 +1663,7 @@
                         </div>
                     </div>
 
-                    <div class="stat-popup-content" id="popup-space" style="display: none;">
+                    <div class="stat-popup-content" id="popup-space">
                         <div class="popup-image-wrapper">
                             <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints">
                         </div>
@@ -1386,7 +1678,7 @@
                         </div>
                     </div>
 
-                    <div class="stat-popup-content" id="popup-time" style="display: none;">
+                    <div class="stat-popup-content" id="popup-time">
                         <div class="popup-image-wrapper">
                             <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints">
                         </div>
@@ -1406,24 +1698,24 @@
 
                 </div>
             
-            <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
-                <img src="/img/projects/project img/8. snaked/snaked 23.webp" alt="Burial Casualties" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
-                <div style="position: absolute; top: 50%; left: clamp(20px, 5vw, 60px); transform: translateY(-50%); color: #fff; z-index: 1;">
-                    <div style="display: flex; flex-direction: column; gap: clamp(5px, 1vw, 10px);">
-                        <div style="font-size: clamp(32px, 5vw, 64px); font-weight: 700; color: var(--point-color); line-height: 1.1;">
+            <div class="media layered flush">
+                <img src="/img/projects/project img/8. snaked/snaked 23.webp" alt="Burial Casualties" loading="lazy">
+                <div class="ov ov-middle">
+                    <div class="ov-stack">
+                        <div class="ov-headline">
                             Collapsed Structures
                         </div>
-                        <div style="display: flex; align-items: baseline; gap: clamp(8px, 1vw, 15px); flex-wrap: wrap;">
-                            <span style="font-size: clamp(20px, 3vw, 36px); font-weight: 300; line-height: 1;">account for over</span>
-                            <span style="font-size: clamp(42px, 7vw, 96px); font-weight: 700; color: var(--point-color); line-height: 1;">75%</span>
-                            <span style="font-size: clamp(20px, 3vw, 36px); font-weight: 300; line-height: 1;">of earthquake fatalities.</span>
+                        <div class="ov-row">
+                            <span class="ov-word-lg">account for over</span>
+                            <span class="ov-key-lg">75%</span>
+                            <span class="ov-word-lg">of earthquake fatalities.</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="dark-split-section">
                 <div class="dark-split-left">
-                    <img src="/img/projects/project img/8. snaked/snaked 24.webp" alt="Conventional SKED stretcher" style="width: 100%; display: block;" loading="lazy">
+                    <img src="/img/projects/project img/8. snaked/snaked 24.webp" alt="Conventional SKED stretcher" loading="lazy">
                     <div class="annotation-container">
                         <div class="annotation-text">
                             Conventional SKED stretcher<br>used today
@@ -1435,95 +1727,95 @@
                     </div>
                 </div>
                 <div class="dark-split-right">
-                    <h2 style="margin: 0; line-height: 1.1;">
-                        <span style="font-size: clamp(36px, 4vw, 54px); font-weight: 700; color: var(--point-color); display: block;">Limitations</span>
-                        <span style="font-size: clamp(22px, 2.5vw, 36px); font-weight: 300; color: #fff;">of Conventional Stretchers</span>
+                    <h2 class="limits-title">
+                        <span class="limits-key">Limitations</span>
+                        <span class="limits-sub">of Conventional Stretchers</span>
                     </h2>
-                    <hr style="width: 100%; border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0 30px 0;">
+                    <hr class="limits-rule">
                     
-                    <p style="font-size: 15px; color: #eee; line-height: 1.6; font-weight: 400; margin-top: 0; margin-bottom: 10px;">
+                    <p class="limits-en">
                         Conventional stretchers are rigid, making it extremely difficult to navigate through the unpredictable debris of collapsed buildings.
                     </p>
-                    <p style="font-size: 14px; color: #888; line-height: 1.6; font-weight: 300; margin-top: 0; margin-bottom: 30px; word-break: keep-all;">
+                    <p class="limits-kr mb-30">
                         기존의 들것은 형태가 단단하여 건물 붕괴 현장의 좁고 불규칙한 잔해를 통과하기가 매우 어렵습니다.
                     </p>
                     
-                    <p style="font-size: 15px; color: #eee; line-height: 1.6; font-weight: 400; margin-bottom: 10px;">
+                    <p class="limits-en">
                         While alternative solutions like SKED address this rigidity, their overly complex strapping systems waste the critical golden hour in confined, dark environments.
                     </p>
-                    <p style="font-size: 14px; color: #888; line-height: 1.6; font-weight: 300; margin-bottom: 0; word-break: keep-all;">
+                    <p class="limits-kr">
                         SKED와 같은 대안 장비가 이러한 유연성 문제를 다소 해결하긴 했지만, 어둡고 비좁은 공간에서 환자를 결속하기에는 벨트 구조가 지나치게 복잡하여 골든타임을 심각하게 낭비합니다.
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="working-process-section" style="position: relative; width: 100%; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
+        <div class="working-process-section">
             
-            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.35) 6%, rgba(0,0,0,0.5) 7.5%, rgba(0,0,0,0.65) 9%, rgba(0,0,0,0.9) 12%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.9) 88%, rgba(0,0,0,0.65) 91%, rgba(0,0,0,0.5) 92.5%, rgba(0,0,0,0.35) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%); z-index: 0;" alt="Working Process Background">
+            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" class="bleed fade-y" alt="Working Process Background">
             
-            <div class="working-process-wrapper" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-start; max-width: 1200px; margin: 0 auto; padding: clamp(40px, 8vw, 120px) clamp(20px, 5vw, 60px) 0;">
-                <div style="display: flex; align-items: center; width: 100%;">
-                    <div style="font-size: clamp(14px, 1.5vw, 20px); color: var(--text-main); font-weight: 500; margin-right: 10px; white-space: nowrap;">The working process of</div>
+            <div class="working-process-wrapper">
+                <div class="story-head">
+                    <div class="story-head-label">The working process of</div>
 
-                    <div id="snaked-logo-svg-container-dark" style="display: inline-flex; align-items: center; height: 1em;">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
+                    <div id="snaked-logo-svg-container-dark" class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
                     </div>
 
-                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(27,27,27,0.4) 0%, rgba(27,27,27,0) 100%); margin-left: 20px;"></div>
+                    <div class="story-rule"></div>
                 </div>
             </div>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden;">
-            <video class="locked-video" autoplay muted loop playsinline style="width: 100%; height: auto; display: block;">
+        <div class="media layered">
+            <video class="locked-video" autoplay muted loop playsinline>
                 <source src="/img/projects/project img/8. snaked/snaked_rescue_1.mp4" type="video/mp4">
             </video>
-            <div style="position: absolute; top: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); z-index: 1;">
-                <div style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1; letter-spacing: 0.02em;">
+            <div class="ov ov-top">
+                <div class="ov-key ov-step">
                     [ 1. APPROACH ]
                 </div>
             </div>
         </div>
               
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 25.webp" alt="SNAKED 구조용 들것 — 1. APPROACH" class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 25.webp" alt="SNAKED 구조용 들것 — 1. APPROACH" class="narrow" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 When entering a collapsed building, rescuers use the telescopic handle to fold the stretcher into a compact size for easy navigation through narrow spaces.<br>
                 Upon reaching the patient, it is extended back to its full length.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 붕괴 현장에 진입할 때, 구조대원은 텔레스코픽 손잡이를 이용해 들것을 작게 접어 좁은 공간을 쉽게 이동할 수 있습니다.<br>
                 환자에게 도달하면 들것을 다시 원래 길이로 폅니다.
             </p>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden;">
-            <video class="locked-video" autoplay muted loop playsinline style="width: 100%; height: auto; display: block;">
+        <div class="media layered">
+            <video class="locked-video" autoplay muted loop playsinline>
                 <source src="/img/projects/project img/8. snaked/snaked_rescue_2.mp4" type="video/mp4">
             </video>
-            <div style="position: absolute; top: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); z-index: 1;">
-                <div style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1; letter-spacing: 0.02em;">
+            <div class="ov ov-top">
+                <div class="ov-key ov-step">
                     [ 2. Secure ]
                 </div>
             </div>
         </div>
               
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 26.webp" alt="SNAKED 구조용 들것 — 2. Secure" class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 26.webp" alt="SNAKED 구조용 들것 — 2. Secure" class="narrow" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 Once the patient is located, we secure them to the stretcher.<br>
                 The soft vacuum vest easily wraps around the patient in tight spaces.<br>
                 Removing the air with a pump hardens the internal beads, perfectly molding to the body for stable support.<br>
                 Finally, securing the legs with belts completes the preparation for transport.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 환자를 발견하면 들것에 고정합니다.<br>
                 부드러운 진공 조끼는 좁은 공간에서도 환자를 쉽게 감싸줍니다.<br>
                 펌프로 공기를 빼면 내부 비즈가 단단히 굳어 환자의 체형에 완벽하게 밀착되며 상체를 안정적으로 고정합니다.<br>
@@ -1531,81 +1823,81 @@
             </p>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden;">
-            <video class="locked-video" autoplay muted loop playsinline style="width: 100%; height: auto; display: block;">
+        <div class="media layered">
+            <video class="locked-video" autoplay muted loop playsinline>
                 <source src="/img/projects/project img/8. snaked/snaked_rescue_3.mp4" type="video/mp4">
             </video>
-            <div style="position: absolute; top: clamp(20px, 5vw, 60px); left: clamp(20px, 5vw, 60px); z-index: 1;">
-                <div style="font-size: clamp(36px, 6vw, 84px); font-weight: 700; color: var(--point-color); line-height: 1; letter-spacing: 0.02em;">
+            <div class="ov ov-top">
+                <div class="ov-key ov-step">
                     [ 3. Transport ]
                 </div>
             </div>
         </div>
               
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 27.webp" alt="SNAKED 구조용 들것 — 3. Transport" class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 27.webp" alt="SNAKED 구조용 들것 — 3. Transport" class="narrow" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 Finally, the evacuation.<br>
                 Rescuers turn a winch to bend the lower frame, allowing smooth transport over steep stairs and tight corners.<br>
                 Meanwhile, the hardened vest and head shield protect the patient from debris, preventing secondary trauma.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 마지막 이송 단계입니다.<br>
                 상단의 윈치를 돌려 하체부를 구부리면 가파른 계단이나 좁은 코너에서도 원활하게 이동할 수 있습니다.<br>
                 동시에 단단해진 조끼와 헤드 실드가 낙석과 충돌로부터 환자를 보호해 2차 외상을 막아줍니다.
             </p>
         </div>
 
-        <div class="working-process-section" style="position: relative; width: 100%; overflow: hidden; background-color: transparent; margin-bottom: 60px;">
+        <div class="working-process-section">
             
-            <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+            <video autoplay muted loop playsinline class="bleed fade-y-thin">
                 <source src="/img/projects/project img/8. snaked/snaked_intro_3.mp4" type="video/mp4">
             </video>
             
-            <div class="working-process-wrapper" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-start; max-width: 1200px; margin: 0 auto; padding: clamp(40px, 8vw, 120px) clamp(20px, 5vw, 60px) 0;">
-                <div style="display: flex; align-items: center; width: 100%;">
-                    <div style="font-size: clamp(14px, 1.5vw, 20px); color: var(--text-main); font-weight: 500; margin-right: 10px; white-space: nowrap;">The Idea of</div>
+            <div class="working-process-wrapper">
+                <div class="story-head">
+                    <div class="story-head-label">The Idea of</div>
 
-                    <div id="snaked-logo-svg-container-dark" style="display: inline-flex; align-items: center; height: 1em;">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" style="height: 1.2em; width: auto; object-fit: contain;">
+                    <div id="snaked-logo-svg-container-dark" class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
                     </div>
 
-                    <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(27,27,27,0.4) 0%, rgba(27,27,27,0) 100%); margin-left: 20px;"></div>
+                    <div class="story-rule"></div>
                 </div>
             </div>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
-            <img src="/img/projects/project img/8. snaked/snaked 31.webp" alt="SNAKED 구조용 들것 — The Idea of" style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+        <div class="media layered flush">
+            <img src="/img/projects/project img/8. snaked/snaked 31.webp" alt="SNAKED 구조용 들것 — The Idea of" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 As captured in the Myanmar earthquake footage above, standard belt systems cannot rigidly secure vital spinal zones—leaving cervical and lumbar regions vulnerable to movement during extraction.<br>
                 The goal was simple: engineer an adaptive immobilization method that stabilizes every body type without compromise.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 위 미얀마 지진 현장 사진에서 보듯, 기존 벨트 방식은 경추와 요추 등 핵심 척추 라인을 견고히 고정하지 못해 이송 중 손상 위험을 키웁니다.<br>
                 어떤 체형이든 빈틈없이 지지할 수 있는 적응형 고정 메커니즘을 구축한 이유입니다.
             </p>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 32.webp" alt="SNAKED 구조용 들것 — 어떤 체형이든 빈틈없이 지지할 수 있는 적응형 고정 메커니즘을 구축한 이유입니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 32.webp" alt="SNAKED 구조용 들것 — 어떤 체형이든 빈틈없이 지지할 수 있는 적응형 고정 메커니즘을 구축한 이유입니다." class="narrow" loading="lazy">
         </div>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 33.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
+                    <h2 class="heading problem-title">
                         Biomimetic Inspiration: <br>
-                        <span style="color: var(--point-color);">The Chrysalis</span>
+                        <span class="accent">The Chrysalis</span>
                     </h2>
                 </div>
                 <div class="problem-desc">
@@ -1621,28 +1913,28 @@
             </div>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 34.webp" alt="SNAKED 구조용 들것 — The Chrysalis" class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 34.webp" alt="SNAKED 구조용 들것 — The Chrysalis" class="narrow" loading="lazy">
         </div>
 
-        <div class="dark-cursor-zone" style="background-color: #1B1B1B; padding: 80px 0; width: 100%; margin-top: 60px;">
-            <div class="image-text-split problem-split" style="margin-top: 0;">
-                <div class="split-image">
+        <div class="dark-cursor-zone dark-band">
+            <div class="split problem-split">
+                <div class="split-media">
                     <img src="/img/projects/project img/8. snaked/snaked 35.webp" alt="Complex Strapping" loading="lazy">
                 </div>
                 <div class="split-text problem-content">
                     <div class="problem-title-group">
-                        <h2 class="split-heading problem-title" style="color: #fff;">
+                        <h2 class="heading problem-title">
                             Optimized for Perfection: <br>
-                            <span style="color: var(--point-color);">1mm Beads & 70% Filling Ratio</span>
+                            <span class="accent">1mm Beads & 70% Filling Ratio</span>
                         </h2>
                     </div>
                     <div class="problem-desc">
-                        <p class="body-en" style="color: #eee;">
+                        <p class="body-en">
                             Iterative testing across bead diameters and filling ratios identified the optimal balance between immobilization strength and physical pressure.<br>
                             A combination of 1 mm EPS beads and an approximately 70% filling ratio delivers the ideal compromise between rigid stabilization and patient comfort.
                         </p>
-                        <p class="body-kr" style="color: #aaa;">
+                        <p class="body-kr">
                             비드 직경과 충전율을 변수로 반복 테스트를 거쳐 고정력과 신체 압박감 사이의 최적점을 도출했습니다.<br>
                             1mm EPS 비드와 약 70%의 내부 충전율 조합이 환자의 신체 부담을 최소화하면서도 견고한 고정력을 확보하는 최적의 구성입니다.
                         </p>
@@ -1651,23 +1943,23 @@
             </div>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline class="bleed fade-y-thin">
             <source src="/img/projects/project img/8. snaked/snaked 36_1.mp4" type="video/mp4">
         </video>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 37.webp" alt="SNAKED 구조용 들것 — 비드 직경과 충전율을 변수로 반복 테스트를 거쳐 고정력과 신체 압박감 사이의 최적점을 도출했습니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 37.webp" alt="SNAKED 구조용 들것 — 비드 직경과 충전율을 변수로 반복 테스트를 거쳐 고정력과 신체 압박감 사이의 최적점을 도출했습니다." class="narrow" loading="lazy">
         </div>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 38.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
+                    <h2 class="heading problem-title">
                         Optimized for Perfection: <br>
-                        <span style="color: var(--point-color);">Adjustable Telescopic Structure</span>
+                        <span class="accent">Adjustable Telescopic Structure</span>
                     </h2>
                 </div>
                 <div class="problem-desc">
@@ -1683,82 +1975,82 @@
             </div>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline class="bleed fade-y-thin">
             <source src="/img/projects/project img/8. snaked/snaked 36_2.mp4" type="video/mp4">
         </video>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 39.webp" alt="SNAKED 구조용 들것 — Adjustable Telescopic Structure" class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 39.webp" alt="SNAKED 구조용 들것 — Adjustable Telescopic Structure" class="narrow" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 80px; margin-bottom: 80px;">
-            <div class="problem-title-group" style="margin-bottom: 30px; text-align: center;">
-                <h2 class="split-heading problem-title" style="font-size: clamp(28px, 3.5vw, 42px); line-height: 1.3;">
-                    <span style="color: var(--point-color);">Ergonomic Design</span>
+        <div class="text-narrow mt-80 mb-80">
+            <div class="problem-title-group">
+                <h2 class="heading problem-title">
+                    <span class="accent">Ergonomic Design</span>
                 </h2>
             </div>
-            <div class="problem-desc" style="text-align: left;">
+            <div class="problem-desc">
                 <p class="body-en">
                     Engineered to conform precisely to the upper torso, the detachable vacuum vest features an outer shell built from stab-resistant armor fabric to withstand sharp disaster debris.<br>
                     Integrated safety belts work in unison with the vest to maintain fail-safe immobilization throughout the entire transport process.
                 </p>
-                <p class="body-kr" style="margin-top: 20px;">
+                <p class="body-kr mt-20">
                     상체 굴곡에 맞추어 정밀 설계된 탈착식 진공 베스트는 날카로운 잔해가 난무하는 재난 환경을 견딜 수 있도록 방검복급 고강도 소재를 외피에 적용했습니다.<br>
                     여기에 일체형 안전벨트를 결합하여 이송 전 과정에 걸쳐 환자를 흔들림 없이 견고하게 고정합니다.
                 </p>
             </div>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline class="bleed fade-y-thin">
             <source src="/img/projects/project img/8. snaked/snaked_intro_4.mp4" type="video/mp4">
         </video>
 
-        <div class="text-single-block" style="margin-top: 80px; margin-bottom: 80px;">
-            <div class="problem-title-group" style="margin-bottom: 30px; text-align: center;">
-                <h2 class="split-heading problem-title" style="font-size: clamp(28px, 3.5vw, 42px); line-height: 1.3;">
+        <div class="text-narrow mt-80 mb-80">
+            <div class="problem-title-group">
+                <h2 class="heading problem-title">
                     GEOMETRIC INSPIRATION:<br>
-                    <span style="color: var(--point-color);">[ Moving Sofa Problem ]</span>
+                    <span class="accent">[ Moving Sofa Problem ]</span>
                 </h2>
             </div>
-            <div class="problem-desc" style="text-align: left;">
+            <div class="problem-desc">
                 <p class="body-en">
                     To overcome spatial constraints in tight passages, the mechanism draws inspiration from the Moving Sofa Problem.<br>
                     First formulated by Leo Moser in 1966, this iconic geometry challenge seeks the maximum shape capable of navigating a 1-meter-wide L-shaped hallway—an unsolved puzzle recently brought back into the academic spotlight through Dr. Jineon Baek’s (Yonsei University) research on the optimality of Gerver’s Sofa.
                 </p>
-                <p class="body-kr" style="margin-top: 20px;">
+                <p class="body-kr mt-20">
                     협소 공간에서의 이동 한계를 극복하기 위해 '소파 문제'의 기하학적 원리에서 영감을 얻었습니다.<br>
                     1966년 레오 모저가 제시한 이 고전 수학 난제는 폭 1m의 'L'자형 직각 복도를 통과할 수 있는 도형의 최대 면적을 규명하는 문제로, 최근 연세대 백진언 박사의 '거버 소파의 최적성' 증명 연구를 통해 다시금 주목받은 바 있습니다.
                 </p>
             </div>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 41.webp" alt="SNAKED 구조용 들것 — 협소 공간에서의 이동 한계를 극복하기 위해 &#x27;소파 문제&#x27;의 기하학적 원리에서 영감을 얻었습니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 41.webp" alt="SNAKED 구조용 들것 — 협소 공간에서의 이동 한계를 극복하기 위해 &#x27;소파 문제&#x27;의 기하학적 원리에서 영감을 얻었습니다." class="narrow" loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 The Moving Sofa Problem reveals that spatial passability through confined turns is dictated by rotational degrees of freedom rather than absolute size.<br>
                 Synchronizing an object's geometry with its rotational capacity is the core engineering principle behind overcoming tight spatial constraints.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 '소파 옮기기 문제'의 핵심은 좁은 곡선 통로의 통과성이 물체의 절대적인 크기가 아닌 '회전 자유도'에 의해 결정된다는 점입니다.<br>
                 물체의 형태와 회전 능력을 유기적으로 연동하는 것이 협소한 공간 제약을 극복하는 핵심 공학 원리입니다.
             </p>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline class="bleed fade-y-thin">
             <source src="/img/projects/project img/8. snaked/snaked 42.mp4" type="video/mp4">
         </video>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 43.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
-                        <span style="color: var(--point-color);">Biomechanically Optimized Articulation</span><br>
+                    <h2 class="heading problem-title">
+                        <span class="accent">Biomechanically Optimized Articulation</span><br>
                         for Complex Maneuverability
                     </h2>
                 </div>
@@ -1775,33 +2067,33 @@
             </div>
         </div>
 
-        <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 1%, rgba(0,0,0,0.35) 2%, rgba(0,0,0,0.5) 2.5%, rgba(0,0,0,0.65) 3%, rgba(0,0,0,0.9) 4%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0.9) 96%, rgba(0,0,0,0.65) 97%, rgba(0,0,0,0.5) 97.5%, rgba(0,0,0,0.35) 98%, rgba(0,0,0,0.1) 99%, rgba(0,0,0,0) 100%); z-index: 0;">
+        <video autoplay muted loop playsinline class="bleed fade-y-thin">
             <source src="/img/projects/project img/8. snaked/snaked 44.mp4" type="video/mp4">
         </video>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 Dividing the lower section at the knee into two 15 degree articulating segments allows the stretcher to dynamically adapt to tight environments.<br>
                 This mechanism drastically enhances maneuverability through steep stairs and L shaped corridors.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 무릎을 기준으로 하체를 두 개의 마디로 분할하고 각각 15도의 굴절각을 부여했습니다.<br>
                 이 관절형 구조를 통해 협소 공간에 유연하게 대응하며, 계단과 L자형 직각 복도에서의 기동성을 극대화합니다.
             </p>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 45.webp" alt="SNAKED 구조용 들것 — 이 관절형 구조를 통해 협소 공간에 유연하게 대응하며, 계단과 L자형 직각 복도에서의 기동성을 극대화합니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 45.webp" alt="SNAKED 구조용 들것 — 이 관절형 구조를 통해 협소 공간에 유연하게 대응하며, 계단과 L자형 직각 복도에서의 기동성을 극대화합니다." class="narrow" loading="lazy">
         </div>
 
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 46.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
-                        <span style="color: var(--point-color);">Optimized Winch Mechanism</span><br>
+                    <h2 class="heading problem-title">
+                        <span class="accent">Optimized Winch Mechanism</span><br>
                         for Precision Angular Control
                     </h2>
                 </div>
@@ -1819,8 +2111,8 @@
             </div>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
-            <img src="/img/projects/project img/8. snaked/snaked 47.webp" alt="SNAKED 구조용 들것 — 와이어를 풀면 중력으로 각도가 꺾이고 감아올리면 수평으로 복원되는 구조입니다." style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+        <div class="media layered flush">
+            <img src="/img/projects/project img/8. snaked/snaked 47.webp" alt="SNAKED 구조용 들것 — 와이어를 풀면 중력으로 각도가 꺾이고 감아올리면 수평으로 복원되는 구조입니다." loading="lazy">
         </div>
 
 
@@ -1839,42 +2131,42 @@
             </div>
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 Tilting the stretcher in L shaped turns caused the gravity-dependent articulation to fail due to wire slack.<br>
                 Integrating elastic bands provides continuous tension across all angles, ensuring reliable bending even during sideways navigation.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다.<br>
                 각 마디에 탄성 밴드를 추가해 들것의 기울기와 무관하게 상시 장력을 유지시킴으로써, 측면 이송 시에도 안정적인 굴절과 통과 성능을 확보했습니다.
             </p>
         </div>
 
-        <div class="full-image-block" style="position: relative; overflow: hidden; margin-bottom: 0;">
-            <img src="/img/projects/project img/8. snaked/snaked 49.webp" alt="SNAKED 구조용 들것 — L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다." style="width: 100%; height: auto; display: block; margin-bottom: 0;" loading="lazy">
+        <div class="media layered flush">
+            <img src="/img/projects/project img/8. snaked/snaked 49.webp" alt="SNAKED 구조용 들것 — L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다." loading="lazy">
         </div>
 
-        <div class="text-single-block" style="margin-top: 40px; margin-bottom: 100px;">
+        <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 Testing in L shaped tunnels revealed that tilting the stretcher sideways caused the winch wire to lose tension, compromising segment articulation.
             </p>
-            <p class="body-kr" style="margin-top: 20px;">
+            <p class="body-kr mt-20">
                 L자형 통로 테스트 결과, 들것을 측면으로 기울였을 때 와이어 장력이 풀려 하체 관절의 굴절 성능이 저하되는 한계가 확인되었습니다.
             </p>
         </div>
 
-        <div class="full-image-block">
-            <img src="/img/projects/project img/8. snaked/snaked 50.webp" alt="SNAKED 구조용 들것 — L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다." class="mobile-view-img" loading="lazy">
+        <div class="media">
+            <img src="/img/projects/project img/8. snaked/snaked 50.webp" alt="SNAKED 구조용 들것 — L자형 통로에서 들것을 옆으로 기울이면 중력 의존성으로 인해 와이어 장력이 풀리는 한계가 있었습니다." class="narrow" loading="lazy">
         </div>
         
-        <div class="image-text-split problem-split" style="margin-top: 60px;">
-            <div class="split-image">
+        <div class="split problem-split">
+            <div class="split-media">
                 <img src="/img/projects/project img/8. snaked/snaked 51.webp" alt="Complex Strapping" loading="lazy">
             </div>
             <div class="split-text problem-content">
                 <div class="problem-title-group">
-                    <h2 class="split-heading problem-title">
-                        <span style="color: var(--point-color);">Gravity-Independent Tension System</span><br>
+                    <h2 class="heading problem-title">
+                        <span class="accent">Gravity-Independent Tension System</span><br>
                         for Complex Maneuverability
                     </h2>
                 </div>
@@ -1892,9 +2184,9 @@
         </div>
 
         <!-- 유튜브 영상 영역 -->
-        <div class="video-wrapper" style="max-width: 1200px; margin: 80px auto; padding: 0 5%;">
-            <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; width: 100%; border-radius: 16px; background-color: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+        <div class="video-wrapper">
+            <div class="video-container">
+                <iframe 
                     src="https://www.youtube.com/embed/7bX-PxF36bk?si=LN7xA5ljdWu0ftzX" 
                     title="YouTube video player" 
                     loading="lazy"
