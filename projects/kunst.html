@@ -21,6 +21,113 @@
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
     <style>
+/* Page-only blocks (moved from project-base.css) */
+.banding-fix { position: relative; width: 100%; background-color: var(--banding-fix-bg); overflow: hidden; margin-bottom: 60px; }
+.banding-fix video { display: block; width: 100%; height: auto; position: relative; z-index: 1; will-change: transform; transform: translate3d(0, 0, 0); }
+.banding-fix::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+    opacity: var(--banding-fix-opacity); mix-blend-mode: overlay; 
+}
+.graph-block { width: 100%; max-width: 800px; margin: 0 auto 40px; }
+.graph-block video { width: 100%; height: auto; display: block; pointer-events: none; }
+.web-constrained-img { width: 100%; max-width: 1200px; margin: 0 auto 20px; display: block; height: auto; }
+.solution-logo { width: 100%; max-width: 600px; padding: 0 40px; height: auto; display: block; margin: 40px auto 0; }
+.highlight-text { color: var(--point-color); font-weight: 700; font-style: italic; }
+.vertical-line { width: 1px; height: 60px; background-color: var(--line-color); margin: 0 auto 20px auto; }
+.horizontal-line { width: 100%; max-width: 400px; height: 1px; background-color: var(--line-color); margin: 0 auto 80px auto; }
+.stats-text-container { display: flex; justify-content: space-between; align-items: flex-start; max-width: 800px; width: 100%; margin: 0 auto 100px; padding: 0 20px; gap: 40px; }
+.stats-text-item { flex: 1; width: 50%; text-align: left; }
+.stats-title { font-size: 28px; font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; word-break: keep-all; }
+.stats-title .highlight-text { color: var(--point-color); font-style: normal; }
+.stats-sub { font-size: 15px; color: var(--text-sub); font-weight: var(--fw-regular); margin-bottom: 20px; }
+.stats-source { font-size: 13px; color: #999999; font-weight: var(--fw-light); line-height: 1.4; }
+.problem-define-section { width: 100%; max-width: 1200px; margin: 40px auto 60px; padding: 0 40px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.problem-label { font-size: 24px; font-weight: 700; font-style: italic; color: var(--point-color); margin-bottom: 20px; width: 100%; max-width: 800px; text-align: left; padding-left: 10px; }
+.bracket-container { display: inline-block; position: relative; padding: 20px 60px; max-width: 90%; }
+.bracket-container::before { content: ''; position: absolute; top: 0; left: 0; width: 30px; height: 100%; border-left: 6px solid var(--point-color); border-top: 6px solid var(--point-color); border-bottom: 6px solid var(--point-color); }
+.bracket-container::after { content: ''; position: absolute; top: 0; right: 0; width: 30px; height: 100%; border-right: 6px solid var(--point-color); border-top: 6px solid var(--point-color); border-bottom: 6px solid var(--point-color); }
+.bracket-text { font-size: clamp(40px, 5vw, 80px); font-weight: 700; color: var(--point-color); line-height: 1.2; text-align: center; margin: 0; letter-spacing: -0.02em; }
+.problem-heading { font-size: 42px; font-weight: 700; color: var(--point-color); line-height: 1.2; margin-bottom: 30px; position: relative; display: inline-block; font-style: italic; }
+.problem-heading::after { content: ''; display: block; width: 100%; height: 1px; background-color: #ddd; margin-top: 10px; }
+.ref-text { font-size: 13px; color: #888; font-weight: var(--fw-light); margin-bottom: 30px; font-style: italic; }
+.mission-section { text-align: center; width: 100%; max-width: 1200px; margin: 150px auto; padding: 0 20px; }
+.mission-text-en { font-size: clamp(20px, 3.2vw, 40px); font-weight: var(--fw-light); color: var(--text-main); line-height: 1.4; margin: 0; letter-spacing: -0.02em; }
+.mission-text-en .accent { font-size: clamp(24px, 4vw, 48px); font-weight: 700; color: var(--point-color); }
+.mission-text-kr { font-size: 15px; color: var(--text-sub); font-weight: var(--fw-light); margin-top: 50px; line-height: 1.6; word-break: keep-all; }
+.definition-section { display: flex; justify-content: center; align-items: center; max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; gap: 80px; }
+.def-left { text-align: left; display: flex; flex-direction: column; justify-content: center; }
+.def-lang { font-size: 16px; font-weight: var(--fw-light); color: #888; margin-bottom: 5px; display: block; }
+.def-title { font-size: clamp(60px, 7vw, 120px); font-weight: var(--fw-extralight); color: var(--text-main); line-height: 1; margin: 0; letter-spacing: -0.02em; }
+.def-meaning { font-size: clamp(30px, 4vw, 50px); font-weight: 700; color: var(--point-color); font-style: italic; margin: 10px 0 0 0; line-height: 1; }
+.def-divider { width: 1px; height: 140px; background-color: #ddd; }
+.def-right { text-align: left; display: flex; flex-direction: column; justify-content: center; }
+.slogan-sub { font-size: clamp(18px, 2.5vw, 32px); font-weight: var(--fw-light); color: var(--text-main); margin: 0 0 10px 0; line-height: 1.2; }
+.slogan-main { font-size: clamp(40px, 6vw, 100px); font-weight: 700; color: var(--point-color); font-style: italic; line-height: 1; margin: 0; letter-spacing: -0.02em; }
+.closing-section { max-width: 1200px; margin: 100px auto; padding: 0 20px; text-align: center; }
+.closing-block { margin-bottom: 80px; }
+.closing-section .mission-text-en { margin-bottom: 10px; }
+.closing-section .mission-text-kr { margin-top: 10px; }
+.product-identity-section { max-width: 1400px; width: 100%; margin: 150px auto; padding: 0 40px; text-align: left; }
+.identity-title { color: var(--point-color); font-style: italic; line-height: 1.1; margin-bottom: 60px; letter-spacing: -0.02em; text-align: left; }
+.identity-desc { max-width: 800px; margin: 0; text-align: left; }
+.product-identity-section.centered { text-align: center; }
+.product-identity-section.centered .identity-title { text-align: center; }
+.product-identity-section.centered .identity-desc { margin: 0 auto; text-align: center; }
+.brand-bold { font-size: clamp(60px, 8vw, 120px); font-weight: 800; }
+.brand-pipe { font-size: clamp(60px, 8vw, 120px); font-weight: var(--fw-extralight); margin: 0 10px; color: var(--point-color); vertical-align: top; }
+.brand-thin { font-size: clamp(60px, 8vw, 120px); font-weight: var(--fw-extralight); display: block; }
+.touching-space-section { max-width: 1400px; width: 100%; margin: 60px auto 100px; padding: 0 40px; text-align: left; }
+.touching-title { font-size: clamp(48px, 6vw, 90px); font-weight: 800; color: var(--point-color); line-height: 1.1; margin-bottom: 10px; }
+.touching-sub { font-size: clamp(24px, 3vw, 40px); font-weight: var(--fw-light); color: var(--text-main); margin-bottom: 10px; }
+.touching-kr { font-size: 16px; color: #888; font-weight: var(--fw-light); margin-bottom: 40px; }
+.touching-line { width: 200px; height: 1px; background-color: #ddd; }
+.hand-tracking-container { max-width: 1200px !important; margin: 0 auto 100px; width: 100%; padding: 0 40px; }
+@media (max-width: 768px) { .hand-tracking-container { padding: 0 20px; margin-bottom: 80px; } } /* the shared .split mobile rule used to win here */
+@media (min-width: 769px) {
+    .video-limit-small { max-width: 1000px !important; margin: 0 auto !important; }
+    .hand-tracking-container.reverse-desktop { display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; gap: 40px; }
+    .hand-tracking-container .split-text { text-align: left; flex: 0 0 auto; width: auto; }
+    .hand-tracking-container .split-media { flex: 1; display: flex; justify-content: flex-end; }
+    .hand-tracking-container .split-media img, .hand-tracking-container .split-media video { max-width: 650px; width: 100%; height: auto; }
+}
+@media (max-width: 768px) {
+    .vertical-line { height: 40px; }
+    .horizontal-line { max-width: 200px; margin-bottom: 50px; }
+    .graph-block { margin-bottom: 20px; }
+    .web-constrained-img { max-width: 100%; }
+    .solution-logo { padding: 0 20px; max-width: 80%; }
+    .stats-text-container { flex-direction: row !important; gap: 20px; padding: 0 20px; margin-bottom: 80px; }
+    .stats-title { font-size: 16px; margin-bottom: 5px; }
+    .stats-sub { font-size: 12px; margin-bottom: 10px; }
+    .stats-source { font-size: 11px; letter-spacing: -0.05em; }
+    .problem-define-section { margin: 20px auto 40px; padding: 0 20px; }
+    .problem-label { font-size: 18px; text-align: center; padding-left: 0; margin-bottom: 15px; }
+    .bracket-container { padding: 15px 30px; }
+    .bracket-container::before, .bracket-container::after { width: 15px; border-width: 4px; }
+    .problem-heading { font-size: 28px; margin-bottom: 20px; }
+    .mission-section { margin: 100px auto; }
+    .mission-text-en { line-height: 1.3; }
+    .mission-text-kr { font-size: 13px; margin-top: 30px; padding: 0 10px; }
+    .pc-break { display: none; }
+    .definition-section { flex-direction: column; gap: 40px; margin: 100px auto; text-align: center; }
+    .def-left, .def-right { text-align: center; align-items: center; }
+    .def-divider { width: 60px; height: 1px; }
+    .def-title { font-size: 80px; }
+    .def-meaning { font-size: 32px; }
+    .slogan-sub { font-size: 20px; }
+    .slogan-main { font-size: 50px; }
+    .product-identity-section { margin: 100px auto; padding: 0 20px; }
+    .brand-bold, .brand-pipe, .brand-thin { font-size: 48px; }
+    .touching-space-section { margin: 60px auto; padding: 0 20px; }
+    .touching-title { font-size: 48px; }
+    .touching-sub { font-size: 24px; }
+    .touching-kr { font-size: 14px; }
+    .hand-tracking-container .heading { font-size: 64px !important; line-height: 0.9; margin-bottom: 20px; }
+    .hand-tracking-container .body-en { font-size: 28px !important; line-height: 1.2; }
+    .hand-tracking-container .body-kr { font-size: 16px; }
+}
+
         :root {
             --bg-color: #000000;
             --text-main: #ffffff;
@@ -104,14 +211,14 @@
             <div class="fact"><p class="fact-label">Output</p><p class="fact-value">Working AR software</p></div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 2.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="text-right">
-            <p class="intro-lead">
+        <div class="text-block">
+            <p class="lead">
                 KUNST is an exhibition docent device powered by Augmented Reality (AR).
             </p>
             <p class="body-en">
@@ -127,20 +234,20 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 3.webp" alt="KUNST AR 도슨트 글라스 — 입장과 동시에 듀얼 카메라가 공간을 스캔하여, 시각 및 청각 해설을 작품 위에 실시간으로 덧입힙니다." loading="lazy">
         </div>
 
-        <section class="title-group">
+        <section class="title-block">
             <div class="vertical-line"></div>
-            <div class="small-label">The Problem.</div>
+            <div class="label">The Problem.</div>
             <div class="horizontal-line"></div>
-            <h2 class="main-quote">
+            <h2 class="quote">
                 <span class="quote-mark">“</span> The Old Way is <span class="highlight-text">Broken</span> <span class="quote-mark">”</span>
             </h2>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 4.webp" alt="KUNST AR 도슨트 글라스 — Broken" loading="lazy">
         </div>
 
@@ -173,8 +280,8 @@
             </div>
         </section>
 
-        <div class="image-text-split">
-            <div class="split-image">
+        <div class="split">
+            <div class="split-media">
                 <video class="locked-video" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/5. kunst/kunst 6-1.mp4" type="video/mp4">
                 </video>
@@ -199,8 +306,8 @@
             </div>
         </div>
 
-        <div class="image-text-split">
-            <div class="split-image">
+        <div class="split">
+            <div class="split-media">
                 <video class="locked-video" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/5. kunst/kunst 6-2.mp4" type="video/mp4">
                 </video>
@@ -225,8 +332,8 @@
             </div>
         </div>
         
-        <div class="image-text-split">
-            <div class="split-image">
+        <div class="split">
+            <div class="split-media">
                 <video class="locked-video" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/5. kunst/kunst 6-3.mp4" type="video/mp4">
                 </video>
@@ -252,7 +359,7 @@
             </div>
         </div> 
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Many museums, both in Korea and abroad, lend audio guide devices that allow visitors to better understand the artworks on display.<br>
                 However, these devices mainly deliver pre-recorded, standardized information.<br>
@@ -266,24 +373,24 @@
             </p>
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 7.gif" alt="KUNST AR 도슨트 글라스 — 연구에 따르면 관람객들은 텍스트·이미지·영상이 결합된 멀티모달 형식을 훨씬 더 선호합니다." loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 8.webp" alt="KUNST AR 도슨트 글라스 — 연구에 따르면 관람객들은 텍스트·이미지·영상이 결합된 멀티모달 형식을 훨씬 더 선호합니다." class="web-constrained-img" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 9.webp" alt="KUNST AR 도슨트 글라스 — 연구에 따르면 관람객들은 텍스트·이미지·영상이 결합된 멀티모달 형식을 훨씬 더 선호합니다." loading="lazy">
         </div> 
 
         <section class="mission-section">
             <p class="mission-text-en">
-               KUNST aims to create an <span class="highlight-orange">Experience;</span>
+               KUNST aims to create an <span class="accent">Experience;</span>
             </p>
             <p class="mission-text-en">
-               where visitors <span class="highlight-orange">Actively Explore & Interpret</span><br class="pc-break">
+               where visitors <span class="accent">Actively Explore & Interpret</span><br class="pc-break">
                with their own perspectives and questions.
             </p>
             <p class="mission-text-kr">
@@ -291,26 +398,26 @@
             </p>
         </section>
 
-        <section class="title-group">
+        <section class="title-block">
             <div class="vertical-line"></div>
-            <div class="small-label">The Solution.</div>
+            <div class="label">The Solution.</div>
             <div class="horizontal-line"></div>
-            <div class="full-image-block" style="margin-bottom: 0;">
+            <div class="media" style="margin-bottom: 0;">
                 <img src="/img/projects/project img/5. kunst/kunst 10.svg" alt="KUNST AR 도슨트 글라스 — The Solution." class="solution-logo" loading="lazy">
             </div> 
         </section>
 
         <div class="banding-fix">
-            <video class="locked-video video-limit" muted loop playsinline preload="none">
+            <video class="locked-video narrow" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 11.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 12.gif" alt="KUNST AR 도슨트 글라스 — The Solution." loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 13.webp" alt="KUNST AR 도슨트 글라스 — The Solution." class="web-constrained-img" loading="lazy">
         </div> 
 
@@ -331,7 +438,7 @@
             <div class="closing-block">
                 <p class="mission-text-en">
                     Is an exhibition really just a place to Look and Observe?<br>
-                    What if we <span class="highlight-orange">Expand</span> that role a little further?
+                    What if we <span class="accent">Expand</span> that role a little further?
                 </p>
                 <p class="mission-text-kr">
                     전시는 정말로 단순히 바라보기만 하는 공간일까요?<br>
@@ -341,7 +448,7 @@
 
             <div class="closing-block">
                 <p class="mission-text-en">
-                    The moment you put on <span class="highlight-orange">KUNST</span>; something changes.
+                    The moment you put on <span class="accent">KUNST</span>; something changes.
                 </p>
                 <p class="mission-text-kr">
                     예술비평가의 “검은 뿔테 안경”을 연상시키는 KUNST를 착용하는 순간,
@@ -351,8 +458,8 @@
             <div class="closing-block">
                 <p class="mission-text-en">
                     From children to adults,<br>
-                    Everyone begins to <span class="highlight-orange">Ask their own Questions</span><br>
-                    and <span class="highlight-orange">Dive Deeper</span> into the world of each artwork.<br>
+                    Everyone begins to <span class="accent">Ask their own Questions</span><br>
+                    and <span class="accent">Dive Deeper</span> into the world of each artwork.<br>
                     The exhibition is no longer a stage for passive viewing.
                 </p>
                 <p class="mission-text-kr">
@@ -363,7 +470,7 @@
 
             <div class="closing-block">
                 <p class="mission-text-en">
-                    Here, everyone becomes an <span class="highlight-orange">Art Critic</span>,<br>
+                    Here, everyone becomes an <span class="accent">Art Critic</span>,<br>
                     freely interpreting, questioning, and recreating art in their own way.
                 </p>
                 <p class="mission-text-kr">
@@ -372,17 +479,17 @@
             </div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 14.webp" alt="KUNST AR 도슨트 글라스 — 누구나 스스로 예술을 비평하고 재창조하는 ‘예술 비평가’입니다." loading="lazy">
         </div> 
 
-        <section class="title-group">
+        <section class="title-block">
             <div class="vertical-line"></div>
-            <div class="small-label">The Product.</div>
+            <div class="label">The Product.</div>
             <div class="horizontal-line"></div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 15.webp" alt="KUNST AR 도슨트 글라스 — The Product." loading="lazy">
         </div> 
 
@@ -403,27 +510,27 @@
             </div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 16.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 17.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 18.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 19.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 20.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" class="web-constrained-img" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 21.webp" alt="KUNST AR 도슨트 글라스 — Docent Glasses" loading="lazy">
         </div> 
 
@@ -433,7 +540,7 @@
                 <span class="brand-bold">[ Art Critics ]</span> <span class="brand-pipe"></span>
             </h2>
 
-            <div class="full-image-block">
+            <div class="media">
                 <img src="/img/projects/project img/5. kunst/kunst 22.webp" alt="KUNST AR 도슨트 글라스 — Art Critics" class="web-constrained-img" loading="lazy">
             </div>
 
@@ -449,13 +556,13 @@
             </div>
         </section>
 
-        <section class="title-group">
+        <section class="title-block">
             <div class="vertical-line"></div>
-            <div class="small-label">The Experience.</div>
+            <div class="label">The Experience.</div>
             <div class="horizontal-line"></div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 23.mp4" type="video/mp4">
             </video>
@@ -468,15 +575,15 @@
             <div class="touching-line"></div>
         </section>
 
-       <div class="full-image-block">
+       <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 24.webp" alt="KUNST AR 도슨트 글라스 — 공간을 터치하다: 핸드 제스처 기반의 몰입형 도슨트" loading="lazy">
         </div> 
 
-       <div class="full-image-block">
+       <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 25.webp" alt="KUNST AR 도슨트 글라스 — 공간을 터치하다: 핸드 제스처 기반의 몰입형 도슨트" class="web-constrained-img" loading="lazy">
         </div>  
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Traditional viewing is passive. KUNST transforms this into interaction.<br>
                 Fusing AR with precise hand-tracking, it bridges the gap between the viewer and the art.<br>
@@ -487,19 +594,19 @@
             </p>
         </div> 
         
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 26.gif" alt="KUNST AR 도슨트 글라스 — AR과 정교한 핸드 트래킹의 결합으로 예술과 관람객 사이의 경계를 허뭅니다." class="web-constrained-img" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 27.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="text-right">
-            <p class="intro-lead">
-                <span class="highlight-orange">Witty Microcopy: Turning Waiting into Entertainment</span>
+        <div class="text-block">
+            <p class="lead">
+                <span class="accent">Witty Microcopy: Turning Waiting into Entertainment</span>
             </p>
             <p class="body-en">
                 KUNST turns friction into fun.<br>
@@ -511,13 +618,13 @@
             </p>
         </div>
 
-        <div class="image-text-split reverse-desktop hand-tracking-container">
-            <div class="split-image">
+        <div class="split reverse-desktop hand-tracking-container">
+            <div class="split-media">
                 <img src="/img/projects/project img/5. kunst/kunst 28.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
-                <h2 class="split-heading" style="margin-bottom: 20px;">
-                    <span class="highlight-orange">Hand<br>Tracking</span>
+                <h2 class="heading" style="margin-bottom: 20px;">
+                    <span class="accent">Hand<br>Tracking</span>
                 </h2>
                 <p class="body-en" style="font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 10px; line-height: 1.2;">
                     for Seamless & Precise<br>
@@ -529,15 +636,15 @@
             </div>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 29.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="text-right">
-            <p class="intro-lead">
-                <span class="highlight-orange">"Intuitive Eperiences Begin by Understanding the User's Fingertips."</span>
+        <div class="text-block">
+            <p class="lead">
+                <span class="accent">"Intuitive Eperiences Begin by Understanding the User's Fingertips."</span>
             </p>
             <p class="body-en">
                 Guidance starts with understanding.<br>
@@ -549,15 +656,15 @@
             </p>
         </div>
 
-        <div class="image-text-split reverse-desktop hand-tracking-container">
-            <div class="split-image">
+        <div class="split reverse-desktop hand-tracking-container">
+            <div class="split-media">
                 <video class="locked-video" muted loop playsinline preload="none">
                     <source src="/img/projects/project img/5. kunst/kunst 30.mp4" type="video/mp4">
                 </video>
             </div>
             <div class="split-text">
-                <h2 class="split-heading" style="margin-bottom: 20px;">
-                    <span class="highlight-orange">Show & Hide</span>
+                <h2 class="heading" style="margin-bottom: 20px;">
+                    <span class="accent">Show & Hide</span>
                 </h2>
                 <p class="body-en" style="font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 10px; line-height: 1.2;">
                     Seamlessly Toggle between<br>
@@ -569,11 +676,11 @@
             </div>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 31.webp" alt="KUNST AR 도슨트 글라스 — 디지털 정보와 아날로그 감상을 자유롭게 오가는 뷰 컨트롤" loading="lazy">
         </div>
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 True immersion requires effortless control.<br>
                 Anchored unobtrusively at the bottom, the navigation bar keeps the focus on the art while offering instant access.
@@ -584,19 +691,19 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 32.webp" alt="KUNST AR 도슨트 글라스 — 시야 하단에 배치된 내비게이션 바로, 작품에서 눈을 떼지 않고 모든 기능을 직관적으로 제어하세요." class="web-constrained-img" loading="lazy">
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 33.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="text-right">
-            <p class="intro-lead">
-                <span class="highlight-orange">Beyond Maps: Let Navigation Lead the Way</span>
+        <div class="text-block">
+            <p class="lead">
+                <span class="accent">Beyond Maps: Let Navigation Lead the Way</span>
             </p>
             <p class="body-en">
                 Exhibitions rely on curated flows to tell a story, but deciphering paper maps often breaks that immersion.<br>
@@ -610,7 +717,7 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 34.mp4" type="video/mp4">
             </video>
@@ -623,11 +730,11 @@
             <div class="touching-line"></div>
         </section>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 35.webp" alt="KUNST AR 도슨트 글라스 — 더욱 깊이있고 맞춤화된 관람을 위한 대화형 인공지능"  loading="lazy">
         </div>
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Curiosity shouldn't wait.<br>
                 Unlike static audio guides, KUNST’s conversational AI answers your specific questions in real-time.<br>
@@ -640,7 +747,7 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 36.mp4" type="video/mp4">
             </video>
@@ -652,11 +759,11 @@
             </video>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 38.webp" alt="KUNST AR 도슨트 글라스 — 검색하려 애쓰지 말고, 떠오르는 그 순간 바로 물어보세요." class="web-constrained-img" loading="lazy">
         </div> 
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Anticipating curiosity enhances engagement.<br>
                 KUNST suggests the next question before you even ask, keeping you fully immersed in the experience.
@@ -667,17 +774,17 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 39.webp" alt="KUNST AR 도슨트 글라스 — 당신이 궁금해할 법한 질문을 먼저 던져줌으로써, 관람에 더 깊이 빠져들게 합니다." class="web-constrained-img" loading="lazy">
         </div>
 
-        <div class="image-text-split reverse-desktop hand-tracking-container">
-            <div class="split-image">
+        <div class="split reverse-desktop hand-tracking-container">
+            <div class="split-media">
                 <img src="/img/projects/project img/5. kunst/kunst 40.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
-                <h2 class="split-heading" style="margin-bottom: 20px;">
-                    <span class="highlight-orange">Show & Hide</span>
+                <h2 class="heading" style="margin-bottom: 20px;">
+                    <span class="accent">Show & Hide</span>
                 </h2>
                 <p class="body-en" style="font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 10px; line-height: 1.2;">
                     Seamlessly Toggle between<br>
@@ -689,13 +796,13 @@
             </div>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <video class="locked-video" muted loop playsinline preload="none">
                 <source src="/img/projects/project img/5. kunst/kunst 41.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Immersion takes many forms.<br>
                 With a simple toggle, instantly switch between informative AR and the raw, analog experience​​​​​​​. Control the view at your fingertips.
@@ -706,13 +813,13 @@
             </p>
         </div>
 
-        <div class="image-text-split reverse-desktop hand-tracking-container">
-            <div class="split-image">
+        <div class="split reverse-desktop hand-tracking-container">
+            <div class="split-media">
                 <img src="/img/projects/project img/5. kunst/kunst 42.webp" alt="Hand Tracking" loading="lazy">
             </div>
             <div class="split-text">
-                <h2 class="split-heading" style="margin-bottom: 20px;">
-                    <span class="highlight-orange">Add yourself</span>
+                <h2 class="heading" style="margin-bottom: 20px;">
+                    <span class="accent">Add yourself</span>
                 </h2>
                 <p class="body-en" style="font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 10px; line-height: 1.2;">
                     for everyone to become “Art Critics”
@@ -723,7 +830,7 @@
             </div>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 43.webp" alt="KUNST AR 도슨트 글라스 — 의견 공유 기능: 모두가 예술 비평가가 되기 위하여" class="web-constrained-img" loading="lazy">
         </div> 
 
@@ -733,7 +840,7 @@
             </video>
         </div>
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Leave your mark in the air.<br>
                 Share your insights like stickers with fellow visitors.<br>
@@ -746,11 +853,11 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 45.webp" alt="KUNST AR 도슨트 글라스 — KUNST는 서로의 생각을 시각화하여, 혼자가 아닌 &#x27;함께&#x27; 즐기는 생동감 넘치는 전시 경험을 선사합니다." loading="lazy">
         </div>
 
-        <div class="text-right">
+        <div class="text-block">
             <p class="body-en">
                 Pin thoughts anywhere.<br>
                 Like movable sticky notes, you can attach comments directly to the artwork or float them in mid-air.<br>
@@ -763,11 +870,11 @@
             </p>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 46.webp" alt="KUNST AR 도슨트 글라스 — 원하는 위치로 코멘트를 마음대로 옮기고 핀해 보세요." class="web-constrained-img" loading="lazy">
         </div> 
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 47.webp" alt="KUNST AR 도슨트 글라스 — 원하는 위치로 코멘트를 마음대로 옮기고 핀해 보세요." class="web-constrained-img" loading="lazy">
         </div> 
 
@@ -777,7 +884,7 @@
             </video>
         </div>
 
-        <div class="full-image-block">
+        <div class="media">
             <img src="/img/projects/project img/5. kunst/kunst 49.webp" alt="KUNST AR 도슨트 글라스 — 원하는 위치로 코멘트를 마음대로 옮기고 핀해 보세요." loading="lazy">
         </div>
 
