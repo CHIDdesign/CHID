@@ -3,29 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHID</title>
-    <meta name="description" content="CHID Industrial Design Portfolio. Seoul based Product Designer. 서울 기반 산업 디자이너 CHID의 포트폴리오.">
+    <title>최은준 Eun Jun Choi | 산업디자이너 · Industrial Designer Portfolio</title>
+    <meta name="description" content="홍익대학교 산업디자인 전공 학생이자 프리랜서 제품 디자이너 최은준(CHID)의 포트폴리오. 리서치·콘셉트부터 3D 모델링, 렌더링, 1:1 프로토타입까지. 제품·의료기기·웨어러블 디자인 의뢰 가능.">
     <meta name="keywords" content="CHID, Industrial Design, Product Design, Portfolio, Designer, 칫, 산업디자인, 제품디자인">
     <meta name="author" content="CHID">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chid.kr">
-    <meta property="og:title" content="CHID">
-    <meta property="og:description" content="Industrial Design Portfolio">
+    <meta property="og:title" content="최은준 Eun Jun Choi · Industrial Designer | CHID">
+    <meta property="og:description" content="Industrial design student at Hongik University and freelance product designer in Seoul. Open to commissions: research, concept, CAD, rendering, prototyping.">
     <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
-      "@type": "Person",
-      "name": "CHID",
-      "url": "https://chid.kr",
-      "jobTitle": "Industrial Designer",
-      "sameAs": [
-        "https://www.instagram.com/chid_design/",
-        "https://www.behance.net/chiddesign/"
-      ]
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "url": "https://chid.kr/",
+      "dateModified": "2026-10-30",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://chid.kr/#me",
+        "name": "최은준",
+        "alternateName": ["Eun Jun Choi", "Choi Eun Jun", "CHID"],
+        "url": "https://chid.kr/",
+        "image": "https://chid.kr/img/main/meta_img.webp",
+        "email": "mailto:eunjun0505@gmail.com",
+        "jobTitle": "Industrial Designer (Freelance)",
+        "description": "Industrial design student at Hongik University and freelance product designer based in Seoul. Clients and partners include COREAMED and Samsung Life Insurance Life-nology Lab.",
+        "address": { "@type": "PostalAddress", "addressLocality": "Seoul", "addressCountry": "KR" },
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "Hongik University", "alternateName": "홍익대학교" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Technische Universität Berlin" },
+        "award": [
+          "The James Dyson Award 2026 — National Finalist (Korea), SNAKED",
+          "15th ROK Army Startup Competition — KOSME Chairman's Award (Encouragement)"
+        ],
+        "knowsAbout": ["Industrial Design", "Product Design", "Medical Device Design", "Wearable Design", "3D Visualization", "Prototyping", "Rhino 3D", "KeyShot", "Branding"],
+        "makesOffer": {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Freelance industrial / product design", "description": "Research, concept design, 3D modeling, rendering and 1:1 prototyping for products, medical devices and wearables." }
+        },
+        "sameAs": [
+          "https://www.instagram.com/chid_design/",
+          "https://www.behance.net/chiddesign/",
+          "https://www.linkedin.com/in/eunjunchoi/"
+        ]
+      }
     }
     </script>
     <link rel="stylesheet" href="static/css/global.css">
@@ -115,7 +138,15 @@
             </ul>
         </nav>
     </header>
-    <main></main>
+    <main>
+        <!-- visually hidden on purpose: the video is the design, this is the same intro for search engines and screen readers -->
+        <div class="sr-only">
+            <h1>최은준 Eun Jun Choi — 산업디자이너 · Industrial Designer, Seoul</h1>
+            <p>홍익대학교 산업디자인 전공 학생이자 프리랜서 제품 디자이너입니다. 리서치·콘셉트부터 3D 모델링, 렌더링, 1:1 프로토타입까지 직접 진행하며, 제품·의료기기·웨어러블 디자인 의뢰를 받고 있습니다.</p>
+            <p>Industrial design student at Hongik University and freelance product designer in Seoul. Work includes Foldisafe for COREAMED, Seesaw with Samsung Life Insurance Life-nology Lab, SNAKED (James Dyson Award 2026 national finalist) and KUNST AR docent glasses.</p>
+            <a href="projects.html">Projects</a> <a href="about.html">About</a> <a href="contact.html">Contact — eunjun0505@gmail.com</a>
+        </div>
+    </main>
     <canvas id="canvas"></canvas>
 
     <script src="static/js/page_effect.js"></script>

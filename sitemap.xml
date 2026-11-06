@@ -36,17 +36,5 @@
     <loc>https://chid.kr/projects/seesaw.html</loc>
     <priority>0.6</priority>
   </url>
-  <url>
-    <loc>https://chid.kr/projects/aetheris.html</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://chid.kr/projects/invasion.html</loc>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://chid.kr/projects/nezhnost.html</loc>
-    <priority>0.6</priority>
-  </url>
 </urlset>
 
