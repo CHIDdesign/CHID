@@ -17,6 +17,7 @@
 | 히어로 | `hero-section` > `img.hero-image` | 배경색은 `--hero-bg` |
 | 제목 줄 | `project-header` > `.project-title h1` + `.project-specs` | |
 | 정보 줄 | `project-facts` > `.fact` > `.fact-label` + `.fact-value` | 데스크톱 6칸, 모바일 2칸 |
+| 4줄 요약 | `summary` > `.summary-grid` > `.summary-item` > `.summary-label` + `.summary-en` + `.summary-ko` | 문제·역할·과정·결과. 데스크톱 2×2, 900px 이하 1열. 판 색은 페이지 색에서 자동(어두운 페이지는 `--summary-tint`를 올림) |
 | 크레딧 | `credit-section` > `.credit-grid` > `.credit-label` + `.credit-content` | |
 | 다음 프로젝트 | `next-project` (`data-href`, `style="--next-bg: url(...)"`) > `.next-label` + `.next-title` | 배경 이미지는 페이지마다 다른 값이라 인라인 유지 |
 
