@@ -176,3 +176,16 @@ video::-webkit-media-controls-panel { display: none !important; }
 @media (max-width: 900px) {
     .project-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px; margin: 0 auto 60px; padding: 0 20px; }
 }
+
+/* ---------- Page frame: summary (problem / role / process / result) ----------
+   Panel tint is mixed from the page's own colors, so it reads as light grey on white pages and slightly lighter on dark ones.
+   Dark pages can raise --summary-tint (default 5%) for a stronger panel. */
+.summary { max-width: 1800px; margin: -40px auto 100px; padding: 0 40px; }
+.summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 56px; padding: 44px 48px; border-radius: 16px; background: color-mix(in srgb, var(--text-main) var(--summary-tint, 5%), var(--bg-color)); }
+.summary-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-sub); margin-bottom: 10px; }
+.summary-en { font-size: 15px; line-height: 1.6; color: var(--text-main); font-weight: var(--fw-regular); word-break: keep-all; }
+.summary-ko { font-size: 13px; line-height: 1.7; color: var(--text-sub); font-weight: var(--fw-light); margin-top: 6px; word-break: keep-all; }
+@media (max-width: 900px) {
+    .summary { margin: -20px auto 70px; padding: 0 20px; }
+    .summary-grid { grid-template-columns: 1fr; gap: 28px; padding: 28px 24px; border-radius: 12px; }
+}
