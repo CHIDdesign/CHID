@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /projects/Base_
-Disallow: /projects/blocks
 
 Sitemap: https://chid.kr/sitemap.xml

@@ -86,6 +86,20 @@
     addEventListener('load', function () { setTimeout(hide, state.t0 + MIN_SHOW - Date.now()); });
     addEventListener('pageshow', function (e) { if (e.persisted) { leaving = false; hide(); } }); // back/forward cache
 
+    // Div-based controls (data-href links, data-key-click buttons) are reachable with Tab and open with Enter/Space
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-href], [data-key-click]').forEach(function (el) {
+            if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+            if (!el.hasAttribute('role')) el.setAttribute('role', el.hasAttribute('data-href') ? 'link' : 'button');
+        });
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        var el = e.target.closest && e.target.closest('[data-href], [data-key-click]');
+        if (!el || el.tagName === 'A' || el.tagName === 'BUTTON') return;
+        e.preventDefault(); el.click();
+    });
+
     document.addEventListener('click', function (e) {
         var a = e.target.closest && e.target.closest('a[href], [data-href]');
         if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

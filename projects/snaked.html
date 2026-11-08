@@ -15,7 +15,7 @@
     <link rel="preload" as="image" href="/img/projects/project img/8. snaked/snaked 1.webp" fetchpriority="high">
 
     <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css" />
     
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
@@ -874,6 +874,8 @@
             visibility: visible;
         }
         .stat-popup-content {
+            max-height: 90dvh;
+            overflow-y: auto;
             background: #111;
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 24px;
@@ -889,10 +891,11 @@
                         filter 0.6s ease-out;
             position: relative;
             box-shadow: 0 40px 80px rgba(0,0,0,0.9);
-            overflow: hidden;
+            overflow-x: hidden;
             display: none; /* openStatPopup() sets display:flex inline */
             flex-direction: column;
         }
+        .stat-popup-content > * { flex-shrink: 0; } /* let tall popups scroll instead of squashing */
         .stat-popup-overlay.active .stat-popup-content {
             transform: translateY(0) scale(1);
             opacity: 1;
@@ -1273,15 +1276,15 @@
 
         <section class="summary">
             <div class="summary-grid">
-                <div class="summary-item"><p class="summary-label">Problem</p><p class="summary-en">Conventional stretchers are built on a straight, rigid frame, so they cannot follow the curved passages and steep slopes of a collapsed building.</p><p class="summary-ko">기존 들것은 곧고 단단한 프레임이라 붕괴된 건물의 굽은 통로와 가파른 경사를 따라가지 못합니다.</p></div>
-                <div class="summary-item"><p class="summary-label">My Role</p><p class="summary-en">In a team of five (2 designers, 3 engineers), I proposed the telescopic upper frame, designed the winch-and-wire mechanism that sets the angle of the lower section, and produced the renderings, photos and film.</p><p class="summary-ko">5인 팀(디자인 2, 엔지니어링 3)에서 상체부 텔레스코픽 프레임을 제안하고, 윈치와 와이어 장력으로 하체부 각도를 조절하는 메커니즘을 설계했으며, 렌더링·사진·영상을 맡았습니다.</p></div>
-                <div class="summary-item"><p class="summary-label">Process</p><p class="summary-en">Started from handling U.S. Army rescue equipment during my KATUSA service, then built a 1/10-scale model and a full-scale prototype on a custom metal frame.</p><p class="summary-ko">카투사 복무 중 미군 구조 장비를 다뤄 본 경험에서 출발해, 1/10 스케일 모형과 금속 프레임을 주문 제작한 실물 크기 프로토타입을 만들었습니다.</p></div>
-                <div class="summary-item"><p class="summary-label">Result</p><p class="summary-en">National Finalist (Korea), James Dyson Award 2026. We demonstrated the prototype to the judges at the final on-site review.</p><p class="summary-ko">James Dyson Award 2026 국내 파이널리스트로 선정되어, 최종 현장 심사에서 프로토타입을 직접 시연했습니다.</p></div>
+                <div class="summary-item"><p class="summary-label">Problem</p><p class="summary-en">Conventional stretchers are built on a straight, rigid frame. In a collapsed building they cannot follow bent passages or steep slopes.</p><p class="summary-ko">기존 들것은 곧고 단단한 프레임으로 만들어집니다. 그래서 붕괴된 건물의 굽은 통로나 가파른 경사를 따라가기 어렵습니다.</p></div>
+                <div class="summary-item"><p class="summary-label">My Role</p><p class="summary-en">In a team of five (2 designers, 3 engineers), I proposed the telescopic upper frame and designed the winch-and-wire mechanism that sets the angle of the lower section. I was also responsible for the renderings, photos and film.</p><p class="summary-ko">5인 팀(디자인 2, 엔지니어링 3)에서 상체부 텔레스코픽 프레임을 제안하고, 윈치와 와이어 장력으로 하체부 각도를 조절하는 메커니즘을 설계했습니다. 렌더링과 사진, 영상 제작도 담당했습니다.</p></div>
+                <div class="summary-item"><p class="summary-label">Process</p><p class="summary-en">The idea came from the U.S. Army rescue equipment I handled as a KATUSA soldier. We tested the concept on a 1/10-scale model first, then built a full-scale prototype on a custom-made metal frame.</p><p class="summary-ko">카투사로 복무하며 미군 구조 장비를 다뤄 본 경험에서 출발했습니다. 1/10 축소 모형으로 구조를 먼저 검증한 뒤, 금속 프레임을 주문 제작해 실물 크기 프로토타입을 완성했습니다.</p></div>
+                <div class="summary-item"><p class="summary-label">Result</p><p class="summary-en">SNAKED was selected as a national finalist for the James Dyson Award 2026 in Korea, and we presented the working prototype to the judges at the final review.</p><p class="summary-ko">SNAKED는 James Dyson Award 2026 국내 결선에 진출했으며, 최종 심사에서 심사위원단에게 프로토타입을 직접 시연했습니다.</p></div>
             </div>
         </section>
 
         <div class="auto-carousel-container">
-            <img src="/img/projects/project img/8. snaked/snaked 8.webp" alt="SNAKED gallery image 1" class="auto-carousel-slide active" fetchpriority="high">
+            <img src="/img/projects/project img/8. snaked/snaked 8.webp" alt="SNAKED gallery image 1" class="auto-carousel-slide active">
             <img src="/img/projects/project img/8. snaked/snaked 9.webp" alt="SNAKED gallery image 2" class="auto-carousel-slide" loading="lazy" decoding="async">
             <img src="/img/projects/project img/8. snaked/snaked 10.webp" alt="SNAKED gallery image 3" class="auto-carousel-slide" loading="lazy" decoding="async">
             <img src="/img/projects/project img/8. snaked/snaked 11.webp" alt="SNAKED gallery image 4" class="auto-carousel-slide" loading="lazy" decoding="async">
@@ -1293,13 +1296,13 @@
             </p>
             <p class="body-en">
                 Every year, earthquakes and wars bring down buildings and cause mass casualties.<br>
-                Conventional stretchers slow rescuers down in the narrow, irregular spaces of a collapse.<br>
-                SNAKED redesigns all three stages of a rescue (approach, secure and transport) to add even one percent to a victim's chance of survival in the golden hour.
+                In the narrow, irregular spaces of a collapse, conventional stretchers slow rescuers down.<br>
+                SNAKED redesigns all three stages of a rescue (approach, secure and transport). The aim is to add even one percent to a victim's chance of survival within the golden hour.
             </p>
             <p class="body-kr">
-                SNAKED는 붕괴된 건물이라는 특수한 재난 환경을 위해 설계한 구조용 들것입니다.<br>
-                지진과 전쟁으로 매년 건물이 무너져 대규모 인명 피해가 발생하지만, 기존 들것은 좁고 불규칙한 붕괴 현장에서 구조를 크게 늦춥니다.<br>
-                SNAKED는 접근, 고정, 이송의 구조 3단계를 새로 설계해 골든타임 안에 생존 가능성을 단 1%라도 높이고자 합니다.
+                SNAKED는 붕괴된 건물 안에서 쓰기 위해 설계한 구조용 들것입니다.<br>
+                지진과 전쟁으로 매년 건물이 무너지고 대규모 인명 피해가 납니다. 좁고 불규칙한 붕괴 현장에서 기존 들것은 구조를 크게 늦춥니다.<br>
+                SNAKED는 접근, 고정, 이송의 구조 3단계를 새로 설계했습니다. 골든타임 안에 생존 가능성을 단 1%라도 높이기 위해서입니다.
             </p>
         </div>
 
@@ -1366,7 +1369,7 @@
                 <div class="ops-card-content">
                     <div class="ops-title">[ WGX ]</div>
                     <div class="ops-desc">
-                        WGX (wet-gap crossing) training moves combat forces across rivers and other water obstacles on temporary floating bridges or watercraft, keeping the combined defense ready for any threat.
+                        WGX (wet-gap crossing) training moves combat forces across rivers and other water obstacles on temporary floating bridges or watercraft. It keeps the combined defense ready for any threat.
                     </div>
                 </div>
             </div>
@@ -1375,7 +1378,7 @@
                 <div class="ops-card-content">
                     <div class="ops-title">[ MEDEVAC ]</div>
                     <div class="ops-desc">
-                        MEDEVAC (medical evacuation) training moves and treats casualties quickly during large-scale operations, keeping medical units ready to support the combined defense of the Korean Peninsula.
+                        MEDEVAC (medical evacuation) training practices moving and treating casualties quickly during large-scale operations. Medical units train this way to stay ready to support the combined defense of the Korean Peninsula.
                     </div>
                 </div>
             </div>
@@ -1384,7 +1387,7 @@
                 <div class="ops-card-content">
                     <div class="ops-title">[ AASLT ]</div>
                     <div class="ops-desc">
-                        AASLT (air assault) training practices fast-rope insertions and helicopter-borne assaults in urban terrain, building interoperability and the ability to deploy forces quickly.
+                        AASLT (air assault) training practices fast-rope insertions and helicopter-borne assaults in urban terrain. It builds interoperability and the ability to deploy forces quickly.
                     </div>
                 </div>
             </div>
@@ -1392,10 +1395,10 @@
 
         <div class="text-narrow mt-60 mb-60">
             <p class="body-en">
-                During this time, we took part in major combined exercises such as WGX, AASLT and MEDEVAC. Carrying out rescue missions with real field equipment in mountains, cities and along coastlines, we saw firsthand how much harsh terrain affects a rescue.
+                During our service we took part in major combined exercises such as WGX, AASLT and MEDEVAC. We carried out rescue missions with real field equipment in the mountains, in cities and along the coast. Out there we saw for ourselves how much harsh terrain affects a rescue.
             </p>
             <p class="body-kr">
-                이 기간 동안 저희는 WGX, 공중강습(AASLT), 의무후송(MEDEVAC) 등 대규모 연합 훈련에 참여했습니다. 산악, 도심, 해안 등 극한의 지형에서 실제 장비로 구조 임무를 수행하며, 가혹한 환경이 인명 구조에 얼마나 큰 영향을 미치는지 직접 체감했습니다.
+                복무 기간 동안 저희는 WGX, 공중강습(AASLT), 의무후송(MEDEVAC) 같은 대규모 연합 훈련에 참여했습니다. 산악과 도심, 해안에서 실제 장비로 구조 임무를 수행했습니다. 그 과정에서 험한 지형이 인명 구조에 얼마나 큰 영향을 주는지 직접 확인했습니다.
             </p>
         </div>
 
@@ -1405,10 +1408,10 @@
             </div>
             <div class="text-block">
                 <p class="body-en">
-                    Of all the field equipment we used, the piece we handled most was the <strong>'SKED'</strong> stretcher: a semi-rigid plastic sled that wraps around a casualty to pull them out of confined spaces or rough terrain.
+                    Of all the field equipment we used, we handled the <strong>'SKED'</strong> stretcher the most. It is a semi-rigid plastic sled that wraps around a casualty so rescuers can pull them out of confined spaces or rough terrain.
                 </p>
                 <p class="body-kr mt-20">
-                    훈련에서 저희가 가장 많이 다룬 장비는 <strong>'SKED(스케드)'</strong> 들것이었습니다. SKED는 좁은 공간이나 험한 지형에서 사상자를 감싸 끌어내는 반강성 플라스틱 썰매형 장비입니다.
+                    훈련에서 가장 많이 다룬 장비는 <strong>'SKED(스케드)'</strong> 들것이었습니다. 좁은 공간이나 험한 지형에서 사상자를 감싸 끌어내는 반강성 플라스틱 썰매형 들것입니다.
                 </p>
             </div>
         </div>
@@ -1427,10 +1430,10 @@
 
         <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
-                We played both roles, the rescuer dragging the stretcher and the casualty strapped into it, and felt its limits firsthand. Gear meant to save lives slowed the rescue down and caused the patient severe pain.
+                We dragged it as rescuers, and we were strapped into it as the casualty. Either way, its limits were obvious. Gear meant to save lives slowed the rescue down and caused the patient severe pain.
             </p>
             <p class="body-kr mt-20">
-                저희는 들것을 끄는 구조대원과 들것에 실려 가는 환자 역할을 모두 맡아 보며 이 장비의 한계를 몸으로 겪었습니다. 생명을 구해야 할 장비가 실제로는 구조를 늦추고 환자에게 극심한 고통을 주었습니다.
+                구조대원이 되어 직접 끌어 보기도 하고, 환자 역할로 실려 보기도 했습니다. 어느 쪽에서든 한계는 분명했습니다. 생명을 구해야 할 장비가 오히려 구조를 늦추고 환자에게 극심한 고통을 주었습니다.
             </p>
         </div>
 
@@ -1476,7 +1479,7 @@
                 </div>
                 <div class="problem-desc">
                     <p class="body-en">
-                        Only a thin plastic sheet separates the patient from the ground, so every shock from rocks and stairs passes straight to the body and can cause serious secondary injuries.
+                        Only a thin plastic sheet separates the patient from the ground. Every shock from rocks and stairs passes straight to the body and can cause serious secondary injuries.
                     </p>
                     <p class="body-kr">
                         이송 중 환자와 지면 사이에는 얇은 플라스틱 판 한 장뿐입니다. 바위와 계단의 충격이 환자에게 그대로 전달되어 심각한 2차 손상을 입힐 수 있습니다.
@@ -1504,7 +1507,7 @@
             </p>
             <p class="body-kr">
                 어디서든 쓸 수 있다는 것은 어디에도 최적화되지 않았다는 뜻이었습니다.<br>
-                훈련을 거듭하며 저희는 이 불편함이 숙련도 부족이 아니라 장비 자체의 결함 때문임을 깨달았습니다.
+                몇 달간 훈련을 거듭하면서, 이 불편함은 숙련도가 부족해서가 아니라 장비 자체의 결함에서 온다는 것을 알게 되었습니다.
             </p>
         </div>
 
@@ -1625,14 +1628,14 @@
                 </div>
 
                 <div class="dark-stats-grid" id="statsGridContainer">
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-90')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-90')">
                         <div class="dark-stat-number" id="stat-num-90">0<span class="stat-unit">%</span></div>
                         <div class="dark-stat-desc">
                             <div class="mb-10">of earthquake deaths are caused by building collapse when follow-on disasters such as tsunamis are excluded.</div>
                             <div class="stat-desc-kr">쓰나미 등 2차 재해를 제외하면 지진 사망자의 약 90%는 건물 붕괴로 발생합니다.</div>
                         </div>
                     </div>
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-space')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-space')">
                         <div class="dark-stat-number stat-hidden stat-word stat-word-space" id="stat-num-space">
                             <span class="sp-char sp-char-1">"&nbsp;</span><span class="sp-char sp-char-1">S</span><span class="sp-char sp-char-2">p</span><span class="sp-char sp-char-3">a</span><span class="sp-char sp-char-4">c</span><span class="sp-char sp-char-5">e</span><span class="sp-char sp-char-5">&nbsp;"</span>
                         </div>
@@ -1641,7 +1644,7 @@
                             <div class="stat-desc-kr">기존의 들것은 좁고 험난한 붕괴 현장을 빠져나갈 수 없습니다.</div>
                         </div>
                     </div>
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-time')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-time')">
                         <div class="dark-stat-number stat-hidden stat-word stat-word-time" id="stat-num-time">" Time "</div>
                         <div class="dark-stat-desc">
                             <div class="mb-10">Complex straps waste the critical golden hour in dark, confined areas.</div>
@@ -1654,7 +1657,7 @@
                     
                     <div class="stat-popup-content" id="popup-90">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures">
+                            <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Almost 90% of Deaths</div>
@@ -1674,12 +1677,12 @@
 
                     <div class="stat-popup-content" id="popup-space">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Spatial Constraints</div>
                             <div class="stat-popup-en">
-                                Rigid frames demand long, straight pathways, severely delaying extraction through unpredictable debris.
+                                A rigid frame needs a long, straight path. In unpredictable debris, that badly delays extraction.
                             </div>
                             <div class="stat-popup-kr">
                                 기존 들것의 길고 단단한 고정형 프레임은 곧은 통로가 필요해, 불규칙한 붕괴 현장에서 구조를 크게 늦춥니다.
@@ -1689,12 +1692,12 @@
 
                     <div class="stat-popup-content" id="popup-time">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Time Constraints</div>
                             <div class="stat-popup-en">
-                                Complicated strapping wastes the critical golden hour when rescuers secure victims in dark, confined spaces.
+                                In dark, confined spaces, rescuers lose precious minutes of the golden hour connecting strap after strap.
                             </div>
                             <div class="stat-popup-kr">
                                 시야가 막힌 좁은 틈에서 수많은 스트랩과 버클을 연결하다 보면 생사를 가르는 골든타임을 허비하게 됩니다.
@@ -1750,10 +1753,10 @@
                     </p>
                     
                     <p class="limits-en">
-                        Alternatives like SKED partly solve the rigidity problem, but their complicated strapping wastes the critical golden hour in dark, confined spaces.
+                        Alternatives like SKED partly solve the rigidity problem. Their strapping, though, is so complicated that securing a patient in a dark, confined space eats into the golden hour.
                     </p>
                     <p class="limits-kr">
-                        SKED 같은 대안 장비는 이런 경직성 문제를 어느 정도 해결했지만, 벨트 구조가 지나치게 복잡해 어둡고 좁은 공간에서 환자를 고정하는 데 골든타임을 크게 허비합니다.
+                        SKED 같은 대안 장비는 이런 경직성 문제를 어느 정도 해결했습니다. 하지만 벨트 구조가 지나치게 복잡해, 어둡고 좁은 공간에서 환자를 고정하는 데만 골든타임을 크게 허비합니다.
                     </p>
                 </div>
             </div>
@@ -1761,14 +1764,14 @@
 
         <div class="working-process-section">
             
-            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" class="bleed fade-y" alt="Working Process Background">
+            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" class="bleed fade-y" alt="Working Process Background" loading="lazy">
             
             <div class="working-process-wrapper">
                 <div class="story-head">
                     <div class="story-head-label">The working process of</div>
 
-                    <div id="snaked-logo-svg-container-dark" class="story-logo">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
+                    <div class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" loading="lazy">
                     </div>
 
                     <div class="story-rule"></div>
@@ -1851,7 +1854,7 @@
             <p class="body-en">
                 Then comes the evacuation.<br>
                 Rescuers turn the winch, set between the two handles at the head end, to bend the lower frame, so the stretcher moves smoothly down steep stairs and around tight corners.<br>
-                Meanwhile, the hardened vest and head shield protect the patient from falling debris and impacts, preventing secondary injuries.
+                Along the way, the hardened vest and the head shield protect the patient from falling debris and impacts and prevent secondary injuries.
             </p>
             <p class="body-kr mt-20">
                 이제 이송 단계입니다.<br>
@@ -1870,8 +1873,8 @@
                 <div class="story-head">
                     <div class="story-head-label">The Idea of</div>
 
-                    <div id="snaked-logo-svg-container-dark" class="story-logo">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
+                    <div class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" loading="lazy">
                     </div>
 
                     <div class="story-rule"></div>
@@ -1886,7 +1889,7 @@
         <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 As the Myanmar earthquake photo above shows, standard belt systems cannot hold the spine firmly, so the neck and lower back can shift during extraction.<br>
-                Our goal was simple: a way to immobilize any body type securely, without gaps.
+                We set out to find a way to immobilize any body type securely, without gaps.
             </p>
             <p class="body-kr mt-20">
                 위 미얀마 지진 현장 사진에서 보듯, 기존 벨트 방식은 척추를 단단히 고정하지 못해 이송 중 경추와 요추가 움직일 수 있습니다.<br>
@@ -1941,11 +1944,11 @@
                     <div class="problem-desc">
                         <p class="body-en">
                             We tested a range of bead diameters and filling ratios to find the balance between holding strength and pressure on the body.<br>
-                            1 mm EPS beads at about a 70% filling ratio gave the best balance between rigid support and patient comfort.
+                            The best combination was 1 mm EPS beads at a filling ratio of about 70%. It held the body firmly without putting too much strain on the patient.
                         </p>
                         <p class="body-kr">
                             비드 직경과 충전율을 바꿔 가며 반복 테스트해 고정력과 신체 압박 사이의 균형점을 찾았습니다.<br>
-                            1mm EPS 비드를 약 70% 채운 조합이 환자의 부담을 줄이면서도 견고한 고정력을 확보하는 최적의 구성이었습니다.
+                            1mm EPS 비드를 약 70% 채웠을 때 환자의 부담은 줄이면서 고정력은 충분히 확보할 수 있었습니다.
                         </p>
                     </div>
                 </div>
@@ -2024,11 +2027,11 @@
             <div class="problem-desc">
                 <p class="body-en">
                     To get through tight passages, the mechanism borrows from the moving sofa problem.<br>
-                    First posed by Leo Moser in 1966, it asks for the largest shape that can turn the corner of an L-shaped hallway of unit width. The puzzle drew new attention recently through Dr. Jineon Baek’s (Yonsei University) research on the optimality of Gerver’s sofa.
+                    Leo Moser posed it in 1966. It asks for the largest shape that can turn the corner of an L-shaped hallway of unit width. The puzzle drew new attention recently with Dr. Jineon Baek’s (Yonsei University) research on the optimality of Gerver’s sofa.
                 </p>
                 <p class="body-kr mt-20">
                     좁은 통로를 통과하기 위해 '소파 옮기기 문제'에서 아이디어를 얻었습니다.<br>
-                    1966년 레오 모저가 제시한 이 수학 난제는 폭이 1인 L자형 복도의 모퉁이를 돌 수 있는 도형의 최대 면적을 묻는 문제로, 최근 연세대 백진언 박사의 '거버 소파의 최적성' 연구로 다시 주목받았습니다.
+                    1966년 레오 모저가 제시한 이 수학 난제는 폭이 1인 L자형 복도의 모퉁이를 돌 수 있는 도형의 최대 면적을 묻습니다. 최근 연세대 백진언 박사의 '거버 소파의 최적성' 연구로 다시 주목받았습니다.
                 </p>
             </div>
         </div>
@@ -2040,11 +2043,11 @@
         <div class="text-narrow mt-40 mb-100">
             <p class="body-en">
                 The moving sofa problem shows that whether an object fits through a tight turn depends on how it can rotate, not on its absolute size.<br>
-                Designing an object's shape together with the way it rotates is the key to getting through tight spaces.
+                So to get through tight spaces, an object's shape and the way it rotates have to be designed together.
             </p>
             <p class="body-kr mt-20">
                 '소파 옮기기 문제'의 핵심은 좁은 모퉁이를 통과할 수 있는지가 물체의 절대적인 크기가 아니라 회전 자유도에 달려 있다는 점입니다.<br>
-                물체의 형태와 회전 방식을 함께 설계하는 것이 좁은 공간을 통과하는 핵심입니다.
+                그래서 좁은 공간을 지나려면 물체의 형태와 회전 방식을 함께 설계해야 합니다.
             </p>
         </div>
 
@@ -2108,7 +2111,7 @@
                 </div>
                 <div class="problem-desc">
                     <p class="body-en">
-                        A manual winch sets the bend of the lower frame through wire tension: releasing the wire lets the segments flex under gravity, and winding it back straightens them.<br>
+                        A manual winch sets the bend of the lower frame through wire tension. Releasing the wire lets the segments flex under gravity, and winding it back straightens them.<br>
                         We tested five gear ratios to balance cranking effort against speed and chose 13:36 as the easiest for rescuers to operate in the field.
                     </p>
                     <p class="body-kr">
@@ -2252,9 +2255,9 @@
             </div>
         </div>
 
-        <div class="next-project" data-href="/projects/nezhnost" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
+        <div class="next-project" data-href="/projects/seesaw" style="--next-bg: url('/img/projects/Thumbnail/project_4.webp');">
             <div class="next-label">Next Project</div>
-            <div class="next-title">Nezhnost &rarr;</div>
+            <div class="next-title">Seesaw &rarr;</div>
         </div>
 
     </main>
@@ -2276,6 +2279,10 @@
                     document.body.style.paddingRight = scrollbarWidth + 'px';
                     document.body.style.overflow = 'hidden';
                 }
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && document.getElementById('statPopupOverlay').classList.contains('active')) closeStatPopup();
+                });
+
                 function closeStatPopup(e) {
                     if(e) e.stopPropagation();
                     document.getElementById('statPopupOverlay').classList.remove('active');
