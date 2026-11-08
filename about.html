@@ -56,6 +56,11 @@
         .intro-name { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 12px; }
         .intro-name span { display: block; font-size: clamp(1rem, 1.6vw, 1.3rem); font-weight: 400; color: var(--text-sub); margin-top: 10px; }
         .intro-tagline { font-size: clamp(20px, 1.6vw, 24px); font-weight: 400; font-style: italic; color: #333; margin-bottom: 24px; word-break: keep-all; line-height: 1.4; letter-spacing: -0.01em; }
+        .intro-facts { margin-top: 32px; max-width: 620px; border-top: 1px solid rgba(0,0,0,0.12); }
+        .intro-facts div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 14px; line-height: 1.5; }
+        .intro-facts dt { color: var(--text-sub); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 2px; }
+        .intro-facts dd { margin: 0; color: #222; word-break: keep-all; }
+        .intro-facts a { color: inherit; }
         .intro-desc { font-size: clamp(15px, 1.15vw, 18px); line-height: 1.75; color: #444; max-width: 620px; word-break: keep-all; }
         @media (max-width: 768px) {
             .intro { flex-direction: column-reverse; justify-content: center; gap: 40px; padding: 120px 22px 80px; }
@@ -319,6 +324,14 @@
                 <p class="intro-desc">
                     Good design has to work in the real world. As an industrial designer, I test ideas with full-scale mockups and technical research, and I keep checking them against how they will actually be made. The timeline below shows that work across products, branding and interactive projects.
                 </p>
+                <dl class="intro-facts">
+                    <div><dt>Seeking</dt><dd>Industrial design internship from Jan 2027 · Freelance commissions · Full-time after graduation</dd></div>
+                    <div><dt>Education</dt><dd>B.F.A. Industrial Design, Hongik University (expected Mar 2028)</dd></div>
+                    <div><dt>Service</dt><dd>KATUSA, U.S. Eighth Army HQ, through Dec 2026</dd></div>
+                    <div><dt>Location</dt><dd>Seoul · Open to relocation</dd></div>
+                    <div><dt>Languages</dt><dd>Korean (native) · English (fluent)</dd></div>
+                    <div><dt>Contact</dt><dd><a href="mailto:eunjun0505@gmail.com">eunjun0505@gmail.com</a></dd></div>
+                </dl>
             </div>
             <div class="intro-image">
                 <img src="img/about/Profile.webp" alt="최은준 Eun Jun Choi" loading="lazy">
@@ -338,15 +351,15 @@
                         <div class="entry-title">Hongik University, College of Fine Arts <br> (Seoul, Korea)</div>
                         <p class="entry-role">Bachelor of Fine Arts in Industrial Design (Product Design)</p>
                         <p class="entry-org">홍익대학교 서울캠퍼스 미술대학 / 디자인학부 산업디자인전공(제품디자인)</p>
-                        <p class="entry-period">2023.03 ~ 2028.03</p>
+                        <p class="entry-period">2023.03 ~ 2028.03 (expected)</p>
                     </div>
                     <div class="entry scroll-reveal">
                         <div class="school-logo">
                             <img src="img/about/school/tu_berlin.svg" alt="Technische Universität Berlin Logo">
                         </div>
                         <div class="entry-title">Technische Universität Berlin <br> (Berlin, Germany)</div>
-                        <p class="entry-role">Summer School Exchange</p>
-                        <p class="entry-org">베를린 공과대학교 / 여름학기 교환학생</p>
+                        <p class="entry-role">Summer School</p>
+                        <p class="entry-org">베를린 공과대학교 / 여름학기 프로그램</p>
                         <p class="entry-period">2024.07 ~ 2024.08</p>
                     </div>
                 </div>
@@ -402,19 +415,19 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2026.01 – 2026.09" data-title="James Dyson Award 2026" data-org="Award · 제임스 다이슨 어워드 / 제임스 다이슨 재단" data-role="Telescopic frame &amp; tension mechanism design<br>Visualization · Photo · Film" data-team="5 people<br>Design 2 · Engineering 3" data-result="National Finalist (Korea)<br>1/10-scale model · Full-scale prototype">
-                            <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
+                            <div class="detail-hero"><img data-src="/img/projects/project img/8. snaked/snaked 1.webp" onerror="this.style.display='none'" alt="SNAKED"></div>
                             <div class="detail-body">
                                     <p class="en-desc">Stretchers have been designed to be light and easy to store. But in collapsed buildings, winding passages and on steep slopes, their straight, rigid frame becomes the problem: it cannot follow the path a rescuer has to take.</p>
                                     <p class="ko-desc">기존 들것은 가볍고 보관하기 쉬운 방향으로 발전해 왔습니다. 하지만 붕괴된 건물이나 굽은 통로, 가파른 경사에서는 곧고 단단한 프레임이 오히려 걸림돌이 됩니다. 구조대원이 지나가야 하는 경로를 따라가지 못하기 때문입니다.</p>
                                     <p class="en-desc">The idea came from handling U.S. Army rescue equipment during my KATUSA service. SNAKED is a stretcher that bends at the patient's hip joint. I proposed the telescopic upper frame and designed the mechanism that controls the bend: turning a winch reels an internal wire in or out, and its tension adjusts the angle of the lower section in small steps. The winch is an off-the-shelf part; the engineers on the team helped set the gear ratio and the wire anchor points.</p>
                                     <p class="ko-desc">카투사 복무 중 미군 구조 장비를 직접 다뤄 본 경험에서 출발했습니다. SNAKED는 환자의 고관절 위치에서 꺾이는 들것입니다. 저는 상체부 텔레스코픽 프레임을 제안했고, 꺾이는 각도를 조절하는 메커니즘을 설계했습니다. 윈치를 돌리면 내부 와이어가 감기거나 풀리고, 그 장력으로 하체부 각도를 조금씩 조절하는 방식입니다. 윈치는 기성품을 활용했고, 기어비와 와이어 연결 위치는 엔지니어 팀원들의 도움을 받아 정했습니다.</p>
-                                    <p class="en-desc">I also produced the team's visual material: renderings, photography and the project film. We built a 1/10-scale model and a full-scale prototype on a custom-made metal frame.</p>
-                                    <p class="ko-desc">팀의 시각 자료도 제가 맡아 렌더링, 사진, 프로젝트 영상을 제작했습니다. 1/10 스케일 모형과, 금속 프레임을 주문 제작한 실물 크기 프로토타입을 만들었습니다.</p>
+                                    <p class="en-desc">I also co-produced the team's visual material with Jaeyoon Lee: renderings, photography and the project film. We built a 1/10-scale model and a full-scale prototype on a custom-made metal frame.</p>
+                                    <p class="ko-desc">팀의 시각 자료도 이재윤과 함께 렌더링, 사진, 프로젝트 영상을 제작했습니다. 1/10 스케일 모형과, 금속 프레임을 주문 제작한 실물 크기 프로토타입을 만들었습니다.</p>
                                     <p class="en-desc">SNAKED was selected as a National Finalist for the James Dyson Award 2026 in Korea, and we presented the prototype to the judges in person at the final on-site review. It did not place in the national top three.</p>
                                     <p class="ko-desc">James Dyson Award 2026 국내 파이널리스트로 선정되어, 최종 현장 심사에서 심사위원단에게 프로토타입을 직접 시연했습니다. 국내 Top 3 입상에는 이르지 못했습니다.</p>
                                 </div>
                             <a href="https://youtu.be/7bX-PxF36bk?si=BzKGYRPzLzQVx5cO" class="shortcut-card">
-                                <img data-src="img/about/info/snaked.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="img/about/info/snaked.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">The Story of SNAKED</h3>
                                     <p class="shortcut-desc">2026 · Product Design<br>James Dyson Award 2026</p>
@@ -422,7 +435,7 @@
                                 <div class="shortcut-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             </a>
                             <a href="/projects/snaked" class="shortcut-card">
-                                <img data-src="img/projects/Thumbnail/project_8.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="img/projects/Thumbnail/project_8.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">SNAKED Stretcher</h3>
                                     <p class="shortcut-desc">2026 · Product Design<br>James Dyson Award 2026</p>
@@ -467,19 +480,19 @@
                                     <p class="ko-desc">Tessera는 부대 안의 인원 정보를 오프라인으로 관리하는 시스템입니다. 모든 군인이 이미 몸에 지니고 있는 군번줄에 NFC 칩을 넣고, 전용 리더기로 정보를 읽습니다.</p>
                                     <p class="en-desc">Military data cannot travel over external networks, so the data on the tag is encrypted and can only be decoded by the reader. Four of the five team members were software engineers, and I was the only designer. I designed the reader and all of the team's visual materials. I designed the reader around two requirements: anyone should be able to use it without instructions, and it should be easy to store inside a unit.</p>
                                     <p class="ko-desc">군의 특성상 외부 네트워크를 쓸 수 없어, 칩의 데이터는 암호화하고 리더기에서만 해독하도록 했습니다. 팀원 5명 중 4명이 소프트웨어 엔지니어였고, 디자인은 저 혼자 맡았습니다. 리더기 디자인과 팀의 시각 자료 전반을 담당했습니다. 리더기는 설명 없이도 바로 쓸 수 있을 것, 부대 안에서 보관하기 쉬울 것 두 가지를 기준으로 디자인했습니다.</p>
-                                    <p class="en-desc">The competition drew 651 teams (1,387 participants); 42 reached the final round and 11 received awards. Tessera received the Encouragement Award (KOSME Chairman's Award).</p>
+                                    <p class="en-desc">The competition drew 651 teams (1,387 participants); 42 reached the final round and 11 received awards. Tessera received the Encouragement Award, the Chairman's Award of the Korea SMEs and Startups Agency (KOSME).</p>
                                     <p class="ko-desc">대회에는 651개 팀(1,387명)이 참가해 42개 팀이 결선에 올랐고, 그중 11개 팀이 수상했습니다. Tessera는 장려상(중소벤처기업진흥공단 이사장상)을 받았습니다.</p>
                                 </div>
                             <a href="https://youtu.be/Up7zPfRmlWo" class="shortcut-card">
-                                <img data-src="/img/about/info/startup2026_2.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="/img/about/info/startup2026_2.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">15회 육군창업경진대회 시상식···미래를 열다 KFN 국방뉴스 [국방홍보원]</h3>
-                                    <p class="shortcut-desc">2026 · YouTube<br>KFN 국방뉴스</p>
+                                    <p class="shortcut-desc">2026 · YouTube<br>KFN (Korea Forces Network) News</p>
                                 </div>
                                 <div class="shortcut-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             </a>
                             <a href="https://www.tesseratag.xyz/" class="shortcut-card">
-                                <img data-src="/img/about/info/Tessera.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="/img/about/info/Tessera.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Tessera</h3>
                                     <p class="shortcut-desc">2026 · Product Design<br>제15회 육군창업경진대회</p>
@@ -528,7 +541,7 @@
                             <meta data-period="2025.06 – 2026.12" data-title="U.S. Eighth Army Headquarters Public Affairs" data-org="Public Affairs Specialist (KATUSA) · 대한민국 육군 카투사 / 주한미8군 본부 공보과 정훈병" data-role="Public Affairs Specialist<br>KFW 2026 logo · Photo · Film" data-team="Eighth Army HQ<br>Public Affairs Office" data-result="KFW 2026 official logo<br>Used on plaques, banners, flyers, posters">
                             <div class="detail-hero"><img data-src="/img/about/info/katusa.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
-                                    <p class="en-desc">I serve as a Public Affairs Specialist at U.S. Eighth Army Headquarters, producing visual material and handling public relations for a large multinational organization.</p>
+                                    <p class="en-desc">As a KATUSA (a Korean soldier serving in a U.S. Army unit), I serve as a Public Affairs Specialist at U.S. Eighth Army Headquarters, producing visual material and handling public relations for a large multinational organization.</p>
                                     <p class="ko-desc">주한미8군 본부 공보과에서 정훈병으로 복무하며, 다국적 조직의 시각 자료 제작과 홍보 업무를 맡고 있습니다.</p>
                                     <p class="en-desc">My main design work was the logo for KATUSA–U.S. Soldier Friendship Week 2026 (KFW). KFW is the largest event U.S. Forces Korea holds each year for Korea–U.S. friendship, separate from the event hosted by Pyeongtaek City. Its main venue is Camp Humphreys, and events take place at every USFK installation on the peninsula. By tradition, the logo is built around the age of the alliance, which is 76 in 2026.</p>
                                     <p class="ko-desc">가장 큰 디자인 업무는 2026 한미친선주간(KFW)의 메인 로고였습니다. KFW는 주한미군이 매년 여는 한미 친선 행사 중 가장 큰 행사로, 평택시가 주최하는 행사와는 별개입니다. 캠프 험프리스를 중심으로 한반도의 모든 주한미군 기지에서 열립니다. 로고에 그해의 동맹 연수를 담는 전통에 따라, 2026년 로고는 숫자 '76'을 중심으로 디자인했습니다.</p>
@@ -536,7 +549,7 @@
                                     <p class="ko-desc">이 로고는 상패, 현수막, 플라이어, 포스터 등 행사 전반에 쓰였습니다. 부대 행사 사진과 영상 촬영도 맡고 있으며, 게시된 작업은 DVIDS에서 볼 수 있습니다.</p>
                                 </div>
                             <a href="https://www.dvidshub.net/portfolio/1899475/eun-jun-choi" class="shortcut-card">
-                                <img data-src="img/about/info/dvids logo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="img/about/info/dvids logo.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">United States of America <br> Defense Visual Information Distribution Service</h3>
                                     <p class="shortcut-desc">2026 · Photography & Visual Storytelling<br>United States of America</p>
@@ -544,7 +557,7 @@
                                 <div class="shortcut-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             </a>
                             <a href="/projects/kfw" class="shortcut-card">
-                                <img data-src="img/projects/Thumbnail/project_7.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="img/projects/Thumbnail/project_7.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">KFW 2026</h3>
                                     <p class="shortcut-desc">2026 · Branding<br>Eighth Army Headquarters</p>
@@ -589,7 +602,7 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2025.01 – 2025.06" data-title="COREAMED" data-org="Freelance Industrial Design · 프리랜스 의료기기 제품 디자인 / 코리아메드" data-role="Sole designer<br>Design to tooling-ready CAD" data-team="Solo (freelance)" data-result="20 prototypes · CAD for mold making<br>Patent filed by COREAMED">
-                            <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
+                            <div class="detail-hero"><img data-src="/img/projects/project img/6. foldisafe/foldisafe 1.webp" onerror="this.style.display='none'" alt="Foldisafe"></div>
                             <div class="detail-body">
                                     <p class="en-desc">Disposable suction liner bags hold infectious fluids in operating rooms and intensive care units, but their soft material makes them unstable, which can lead to medical accidents.</p>
                                     <p class="ko-desc">수술실과 중환자실에서 감염성 체액을 담는 일회용 석션 라이너 백은 재질이 흐물거려 형태가 불안정하고, 이것이 의료 사고로 이어질 수 있습니다.</p>
@@ -599,7 +612,7 @@
                                     <p class="ko-desc">회사 사정으로 판매용 양산까지는 이어지지 않았지만, 코리아메드는 아이디어와 실현 가능성을 높게 평가해 회사 명의로 특허를 출원했습니다.</p>
                                 </div>
                             <a href="/projects/foldiSafe" class="shortcut-card">
-                                <img data-src="/img/projects/Thumbnail/project_6.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="/img/projects/Thumbnail/project_6.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Foldisafe</h3>
                                     <p class="shortcut-desc">2025 · Product Design<br>COREAMED</p>
@@ -648,7 +661,7 @@
                                     <p class="ko-desc">프로토타입 3개와 실물 크기 모형 2개를 제작했습니다. 결과물은 삼성생명 사내 전시와 성수동 팝업스토어(1주일)에서 공개되었습니다.</p>
                                 </div>
                             <a href="/projects/seesaw" class="shortcut-card">
-                                <img data-src="/img/projects/Thumbnail/project_4.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Seesaw'" class="shortcut-img" alt="Seesaw">
+                                <img data-src="/img/projects/Thumbnail/project_4.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Seesaw">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Seesaw</h3>
                                     <p class="shortcut-desc">2025 · Wearable Device Design<br>Samsung Life Insurance</p>
@@ -703,7 +716,7 @@
                                     <p class="ko-desc">전시는 2025년 3월 10일부터 23일까지 2주간 서울 성수 플리에서 열렸습니다.</p>
                                 </div>
                             <a href="https://www.damjangneomeo.com/platypus" class="shortcut-card">
-                                <img data-src="/img/about/info/platypus_logo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                <img data-src="/img/about/info/platypus_logo.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Thumbnail">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Platypus Project 2025</h3>
                                     <p class="shortcut-desc">2024–2025 · Exhibition<br>Hongik Univ. × K-Arts</p>
@@ -719,7 +732,7 @@
                                 <span>Technische Universität Berlin Summer School</span>
                                 <svg class="entry-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
                             </div>
-                            <p class="entry-org">VR 게임 콘텐츠 디자이너 / 베를린 공과대학교 (여름학기 교환학생)</p>
+                            <p class="entry-org">VR 게임 콘텐츠 디자이너 / 베를린 공과대학교 (여름학기 프로그램)</p>
                             <p class="entry-period" style="font-weight: 500;">2024.07 – 2024.08</p>
                             <div class="entry-tools">
                                 <div class="tool-badge">
@@ -729,7 +742,7 @@
                             </div>
                         </div>
                         <template class="detail-content">
-                            <meta data-period="2024.07 – 2024.08" data-title="Technische Universität Berlin Summer School" data-org="VR Game Content Designer · 베를린 공과대학교 (여름학기 교환학생)" data-role="3D assets<br>Presentation · Trailer animation" data-team="5 people · Design 2 · Dev 3<br>Korea, Singapore, Brazil, USA" data-result="Playable VR game<br>Meta Quest 3">
+                            <meta data-period="2024.07 – 2024.08" data-title="Technische Universität Berlin Summer School" data-org="VR Game Content Designer · 베를린 공과대학교 (여름학기 프로그램)" data-role="3D assets<br>Presentation · Trailer animation" data-team="5 people · Design 2 · Dev 3<br>Korea, Singapore, Brazil, USA" data-result="Playable VR game<br>Meta Quest 3">
                             <div class="detail-hero"><img data-src="/img/about/info/tu.webp" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                     <p class="en-desc">At the TU Berlin summer school, I joined an international team of five (two designers and three developers from Korea, Singapore, Brazil and the U.S.) to build a VR game for Meta Quest 3.</p>
@@ -740,7 +753,7 @@
                                     <p class="ko-desc">가상 공간의 몰입감을 높이려면 오히려 현실의 물리 법칙을 정교하게 따라야 한다는 것을 배웠습니다.</p>
                                 </div>
                             <a href="/projects/invasion" class="shortcut-card">
-                                <img data-src="/img/projects/Thumbnail/project_2.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Invasion'" class="shortcut-img" alt="Invasion">
+                                <img data-src="/img/projects/Thumbnail/project_2.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Invasion">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Invasion</h3>
                                     <p class="shortcut-desc">2024 · XR Interaction Design<br>TU Berlin</p>
@@ -777,7 +790,6 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2023.09 – 2024.03" data-title="Cosmo-es 2024" data-org="Product Design Exhibition · 서울대 x 홍익대 x 국민대 디자인 연합전시" data-role="Personal work<br>Concept · Form · Mockup" data-team="Solo" data-result="Full-scale mockup (non-working)<br>SNU × Hongik × Kookmin joint exhibition">
-                            <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                     <p class="en-desc">A personal project for a joint exhibition of first-year design students from Seoul National University, Hongik University and Kookmin University. It started from one scenario: a user whose memory resets every 24 hours.</p>
                                     <p class="ko-desc">서울대·홍익대·국민대 디자인 전공 1학년 연합 전시에 낸 개인 프로젝트입니다. '24시간마다 기억이 초기화되는 사용자'라는 시나리오에서 출발했습니다.</p>
@@ -785,10 +797,10 @@
                                     <p class="ko-desc">이 사용자는 하루를 버티기 위해 스스로 전력을 만들어야 한다고 보고, 걸을 때의 압력을 전기로 바꾸는 신발을 디자인했습니다. 기계 부품을 넣으면서도 신발로 읽히는 형태를 만드는 것이 가장 어려운 부분이었습니다. 전시용으로 작동하지 않는 실물 크기 목업을 제작했습니다.</p>
                                 </div>
                             <a href="#" class="shortcut-card">
-                                <img data-src="img/about/thumb_cosmo.webp" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Cosmo-es">
+                                <img data-src="img/about/thumb_cosmo.webp" onerror="this.style.visibility='hidden'" class="shortcut-img" alt="Cosmo-es">
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Cosmo-es 2024</h3>
-                                    <p class="shortcut-desc">2024 · Product Design<br>개인작 전시</p>
+                                    <p class="shortcut-desc">2024 · Product Design<br>Personal work</p>
                                 </div>
                                 <div class="shortcut-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             </a>
@@ -816,7 +828,6 @@
                         </div>
                         <template class="detail-content">
                             <meta data-period="2023.05 – 2024.03" data-title="Hanyang University (Startup Team)" data-org="UX/UI & Brand Designer · 한양대학교 창업동아리" data-role="Sole designer<br>Logo · Brand identity · Web UI" data-team="Startup team<br>Design 1" data-result="Service reached beta testing">
-                            <div class="detail-hero"><img data-src="https://via.placeholder.com/900x500/f4f4f4/888?text=Hero+Image" onerror="this.style.display='none'" alt="Hero Image"></div>
                             <div class="detail-body">
                                     <p class="en-desc">I joined a Hanyang University startup team building a survey platform for college students. The service needed a website, and I was the only designer on the team.</p>
                                     <p class="ko-desc">대학생을 위한 설문조사 플랫폼을 준비하던 한양대학교 창업팀에 합류했습니다. 서비스에 웹사이트가 필요했고, 팀의 디자이너는 저 한 명이었습니다.</p>
@@ -826,7 +837,7 @@
                                     <p class="ko-desc">서비스는 베타 테스트까지 진행되었고, 핵심 멤버들이 취업 준비에 들어가면서 프로젝트가 마무리되었습니다.</p>
                                 </div>
                             <a href="#" class="shortcut-card">
-                                <img data-src="https://via.placeholder.com/400x300/f4f4f4/888?text=Thumbnail" onerror="this.src='https://via.placeholder.com/400x300/f4f4f4/888?text=Image'" class="shortcut-img" alt="Thumbnail">
+                                
                                 <div class="shortcut-info">
                                     <h3 class="shortcut-title">Startup Team Project</h3>
                                     <p class="shortcut-desc">2023-2024 · UX/UI & Branding<br>Hanyang University</p>
