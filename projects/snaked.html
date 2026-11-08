@@ -15,7 +15,7 @@
     <link rel="preload" as="image" href="/img/projects/project img/8. snaked/snaked 1.webp" fetchpriority="high">
 
     <link rel="icon" href="/img/main/favicon.webp" type="image/webp">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css" />
     
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="/static/css/project-base.css">
@@ -874,6 +874,8 @@
             visibility: visible;
         }
         .stat-popup-content {
+            max-height: 90dvh;
+            overflow-y: auto;
             background: #111;
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 24px;
@@ -889,10 +891,11 @@
                         filter 0.6s ease-out;
             position: relative;
             box-shadow: 0 40px 80px rgba(0,0,0,0.9);
-            overflow: hidden;
+            overflow-x: hidden;
             display: none; /* openStatPopup() sets display:flex inline */
             flex-direction: column;
         }
+        .stat-popup-content > * { flex-shrink: 0; } /* let tall popups scroll instead of squashing */
         .stat-popup-overlay.active .stat-popup-content {
             transform: translateY(0) scale(1);
             opacity: 1;
@@ -1281,7 +1284,7 @@
         </section>
 
         <div class="auto-carousel-container">
-            <img src="/img/projects/project img/8. snaked/snaked 8.webp" alt="SNAKED gallery image 1" class="auto-carousel-slide active" fetchpriority="high">
+            <img src="/img/projects/project img/8. snaked/snaked 8.webp" alt="SNAKED gallery image 1" class="auto-carousel-slide active">
             <img src="/img/projects/project img/8. snaked/snaked 9.webp" alt="SNAKED gallery image 2" class="auto-carousel-slide" loading="lazy" decoding="async">
             <img src="/img/projects/project img/8. snaked/snaked 10.webp" alt="SNAKED gallery image 3" class="auto-carousel-slide" loading="lazy" decoding="async">
             <img src="/img/projects/project img/8. snaked/snaked 11.webp" alt="SNAKED gallery image 4" class="auto-carousel-slide" loading="lazy" decoding="async">
@@ -1625,14 +1628,14 @@
                 </div>
 
                 <div class="dark-stats-grid" id="statsGridContainer">
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-90')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-90')">
                         <div class="dark-stat-number" id="stat-num-90">0<span class="stat-unit">%</span></div>
                         <div class="dark-stat-desc">
                             <div class="mb-10">of earthquake deaths are caused by building collapse when follow-on disasters such as tsunamis are excluded.</div>
                             <div class="stat-desc-kr">쓰나미 등 2차 재해를 제외하면 지진 사망자의 약 90%는 건물 붕괴로 발생합니다.</div>
                         </div>
                     </div>
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-space')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-space')">
                         <div class="dark-stat-number stat-hidden stat-word stat-word-space" id="stat-num-space">
                             <span class="sp-char sp-char-1">"&nbsp;</span><span class="sp-char sp-char-1">S</span><span class="sp-char sp-char-2">p</span><span class="sp-char sp-char-3">a</span><span class="sp-char sp-char-4">c</span><span class="sp-char sp-char-5">e</span><span class="sp-char sp-char-5">&nbsp;"</span>
                         </div>
@@ -1641,7 +1644,7 @@
                             <div class="stat-desc-kr">기존의 들것은 좁고 험난한 붕괴 현장을 빠져나갈 수 없습니다.</div>
                         </div>
                     </div>
-                    <div class="dark-stat-card" onclick="openStatPopup('popup-time')">
+                    <div class="dark-stat-card" data-key-click onclick="openStatPopup('popup-time')">
                         <div class="dark-stat-number stat-hidden stat-word stat-word-time" id="stat-num-time">" Time "</div>
                         <div class="dark-stat-desc">
                             <div class="mb-10">Complex straps waste the critical golden hour in dark, confined areas.</div>
@@ -1654,7 +1657,7 @@
                     
                     <div class="stat-popup-content" id="popup-90">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures">
+                            <img src="/img/projects/project img/8. snaked/snaked 28.webp" alt="Collapsed Structures" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Almost 90% of Deaths</div>
@@ -1674,7 +1677,7 @@
 
                     <div class="stat-popup-content" id="popup-space">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 29.webp" alt="Spatial Constraints" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Spatial Constraints</div>
@@ -1689,7 +1692,7 @@
 
                     <div class="stat-popup-content" id="popup-time">
                         <div class="popup-image-wrapper">
-                            <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints">
+                            <img src="/img/projects/project img/8. snaked/snaked 30.webp" alt="Time Constraints" loading="lazy">
                         </div>
                         <div class="popup-text-wrapper">
                             <div class="stat-popup-title">Time Constraints</div>
@@ -1761,14 +1764,14 @@
 
         <div class="working-process-section">
             
-            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" class="bleed fade-y" alt="Working Process Background">
+            <img src="/img/projects/project img/8. snaked/snaked_intro_2.webp" class="bleed fade-y" alt="Working Process Background" loading="lazy">
             
             <div class="working-process-wrapper">
                 <div class="story-head">
                     <div class="story-head-label">The working process of</div>
 
-                    <div id="snaked-logo-svg-container-dark" class="story-logo">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
+                    <div class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" loading="lazy">
                     </div>
 
                     <div class="story-rule"></div>
@@ -1870,8 +1873,8 @@
                 <div class="story-head">
                     <div class="story-head-label">The Idea of</div>
 
-                    <div id="snaked-logo-svg-container-dark" class="story-logo">
-                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo">
+                    <div class="story-logo">
+                        <img src="/img/projects/project img/8. snaked/snaked_logo_2.svg" alt="SNAKED Logo" loading="lazy">
                     </div>
 
                     <div class="story-rule"></div>
@@ -2252,9 +2255,9 @@
             </div>
         </div>
 
-        <div class="next-project" data-href="/projects/nezhnost" style="--next-bg: url('/img/projects/Thumbnail/project_1.webp');">
+        <div class="next-project" data-href="/projects/seesaw" style="--next-bg: url('/img/projects/Thumbnail/project_4.webp');">
             <div class="next-label">Next Project</div>
-            <div class="next-title">Nezhnost &rarr;</div>
+            <div class="next-title">Seesaw &rarr;</div>
         </div>
 
     </main>
@@ -2276,6 +2279,10 @@
                     document.body.style.paddingRight = scrollbarWidth + 'px';
                     document.body.style.overflow = 'hidden';
                 }
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && document.getElementById('statPopupOverlay').classList.contains('active')) closeStatPopup();
+                });
+
                 function closeStatPopup(e) {
                     if(e) e.stopPropagation();
                     document.getElementById('statPopupOverlay').classList.remove('active');

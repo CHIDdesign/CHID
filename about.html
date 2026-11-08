@@ -13,9 +13,9 @@
     <meta property="og:url" content="https://chid.kr/about">
     <meta property="og:title" content="About · 최은준 Eun Jun Choi 산업디자이너">
     <meta property="og:description" content="최은준(Eun Jun Choi) — Industrial Designer 약력·프로젝트 타임라인">
-    <meta property="og:image" content="img/main/favicon.webp">
+    <meta property="og:image" content="https://chid.kr/img/main/meta_img.webp">
     <link rel="icon" href="img/main/favicon.webp" type="image/webp">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css" />
     <link rel="stylesheet" href="static/css/global.css">
     <style>
         :root {
@@ -69,10 +69,12 @@
             .intro-image img { aspect-ratio: 1/1; }
             .intro-tagline { margin-bottom: 20px; }
         }
+        header.header-hidden ~ main .filter-container { top: 0; }
         .filter-container {
             position: sticky;
-            top: 90px;
+            top: var(--header-h, 90px);
             z-index: 90;
+            transition: top 0.3s ease-in-out;
             background-color: rgba(244, 244, 244, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -334,7 +336,7 @@
                 </dl>
             </div>
             <div class="intro-image">
-                <img src="img/about/Profile.webp" alt="최은준 Eun Jun Choi" loading="lazy">
+                <img src="img/about/Profile.webp" alt="최은준 Eun Jun Choi" fetchpriority="high">
             </div>
         </section>
         <div class="section-header">
@@ -386,7 +388,7 @@
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
                     <div class="timeline-item" data-category="product award">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Award (National Finalist)</p>
                             <div class="entry-title">
                                 <span>James Dyson Award 2026</span>
@@ -445,7 +447,7 @@
                         </template>
                     </div>
                     <div class="timeline-item" data-category="product interaction award">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Award (Encouragement Award, KOSME Chairman’s Award)</p>
                             <div class="entry-title">
                                 <span>15th ROK Army Startup Competition</span>
@@ -502,7 +504,7 @@
                         </template>
                     </div>
                     <div class="timeline-item" data-category="branding">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Public Affairs Specialist (KATUSA)</p>
                             <div class="entry-title">
                                 <span>U.S. Eighth Army Headquarters Public Affairs</span>
@@ -573,7 +575,7 @@
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
                     <div class="timeline-item" data-category="product">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Freelance Industrial Design</p>
                             <div class="entry-title">
                                 <span>COREAMED</span>
@@ -622,7 +624,7 @@
                         </template>
                     </div>
                     <div class="timeline-item" data-category="product interaction">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Concept Lead & 3D Visualizer</p>
                             <div class="entry-title">
                                 <span>Samsung Life Insurance Life-nology Lab</span>
@@ -677,7 +679,7 @@
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
                     <div class="timeline-item" data-category="exhibition">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Organizing Team & Head of Promotion</p>
                             <div class="entry-title">
                                 <span>Platypus Project 2025</span>
@@ -726,7 +728,7 @@
                         </template>
                     </div>
                     <div class="timeline-item" data-category="interaction">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">VR Game Content Designer</p>
                             <div class="entry-title">
                                 <span>Technische Universität Berlin Summer School</span>
@@ -769,7 +771,7 @@
                 <div class="year-body">
                     <div class="timeline-track"><div class="timeline-progress"></div></div>
                     <div class="timeline-item" data-category="product exhibition">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">Product Design Exhibition</p>
                             <div class="entry-title">
                                 <span>Cosmo-es 2024</span>
@@ -807,7 +809,7 @@
                         </template>
                     </div>
                     <div class="timeline-item" data-category="interaction branding">
-                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)">
+                        <div class="entry clickable scroll-reveal" onclick="openDetail(this)" data-key-click>
                             <p class="entry-role">UX/UI & Brand Designer</p>
                             <div class="entry-title">
                                 <span>Hanyang University (Startup Team)</span>
@@ -851,7 +853,7 @@
         </section>
     </main>
     <div class="detail-overlay" id="detail-overlay">
-        <div class="detail-close" id="detail-close" aria-label="닫기">
+        <div class="detail-close" id="detail-close" aria-label="닫기" data-key-click>
             <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="detail-inner">
@@ -907,24 +909,11 @@
             const header = document.getElementById('main-header');
             const filterContainer = document.getElementById('filter-container');
 
-            window.addEventListener('scroll', () => {
-                if (header && filterContainer) {
-                    if (header.classList.contains('header-hidden')) filterContainer.style.top = '0px';
-                    else filterContainer.style.top = header.offsetHeight + 'px';
-                }
-            }, { passive: true });
+            // Filter bar sits under the header; CSS moves it to the top when the header hides
+            const setHeaderHeight = () => { if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px'); };
+            window.addEventListener('load', setHeaderHeight);
+            window.addEventListener('resize', setHeaderHeight);
 
-            window.addEventListener('load', () => {
-                if (header && filterContainer) filterContainer.style.top = header.offsetHeight + 'px';
-            });
-
-            window.addEventListener('resize', () => {
-                if (header && filterContainer && !header.classList.contains('header-hidden')) {
-                    filterContainer.style.top = header.offsetHeight + 'px';
-                } else if (header && filterContainer && header.classList.contains('header-hidden')) {
-                    filterContainer.style.top = '0px';
-                }
-            });
 
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1025,7 +1014,7 @@
                 const dynamicCanvas = document.getElementById('canvas');
                 if(dynamicCanvas) dynamicCanvas.style.mixBlendMode = 'normal';
                 
-                setTimeout(() => { renderBody.innerHTML = ''; }, 600);
+                setTimeout(() => { if (!overlay.classList.contains('open')) renderBody.innerHTML = ''; }, 600);
             }
 
             closeBtn.addEventListener('click', closeDetail);
